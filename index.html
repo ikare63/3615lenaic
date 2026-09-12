@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07151a">
+  <title>3615 LÉNAÏC — Portail personnel</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+  <div class="terminal-shell">
+    <header class="terminal-head">
+      <div class="brand-block">
+        <div class="brand-kicker">CONNEXION ÉTABLIE</div>
+        <h1>3615 LÉNAÏC</h1>
+        <div class="brand-sub">PORTAIL PERSONNEL // TERMINAL LOCAL</div>
+      </div>
+      <div class="head-meta">
+        <div id="clockDate">--/--/----</div>
+        <div id="clockTime" class="clock">--:--:--</div>
+        <button class="key-button" id="paletteBtn" type="button">COULEUR</button>
+      </div>
+    </header>
+
+    <nav class="service-line" aria-label="Navigation 3615">
+      <button class="service-key active" data-section="home">[0] ACCUEIL</button>
+      <button class="service-key" data-section="services">[1] SERVICES</button>
+      <button class="service-key" data-section="otarie">[2] OTARIE</button>
+      <span class="line-status"><i></i> BUS LOCAL ACTIF</span>
+    </nav>
+
+    <main>
+      <section class="terminal-section active" id="home">
+        <div class="context-panel">
+          <div class="context-code" id="contextCode">SYS.00</div>
+          <div>
+            <h2 id="greetingTitle">BONJOUR LÉNAÏC</h2>
+            <p id="greetingText">Initialisation du terminal…</p>
+          </div>
+        </div>
+
+        <section id="sleepPanel" class="minitel-card sleep-panel" hidden>
+          <div class="card-head">
+            <div>
+              <span class="service-number">SOMMEIL.01</span>
+              <h3>BIEN DORMI ?</h3>
+            </div>
+            <span class="card-state" id="sleepState">À RENSEIGNER</span>
+          </div>
+
+          <form id="sleepForm" class="sleep-form">
+            <label>
+              <span>HEURES</span>
+              <input id="sleepHours3615" type="number" inputmode="decimal" min="0" max="16" step="0.25" placeholder="7,5" required>
+            </label>
+            <label>
+              <span>QUALITÉ %</span>
+              <input id="sleepQuality3615" type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="80" required>
+            </label>
+            <label>
+              <span>RÉCUP. PHYSIQUE %</span>
+              <input id="sleepPhysical3615" type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="80" required>
+            </label>
+            <label>
+              <span>RÉCUP. MENTALE %</span>
+              <input id="sleepMental3615" type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="80" required>
+            </label>
+            <button class="minitel-action" type="submit">ENVOYER À CAP →</button>
+          </form>
+
+          <div id="sleepResult" class="sleep-result" hidden>
+            <div class="big-value" id="sleepResultScore">—</div>
+            <div>
+              <strong id="sleepResultLabel">NUIT TRANSMISE</strong>
+              <p id="sleepResultText">CAP calculera le score de sommeil.</p>
+            </div>
+            <a class="inline-link" href="../cap/">OUVRIR CAP →</a>
+          </div>
+        </section>
+
+        <section class="status-grid" aria-label="État des services">
+          <article class="status-box">
+            <span>CAP</span>
+            <strong id="capStatus">PRÊT</strong>
+            <small id="capStatusDetail">Santé & récupération</small>
+          </article>
+          <article class="status-box">
+            <span>CULINA</span>
+            <strong id="culinaStatus">PRÊT</strong>
+            <small id="culinaStatusDetail">Cuisine & repas</small>
+          </article>
+          <article class="status-box">
+            <span>BUS</span>
+            <strong id="busStatus">ACTIF</strong>
+            <small id="busStatusDetail">0 message en attente</small>
+          </article>
+        </section>
+
+        <section class="quick-grid">
+          <a class="quick-card cyan" href="../cap/">
+            <span class="quick-code">01</span>
+            <strong>CAP</strong>
+            <small>Sport · nutrition · sommeil</small>
+          </a>
+          <a class="quick-card green" href="../culina/">
+            <span class="quick-code">02</span>
+            <strong>CULINA</strong>
+            <small>Recettes · stocks · repas</small>
+          </a>
+          <a class="quick-card amber" href="../stylia/">
+            <span class="quick-code">03</span>
+            <strong>STYLIA</strong>
+            <small>Tenues · couleurs · saison</small>
+          </a>
+          <a class="quick-card magenta" href="../lenaic-express/">
+            <span class="quick-code">04</span>
+            <strong>LÉNAÏC EXPRESS</strong>
+            <small>Fil d’actualité personnel</small>
+          </a>
+        </section>
+
+        <div class="more-line">
+          <button class="minitel-action secondary" type="button" data-go="services">VOIR TOUS LES SERVICES →</button>
+          <button class="minitel-action secondary" type="button" data-go="otarie">VOIR L’OTARIE →</button>
+        </div>
+      </section>
+
+      <section class="terminal-section" id="services">
+        <div class="section-title">
+          <span>INDEX.01</span>
+          <h2>SERVICES DISPONIBLES</h2>
+        </div>
+
+        <div class="directory-grid">
+          <article class="directory-card">
+            <div class="directory-head"><span>[01]</span><strong>QUOTIDIEN</strong></div>
+            <a href="../cap/"><b>CAP</b><small>Sport, nutrition, sommeil, mesures</small></a>
+            <a href="../culina/"><b>CULINA</b><small>Recettes, stocks et repas</small></a>
+            <a href="../stylia/"><b>STYLIA</b><small>Assistant de tenues</small></a>
+            <a href="../lenaic-express/"><b>LÉNAÏC EXPRESS</b><small>Actualités personnalisées</small></a>
+          </article>
+
+          <article class="directory-card">
+            <div class="directory-head"><span>[02]</span><strong>BUREAU GÉNÉALOGIQUE</strong></div>
+            <a href="../bureau-genealogique/index.html"><b>ARBORIS</b><small>Généalogie personnelle</small></a>
+            <a href="../bureau-genealogique/index2.html"><b>SCRIPTORIA</b><small>Registres et actes</small></a>
+            <a href="../bureau-genealogique/index3.html"><b>PISTORIA</b><small>Assistant des ancêtres directs</small></a>
+          </article>
+
+          <article class="directory-card">
+            <div class="directory-head"><span>[03]</span><strong>ARCHIVES</strong></div>
+            <a href="../aide_archive/Ariane.html"><b>LE FIL D’ARIANE</b><small>Enquêtes et pistes documentaires</small></a>
+            <a href="../aide_archive/Scribe-v3.html"><b>SCRIBE</b><small>Aide au travail d’archives</small></a>
+          </article>
+
+          <article class="directory-card">
+            <div class="directory-head"><span>[04]</span><strong>DÉTENTE</strong></div>
+            <a href="../uchronies/"><b>UCHRONIES</b><small>Bibliothèque des jeux historiques</small></a>
+          </article>
+        </div>
+      </section>
+
+      <section class="terminal-section" id="otarie">
+        <div class="section-title">
+          <span>OTARIE.EXE</span>
+          <h2>BASSIN DE L’OTARIE</h2>
+        </div>
+        <article class="minitel-card otarie-card">
+          <div class="aquarium-frame">
+            <canvas id="aquariumCanvas" width="900" height="360" aria-label="Otarie animée dans son bassin"></canvas>
+            <div class="screen-label">CAMÉRA BASSIN // DIRECT</div>
+          </div>
+          <div class="otarie-panel">
+            <div class="otarie-stat"><span>FAIM</span><strong id="otarieHunger">— %</strong></div>
+            <div class="meter"><i id="otarieMeter"></i></div>
+            <div class="otarie-stat"><span>DERNIER REPAS</span><strong id="otarieLastFed">JAMAIS</strong></div>
+            <button class="minitel-action" id="feedOtarieBtn" type="button">NOURRIR L’OTARIE</button>
+            <p id="otarieMessage" class="terminal-message">L’otarie nage tranquillement.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="terminal-footer">
+      <form id="commandForm" class="command-line">
+        <label for="commandInput">COMMANDE &gt;</label>
+        <input id="commandInput" autocomplete="off" spellcheck="false" placeholder="CAP, CULINA, ARBORIS, OTARIE…">
+        <button type="submit">ENVOI</button>
+      </form>
+      <div class="footer-line"><span>3615 LÉNAÏC // VERSION 6.0</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+    </footer>
+  </div>
+
+  <script src="js/lenaic-bus.js?v=1"></script>
+  <script src="js/app.js?v=1"></script>
+</body>
+</html>

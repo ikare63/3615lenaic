@@ -1,0 +1,12 @@
+3615 LÉNAÏC V6 — reconstruction complète
+
+Cette archive remplace l'ancien contenu du dépôt 3615lenaic.
+Elle contient uniquement le nouveau portail :
+- index.html
+- css/style.css
+- js/app.js
+- js/lenaic-bus.js
+- assets/favicon.svg
+
+L'ancienne interface, Motoria embarqué, météo, horoscope, budget, anciens JSON et autres modules obsolètes ne sont plus utilisés.
+L'otarie est conservée et réécrite dans le nouveau portail.
