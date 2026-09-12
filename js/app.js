@@ -138,6 +138,19 @@
   function readCulinaSnapshot(){
     try{return JSON.parse(localStorage.getItem(CULINA_SNAPSHOT_KEY)||'null')}catch(e){return null}
   }
+  const STYLIA_SNAPSHOT_KEY='lenaic-stylia-snapshot-v1';
+  function readStyliaSnapshot(){
+    try{return JSON.parse(localStorage.getItem(STYLIA_SNAPSHOT_KEY)||'null')}catch(e){return null}
+  }
+  function styliaShadeHex(name=''){
+    const map={
+      'Blanc':'#f4f4ef','Écru':'#e9dfc8','Beige':'#d8c3a5','Camel':'#c18d5f','Cognac':'#9a5c2f',
+      'Marron':'#6d4c41','Noir':'#111111','Gris':'#8b9097','Bleu':'#3976c4','Bleu ciel':'#8fc8ee','Bleu marine':'#18345e',
+      'Vert':'#4f8d56','Kaki':'#71805a','Rouge':'#ba3d44','Bordeaux':'#6d2335','Jaune':'#e4c33a','Moutarde':'#c89a22',
+      'Orange':'#dc7a31','Violet':'#7458a8','Rose':'#cf7c9d'
+    };
+    return map[name]||'#7fffd4';
+  }
   function formatShortDate(key){
     if(!key)return '—';
     const d=new Date(key+'T12:00:00');
@@ -239,6 +252,36 @@
     const missing=plans.reduce((n,p)=>n+(Number(p.missingCount)||0),0);
     setText('culinaLiveFoot',count?(missing?`${missing} MANQUANT${missing>1?'S':''} AU TOTAL · NON COMPTABILISÉ DANS CAP`:'TOUT LE PRINCIPAL EST DISPONIBLE · NON COMPTABILISÉ DANS CAP'):'REPAS PRÉVUS · NON COMPTABILISÉS DANS CAP');
   }
+  function renderStyliaLive(){
+    const snap=readStyliaSnapshot();
+    const card=document.querySelector('.stylia-live-card');
+    const current=Boolean(snap&&snap.date===localDateKey());
+    card?.classList.toggle('ready',current);
+    card?.classList.toggle('stale',Boolean(snap&&!current));
+    const partsEl=$('styliaParts');
+    if(!snap){
+      setText('styliaLiveState','AUCUNE TENUE');
+      setText('styliaOutfitName','AUCUNE TENUE DU JOUR');
+      setText('styliaOutfitWhy','Compose une tenue dans Stylia pour l’afficher ici.');
+      setText('styliaLiveFoot','DERNIÈRE PROPOSITION STYLIA');
+      if(partsEl)partsEl.innerHTML='';
+      setText('styliaStatus','PRÊT');
+      setText('styliaStatusDetail','Tenue du jour');
+      return;
+    }
+    setText('styliaLiveState',current?'TENUE DU JOUR':'DERNIÈRE TENUE');
+    setText('styliaOutfitName',(snap.name||'Tenue Stylia').toUpperCase());
+    setText('styliaOutfitWhy',snap.why||'Proposition générée par Stylia.');
+    const defs=[['top','HAUT'],['bottom','BAS'],['outer','COUCHE'],['shoes','CHAUSSURES'],['accessory','ACCESSOIRE']];
+    const parts=defs.filter(([key])=>snap[key]).map(([key,label])=>({label,...snap[key]}));
+    if(partsEl)partsEl.innerHTML=parts.map(part=>`<div class="stylia-part"><span>${part.label}</span><strong>${String(part.piece||'—').toUpperCase()}</strong><small><i class="stylia-swatch" style="background:${styliaShadeHex(part.shade)}"></i>${String(part.shade||'—').toUpperCase()}</small></div>`).join('');
+    const when=snap.generatedAt?new Date(snap.generatedAt):null;
+    const time=when&&Number.isFinite(when.getTime())?when.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'—';
+    setText('styliaLiveFoot',`${current?'AUJOURD’HUI':'ARCHIVE'} · ${time}${snap.rain?' · PARAPLUIE CONSEILLÉ':''}`);
+    setText('styliaStatus',current?'TENUE OK':'À ACTUALISER');
+    setText('styliaStatusDetail',current?(snap.accessory?.piece==='Parapluie'?'Tenue + parapluie':snap.name||'Tenue proposée'):'Ouvre Stylia pour aujourd’hui');
+  }
+
   function capSleepForToday(){return readCapState()?.daily?.[localDateKey()]?.sleep||null}
   function hasCompleteSleep(s){return s&&Number(s.hours)>0&&Number.isFinite(Number(s.quality))&&Number.isFinite(Number(s.physical))&&Number.isFinite(Number(s.mental))}
   function latestSleepUpdate(){
@@ -317,11 +360,12 @@
     setText('capStatus',hasCompleteSleep(sleep)?'NUIT OK':'PRÊT');
     setText('capStatusDetail',hasCompleteSleep(sleep)?`${sleep.hours} h enregistrées`:'Santé & récupération');
   }
-  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive()});
+  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive()});
   window.addEventListener('storage',e=>{
     if(e.key==='cap-data'){renderSleepPanel();renderBusStatus()}
     if(e.key===CAP_SNAPSHOT_KEY)renderCapLive();
     if(e.key===CULINA_SNAPSHOT_KEY){renderCulinaLive();renderBusStatus()}
+    if(e.key===STYLIA_SNAPSHOT_KEY){renderStyliaLive();renderBusStatus()}
   });
 
   const commandMap={
@@ -376,7 +420,7 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderSleepPanel();renderCapLive();renderCulinaLive();renderBusStatus();renderOtarieStatus();
-  setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderBusStatus();},60000);
+  renderContext();renderAbsurdities();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderBusStatus();renderOtarieStatus();
+  setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderStyliaLive();renderBusStatus();},60000);
   setInterval(renderCulinaLive,3000);
 })();
