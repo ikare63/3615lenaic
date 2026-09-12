@@ -234,3 +234,16 @@ body[data-palette="green"]{--ink:#8cff8c;--ink-soft:#56b756;--cyan:#a8ffb0;--gre
 .cap-live-card.stale{opacity:.78}
 @media(max-width:760px){.cap-live-grid{grid-template-columns:1fr 1fr}.activity-live{grid-column:1/-1}}
 @media(max-width:430px){.cap-live-grid{grid-template-columns:1fr}.activity-live{grid-column:auto}.cap-live-card{min-height:145px}}
+
+/* 3615 V6.3 — Culina ↔ CAP ↔ 3615 */
+.culina-live-card{margin-bottom:14px;min-height:0}
+.culina-meal-slots{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.culina-meal-slot{border:1px solid var(--line);background:#031015;padding:11px;min-height:96px}
+.culina-meal-slot>span{display:block;color:var(--amber);font-size:.6rem;font-weight:900;letter-spacing:.08em}
+.culina-meal-slot>strong{display:block;color:var(--ink);font-size:.8rem;line-height:1.35;margin:8px 0 5px}
+.culina-meal-slot>small{display:block;color:var(--ink-soft);font-size:.6rem;line-height:1.4}
+.culina-meal-slot.ready{border-color:var(--green)}
+.culina-meal-slot.ready>small{color:var(--green)}
+.culina-meal-slot.missing{border-color:var(--amber);background:rgba(255,209,102,.05)}
+.culina-meal-slot.missing>small{color:var(--amber)}
+@media(max-width:520px){.culina-meal-slots{grid-template-columns:1fr}}
