@@ -345,11 +345,26 @@
   }
   function escapeHtml3615(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
   function escapeAttr3615(value){return escapeHtml3615(value)}
-  async function loadExpressFallback(){
+  let expressFetchInFlight=false;
+  async function fetchJsonWithTimeout(url,timeoutMs=7000){
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),timeoutMs);
     try{
-      const res=await fetch('../lenaic-express/data/actualites.json?ts='+Date.now(),{cache:'no-store'});
+      const res=await fetch(url,{cache:'no-store',signal:controller.signal});
       if(!res.ok)throw new Error('HTTP '+res.status);
-      const data=await res.json();
+      return await res.json();
+    }finally{
+      clearTimeout(timer);
+    }
+  }
+  async function loadExpressFallback(){
+    if(expressFetchInFlight)return;
+    expressFetchInFlight=true;
+    const box=$('expressHeadlines');
+    setText('expressLiveState','SYNCHRO…');
+    try{
+      // Chemin absolu : évite toute ambiguïté entre /3615lenaic/ et /lenaic-express/.
+      const data=await fetchJsonWithTimeout('/lenaic-express/data/actualites.json?ts='+Date.now(),7000);
       const {hidden,sources}=expressHiddenSets();
       const arr=(Array.isArray(data.articles)?data.articles:[])
         .filter(a=>!hidden.has(a.id)&&!sources.has(a.source))
@@ -358,12 +373,14 @@
         .map(a=>({id:a.id,title:a.title,category:a.category,categoryLabel:expressCategoryLabel(a.category),source:a.source,url:a.url,publishedAt:a.published_at,score:expressFallbackScore(a)}));
       renderExpressArticles(arr,{editionGeneratedAt:data.generated_at,generatedAt:new Date().toISOString()});
     }catch(e){
-      const box=$('expressHeadlines');
-      if(box)box.innerHTML='<div class="express-empty">Lénaïc Express n’a pas encore pu être synchronisé.</div>';
-      setText('expressLiveState','EN ATTENTE');
+      if(box)box.innerHTML='<div class="express-empty">Impossible de récupérer l’édition. Ouvre Lénaïc Express puis reviens ici.</div>';
+      setText('expressLiveState','INDISPONIBLE');
       setText('expressLiveFoot','OUVRIR LÉNAÏC EXPRESS →');
+    }finally{
+      expressFetchInFlight=false;
     }
   }
+
   function renderExpressLive(){
     const snap=readExpressSnapshot();
     if(snap&&Array.isArray(snap.top)&&snap.top.length){
