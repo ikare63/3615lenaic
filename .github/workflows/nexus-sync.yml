@@ -1,0 +1,33 @@
+name: NEXUS - synchroniser les JSON publics
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */3 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synchroniser les JSON
+        run: python scripts/sync_public_json.py
+      - name: Enregistrer les changements
+        run: |
+          git config user.name "3615 NEXUS"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/mirror
+          if git diff --cached --quiet; then
+            echo "Aucun changement"
+          else
+            git commit -m "chore(nexus): synchronisation JSON"
+            git push
+          fi
