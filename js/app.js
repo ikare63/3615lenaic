@@ -134,6 +134,10 @@
   function readCapSnapshot(){
     try{return JSON.parse(localStorage.getItem(CAP_SNAPSHOT_KEY)||'null')}catch(e){return null}
   }
+  const CULINA_SNAPSHOT_KEY='lenaic-culina-snapshot-v1';
+  function readCulinaSnapshot(){
+    try{return JSON.parse(localStorage.getItem(CULINA_SNAPSHOT_KEY)||'null')}catch(e){return null}
+  }
   function formatShortDate(key){
     if(!key)return '—';
     const d=new Date(key+'T12:00:00');
@@ -199,6 +203,41 @@
       setText('capMeasuresText',`Prochaine échéance : ${formatShortDate(m.nextDueDate)}.`);
       setText('capMeasuresLast',`DERNIÈRE : ${formatShortDate(m.latestDate)}`);
     }
+  }
+  function formatClock(ts){
+    const d=new Date(Number(ts));
+    return Number.isFinite(d.getTime())?d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'—';
+  }
+  function culinaPlansToday(){
+    const snap=readCulinaSnapshot();
+    if(!snap||!Array.isArray(snap.planned))return [];
+    return snap.planned.filter(p=>localDateKey(new Date(Number(p.at)))===localDateKey()).sort((a,b)=>a.at-b.at);
+  }
+  function renderCulinaSlot(prefix,plan){
+    const slot=$(prefix==='culinaLunch'?'culinaLunchSlot':'culinaDinnerSlot');
+    if(!plan){
+      setText(prefix+'Name','RIEN DE PROGRAMMÉ');
+      setText(prefix+'Meta','Programme un repas dans Culina.');
+      slot?.classList.remove('ready','missing');
+      return;
+    }
+    const missing=Math.max(0,Number(plan.missingCount)||0);
+    setText(prefix+'Name',(plan.name||'Repas Culina').toUpperCase());
+    const stock=missing?`${missing} ingrédient${missing>1?'s':''} manquant${missing>1?'s':''}`:'ingrédients principaux disponibles';
+    setText(prefix+'Meta',`${formatClock(plan.at)} · ${Math.round(Number(plan.calories)||0)} kcal · ${stock}`);
+    slot?.classList.toggle('missing',missing>0);
+    slot?.classList.toggle('ready',missing===0);
+  }
+  function renderCulinaLive(){
+    const plans=culinaPlansToday();
+    const lunch=plans.find(p=>p.mealType==='lunch')||null;
+    const dinner=plans.find(p=>p.mealType==='dinner')||null;
+    renderCulinaSlot('culinaLunch',lunch);
+    renderCulinaSlot('culinaDinner',dinner);
+    const count=plans.length;
+    setText('culinaLiveState',count?`${count} PRÉVU${count>1?'S':''}`:'AUCUN REPAS');
+    const missing=plans.reduce((n,p)=>n+(Number(p.missingCount)||0),0);
+    setText('culinaLiveFoot',count?(missing?`${missing} MANQUANT${missing>1?'S':''} AU TOTAL · NON COMPTABILISÉ DANS CAP`:'TOUT LE PRINCIPAL EST DISPONIBLE · NON COMPTABILISÉ DANS CAP'):'REPAS PRÉVUS · NON COMPTABILISÉS DANS CAP');
   }
   function capSleepForToday(){return readCapState()?.daily?.[localDateKey()]?.sleep||null}
   function hasCompleteSleep(s){return s&&Number(s.hours)>0&&Number.isFinite(Number(s.quality))&&Number.isFinite(Number(s.physical))&&Number.isFinite(Number(s.mental))}
@@ -270,17 +309,19 @@
     if(!window.LenaicBus){setText('busStatus','HORS LIGNE');setText('busStatusDetail','Bus non chargé');return}
     const pending=LenaicBus.pending();
     const meals=LenaicBus.pending({type:'meal.proposed',source:'culina',target:'cap'}).length;
+    const planned=culinaPlansToday().length;
     setText('busStatus','ACTIF');setText('busStatusDetail',`${pending.length} message${pending.length>1?'s':''} en attente`);
-    setText('culinaStatus',meals?`${meals} À VALIDER`:'PRÊT');
-    setText('culinaStatusDetail',meals?'Repas en attente dans CAP':'Cuisine & repas');
+    setText('culinaStatus',meals?`${meals} À VALIDER`:(planned?`${planned} PRÉVU${planned>1?'S':''}`:'PRÊT'));
+    setText('culinaStatusDetail',meals?'Repas en attente dans CAP':(planned?'Repas du jour synchronisés':'Cuisine & repas'));
     const sleep=capSleepForToday();
     setText('capStatus',hasCompleteSleep(sleep)?'NUIT OK':'PRÊT');
     setText('capStatusDetail',hasCompleteSleep(sleep)?`${sleep.hours} h enregistrées`:'Santé & récupération');
   }
-  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive()});
+  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive()});
   window.addEventListener('storage',e=>{
     if(e.key==='cap-data'){renderSleepPanel();renderBusStatus()}
     if(e.key===CAP_SNAPSHOT_KEY)renderCapLive();
+    if(e.key===CULINA_SNAPSHOT_KEY){renderCulinaLive();renderBusStatus()}
   });
 
   const commandMap={
@@ -335,6 +376,7 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderSleepPanel();renderCapLive();renderBusStatus();renderOtarieStatus();
-  setInterval(()=>{renderContext();renderCapLive();},60000);
+  renderContext();renderAbsurdities();renderSleepPanel();renderCapLive();renderCulinaLive();renderBusStatus();renderOtarieStatus();
+  setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderBusStatus();},60000);
+  setInterval(renderCulinaLive,3000);
 })();
