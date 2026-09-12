@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07151a">
   <title>3615 LÉNAÏC — Portail personnel</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
   <div class="terminal-shell">
@@ -166,6 +166,44 @@
           <div class="cap-live-foot"><span id="expressLiveFoot">5 TITRES MAXIMUM · APERÇU</span><a href="../lenaic-express/">VOIR TOUTE L’ACTUALITÉ →</a></div>
         </section>
 
+
+        <section class="minitel-card genealogy-office-card" aria-label="Bureau généalogique">
+          <div class="retro-head"><span>BUREAU.GENEALOGIQUE</span><strong id="genealogyOfficeState">LECTURE LOCALE…</strong></div>
+          <div class="genealogy-office-grid">
+            <a class="genealogy-app-row" href="../bureau-genealogique/index.html">
+              <span class="genealogy-app-code">ARBORIS</span>
+              <div><strong id="arborisSummaryTitle">AUCUNE DONNÉE</strong><small id="arborisSummaryMeta">Dernier individu ajouté</small></div>
+              <b>→</b>
+            </a>
+            <a class="genealogy-app-row" href="../bureau-genealogique/index2.html">
+              <span class="genealogy-app-code">SCRIPTORIA</span>
+              <div><strong id="scriptoriaSummaryTitle">AUCUNE DONNÉE</strong><small id="scriptoriaSummaryMeta">Registre et actes</small></div>
+              <b>→</b>
+            </a>
+            <a class="genealogy-app-row" href="../bureau-genealogique/index3.html">
+              <span class="genealogy-app-code">PISTORIA</span>
+              <div><strong id="pistoriaSummaryTitle">AUCUNE PISTE</strong><small id="pistoriaSummaryMeta">Piste prioritaire</small></div>
+              <b>→</b>
+            </a>
+          </div>
+          <div class="cap-live-foot"><span id="genealogyOfficeFoot">DONNÉES LOCALES DU BUREAU</span><a href="../bureau-genealogique/">OUVRIR LE BUREAU →</a></div>
+        </section>
+
+        <section class="minitel-card ariane-live-card" aria-label="Enquête active dans Le Fil d’Ariane">
+          <div class="retro-head"><span>ARIANE.ENQUETE</span><strong id="arianeLiveState">LECTURE LOCALE…</strong></div>
+          <div class="ariane-case-box">
+            <span class="ariane-case-kicker">ENQUÊTE ACTIVE</span>
+            <strong id="arianeCaseTitle">AUCUNE ENQUÊTE ACTIVE</strong>
+            <small id="arianeCaseMeta">Ouvre Ariane pour sélectionner un dossier.</small>
+          </div>
+          <div class="ariane-next" id="arianeNextBox" hidden>
+            <span>PROCHAINE ACTION</span>
+            <strong id="arianeNextAction">—</strong>
+            <small id="arianeNextRef">—</small>
+          </div>
+          <div class="cap-live-foot"><span id="arianeLiveFoot">DOSSIERS D’ENQUÊTES</span><a href="../aide_archive/Ariane.html">OUVRIR ARIANE →</a></div>
+        </section>
+
         <div class="more-line">
           <button class="minitel-action secondary" type="button" data-go="services">VOIR TOUS LES SERVICES →</button>
           <button class="minitel-action secondary" type="button" data-go="otarie">VOIR L’OTARIE →</button>
@@ -234,11 +272,11 @@
         <input id="commandInput" autocomplete="off" spellcheck="false" placeholder="CAP, CULINA, ARBORIS, OTARIE…">
         <button type="submit">ENVOI</button>
       </form>
-      <div class="footer-line"><span>3615 LÉNAÏC // VERSION 6.7</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+      <div class="footer-line"><span>3615 LÉNAÏC // VERSION 6.8</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
     </footer>
   </div>
 
   <script src="js/lenaic-bus.js?v=1"></script>
-  <script src="js/app.js?v=8"></script>
+  <script src="js/app.js?v=9"></script>
 </body>
 </html>
