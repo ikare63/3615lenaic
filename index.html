@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07151a">
   <title>3615 LÉNAÏC — Portail personnel</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/style.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
   <div class="terminal-shell">
@@ -17,8 +17,18 @@
         <div class="brand-sub">PORTAIL PERSONNEL // TERMINAL LOCAL</div>
       </div>
       <div class="head-meta">
-        <div id="clockDate">--/--/----</div>
-        <div id="clockTime" class="clock">--:--:--</div>
+        <div class="dual-clock" aria-live="polite">
+          <div class="clock-block">
+            <span class="clock-label">CALENDRIER GRÉGORIEN</span>
+            <strong id="clockDate">--/--/----</strong>
+            <div id="clockTime" class="clock">--:--:--</div>
+          </div>
+          <div class="clock-block clock-block-alt">
+            <span class="clock-label">CALENDRIER RÉPUBLICAIN</span>
+            <strong id="republicanDate">--</strong>
+            <div id="decimalTime" class="clock">--:--:--</div>
+          </div>
+        </div>
         <button class="key-button" id="paletteBtn" type="button">COULEUR</button>
       </div>
     </header>
@@ -77,6 +87,19 @@
             </div>
             <a class="inline-link" href="../cap/">OUVRIR CAP →</a>
           </div>
+        </section>
+
+        <section class="retro-grid" aria-label="Fantaisies du terminal">
+          <article class="minitel-card whimsy-card">
+            <div class="retro-head"><span>MESSAGE.SYS</span><strong>MESSAGE D’ACCUEIL OFFICIEL</strong></div>
+            <p id="absurdWelcome">Le terminal consulte le comité des phrases inutiles…</p>
+          </article>
+          <article class="minitel-card horoscope-card">
+            <div class="retro-head"><span>ASTRES.♊</span><strong>HOROSCOPE PERSONNEL — GÉMEAUX</strong></div>
+            <div class="horoscope-sign" aria-hidden="true">♊</div>
+            <p id="geminiHoroscope">Les astres consultent encore leurs dossiers.</p>
+            <small id="geminiLucky">Calcul du trombone protecteur…</small>
+          </article>
         </section>
 
         <section class="status-grid" aria-label="État des services">
@@ -188,11 +211,11 @@
         <input id="commandInput" autocomplete="off" spellcheck="false" placeholder="CAP, CULINA, ARBORIS, OTARIE…">
         <button type="submit">ENVOI</button>
       </form>
-      <div class="footer-line"><span>3615 LÉNAÏC // VERSION 6.0</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+      <div class="footer-line"><span>3615 LÉNAÏC // VERSION 6.1</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
     </footer>
   </div>
 
   <script src="js/lenaic-bus.js?v=1"></script>
-  <script src="js/app.js?v=1"></script>
+  <script src="js/app.js?v=2"></script>
 </body>
 </html>
