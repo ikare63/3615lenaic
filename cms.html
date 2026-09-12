@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#061015">
+<title>3615 NEXUS — Centre de contrôle</title>
+<link rel="stylesheet" href="css/cms.css?v=1">
+</head>
+<body>
+<div class="scanlines"></div>
+<header class="cms-head">
+  <div>
+    <div class="eyebrow">3615 LÉNAÏC // ADMINISTRATION</div>
+    <h1>NEXUS</h1>
+    <p>Centre névralgique des applications et des données.</p>
+  </div>
+  <div class="head-actions">
+    <a class="btn ghost" href="./">← 3615</a>
+    <button class="btn" id="snapshotAllBtn">SAUVEGARDER MAINTENANT</button>
+  </div>
+</header>
+
+<main>
+  <section class="status-strip" id="statusStrip">
+    <div><span>AUTO</span><strong id="autoStatus">3 H</strong></div>
+    <div><span>DERNIER PASSAGE</span><strong id="lastSweep">—</strong></div>
+    <div><span>COFFRE LOCAL</span><strong id="vaultCount">—</strong></div>
+    <div><span>JSON PUBLICS</span><strong id="mirrorStatus">—</strong></div>
+  </section>
+
+  <nav class="cms-tabs" aria-label="Sections NEXUS">
+    <button class="tab active" data-tab="apps">APPLICATIONS</button>
+    <button class="tab" data-tab="data">COFFRE JSON</button>
+    <button class="tab" data-tab="mirrors">MIROIRS 3 H</button>
+    <button class="tab" data-tab="bus">BUS</button>
+  </nav>
+
+  <section class="panel active" id="panel-apps">
+    <div class="panel-head"><div><span>INDEX.01</span><h2>APPLICATIONS</h2></div><p>État des données locales et accès direct.</p></div>
+    <div class="apps-grid" id="appsGrid"></div>
+  </section>
+
+  <section class="panel" id="panel-data">
+    <div class="panel-head"><div><span>DATA.02</span><h2>COFFRE JSON</h2></div><p>Snapshots locaux automatiques, historiques, restauration et export.</p></div>
+    <div class="toolbar">
+      <button class="btn" id="exportAllBtn">EXPORT GLOBAL JSON</button>
+      <label class="btn ghost file-btn">IMPORT GLOBAL<input type="file" id="importAllInput" accept="application/json,.json" hidden></label>
+      <button class="btn ghost" id="cleanupBtn">NETTOYER LES ANCIENS SNAPSHOTS</button>
+    </div>
+    <div class="dataset-list" id="datasetList"></div>
+  </section>
+
+  <section class="panel" id="panel-mirrors">
+    <div class="panel-head"><div><span>MIRROR.03</span><h2>MIROIRS JSON PUBLICS</h2></div><p>Copie GitHub automatique, planifiée environ toutes les trois heures.</p></div>
+    <div class="notice">Les JSON publics sont recopiés par GitHub Actions. Les données privées de tes applications ne sont jamais envoyées dans le dépôt par ce mécanisme.</div>
+    <div class="mirror-list" id="mirrorList"></div>
+  </section>
+
+  <section class="panel" id="panel-bus">
+    <div class="panel-head"><div><span>BUS.04</span><h2>BUS COMMUN</h2></div><p>Événements échangés entre CAP, Culina, Stylia, 3615 et les outils généalogiques.</p></div>
+    <div class="toolbar"><button class="btn ghost" id="refreshBusBtn">ACTUALISER</button><button class="btn danger" id="purgeBusBtn">PURGER LES ÉVÉNEMENTS TRAITÉS</button></div>
+    <div class="bus-list" id="busList"></div>
+  </section>
+</main>
+
+<dialog id="jsonDialog">
+  <form method="dialog" class="dialog-shell">
+    <div class="dialog-head"><div><span id="dialogKey">JSON</span><h3 id="dialogTitle">Éditeur</h3></div><button class="xbtn" value="cancel">×</button></div>
+    <textarea id="jsonEditor" spellcheck="false"></textarea>
+    <div class="dialog-note" id="dialogNote"></div>
+    <div class="dialog-actions">
+      <button class="btn ghost" type="button" id="downloadDatasetBtn">TÉLÉCHARGER</button>
+      <button class="btn" type="button" id="saveDatasetBtn">VALIDER DANS LE STOCKAGE LOCAL</button>
+      <button class="btn ghost" value="cancel">FERMER</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="historyDialog">
+  <form method="dialog" class="dialog-shell history-shell">
+    <div class="dialog-head"><div><span>HISTORIQUE</span><h3 id="historyTitle">Snapshots</h3></div><button class="xbtn" value="cancel">×</button></div>
+    <div id="historyList" class="history-list"></div>
+    <div class="dialog-actions"><button class="btn ghost" value="cancel">FERMER</button></div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast"></div>
+<script src="js/cms.js?v=1"></script>
+</body>
+</html>
