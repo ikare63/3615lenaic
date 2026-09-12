@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07151a">
   <title>3615 LÉNAÏC — Portail personnel</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
   <div class="terminal-shell">
@@ -50,10 +50,23 @@
           </div>
         </div>
 
+        <section class="retro-grid" aria-label="Fantaisies du terminal">
+          <article class="minitel-card whimsy-card">
+            <div class="retro-head"><span>MESSAGE.SYS</span><strong>MESSAGE D’ACCUEIL OFFICIEL</strong></div>
+            <p id="absurdWelcome">Le terminal consulte le comité des phrases inutiles…</p>
+          </article>
+          <article class="minitel-card horoscope-card">
+            <div class="retro-head"><span>ASTRES.♊</span><strong>HOROSCOPE PERSONNEL — GÉMEAUX</strong></div>
+            <div class="horoscope-sign" aria-hidden="true">♊</div>
+            <p id="geminiHoroscope">Les astres consultent encore leurs dossiers.</p>
+            <small id="geminiLucky">Calcul du trombone protecteur…</small>
+          </article>
+        </section>
+
         <section id="sleepPanel" class="minitel-card sleep-panel" hidden>
           <div class="card-head">
             <div>
-              <span class="service-number">SOMMEIL.01</span>
+              <span class="service-number">QUESTION.01</span>
               <h3>BIEN DORMI ?</h3>
             </div>
             <span class="card-state" id="sleepState">À RENSEIGNER</span>
@@ -89,29 +102,38 @@
           </div>
         </section>
 
-        <section class="cap-live-grid" aria-label="Tableau de bord CAP">
-          <article class="minitel-card cap-live-card activity-live">
-            <div class="retro-head"><span>CAP.ACTIVITÉ</span><strong id="capActivityState">SYNCHRONISATION…</strong></div>
-            <div class="cap-activity-line">
-              <span class="cap-live-icon" id="capActivityIcon">◌</span>
-              <div><strong id="capActivityTitle">ACTIVITÉ DU JOUR</strong><small id="capActivityMeta">Ouvre CAP une fois pour synchroniser.</small></div>
+        <section class="minitel-card cap-summary-card" id="capSummaryCard" aria-label="Récapitulatif CAP">
+          <div class="retro-head"><span>CAP.RÉCAP</span><strong id="capRecapState">SYNCHRONISATION…</strong></div>
+
+          <div class="cap-summary-activity">
+            <span class="cap-live-icon" id="capActivityIcon">◌</span>
+            <div>
+              <span class="cap-summary-label">SÉANCE DU JOUR</span>
+              <strong id="capActivityTitle">ACTIVITÉ DU JOUR</strong>
+              <small id="capActivityMeta">Ouvre CAP une fois pour synchroniser.</small>
             </div>
-            <div class="cap-progress"><i id="capActivityBar"></i></div>
-            <div class="cap-live-foot"><span id="capActivityProgress">—</span><a href="../cap/">OUVRIR CAP →</a></div>
-          </article>
+          </div>
+          <div class="cap-progress"><i id="capActivityBar"></i></div>
+          <div class="cap-summary-subline"><span id="capActivityProgress">—</span><strong id="capActivityState">—</strong></div>
 
-          <article class="minitel-card cap-live-card score-live">
-            <div class="retro-head"><span>CAP.SCORE</span><strong>HIER</strong></div>
-            <div class="cap-score-line"><span id="capYesterdayScore">—</span><div><strong id="capYesterdayLabel">EN ATTENTE</strong><small id="capYesterdayMeta">Score Cap d’hier</small></div></div>
-            <div class="cap-live-foot"><span id="capYesterdayCoverage">—</span><a href="../cap/">DÉTAILS →</a></div>
-          </article>
+          <div class="cap-summary-divider"></div>
 
-          <article class="minitel-card cap-live-card measures-live" id="capMeasuresCard">
-            <div class="retro-head"><span>CAP.MESURES</span><strong id="capMeasuresState">À JOUR</strong></div>
-            <div class="measure-reminder-value" id="capMeasuresValue">—</div>
+          <div class="cap-summary-score">
+            <div>
+              <span class="cap-summary-label">SCORE CAP D’HIER</span>
+              <div class="cap-score-line"><span id="capYesterdayScore">—</span><div><strong id="capYesterdayLabel">EN ATTENTE</strong><small id="capYesterdayMeta">Score Cap d’hier</small></div></div>
+            </div>
+            <span class="cap-score-coverage" id="capYesterdayCoverage">—</span>
+          </div>
+
+          <div class="cap-measure-alert" id="capMeasuresReminder" hidden>
+            <span class="cap-summary-label">RAPPEL MESURES</span>
+            <strong id="capMeasuresValue">—</strong>
             <p id="capMeasuresText">Échéance des prochaines mensurations.</p>
-            <div class="cap-live-foot"><span id="capMeasuresLast">—</span><a href="../cap/">MESURES →</a></div>
-          </article>
+            <small id="capMeasuresLast">—</small>
+          </div>
+
+          <div class="cap-live-foot"><span>SPORT · SCORE · MESURES SI ÉCHÉANCE PROCHE</span><a href="../cap/">OUVRIR CAP →</a></div>
         </section>
 
         <section class="minitel-card culina-live-card" aria-label="Repas programmés dans Culina">
@@ -130,7 +152,7 @@
         <section class="minitel-card stylia-live-card" aria-label="Tenue proposée par Stylia">
           <div class="retro-head"><span>STYLIA.TENUE</span><strong id="styliaLiveState">EN ATTENTE</strong></div>
           <div class="stylia-outfit-grid" id="styliaOutfitGrid">
-            <div class="stylia-outfit-title"><span class="stylia-signal">◇</span><div><strong id="styliaOutfitName">AUCUNE TENUE DU JOUR</strong><small id="styliaOutfitWhy">Compose une tenue dans Stylia pour l’afficher ici.</small></div></div>
+            <div class="stylia-outfit-title"><span class="stylia-signal">◇</span><div><strong id="styliaOutfitName">AUCUNE TENUE DU JOUR</strong><small id="styliaOutfitWhy">Valide une tenue dans Stylia pour l’afficher ici.</small></div></div>
             <div class="stylia-parts" id="styliaParts"></div>
           </div>
           <div class="cap-live-foot"><span id="styliaLiveFoot">DERNIÈRE TENUE VALIDÉE</span><a href="../stylia/">OUVRIR STYLIA →</a></div>
@@ -142,65 +164,6 @@
             <div class="express-empty">Récupération de l’édition personnalisée…</div>
           </div>
           <div class="cap-live-foot"><span id="expressLiveFoot">5 TITRES MAXIMUM · APERÇU</span><a href="../lenaic-express/">VOIR TOUTE L’ACTUALITÉ →</a></div>
-        </section>
-
-        <section class="retro-grid" aria-label="Fantaisies du terminal">
-          <article class="minitel-card whimsy-card">
-            <div class="retro-head"><span>MESSAGE.SYS</span><strong>MESSAGE D’ACCUEIL OFFICIEL</strong></div>
-            <p id="absurdWelcome">Le terminal consulte le comité des phrases inutiles…</p>
-          </article>
-          <article class="minitel-card horoscope-card">
-            <div class="retro-head"><span>ASTRES.♊</span><strong>HOROSCOPE PERSONNEL — GÉMEAUX</strong></div>
-            <div class="horoscope-sign" aria-hidden="true">♊</div>
-            <p id="geminiHoroscope">Les astres consultent encore leurs dossiers.</p>
-            <small id="geminiLucky">Calcul du trombone protecteur…</small>
-          </article>
-        </section>
-
-        <section class="status-grid" aria-label="État des services">
-          <article class="status-box">
-            <span>CAP</span>
-            <strong id="capStatus">PRÊT</strong>
-            <small id="capStatusDetail">Santé & récupération</small>
-          </article>
-          <article class="status-box">
-            <span>CULINA</span>
-            <strong id="culinaStatus">PRÊT</strong>
-            <small id="culinaStatusDetail">Cuisine & repas</small>
-          </article>
-          <article class="status-box">
-            <span>STYLIA</span>
-            <strong id="styliaStatus">PRÊT</strong>
-            <small id="styliaStatusDetail">Tenue du jour</small>
-          </article>
-          <article class="status-box">
-            <span>BUS</span>
-            <strong id="busStatus">ACTIF</strong>
-            <small id="busStatusDetail">0 message en attente</small>
-          </article>
-        </section>
-
-        <section class="quick-grid">
-          <a class="quick-card cyan" href="../cap/">
-            <span class="quick-code">01</span>
-            <strong>CAP</strong>
-            <small>Sport · nutrition · sommeil</small>
-          </a>
-          <a class="quick-card green" href="../culina/">
-            <span class="quick-code">02</span>
-            <strong>CULINA</strong>
-            <small>Recettes · stocks · repas</small>
-          </a>
-          <a class="quick-card amber" href="../stylia/">
-            <span class="quick-code">03</span>
-            <strong>STYLIA</strong>
-            <small>Tenues · couleurs · saison</small>
-          </a>
-          <a class="quick-card magenta" href="../lenaic-express/">
-            <span class="quick-code">04</span>
-            <strong>LÉNAÏC EXPRESS</strong>
-            <small>Fil d’actualité personnel</small>
-          </a>
         </section>
 
         <div class="more-line">
@@ -271,11 +234,11 @@
         <input id="commandInput" autocomplete="off" spellcheck="false" placeholder="CAP, CULINA, ARBORIS, OTARIE…">
         <button type="submit">ENVOI</button>
       </form>
-      <div class="footer-line"><span>3615 LÉNAÏC // VERSION 6.6.1</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+      <div class="footer-line"><span>3615 LÉNAÏC // VERSION 6.7</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
     </footer>
   </div>
 
   <script src="js/lenaic-bus.js?v=1"></script>
-  <script src="js/app.js?v=7"></script>
+  <script src="js/app.js?v=8"></script>
 </body>
 </html>
