@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07151a">
   <title>3615 LÉNAÏC — Portail personnel</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
   <div class="terminal-shell">
@@ -87,6 +87,31 @@
             </div>
             <a class="inline-link" href="../cap/">OUVRIR CAP →</a>
           </div>
+        </section>
+
+        <section class="cap-live-grid" aria-label="Tableau de bord CAP">
+          <article class="minitel-card cap-live-card activity-live">
+            <div class="retro-head"><span>CAP.ACTIVITÉ</span><strong id="capActivityState">SYNCHRONISATION…</strong></div>
+            <div class="cap-activity-line">
+              <span class="cap-live-icon" id="capActivityIcon">◌</span>
+              <div><strong id="capActivityTitle">ACTIVITÉ DU JOUR</strong><small id="capActivityMeta">Ouvre CAP une fois pour synchroniser.</small></div>
+            </div>
+            <div class="cap-progress"><i id="capActivityBar"></i></div>
+            <div class="cap-live-foot"><span id="capActivityProgress">—</span><a href="../cap/">OUVRIR CAP →</a></div>
+          </article>
+
+          <article class="minitel-card cap-live-card score-live">
+            <div class="retro-head"><span>CAP.SCORE</span><strong>HIER</strong></div>
+            <div class="cap-score-line"><span id="capYesterdayScore">—</span><div><strong id="capYesterdayLabel">EN ATTENTE</strong><small id="capYesterdayMeta">Score Cap d’hier</small></div></div>
+            <div class="cap-live-foot"><span id="capYesterdayCoverage">—</span><a href="../cap/">DÉTAILS →</a></div>
+          </article>
+
+          <article class="minitel-card cap-live-card measures-live" id="capMeasuresCard">
+            <div class="retro-head"><span>CAP.MESURES</span><strong id="capMeasuresState">À JOUR</strong></div>
+            <div class="measure-reminder-value" id="capMeasuresValue">—</div>
+            <p id="capMeasuresText">Échéance des prochaines mensurations.</p>
+            <div class="cap-live-foot"><span id="capMeasuresLast">—</span><a href="../cap/">MESURES →</a></div>
+          </article>
         </section>
 
         <section class="retro-grid" aria-label="Fantaisies du terminal">
@@ -211,11 +236,11 @@
         <input id="commandInput" autocomplete="off" spellcheck="false" placeholder="CAP, CULINA, ARBORIS, OTARIE…">
         <button type="submit">ENVOI</button>
       </form>
-      <div class="footer-line"><span>3615 LÉNAÏC // VERSION 6.1</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+      <div class="footer-line"><span>3615 LÉNAÏC // VERSION 6.2</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
     </footer>
   </div>
 
   <script src="js/lenaic-bus.js?v=1"></script>
-  <script src="js/app.js?v=2"></script>
+  <script src="js/app.js?v=3"></script>
 </body>
 </html>
