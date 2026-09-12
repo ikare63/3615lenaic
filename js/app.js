@@ -142,6 +142,27 @@
   function readStyliaSnapshot(){
     try{return JSON.parse(localStorage.getItem(STYLIA_SNAPSHOT_KEY)||'null')}catch(e){return null}
   }
+  const EXPRESS_SNAPSHOT_KEY='lenaic-express-snapshot-v1';
+  function readExpressSnapshot(){
+    try{return JSON.parse(localStorage.getItem(EXPRESS_SNAPSHOT_KEY)||'null')}catch(e){return null}
+  }
+  function expressAgeHours(article){
+    const d=article?.published_at?new Date(article.published_at):null;
+    return d&&Number.isFinite(d.getTime())?(Date.now()-d.getTime())/36e5:9999;
+  }
+  function expressFallbackScore(article){
+    let boosts={};
+    try{boosts=JSON.parse(localStorage.getItem('lex_category_boosts')||'{}')}catch(e){}
+    const age=Math.max(0,expressAgeHours(article));
+    const recency=Math.max(0,30-age/6);
+    return Number(article?.score||0)+Number(boosts[article?.category]||0)*9+recency;
+  }
+  function expressHiddenSets(){
+    let hidden=[],sources=[];
+    try{hidden=JSON.parse(localStorage.getItem('lex_hidden')||'[]')}catch(e){}
+    try{sources=JSON.parse(localStorage.getItem('lex_hidden_sources')||'[]')}catch(e){}
+    return {hidden:new Set(hidden),sources:new Set(sources)};
+  }
   function styliaShadeHex(name=''){
     // Même palette que Stylia : chaque nuance transmise garde sa vraie couleur dans 3615.
     const map={
@@ -291,6 +312,67 @@
     setText('styliaStatusDetail',current?(snap.accessory?.piece==='Parapluie'?'Tenue validée + parapluie':snap.name||'Tenue validée'):'Valide une tenue dans Stylia');
   }
 
+  function expressCategoryLabel(key){
+    return ({genealogie:'GÉNÉALOGIE',histoire:'HISTOIRE',local:'LOCAL',tech:'WEB / TECH',culture:'CULTURE',sciences:'SCIENCES',general:'ACTUALITÉ'})[key]||String(key||'ACTUALITÉ').toUpperCase();
+  }
+  function expressPublishedLabel(value){
+    const d=value?new Date(value):null;
+    if(!d||!Number.isFinite(d.getTime()))return '';
+    const today=localDateKey(d)===localDateKey();
+    return today?d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'});
+  }
+  function renderExpressArticles(articles,meta={}){
+    const box=$('expressHeadlines');
+    if(!box)return;
+    const rows=(Array.isArray(articles)?articles:[]).slice(0,5);
+    if(!rows.length){
+      box.innerHTML='<div class="express-empty">Aucun titre disponible pour le moment.</div>';
+      setText('expressLiveState','AUCUN TITRE');
+      setText('expressLiveFoot','OUVRE LÉNAÏC EXPRESS POUR ACTUALISER');
+      return;
+    }
+    box.innerHTML=rows.map((a,i)=>`<article class="express-story">
+      <span class="express-story-rank">${String(i+1).padStart(2,'0')}</span>
+      <div class="express-story-main"><strong>${escapeHtml3615(a.title||'Sans titre')}</strong><small>${escapeHtml3615(a.categoryLabel||expressCategoryLabel(a.category))} · ${escapeHtml3615(a.source||'Source')}${expressPublishedLabel(a.publishedAt||a.published_at)?' · '+escapeHtml3615(expressPublishedLabel(a.publishedAt||a.published_at)):''}</small></div>
+      <a class="express-story-link" href="${escapeAttr3615(a.url||'../lenaic-express/') }" target="_blank" rel="noopener noreferrer">LIRE ↗</a>
+    </article>`).join('');
+    document.querySelector('.express-live-card')?.classList.add('ready');
+    setText('expressLiveState',`${rows.length} TITRE${rows.length>1?'S':''}`);
+    const dt=meta.editionGeneratedAt||meta.generatedAt;
+    const d=dt?new Date(dt):null;
+    const stamp=d&&Number.isFinite(d.getTime())?d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+    setText('expressLiveFoot',`ÉDITION ${stamp} · APERÇU PERSONNALISÉ`);
+  }
+  function escapeHtml3615(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function escapeAttr3615(value){return escapeHtml3615(value)}
+  async function loadExpressFallback(){
+    try{
+      const res=await fetch('../lenaic-express/data/actualites.json?ts='+Date.now(),{cache:'no-store'});
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      const data=await res.json();
+      const {hidden,sources}=expressHiddenSets();
+      const arr=(Array.isArray(data.articles)?data.articles:[])
+        .filter(a=>!hidden.has(a.id)&&!sources.has(a.source))
+        .sort((a,b)=>expressFallbackScore(b)-expressFallbackScore(a))
+        .slice(0,5)
+        .map(a=>({id:a.id,title:a.title,category:a.category,categoryLabel:expressCategoryLabel(a.category),source:a.source,url:a.url,publishedAt:a.published_at,score:expressFallbackScore(a)}));
+      renderExpressArticles(arr,{editionGeneratedAt:data.generated_at,generatedAt:new Date().toISOString()});
+    }catch(e){
+      const box=$('expressHeadlines');
+      if(box)box.innerHTML='<div class="express-empty">Lénaïc Express n’a pas encore pu être synchronisé.</div>';
+      setText('expressLiveState','EN ATTENTE');
+      setText('expressLiveFoot','OUVRIR LÉNAÏC EXPRESS →');
+    }
+  }
+  function renderExpressLive(){
+    const snap=readExpressSnapshot();
+    if(snap&&Array.isArray(snap.top)&&snap.top.length){
+      renderExpressArticles(snap.top,snap);
+      return;
+    }
+    loadExpressFallback();
+  }
+
   function capSleepForToday(){return readCapState()?.daily?.[localDateKey()]?.sleep||null}
   function hasCompleteSleep(s){return s&&Number(s.hours)>0&&Number.isFinite(Number(s.quality))&&Number.isFinite(Number(s.physical))&&Number.isFinite(Number(s.mental))}
   function latestSleepUpdate(){
@@ -369,12 +451,13 @@
     setText('capStatus',hasCompleteSleep(sleep)?'NUIT OK':'PRÊT');
     setText('capStatusDetail',hasCompleteSleep(sleep)?`${sleep.hours} h enregistrées`:'Santé & récupération');
   }
-  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive()});
+  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive()});
   window.addEventListener('storage',e=>{
     if(e.key==='cap-data'){renderSleepPanel();renderBusStatus()}
     if(e.key===CAP_SNAPSHOT_KEY)renderCapLive();
     if(e.key===CULINA_SNAPSHOT_KEY){renderCulinaLive();renderBusStatus()}
     if(e.key===STYLIA_SNAPSHOT_KEY){renderStyliaLive();renderBusStatus()}
+    if(e.key===EXPRESS_SNAPSHOT_KEY){renderExpressLive();renderBusStatus()}
   });
 
   const commandMap={
@@ -429,7 +512,7 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderBusStatus();renderOtarieStatus();
-  setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderStyliaLive();renderBusStatus();},60000);
+  renderContext();renderAbsurdities();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderBusStatus();renderOtarieStatus();
+  setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderBusStatus();},60000);
   setInterval(renderCulinaLive,3000);
 })();
