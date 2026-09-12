@@ -15,12 +15,94 @@
   function clamp(n,min,max){return Math.min(max,Math.max(min,Number(n)||0))}
   function setText(id,text){const el=$(id);if(el)el.textContent=text}
 
+  function republicanDate(date){
+    const months=['VENDÉMIAIRE','BRUMAIRE','FRIMAIRE','NIVÔSE','PLUVIÔSE','VENTÔSE','GERMINAL','FLORÉAL','PRAIRIAL','MESSIDOR','THERMIDOR','FRUCTIDOR'];
+    const complementary=['DE LA VERTU','DU GÉNIE','DU TRAVAIL','DE L’OPINION','DES RÉCOMPENSES','DE LA RÉVOLUTION'];
+    const y=date.getFullYear();
+    const thisStart=new Date(y,8,22);
+    const start=date>=thisStart?thisStart:new Date(y-1,8,22);
+    const republicanYear=start.getFullYear()-1791;
+    const dayIndex=Math.floor((new Date(y,date.getMonth(),date.getDate())-start)/86400000);
+    if(dayIndex<360){
+      const month=Math.floor(dayIndex/30),day=dayIndex%30+1;
+      return `${day} ${months[month]} AN ${republicanYear}`;
+    }
+    const day=dayIndex-359;
+    return `${day} JOUR ${complementary[Math.min(day-1,5)]} AN ${republicanYear}`;
+  }
+  function decimalTime(date){
+    const seconds=date.getHours()*3600+date.getMinutes()*60+date.getSeconds()+date.getMilliseconds()/1000;
+    const total=Math.floor(seconds*100000/86400);
+    const h=Math.floor(total/10000),m=Math.floor((total%10000)/100),sec=total%100;
+    return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  }
   function updateClock(){
     const d=new Date();
     setText('clockDate',d.toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'}).toUpperCase());
     setText('clockTime',d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'}));
+    setText('republicanDate',republicanDate(d));
+    setText('decimalTime',decimalTime(d));
   }
-  updateClock();setInterval(updateClock,1000);
+  updateClock();setInterval(updateClock,250);
+
+  function seededIndex(seed,max){
+    let h=2166136261;
+    for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)}
+    return Math.abs(h>>>0)%max;
+  }
+  function renderAbsurdities(){
+    const key=localDateKey();
+    const openings=[
+      'Bonjour Lénaïc. Le terminal a terminé ses vérifications',
+      'Bienvenue à bord. Les archives personnelles sont ouvertes',
+      'Connexion établie. Aucun incident majeur n’a été signalé',
+      'Nouveau jour détecté. Les circuits semblent étonnamment coopératifs',
+      'Bonjour Lénaïc. Le tableau de bord est réveillé',
+      'Session quotidienne initialisée. L’otarie confirme sa présence',
+      'Le terminal 3615 LÉNAÏC est opérationnel',
+      'Les données du jour sont prêtes. Le café reste sous ta responsabilité'
+    ];
+    const middles=[
+      'Tu peux avancer tranquillement, une chose après l’autre.',
+      'Les petites actions restent officiellement reconnues comme des actions.',
+      'Aucun comité ne t’oblige à tout faire parfaitement.',
+      'Le programme peut évoluer sans provoquer d’effondrement administratif.',
+      'Le niveau général de mystère demeure acceptable.',
+      'Garde un peu de place pour l’imprévu et une autre pour le goûter.',
+      'Les priorités ont été examinées par un sous-comité qui nie toute responsabilité.',
+      'La machine estime que la journée est statistiquement compatible avec une journée.'
+    ];
+    const endings=[
+      'Bonne exploration.','Le poste de commande est à toi.','Les boutons attendent des instructions.',
+      'La situation est sous contrôle, au sens large.','Aucune urgence cosmique n’a été détectée.',
+      'Le terminal te souhaite une journée raisonnablement glorieuse.','Merci de ne pas nourrir les formulaires après minuit.'
+    ];
+    setText('absurdWelcome',`${openings[seededIndex(key+'wo',openings.length)]}. ${middles[seededIndex(key+'wm',middles.length)]} ${endings[seededIndex(key+'we',endings.length)]}`);
+
+    const horoscopeOpen=[
+      'Une archive oubliée','Un café légèrement trop ambitieux','Une chaussette indépendante','Un cousin dont personne ne se souvenait',
+      'Une notification administrative','Mercure, qui nie toute responsabilité','Un document classé au mauvais endroit','Une idée arrivée sans rendez-vous',
+      'Un détail généalogique minuscule','Une otarie intérieure'
+    ];
+    const verbs=[
+      'bouleversera discrètement','tentera de négocier avec','mettra en doute','apportera une précision inutile à','fera semblant de comprendre',
+      'réorganisera sans autorisation','observera avec une gravité excessive','provoquera un léger incident diplomatique dans','éclairera brièvement','demandera des justificatifs à'
+    ];
+    const ends=[
+      'ta journée administrative.','ton arbre généalogique.','la hiérarchie naturelle de tes tiroirs.','tes projets les plus raisonnables.',
+      'un repas qui ne demandait rien.','ta capacité à ignorer les petits détails.','le conseil secret des Gémeaux.','une décision prise beaucoup trop tôt.',
+      'tes finances, mais poliment.','la partie de ton cerveau chargée de retrouver les mots de passe.'
+    ];
+    const advice=[
+      'Conseil cosmique : ne signe rien avec une biscotte.','Les astres recommandent une pause avant toute décision impliquant une imprimante.',
+      'Un silence bien placé vaudra aujourd’hui environ trois explications.','Évite de confier une mission importante à un objet qui clignote.',
+      'La prudence est conseillée, surtout face aux listes déroulantes.','Aujourd’hui, ton intuition a raison, mais elle refuse de montrer ses sources.',
+      'Une bonne surprise est possible entre deux tâches parfaitement banales.'
+    ];
+    setText('geminiHoroscope',`${horoscopeOpen[seededIndex(key+'a',horoscopeOpen.length)]} ${verbs[seededIndex(key+'b',verbs.length)]} ${ends[seededIndex(key+'c',ends.length)]} ${advice[seededIndex(key+'d',advice.length)]}`);
+    const objects=['trombone','cuillère','ticket de caisse','stylo vert','chaussette sobre','dossier beige','petit poisson administratif'];
+    setText('geminiLucky',`NOMBRE VAGUEMENT FAVORABLE : ${seededIndex(key+'n',89)+1} · OBJET PROTECTEUR : ${objects[seededIndex(key+'o',objects.length)].toUpperCase()}.`);
+  }
 
   function currentContext(){
     const h=new Date().getHours();
@@ -180,5 +262,5 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderSleepPanel();renderBusStatus();renderOtarieStatus();
+  renderContext();renderAbsurdities();renderSleepPanel();renderBusStatus();renderOtarieStatus();
 })();
