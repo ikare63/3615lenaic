@@ -247,3 +247,23 @@ body[data-palette="green"]{--ink:#8cff8c;--ink-soft:#56b756;--cyan:#a8ffb0;--gre
 .culina-meal-slot.missing{border-color:var(--amber);background:rgba(255,209,102,.05)}
 .culina-meal-slot.missing>small{color:var(--amber)}
 @media(max-width:520px){.culina-meal-slots{grid-template-columns:1fr}}
+
+/* 3615 V6.4 — Stylia → 3615 */
+.stylia-live-card{margin-bottom:14px;min-height:0}
+.stylia-outfit-grid{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:10px;align-items:center}
+.stylia-outfit-title{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;align-items:center;border:1px solid var(--line);background:#031015;padding:11px;min-height:88px}
+.stylia-signal{width:44px;height:44px;border:1px solid var(--amber);display:grid;place-items:center;color:var(--amber);font-size:1.45rem;background:rgba(255,209,102,.05)}
+.stylia-outfit-title strong{display:block;color:var(--ink);font-size:.82rem;line-height:1.3}
+.stylia-outfit-title small{display:block;color:var(--ink-soft);font-size:.58rem;line-height:1.4;margin-top:5px}
+.stylia-parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.stylia-part{border:1px solid var(--line);background:#031015;padding:9px;min-height:72px}
+.stylia-part>span{display:block;color:var(--ink-soft);font-size:.52rem;font-weight:900;letter-spacing:.07em}
+.stylia-part>strong{display:block;color:var(--ink);font-size:.66rem;line-height:1.25;margin-top:6px}
+.stylia-part>small{display:flex;align-items:center;gap:5px;color:var(--amber);font-size:.54rem;margin-top:4px}
+.stylia-swatch{width:8px;height:8px;border:1px solid rgba(255,255,255,.35);display:inline-block;flex:0 0 auto}
+.stylia-live-card.ready{border-color:var(--amber)}
+.stylia-live-card.stale{opacity:.78}
+@media(max-width:700px){.stylia-outfit-grid{grid-template-columns:1fr}.stylia-parts{grid-template-columns:1fr 1fr}}
+@media(max-width:390px){.stylia-parts{grid-template-columns:1fr 1fr}.status-grid{grid-template-columns:1fr 1fr}.status-box:last-child{grid-column:auto}}
+.status-grid{grid-template-columns:repeat(4,1fr)}
+@media(max-width:760px){.status-grid{grid-template-columns:repeat(2,1fr)}}
