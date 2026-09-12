@@ -130,6 +130,76 @@
   function readCapState(){
     try{return JSON.parse(localStorage.getItem('cap-data')||'{}')}catch(e){return {}}
   }
+  const CAP_SNAPSHOT_KEY='lenaic-cap-snapshot-v1';
+  function readCapSnapshot(){
+    try{return JSON.parse(localStorage.getItem(CAP_SNAPSHOT_KEY)||'null')}catch(e){return null}
+  }
+  function formatShortDate(key){
+    if(!key)return '—';
+    const d=new Date(key+'T12:00:00');
+    return Number.isFinite(d.getTime())?d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}):key;
+  }
+  function renderCapLive(){
+    const snap=readCapSnapshot();
+    const current=Boolean(snap&&snap.date===localDateKey());
+    const activityCard=document.querySelector('.activity-live');
+    const measuresCard=$('capMeasuresCard');
+
+    activityCard?.classList.toggle('stale',!current);
+    activityCard?.classList.toggle('completed',Boolean(current&&snap?.activity?.completed));
+    measuresCard?.classList.toggle('stale',!current);
+    measuresCard?.classList.toggle('due',Boolean(current&&snap?.measurements?.due));
+
+    if(!current){
+      setText('capActivityState','À ACTUALISER');
+      setText('capActivityIcon','◌');
+      setText('capActivityTitle','OUVRE CAP UNE FOIS');
+      setText('capActivityMeta','CAP publiera ensuite automatiquement son état du jour.');
+      setText('capActivityProgress','SYNCHRO LOCALE');
+      if($('capActivityBar'))$('capActivityBar').style.width='0%';
+      setText('capYesterdayScore','—');
+      setText('capYesterdayLabel','EN ATTENTE');
+      setText('capYesterdayMeta','Score Cap d’hier');
+      setText('capYesterdayCoverage','OUVRE CAP POUR ACTUALISER');
+      setText('capMeasuresState','EN ATTENTE');
+      setText('capMeasuresValue','—');
+      setText('capMeasuresText','Ouvre CAP pour calculer la prochaine échéance.');
+      setText('capMeasuresLast','—');
+      return;
+    }
+
+    const a=snap.activity||{};
+    setText('capActivityState',a.completed?'SÉANCE TERMINÉE':(a.rest&&a.progress>=100?'REPOS VALIDÉ':'PRÉVU AUJOURD’HUI'));
+    setText('capActivityIcon',a.icon||'•');
+    setText('capActivityTitle',(a.title||'Activité du jour').toUpperCase());
+    setText('capActivityMeta',[a.duration,a.focus].filter(Boolean).join(' · ')||'Programme CAP');
+    setText('capActivityProgress',`${Math.round(Number(a.progress)||0)} % · ${a.label||''}`);
+    if($('capActivityBar'))$('capActivityBar').style.width=`${Math.max(0,Math.min(100,Number(a.progress)||0))}%`;
+
+    const y=snap.yesterday||{};
+    setText('capYesterdayScore',y.score==null?'—':String(Math.round(Number(y.score)||0)));
+    setText('capYesterdayLabel',(y.label||'DONNÉES INSUFFISANTES').toUpperCase());
+    setText('capYesterdayMeta',y.score==null?'Score non calculable':`Score Cap du ${formatShortDate(y.date)} / 100`);
+    setText('capYesterdayCoverage',y.score==null?'DONNÉES INSUFFISANTES':`${Math.round(Number(y.coverage)||0)} % DES DONNÉES`);
+
+    const m=snap.measurements||{};
+    setText('capMeasuresState',m.due?'ÉCHÉANCE':'À JOUR');
+    if(!m.latestDate){
+      setText('capMeasuresValue','À FAIRE');
+      setText('capMeasuresText','Aucune mensuration enregistrée : première saisie à faire dans CAP.');
+      setText('capMeasuresLast','AUCUNE MESURE');
+    }else if(m.due){
+      const late=Math.abs(Math.min(0,Number(m.daysUntil)||0));
+      setText('capMeasuresValue','À FAIRE');
+      setText('capMeasuresText',late?`Échéance dépassée de ${late} jour${late>1?'s':''}.`:'Échéance atteinte aujourd’hui.');
+      setText('capMeasuresLast',`DERNIÈRE : ${formatShortDate(m.latestDate)}`);
+    }else{
+      const days=Math.max(0,Number(m.daysUntil)||0);
+      setText('capMeasuresValue',`J-${days}`);
+      setText('capMeasuresText',`Prochaine échéance : ${formatShortDate(m.nextDueDate)}.`);
+      setText('capMeasuresLast',`DERNIÈRE : ${formatShortDate(m.latestDate)}`);
+    }
+  }
   function capSleepForToday(){return readCapState()?.daily?.[localDateKey()]?.sleep||null}
   function hasCompleteSleep(s){return s&&Number(s.hours)>0&&Number.isFinite(Number(s.quality))&&Number.isFinite(Number(s.physical))&&Number.isFinite(Number(s.mental))}
   function latestSleepUpdate(){
@@ -207,8 +277,11 @@
     setText('capStatus',hasCompleteSleep(sleep)?'NUIT OK':'PRÊT');
     setText('capStatusDetail',hasCompleteSleep(sleep)?`${sleep.hours} h enregistrées`:'Santé & récupération');
   }
-  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus()});
-  window.addEventListener('storage',e=>{if(e.key==='cap-data'){renderSleepPanel();renderBusStatus()}});
+  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive()});
+  window.addEventListener('storage',e=>{
+    if(e.key==='cap-data'){renderSleepPanel();renderBusStatus()}
+    if(e.key===CAP_SNAPSHOT_KEY)renderCapLive();
+  });
 
   const commandMap={
     '0':()=>showSection('home'),'accueil':()=>showSection('home'),'home':()=>showSection('home'),
@@ -262,5 +335,6 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderSleepPanel();renderBusStatus();renderOtarieStatus();
+  renderContext();renderAbsurdities();renderSleepPanel();renderCapLive();renderBusStatus();renderOtarieStatus();
+  setInterval(()=>{renderContext();renderCapLive();},60000);
 })();
