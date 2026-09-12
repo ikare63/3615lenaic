@@ -143,13 +143,22 @@
     try{return JSON.parse(localStorage.getItem(STYLIA_SNAPSHOT_KEY)||'null')}catch(e){return null}
   }
   function styliaShadeHex(name=''){
+    // Même palette que Stylia : chaque nuance transmise garde sa vraie couleur dans 3615.
     const map={
-      'Blanc':'#f4f4ef','Écru':'#e9dfc8','Beige':'#d8c3a5','Camel':'#c18d5f','Cognac':'#9a5c2f',
-      'Marron':'#6d4c41','Noir':'#111111','Gris':'#8b9097','Bleu':'#3976c4','Bleu ciel':'#8fc8ee','Bleu marine':'#18345e',
-      'Vert':'#4f8d56','Kaki':'#71805a','Rouge':'#ba3d44','Bordeaux':'#6d2335','Jaune':'#e4c33a','Moutarde':'#c89a22',
-      'Orange':'#dc7a31','Violet':'#7458a8','Rose':'#cf7c9d'
+      'Noir':'#171717','Noir délavé':'#4a4c4e',
+      'Blanc':'#f7f7f2','Écru':'#eee5d1','Crème':'#f3e5c6',
+      'Gris':'#8f9291','Gris clair':'#c7c9c6','Gris moyen':'#8f9291','Anthracite':'#4e5052',
+      'Beige':'#d9c3a4','Sable':'#d9c3a4','Taupe':'#a8957e','Lin':'#d9ccb4',
+      'Marron':'#79513a','Camel':'#b57943','Cognac':'#9b5a31','Chocolat':'#5a3928','Noisette':'#856046',
+      'Rouge':'#ee003d','Écarlate':'#ee003d','Carmin':'#a61b31','Bordeaux':'#6f2331','Brique':'#ad4d3b','Grenat':'#67202a',
+      'Orange':'#ed7c2d','Terracotta':'#bb6246','Rouille':'#9d5030','Corail':'#e98070',
+      'Jaune':'#ffeb2e','Citron':'#ffeb2e','Jaune pâle':'#f0df9f','Moutarde':'#c69120','Ocre':'#c88c31','Doré':'#d2a13a',
+      'Vert':'#35c97d','Kaki':'#73754c','Olive':'#7b7c45','Forêt':'#244c37','Sauge':'#9da88e','Menthe':'#b8d5c0',
+      'Bleu':'#3c75b5','Bleu marine':'#233a55','Bleu ciel':'#91c3e5','Bleu roi':'#3159a3','Bleu pétrole':'#2d636d','Denim':'#587996',
+      'Violet':'#9e239d','Prune':'#6f4163','Aubergine':'#513344','Lilas':'#baa6cf','Lavande':'#a79cca',
+      'Rose':'#f40063','Rose poudré':'#d8aba9','Vieux rose':'#b98382','Fuchsia':'#d60073','Saumon':'#e78d7b'
     };
-    return map[name]||'#7fffd4';
+    return map[name]||'#7f8c8d';
   }
   function formatShortDate(key){
     if(!key)return '—';
