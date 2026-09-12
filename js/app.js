@@ -390,6 +390,146 @@
     loadExpressFallback();
   }
 
+
+  const ARBORIS_DATA_KEY='memoire-famille-data';
+  const SCRIPTORIA_DATA_KEY='scriptoria-data';
+  const PISTORIA_DATA_KEY='pistoria_private_v3';
+  const ARIANE_DATA_KEY='ariane-local-v2';
+
+  function readLocalJson(key){
+    try{return JSON.parse(localStorage.getItem(key)||'null')}catch(e){return null}
+  }
+  function upperText(value,fallback='—'){
+    const text=String(value||'').trim();return (text||fallback).toUpperCase();
+  }
+  function personDisplayName(p){return [p?.firstNames,p?.lastName].filter(Boolean).join(' ').trim()||'Individu sans nom'}
+  function timeValue(obj,fields=['createdAt','updatedAt']){
+    for(const field of fields){const t=Date.parse(obj?.[field]||'');if(Number.isFinite(t))return t}
+    return 0;
+  }
+  function renderGenealogyOffice(){
+    let ready=0;
+
+    const arboris=readLocalJson(ARBORIS_DATA_KEY);
+    if(arboris&&Array.isArray(arboris.people)){
+      ready++;
+      const people=arboris.people;
+      const latest=[...people].sort((a,b)=>timeValue(b,['createdAt','updatedAt'])-timeValue(a,['createdAt','updatedAt']))[0]||null;
+      setText('arborisSummaryTitle',latest?upperText(personDisplayName(latest)):'AUCUN INDIVIDU');
+      const details=[];
+      if(latest?.sosa)details.push(`Sosa ${latest.sosa}`);
+      if(latest?.branch)details.push(latest.branch);
+      details.push(`${people.length} individu${people.length>1?'s':''}`);
+      setText('arborisSummaryMeta',`Dernier ajouté · ${details.join(' · ')}`);
+    }else{
+      setText('arborisSummaryTitle','OUVRE ARBORIS UNE FOIS');
+      setText('arborisSummaryMeta','Aucune donnée Arboris trouvée dans ce navigateur.');
+    }
+
+    const scriptoria=readLocalJson(SCRIPTORIA_DATA_KEY);
+    if(scriptoria&&Array.isArray(scriptoria.records)){
+      ready++;
+      const registers=Array.isArray(scriptoria.registers)?scriptoria.registers:[];
+      const notes=scriptoria.settings?.registerYearNotes||{};
+      const partialYears=Object.entries(notes)
+        .filter(([,v])=>!v?.complete && /partiel|incompl|en cours|lacunaire/i.test(`${v?.status||''} ${v?.note||''}`))
+        .map(([year,v])=>({year:Number(year)||0,v}))
+        .filter(x=>x.year)
+        .sort((a,b)=>b.year-a.year);
+      const currentReg=[...registers]
+        .filter(r=>/en cours|partiellement|à vérifier/i.test(String(r?.status||'')))
+        .sort((a,b)=>timeValue(b,['updatedAt','createdAt'])-timeValue(a,['updatedAt','createdAt']))[0]||null;
+      let label='BASE DES REGISTRES';
+      let count=scriptoria.records.length;
+      let meta='';
+      if(partialYears.length){
+        const year=partialYears[0].year;
+        count=scriptoria.records.filter(r=>String(r?.date||r?.year||'').startsWith(String(year))).length;
+        label=`ANNÉE ${year}`;
+        meta=`${count} acte${count>1?'s':''} pour ${year} · ${scriptoria.records.length} au total`;
+      }else if(currentReg){
+        label=currentReg.title||currentReg.cote||'REGISTRE EN COURS';
+        count=scriptoria.records.filter(r=>r.registerId===currentReg.id).length;
+        const loc=currentReg.communeParish||currentReg.commune||currentReg.parish||'';
+        const period=[currentReg.startYear,currentReg.endYear].filter(Boolean).join('–');
+        meta=[`${count} acte${count>1?'s':''}`,loc,period].filter(Boolean).join(' · ');
+      }else{
+        const years=scriptoria.records.map(r=>Number(String(r?.date||r?.year||'').slice(0,4))).filter(Boolean);
+        const latestYear=years.length?Math.min(...years):null;
+        if(latestYear){label=`REGISTRES JUSQU’À ${latestYear}`}
+        meta=`${scriptoria.records.length} acte${scriptoria.records.length>1?'s':''} · ${registers.length} registre${registers.length>1?'s':''}`;
+      }
+      setText('scriptoriaSummaryTitle',upperText(label));
+      setText('scriptoriaSummaryMeta',meta||`${scriptoria.records.length} actes indexés`);
+    }else{
+      setText('scriptoriaSummaryTitle','OUVRE SCRIPTORIA UNE FOIS');
+      setText('scriptoriaSummaryMeta','Aucune donnée Scriptoria trouvée dans ce navigateur.');
+    }
+
+    const pistoria=readLocalJson(PISTORIA_DATA_KEY);
+    if(pistoria&&Array.isArray(pistoria.investigations)){
+      ready++;
+      const open=pistoria.investigations
+        .filter(inv=>!['resolved','archived','closed'].includes(String(inv?.status||'').toLowerCase()))
+        .sort((a,b)=>(Number(a?.priorityRank)||999999)-(Number(b?.priorityRank)||999999));
+      const inv=open[0]||null;
+      if(inv){
+        const step=(inv.steps||[]).find(st=>String(st?.status||'').toLowerCase()==='todo')
+          ||(inv.steps||[]).find(st=>!['done','found','partial','negative','skipped','locked'].includes(String(st?.status||'').toLowerCase()))
+          ||null;
+        const who=[inv.sosa?`Sosa ${inv.sosa}`:'',inv.person||''].filter(Boolean).join(' · ');
+        setText('pistoriaSummaryTitle',upperText(who||'PISTE PRIORITAIRE'));
+        setText('pistoriaSummaryMeta',step?.title||`${open.length} enquête${open.length>1?'s':''} encore ouverte${open.length>1?'s':''}`);
+      }else{
+        setText('pistoriaSummaryTitle','AUCUNE ENQUÊTE OUVERTE');
+        setText('pistoriaSummaryMeta',`${pistoria.investigations.length} enquête${pistoria.investigations.length>1?'s':''} dans Pistoria`);
+      }
+    }else{
+      setText('pistoriaSummaryTitle','OUVRE PISTORIA UNE FOIS');
+      setText('pistoriaSummaryMeta','Aucune donnée Pistoria trouvée dans ce navigateur.');
+    }
+
+    setText('genealogyOfficeState',ready===3?'À JOUR':ready?`${ready}/3 DISPONIBLES`:'EN ATTENTE');
+    setText('genealogyOfficeFoot',ready===3?'ARBORIS · SCRIPTORIA · PISTORIA':'OUVRE LES OUTILS POUR INITIALISER LE RÉCAP');
+  }
+
+  function renderArianeLive(){
+    const ariane=readLocalJson(ARIANE_DATA_KEY);
+    const nextBox=$('arianeNextBox');
+    if(!ariane||!Array.isArray(ariane.cases)){
+      setText('arianeLiveState','EN ATTENTE');
+      setText('arianeCaseTitle','OUVRE ARIANE UNE FOIS');
+      setText('arianeCaseMeta','Aucune donnée Ariane trouvée dans ce navigateur.');
+      setText('arianeLiveFoot','DOSSIERS D’ENQUÊTES');
+      if(nextBox)nextBox.hidden=true;
+      return;
+    }
+    let current=ariane.cases.find(c=>c.id===ariane.activeId)||null;
+    if(!current)current=ariane.cases.find(c=>!['Terminée','Archivée'].includes(c?.status))||ariane.cases[0]||null;
+    if(!current){
+      setText('arianeLiveState','AUCUNE ENQUÊTE');
+      setText('arianeCaseTitle','AUCUN DOSSIER');
+      setText('arianeCaseMeta','Crée une enquête dans Ariane pour la retrouver ici.');
+      setText('arianeLiveFoot','0 DOSSIER');
+      if(nextBox)nextBox.hidden=true;
+      return;
+    }
+    const items=Array.isArray(current.items)?current.items:[];
+    const remaining=items.filter(i=>!i.done);
+    const next=remaining[0]||null;
+    setText('arianeLiveState',upperText(current.status||'EN COURS'));
+    setText('arianeCaseTitle',upperText(current.title||'DOSSIER SANS TITRE'));
+    const meta=[current.place,current.type,`${remaining.length} cote${remaining.length>1?'s':''} restante${remaining.length>1?'s':''}`].filter(Boolean).join(' · ');
+    setText('arianeCaseMeta',meta||'Enquête active');
+    setText('arianeLiveFoot',`${remaining.length}/${items.length} À VÉRIFIER · ${ariane.cases.length} DOSSIER${ariane.cases.length>1?'S':''}`);
+    if(nextBox)nextBox.hidden=!next;
+    if(next){
+      setText('arianeNextAction',upperText(next.label||'PIÈCE À VÉRIFIER'));
+      const ref=[next.cote?`Cote ${next.cote}`:'',next.dossier?`Dossier ${next.dossier}`:''].filter(Boolean).join(' · ');
+      setText('arianeNextRef',ref||'Référence à compléter dans Ariane');
+    }
+  }
+
   function capSleepForToday(){return readCapState()?.daily?.[localDateKey()]?.sleep||null}
   function hasCompleteSleep(s){return s&&Number(s.hours)>0&&Number.isFinite(Number(s.quality))&&Number.isFinite(Number(s.physical))&&Number.isFinite(Number(s.mental))}
   function latestSleepUpdate(){
@@ -468,13 +608,15 @@
     setText('capStatus',hasCompleteSleep(sleep)?'NUIT OK':'PRÊT');
     setText('capStatusDetail',hasCompleteSleep(sleep)?`${sleep.hours} h enregistrées`:'Santé & récupération');
   }
-  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive()});
+  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive()});
   window.addEventListener('storage',e=>{
     if(e.key==='cap-data'){renderSleepPanel();renderBusStatus()}
     if(e.key===CAP_SNAPSHOT_KEY)renderCapLive();
     if(e.key===CULINA_SNAPSHOT_KEY){renderCulinaLive();renderBusStatus()}
     if(e.key===STYLIA_SNAPSHOT_KEY){renderStyliaLive();renderBusStatus()}
     if(e.key===EXPRESS_SNAPSHOT_KEY){renderExpressLive();renderBusStatus()}
+    if([ARBORIS_DATA_KEY,SCRIPTORIA_DATA_KEY,PISTORIA_DATA_KEY].includes(e.key))renderGenealogyOffice();
+    if(e.key===ARIANE_DATA_KEY)renderArianeLive();
   });
 
   const commandMap={
@@ -529,7 +671,7 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderBusStatus();renderOtarieStatus();
+  renderContext();renderAbsurdities();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderBusStatus();renderOtarieStatus();
   setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderBusStatus();},60000);
   setInterval(renderCulinaLive,3000);
 })();
