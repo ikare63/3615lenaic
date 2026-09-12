@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07151a">
   <title>3615 LÉNAÏC — Portail personnel</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
   <div class="terminal-shell">
@@ -112,6 +112,19 @@
             <p id="capMeasuresText">Échéance des prochaines mensurations.</p>
             <div class="cap-live-foot"><span id="capMeasuresLast">—</span><a href="../cap/">MESURES →</a></div>
           </article>
+        </section>
+
+        <section class="minitel-card culina-live-card" aria-label="Repas programmés dans Culina">
+          <div class="retro-head"><span>CULINA.REPAS</span><strong id="culinaLiveState">SYNCHRONISATION…</strong></div>
+          <div class="culina-meal-slots">
+            <article class="culina-meal-slot" id="culinaLunchSlot">
+              <span>CE MIDI</span><strong id="culinaLunchName">RIEN DE PROGRAMMÉ</strong><small id="culinaLunchMeta">Programme un repas dans Culina.</small>
+            </article>
+            <article class="culina-meal-slot" id="culinaDinnerSlot">
+              <span>CE SOIR</span><strong id="culinaDinnerName">RIEN DE PROGRAMMÉ</strong><small id="culinaDinnerMeta">Programme un repas dans Culina.</small>
+            </article>
+          </div>
+          <div class="cap-live-foot"><span id="culinaLiveFoot">REPAS PRÉVUS · NON COMPTABILISÉS DANS CAP</span><a href="../culina/">OUVRIR CULINA →</a></div>
         </section>
 
         <section class="retro-grid" aria-label="Fantaisies du terminal">
@@ -241,6 +254,6 @@
   </div>
 
   <script src="js/lenaic-bus.js?v=1"></script>
-  <script src="js/app.js?v=3"></script>
+  <script src="js/app.js?v=4"></script>
 </body>
 </html>
