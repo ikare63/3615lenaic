@@ -5,7 +5,7 @@
   const PATHS={
     cap:'../cap/',culina:'../culina/',stylia:'../stylia/',express:'../lenaic-express/',uchronies:'../uchronies/',
     arboris:'../bureau-genealogique/index.html',scriptoria:'../bureau-genealogique/index2.html',pistoria:'../bureau-genealogique/index3.html',
-    ariane:'../aide_archive/Ariane.html',scribe:'../aide_archive/Scribe-v3.html'
+    ariane:'../aide_archive/Ariane.html',scribe:'../aide_archive/Scribe-v3.html',nexus:'cms.html'
   };
 
   function localDateKey(date=new Date()){
@@ -624,7 +624,7 @@
     '1':()=>showSection('services'),'services':()=>showSection('services'),
     '2':()=>showSection('otarie'),'otarie':()=>showSection('otarie'),
     'cap':PATHS.cap,'culina':PATHS.culina,'stylia':PATHS.stylia,'express':PATHS.express,'lenaic express':PATHS.express,'lénaïc express':PATHS.express,
-    'uchronies':PATHS.uchronies,'arboris':PATHS.arboris,'scriptoria':PATHS.scriptoria,'pistoria':PATHS.pistoria,'ariane':PATHS.ariane,'fil d ariane':PATHS.ariane,'scribe':PATHS.scribe
+    'uchronies':PATHS.uchronies,'nexus':PATHS.nexus,'cms':PATHS.nexus,'admin':PATHS.nexus,'arboris':PATHS.arboris,'scriptoria':PATHS.scriptoria,'pistoria':PATHS.pistoria,'ariane':PATHS.ariane,'fil d ariane':PATHS.ariane,'scribe':PATHS.scribe
   };
   $('commandForm').addEventListener('submit',e=>{
     e.preventDefault();const raw=$('commandInput').value.trim().toLowerCase();const dest=commandMap[raw];
