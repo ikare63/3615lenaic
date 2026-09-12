@@ -262,24 +262,24 @@
     if(!snap){
       setText('styliaLiveState','AUCUNE TENUE');
       setText('styliaOutfitName','AUCUNE TENUE DU JOUR');
-      setText('styliaOutfitWhy','Compose une tenue dans Stylia pour l’afficher ici.');
-      setText('styliaLiveFoot','DERNIÈRE PROPOSITION STYLIA');
+      setText('styliaOutfitWhy','Valide une tenue dans Stylia pour l’afficher ici.');
+      setText('styliaLiveFoot','DERNIÈRE TENUE VALIDÉE');
       if(partsEl)partsEl.innerHTML='';
       setText('styliaStatus','PRÊT');
       setText('styliaStatusDetail','Tenue du jour');
       return;
     }
-    setText('styliaLiveState',current?'TENUE DU JOUR':'DERNIÈRE TENUE');
+    setText('styliaLiveState',current?'TENUE VALIDÉE':'DERNIÈRE TENUE');
     setText('styliaOutfitName',(snap.name||'Tenue Stylia').toUpperCase());
-    setText('styliaOutfitWhy',snap.why||'Proposition générée par Stylia.');
+    setText('styliaOutfitWhy',snap.why||'Tenue validée depuis Stylia.');
     const defs=[['top','HAUT'],['bottom','BAS'],['outer','COUCHE'],['shoes','CHAUSSURES'],['accessory','ACCESSOIRE']];
     const parts=defs.filter(([key])=>snap[key]).map(([key,label])=>({label,...snap[key]}));
     if(partsEl)partsEl.innerHTML=parts.map(part=>`<div class="stylia-part"><span>${part.label}</span><strong>${String(part.piece||'—').toUpperCase()}</strong><small><i class="stylia-swatch" style="background:${styliaShadeHex(part.shade)}"></i>${String(part.shade||'—').toUpperCase()}</small></div>`).join('');
     const when=snap.generatedAt?new Date(snap.generatedAt):null;
     const time=when&&Number.isFinite(when.getTime())?when.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'—';
     setText('styliaLiveFoot',`${current?'AUJOURD’HUI':'ARCHIVE'} · ${time}${snap.rain?' · PARAPLUIE CONSEILLÉ':''}`);
-    setText('styliaStatus',current?'TENUE OK':'À ACTUALISER');
-    setText('styliaStatusDetail',current?(snap.accessory?.piece==='Parapluie'?'Tenue + parapluie':snap.name||'Tenue proposée'):'Ouvre Stylia pour aujourd’hui');
+    setText('styliaStatus',current?'VALIDÉE':'À ACTUALISER');
+    setText('styliaStatusDetail',current?(snap.accessory?.piece==='Parapluie'?'Tenue validée + parapluie':snap.name||'Tenue validée'):'Valide une tenue dans Stylia');
   }
 
   function capSleepForToday(){return readCapState()?.daily?.[localDateKey()]?.sleep||null}
