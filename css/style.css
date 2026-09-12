@@ -189,3 +189,24 @@ body[data-palette="green"]{--ink:#8cff8c;--ink-soft:#56b756;--cyan:#a8ffb0;--gre
   .terminal-footer{padding-left:8px;padding-right:8px}.command-line label{display:none}.command-line{grid-template-columns:1fr auto}.footer-line{font-size:.5rem}
 }
 @media(max-width:390px){.quick-grid{grid-template-columns:1fr 1fr}.sleep-form{grid-template-columns:1fr}.status-grid{grid-template-columns:1fr 1fr}.status-box:last-child{grid-column:1/-1}.directory-card>a{grid-template-columns:1fr}.directory-card small{margin-top:-4px}.footer-line span:last-child{display:none}}
+
+/* 3615 V6.1 — fantaisies Minitel conservées */
+.head-meta{display:flex;align-items:flex-end;gap:12px}
+.dual-clock{display:grid;grid-template-columns:auto auto;gap:18px;text-align:right}
+.clock-block{display:grid;gap:2px;min-width:170px}
+.clock-block-alt{padding-left:14px;border-left:1px dotted var(--line)}
+.clock-label{font-size:.52rem;color:var(--ink-soft);letter-spacing:.08em}
+.clock-block strong{font-size:.68rem;color:var(--cyan);font-weight:800;white-space:nowrap}
+.clock-block .clock{font-size:1rem;color:var(--green);margin:0}
+.clock-block-alt .clock{color:var(--amber)}
+.retro-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.whimsy-card,.horoscope-card{position:relative;min-height:142px;overflow:hidden}
+.retro-head{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted var(--line);padding-bottom:7px;margin-bottom:10px;font-size:.65rem}
+.retro-head span{color:var(--ink-soft)}.retro-head strong{color:var(--amber);text-align:right}
+.whimsy-card p,.horoscope-card p{position:relative;z-index:1;margin:0;color:var(--ink);font-size:.78rem;line-height:1.55}
+.horoscope-sign{position:absolute;right:11px;bottom:-15px;font-size:7rem;line-height:1;color:var(--cyan);opacity:.08;pointer-events:none}
+.horoscope-card small{display:block;position:relative;z-index:1;margin-top:10px;color:var(--ink-soft);font-size:.58rem;line-height:1.4}
+@media(max-width:760px){
+  .terminal-head{display:grid;grid-template-columns:1fr}.head-meta{justify-content:space-between;align-items:center}.dual-clock{grid-template-columns:1fr 1fr;gap:8px;flex:1;text-align:left}.clock-block{min-width:0}.clock-block-alt{padding-left:9px}.clock-block strong{font-size:.58rem;white-space:normal}.clock-label{font-size:.45rem}.retro-grid{grid-template-columns:1fr}.key-button{align-self:end}
+}
+@media(max-width:430px){.head-meta{display:block}.dual-clock{margin-bottom:8px}.clock-block .clock{font-size:.88rem}.key-button{width:100%}}
