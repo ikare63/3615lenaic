@@ -210,3 +210,27 @@ body[data-palette="green"]{--ink:#8cff8c;--ink-soft:#56b756;--cyan:#a8ffb0;--gre
   .terminal-head{display:grid;grid-template-columns:1fr}.head-meta{justify-content:space-between;align-items:center}.dual-clock{grid-template-columns:1fr 1fr;gap:8px;flex:1;text-align:left}.clock-block{min-width:0}.clock-block-alt{padding-left:9px}.clock-block strong{font-size:.58rem;white-space:normal}.clock-label{font-size:.45rem}.retro-grid{grid-template-columns:1fr}.key-button{align-self:end}
 }
 @media(max-width:430px){.head-meta{display:block}.dual-clock{margin-bottom:8px}.clock-block .clock{font-size:.88rem}.key-button{width:100%}}
+
+/* 3615 V6.2 — CAP ↔ 3615 : état quotidien */
+.cap-live-grid{display:grid;grid-template-columns:1.35fr .85fr .9fr;gap:8px;margin-bottom:14px}
+.cap-live-card{min-height:166px;display:flex;flex-direction:column}
+.cap-live-card .retro-head{margin-bottom:12px}
+.cap-activity-line{display:grid;grid-template-columns:46px minmax(0,1fr);gap:10px;align-items:center}
+.cap-live-icon{width:46px;height:46px;border:1px solid var(--line-strong);display:grid;place-items:center;color:var(--cyan);font-size:1.6rem;background:#020c10}
+.cap-activity-line strong,.cap-score-line strong{display:block;color:var(--ink);font-size:.82rem;line-height:1.3}
+.cap-activity-line small,.cap-score-line small{display:block;margin-top:4px;color:var(--ink-soft);font-size:.62rem;line-height:1.35}
+.cap-progress{height:10px;margin-top:14px;border:1px solid var(--line-strong);padding:2px;background:#01080b}
+.cap-progress i{display:block;height:100%;width:0;background:var(--cyan);transition:width .25s ease}
+.cap-live-foot{display:flex;justify-content:space-between;gap:8px;margin-top:auto;padding-top:10px;color:var(--ink-soft);font-size:.6rem}
+.cap-live-foot a{color:var(--cyan);font-weight:900}
+.cap-score-line{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}
+.cap-score-line>span{font-size:2.55rem;line-height:1;color:var(--amber);font-weight:900;min-width:70px}
+.measure-reminder-value{font-size:1.55rem;color:var(--green);font-weight:900;margin:2px 0 8px}
+.measures-live p{font-size:.68rem;line-height:1.45;color:var(--ink-soft);margin:0}
+.measures-live.due{border-color:var(--amber);background:linear-gradient(180deg,rgba(255,209,102,.09),#061319)}
+.measures-live.due .measure-reminder-value,.measures-live.due #capMeasuresState{color:var(--amber)}
+.activity-live.completed{border-color:var(--green);background:linear-gradient(180deg,rgba(127,255,212,.07),#061319)}
+.activity-live.completed #capActivityState{color:var(--green)}
+.cap-live-card.stale{opacity:.78}
+@media(max-width:760px){.cap-live-grid{grid-template-columns:1fr 1fr}.activity-live{grid-column:1/-1}}
+@media(max-width:430px){.cap-live-grid{grid-template-columns:1fr}.activity-live{grid-column:auto}.cap-live-card{min-height:145px}}
