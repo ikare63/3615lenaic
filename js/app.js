@@ -189,34 +189,32 @@
   function renderCapLive(){
     const snap=readCapSnapshot();
     const current=Boolean(snap&&snap.date===localDateKey());
-    const activityCard=document.querySelector('.activity-live');
-    const measuresCard=$('capMeasuresCard');
+    const card=$('capSummaryCard');
+    const measureReminder=$('capMeasuresReminder');
 
-    activityCard?.classList.toggle('stale',!current);
-    activityCard?.classList.toggle('completed',Boolean(current&&snap?.activity?.completed));
-    measuresCard?.classList.toggle('stale',!current);
-    measuresCard?.classList.toggle('due',Boolean(current&&snap?.measurements?.due));
+    card?.classList.toggle('stale',!current);
+    card?.classList.toggle('completed',Boolean(current&&snap?.activity?.completed));
 
     if(!current){
-      setText('capActivityState','À ACTUALISER');
+      setText('capRecapState','À ACTUALISER');
+      setText('capActivityState','OUVRE CAP');
       setText('capActivityIcon','◌');
-      setText('capActivityTitle','OUVRE CAP UNE FOIS');
-      setText('capActivityMeta','CAP publiera ensuite automatiquement son état du jour.');
+      setText('capActivityTitle','ACTIVITÉ DU JOUR');
+      setText('capActivityMeta','Ouvre CAP une fois pour synchroniser le récapitulatif.');
       setText('capActivityProgress','SYNCHRO LOCALE');
       if($('capActivityBar'))$('capActivityBar').style.width='0%';
       setText('capYesterdayScore','—');
       setText('capYesterdayLabel','EN ATTENTE');
       setText('capYesterdayMeta','Score Cap d’hier');
       setText('capYesterdayCoverage','OUVRE CAP POUR ACTUALISER');
-      setText('capMeasuresState','EN ATTENTE');
-      setText('capMeasuresValue','—');
-      setText('capMeasuresText','Ouvre CAP pour calculer la prochaine échéance.');
-      setText('capMeasuresLast','—');
+      if(measureReminder)measureReminder.hidden=true;
       return;
     }
 
+    setText('capRecapState','À JOUR');
     const a=snap.activity||{};
-    setText('capActivityState',a.completed?'SÉANCE TERMINÉE':(a.rest&&a.progress>=100?'REPOS VALIDÉ':'PRÉVU AUJOURD’HUI'));
+    const activityState=a.completed?'SÉANCE TERMINÉE':(a.rest&&a.progress>=100?'REPOS VALIDÉ':'PRÉVU AUJOURD’HUI');
+    setText('capActivityState',activityState);
     setText('capActivityIcon',a.icon||'•');
     setText('capActivityTitle',(a.title||'Activité du jour').toUpperCase());
     setText('capActivityMeta',[a.duration,a.focus].filter(Boolean).join(' · ')||'Programme CAP');
@@ -230,20 +228,22 @@
     setText('capYesterdayCoverage',y.score==null?'DONNÉES INSUFFISANTES':`${Math.round(Number(y.coverage)||0)} % DES DONNÉES`);
 
     const m=snap.measurements||{};
-    setText('capMeasuresState',m.due?'ÉCHÉANCE':'À JOUR');
-    if(!m.latestDate){
-      setText('capMeasuresValue','À FAIRE');
-      setText('capMeasuresText','Aucune mensuration enregistrée : première saisie à faire dans CAP.');
-      setText('capMeasuresLast','AUCUNE MESURE');
-    }else if(m.due){
-      const late=Math.abs(Math.min(0,Number(m.daysUntil)||0));
-      setText('capMeasuresValue','À FAIRE');
-      setText('capMeasuresText',late?`Échéance dépassée de ${late} jour${late>1?'s':''}.`:'Échéance atteinte aujourd’hui.');
-      setText('capMeasuresLast',`DERNIÈRE : ${formatShortDate(m.latestDate)}`);
-    }else{
-      const days=Math.max(0,Number(m.daysUntil)||0);
-      setText('capMeasuresValue',`J-${days}`);
-      setText('capMeasuresText',`Prochaine échéance : ${formatShortDate(m.nextDueDate)}.`);
+    const days=Number(m.daysUntil);
+    const shouldRemind=Boolean(m.latestDate && Number.isFinite(days) && days<=1);
+    if(measureReminder)measureReminder.hidden=!shouldRemind;
+    if(shouldRemind){
+      measureReminder.classList.toggle('due',days<=0);
+      if(days===1){
+        setText('capMeasuresValue','DEMAIN');
+        setText('capMeasuresText',`Mensurations prévues le ${formatShortDate(m.nextDueDate)}.`);
+      }else if(days===0){
+        setText('capMeasuresValue','AUJOURD’HUI');
+        setText('capMeasuresText','Échéance des mensurations aujourd’hui.');
+      }else{
+        const late=Math.abs(days);
+        setText('capMeasuresValue','EN RETARD');
+        setText('capMeasuresText',`Échéance dépassée de ${late} jour${late>1?'s':''}.`);
+      }
       setText('capMeasuresLast',`DERNIÈRE : ${formatShortDate(m.latestDate)}`);
     }
   }
@@ -411,7 +411,7 @@
     const update=latestSleepUpdate();
     const pending=pendingSleepLog();
     const panel=$('sleepPanel'),form=$('sleepForm'),result=$('sleepResult');
-    panel.hidden=!(morning||hasCompleteSleep(capSleep)||update||pending);
+    panel.hidden=!morning;
     if(panel.hidden)return;
 
     if(update){
