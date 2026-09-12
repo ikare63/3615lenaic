@@ -267,3 +267,23 @@ body[data-palette="green"]{--ink:#8cff8c;--ink-soft:#56b756;--cyan:#a8ffb0;--gre
 @media(max-width:390px){.stylia-parts{grid-template-columns:1fr 1fr}.status-grid{grid-template-columns:1fr 1fr}.status-box:last-child{grid-column:auto}}
 .status-grid{grid-template-columns:repeat(4,1fr)}
 @media(max-width:760px){.status-grid{grid-template-columns:repeat(2,1fr)}}
+
+
+/* ===== 3615 v6.6 — Lénaïc Express ===== */
+.express-live-card{margin-bottom:14px;min-height:0}
+.express-live-card.ready{border-color:var(--magenta)}
+.express-headlines{display:grid;gap:0;border-top:1px dotted var(--line);margin-top:2px}
+.express-story{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:10px;align-items:start;padding:11px 0;border-bottom:1px dotted var(--line);color:inherit}
+.express-story:last-child{border-bottom:0}
+.express-story-rank{color:var(--magenta);font-weight:900;font-size:.72rem;letter-spacing:.08em}
+.express-story-main{min-width:0}
+.express-story-main strong{display:block;color:var(--ink);font-size:.78rem;line-height:1.35;letter-spacing:.015em}
+.express-story-main small{display:block;margin-top:4px;color:var(--ink-soft);font-size:.58rem;line-height:1.25}
+.express-story-link{color:var(--cyan);font-size:.7rem;font-weight:900;white-space:nowrap;padding-top:1px}
+.express-empty{padding:16px 0;color:var(--ink-soft);font-size:.72rem}
+@media(max-width:560px){
+  .express-story{grid-template-columns:40px minmax(0,1fr) auto;gap:8px;padding:10px 0}
+  .express-story-main strong{font-size:.72rem}
+  .express-story-main small{font-size:.54rem}
+  .express-story-link{font-size:.62rem}
+}
