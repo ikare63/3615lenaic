@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "name": "3615 NEXUS",
   "autoSnapshotHours": 3,
   "retentionPerDataset": 20,
@@ -9,8 +9,21 @@
       "name": "3615 Lénaïc",
       "url": "/3615lenaic/",
       "storage": [
-        {"key": "3615-lenaic-v2", "label": "État 3615", "critical": true},
-        {"key": "3615-otarie-v1", "label": "Otarie", "critical": false}
+        {
+          "key": "3615-otarie-v1",
+          "label": "Otarie",
+          "critical": false
+        },
+        {
+          "key": "3615-meditation-v1",
+          "label": "Méditation",
+          "critical": false
+        },
+        {
+          "key": "lenaic-nexus-published-v2",
+          "label": "Configuration publiée NEXUS",
+          "critical": false
+        }
       ]
     },
     {
@@ -18,7 +31,11 @@
       "name": "CAP",
       "url": "/cap/",
       "storage": [
-        {"key": "cap-data", "label": "Données CAP", "critical": true}
+        {
+          "key": "cap-data",
+          "label": "Données CAP",
+          "critical": true
+        }
       ]
     },
     {
@@ -26,14 +43,46 @@
       "name": "Culina",
       "url": "/culina/",
       "storage": [
-        {"key": "culina-stock-v1", "label": "Stocks", "critical": true},
-        {"key": "culina-week-v1", "label": "Semaine / repas", "critical": true},
-        {"key": "culina-planned-v1", "label": "Repas programmés", "critical": true},
-        {"key": "culina-history-v1", "label": "Historique", "critical": false},
-        {"key": "culina-leftovers-v1", "label": "Restes", "critical": false},
-        {"key": "culina-shopping-v1", "label": "Liste de courses", "critical": false},
-        {"key": "culina-prefs", "label": "Préférences", "critical": false},
-        {"key": "culina-match-prefs-v1", "label": "Préférences de correspondance", "critical": false}
+        {
+          "key": "culina-stock-v1",
+          "label": "Stocks",
+          "critical": true
+        },
+        {
+          "key": "culina-week-v1",
+          "label": "Semaine / repas",
+          "critical": true
+        },
+        {
+          "key": "culina-planned-v1",
+          "label": "Repas programmés",
+          "critical": true
+        },
+        {
+          "key": "culina-history-v1",
+          "label": "Historique",
+          "critical": false
+        },
+        {
+          "key": "culina-leftovers-v1",
+          "label": "Restes",
+          "critical": false
+        },
+        {
+          "key": "culina-shopping-v1",
+          "label": "Liste de courses",
+          "critical": false
+        },
+        {
+          "key": "culina-prefs",
+          "label": "Préférences",
+          "critical": false
+        },
+        {
+          "key": "culina-match-prefs-v1",
+          "label": "Préférences de correspondance",
+          "critical": false
+        }
       ]
     },
     {
@@ -41,9 +90,21 @@
       "name": "Stylia",
       "url": "/stylia/",
       "storage": [
-        {"key": "stylia_wardrobe", "label": "Garde-robe", "critical": true},
-        {"key": "stylia_saved", "label": "Looks favoris", "critical": false},
-        {"key": "lenaic-stylia-snapshot-v1", "label": "Tenue validée", "critical": false}
+        {
+          "key": "stylia_wardrobe",
+          "label": "Garde-robe",
+          "critical": true
+        },
+        {
+          "key": "stylia_saved",
+          "label": "Looks favoris",
+          "critical": false
+        },
+        {
+          "key": "lenaic-stylia-snapshot-v1",
+          "label": "Tenue validée",
+          "critical": false
+        }
       ]
     },
     {
@@ -51,10 +112,26 @@
       "name": "Lénaïc Express",
       "url": "/lenaic-express/",
       "storage": [
-        {"key": "lex_category_boosts", "label": "Priorités de rubriques", "critical": false},
-        {"key": "lex_hidden", "label": "Articles masqués", "critical": false},
-        {"key": "lex_hidden_sources", "label": "Sources masquées", "critical": false},
-        {"key": "lex_saved", "label": "Articles sauvegardés", "critical": false}
+        {
+          "key": "lex_category_boosts",
+          "label": "Priorités de rubriques",
+          "critical": false
+        },
+        {
+          "key": "lex_hidden",
+          "label": "Articles masqués",
+          "critical": false
+        },
+        {
+          "key": "lex_hidden_sources",
+          "label": "Sources masquées",
+          "critical": false
+        },
+        {
+          "key": "lex_saved",
+          "label": "Articles sauvegardés",
+          "critical": false
+        }
       ]
     },
     {
@@ -62,7 +139,11 @@
       "name": "Arboris",
       "url": "/bureau-genealogique/index.html",
       "storage": [
-        {"key": "memoire-famille-data", "label": "Arbre et données familiales", "critical": true}
+        {
+          "key": "memoire-famille-data",
+          "label": "Arbre et données familiales",
+          "critical": true
+        }
       ]
     },
     {
@@ -70,7 +151,11 @@
       "name": "Scriptoria",
       "url": "/bureau-genealogique/index2.html",
       "storage": [
-        {"key": "scriptoria-data", "label": "Registres, actes et individus", "critical": true}
+        {
+          "key": "scriptoria-data",
+          "label": "Registres, actes et individus",
+          "critical": true
+        }
       ]
     },
     {
@@ -78,7 +163,11 @@
       "name": "Pistoria",
       "url": "/bureau-genealogique/index3.html",
       "storage": [
-        {"key": "pistoria_private_v3", "label": "Pistes et recherches", "critical": true}
+        {
+          "key": "pistoria_private_v3",
+          "label": "Pistes et recherches",
+          "critical": true
+        }
       ]
     },
     {
@@ -86,7 +175,11 @@
       "name": "Le Fil d’Ariane",
       "url": "/aide_archive/Ariane.html",
       "storage": [
-        {"key": "ariane-local-v2", "label": "Enquêtes", "critical": true}
+        {
+          "key": "ariane-local-v2",
+          "label": "Enquêtes",
+          "critical": true
+        }
       ]
     },
     {
@@ -94,7 +187,11 @@
       "name": "Scribe",
       "url": "/aide_archive/Scribe-v3.html",
       "storage": [
-        {"key": "scribe-local-v3", "label": "Notes et travail d’archives", "critical": true}
+        {
+          "key": "scribe-local-v3",
+          "label": "Notes et travail d’archives",
+          "critical": true
+        }
       ]
     },
     {
@@ -102,9 +199,21 @@
       "name": "Bus commun",
       "url": "/3615lenaic/cms.html",
       "storage": [
-        {"key": "lenaic-bus-v1", "label": "File d’événements", "critical": false},
-        {"key": "lenaic-cap-snapshot-v1", "label": "Snapshot CAP → 3615", "critical": false},
-        {"key": "lenaic-culina-snapshot-v1", "label": "Snapshot Culina → 3615", "critical": false}
+        {
+          "key": "lenaic-bus-v1",
+          "label": "File d’événements",
+          "critical": false
+        },
+        {
+          "key": "lenaic-cap-snapshot-v1",
+          "label": "Snapshot CAP → 3615",
+          "critical": false
+        },
+        {
+          "key": "lenaic-culina-snapshot-v1",
+          "label": "Snapshot Culina → 3615",
+          "critical": false
+        }
       ]
     }
   ],
