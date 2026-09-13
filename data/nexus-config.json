@@ -1,10 +1,10 @@
 {
-  "version": 4,
+  "version": 5,
   "publishedAt": null,
   "site": {
     "title": "3615 LÉNAÏC",
     "subtitle": "TABLEAU DE BORD PERSONNEL // TERMINAL LOCAL",
-    "footerLeft": "3615 LÉNAÏC // VERSION 8.1",
+    "footerLeft": "3615 LÉNAÏC // VERSION 9.0",
     "footerRight": "DONNÉES LOCALES · BUS PARTAGÉ",
     "showBusStatus": true
   },
@@ -34,19 +34,19 @@
       "id": "otarie",
       "label": "Otarie — bassin compact",
       "visible": true,
-      "order": 30
+      "order": 40
     },
     {
       "id": "horoscope",
       "label": "Horoscope Gémeaux",
       "visible": true,
-      "order": 40
+      "order": 50
     },
     {
       "id": "sleep",
-      "label": "Question sommeil",
+      "label": "Question du moment / sommeil",
       "visible": true,
-      "order": 50
+      "order": 30
     },
     {
       "id": "today",
@@ -87,7 +87,7 @@
     {
       "id": "ariane",
       "label": "Le Fil d’Ariane — enquête",
-      "visible": true,
+      "visible": false,
       "order": 120
     },
     {
