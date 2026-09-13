@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-13T00:57:30.157939Z",
+  "generated_at": "2026-09-13T11:45:15.868252Z",
   "mode": "live",
   "article_count": 180,
   "fetch_errors": [
@@ -19,26 +19,10 @@
       "category": "genealogie",
       "published_at": "2026-09-10T15:37:36Z",
       "image": "",
-      "score": 143.83,
+      "score": 142.48,
       "matched_keywords": [
         "archives",
         "histoire",
-        "patrimoine"
-      ]
-    },
-    {
-      "id": "b8b030f207c092f028",
-      "title": "Journées européennes du patrimoine 2026 aux Archives de Paris, Exposition : dates, horaires, tarifs",
-      "summary": "Journées européennes du patrimoine 2026 aux Archives de Paris, Exposition : dates, horaires, tarifs jds.fr",
-      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPZS1MYUxUcnJPOUVfYjBsXzQyNF9fSUhkNUhTYVRSMG1yX1RrVU5SNE9mWFJnOVZDY1FtWG1kM3ZIMHllbTRuRWpVcGJNZkV4LTZWM3hhcV9xM05Ub3RUM1VIVGdFNnUxX2gtdWVTX3ZQNFYzVVc4YVktcDRYdnRZeDFYeXR3QUhhbFc4eUFsQVNlX19HRjNLTXJjWVBFRXY3R3RDRg?oc=5",
-      "source": "jds.fr",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T22:33:43Z",
-      "image": "",
-      "score": 138.7,
-      "matched_keywords": [
-        "archives",
         "patrimoine"
       ]
     },
@@ -52,23 +36,7 @@
       "category": "genealogie",
       "published_at": "2026-09-12T22:31:14Z",
       "image": "",
-      "score": 138.7,
-      "matched_keywords": [
-        "archives",
-        "patrimoine"
-      ]
-    },
-    {
-      "id": "e19833789930102329",
-      "title": "\"Rien qu'à Figeac, on a 3 000 visiteurs à chaque édition\" : les bâtiments en péril du centre ancien ou encore les archives de la ville font l'objet de visites inédites lors des Journées du patrimoine",
-      "summary": "\"Rien qu'à Figeac, on a 3 000 visiteurs à chaque édition\" : les bâtiments en péril du centre ancien ou encore les archives de la ville font l'objet de visites inédites lors des Journées du patrimoine ladepeche.fr",
-      "url": "https://news.google.com/rss/articles/CBMinAJBVV95cUxPc3pzV0tERmFjdGtVNzNKUkU0QThwbGN6bVZQcDR4MTV0LVZVcFdBTmxOandrMlFndUtlamZ3MVktblhYUG1WNDV4ZnZQeGt5eFE2cnM2ZFRqN1JyeVFqOG5OMU1XLUlUbktaSFgybms5Ny1QelVkSW05c2RvbDFPdzBqUlR1RDUyOExDc0lQb2VTcjN3amp3VDl1Y2FuTE0xQndCUHd0dk5rTHFtWmx1Q3ZzYURlVUUzUW1DVXZKcFZwR2cxLV9yRmY0UFZRcWZXbTdDVTkwVENVcDdDcWtleFpxZm5jWVdkcDk5ODZSa2Z4dE8weU9TSmNQc1pKQVdHSVZBY29wYmp1T29JYjVUdUc5cGtuTEh6cVJITg?oc=5",
-      "source": "ladepeche.fr",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T10:56:00Z",
-      "image": "",
-      "score": 137.25,
+      "score": 137.35,
       "matched_keywords": [
         "archives",
         "patrimoine"
@@ -84,10 +52,26 @@
       "category": "genealogie",
       "published_at": "2026-09-11T12:53:24Z",
       "image": "",
-      "score": 134.49,
+      "score": 133.14,
       "matched_keywords": [
         "archives",
         "patrimoine"
+      ]
+    },
+    {
+      "id": "dee69198ee0502d891",
+      "title": "L'Hôpital général de Clermont-Ferrand : 300 ans d'histoire avant sa démolition dans les années 1980",
+      "summary": "L'Hôpital général de Clermont-Ferrand : 300 ans d'histoire avant sa démolition dans les années 1980 La Montagne",
+      "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxQS1dBNG1tS1FBaFllSEtuRThUNy13SUJjb0J0QXZJZG5nTkV2Q1lvSDFQRGdMdmtXMTZYVXU5Vk5BZVMxQ21La1NZMm1ab1BRY3RWWkNDUGZhNzZQOVlrZUw0RWlIZnJXLXAzYm1JR3c2OEY5ejdoY3FzbVlqenlTVDdzX1BEV3YyM0twZzNZY0ZlTmUyWGthUkdiRjVvNWQ3eGJvZHpqel85VXV1dXEtZDMtZzc0d0owaG1jamNWQXBEczRnVVh4UUM1aWRvZEN3MVdhOXZCNXozTUFRR2hlMmYxaHpwUWw1a2luUDhxLXBtZEVXTjRB?oc=5",
+      "source": "La Montagne",
+      "source_id": "news-clermont",
+      "category": "local",
+      "published_at": "2026-09-13T03:32:00Z",
+      "image": "",
+      "score": 127.17,
+      "matched_keywords": [
+        "clermont-ferrand",
+        "histoire"
       ]
     },
     {
@@ -100,7 +84,7 @@
       "category": "genealogie",
       "published_at": "2026-09-09T07:00:00Z",
       "image": "",
-      "score": 127.76,
+      "score": 126.41,
       "matched_keywords": [
         "archives",
         "patrimoine"
@@ -116,7 +100,7 @@
       "category": "local",
       "published_at": "2026-09-10T19:14:00Z",
       "image": "",
-      "score": 126.48,
+      "score": 125.13,
       "matched_keywords": [
         "clermont-ferrand",
         "puy-de-dôme"
@@ -125,14 +109,14 @@
     {
       "id": "b4e464cb47a65fd924",
       "title": "Puy-de-Dôme : révision du stationnement au centre hospitalier Gabriel-Montpied, à Clermont-Ferrand",
-      "summary": "Puy-de-Dôme : révision du stationnement au centre hospitalier Gabriel-Montpied, à Clermont-Ferrand lemoniteur.fr",
+      "summary": "Puy-de-Dôme : révision du stationnement au centre hospitalier Gabriel-Montpied, à Clermont-Ferrand Le Moniteur",
       "url": "https://news.google.com/rss/articles/CBMilAJBVV95cUxNM3A4WnlKNUNqdXR4WmxBLVlXY1lGay1LTllyY01GS2xuU1U1Z0JyX05PV3pNNkZKUUlOUU15T1lrMG1mZGJLQ0I2Y21rbGRkZ0VpVmZ0SHM5b0VkM2hEWVZ3Uk1WTkN2d25NdXpTYWZzVHd0TUlXSDBUazZuZllac291QmFRWnFiWXJKVEMyUVBWMUt1d3ptR2s2SENZd1cxOGdEVlA3dWNfT2tvV0VRSjNyeXJPWEV1NFhxa01mRFlrRzhNYXFVRTdrMFNrY1BYWTRBaVNIQk5vaFNfT0d1SFozOEhqcFdNS1oyOTg5cldGN0xRSjdIdHZtUE5pVEVUblZXQzZObU1JbTRhQ1h5OFkxQUc?oc=5",
-      "source": "lemoniteur.fr",
+      "source": "Le Moniteur",
       "source_id": "news-puy-de-dome",
       "category": "local",
       "published_at": "2026-09-10T15:42:08Z",
       "image": "",
-      "score": 126.04,
+      "score": 124.69,
       "matched_keywords": [
         "clermont-ferrand",
         "puy-de-dôme"
@@ -148,10 +132,85 @@
       "category": "genealogie",
       "published_at": "2026-09-08T15:20:34Z",
       "image": "",
-      "score": 125.8,
+      "score": 124.45,
       "matched_keywords": [
         "archives",
         "patrimoine"
+      ]
+    },
+    {
+      "id": "5a4816ca3a27558d22",
+      "title": "Les fous du vêtement (3/4) : Olivier Châtenet, des merveilles de Guerrisol aux archives de Saint Laurent",
+      "summary": "Les fous du vêtement (3/4) : Olivier Châtenet, des merveilles de Guerrisol aux archives de Saint Laurent ELLE",
+      "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxOLUZidGQwNW1oRFhBUGlXcnNpZXlJWFFtRkE2SzM2NlFBdGdRb09NVTVVMTlJdkxsSDE5UHVSbjBhWU5IX3ljTmdBVlF6YjNtU05NUkZESjFYNHF5SWFJMVZzVGh6SGNvZVlxLXBpOFpySkd4c3BEb0NRU3M3aEZWUkdSaHEtQkg2RUxGLUlHRVlaZ0ZEVlp1TzBHcGJ3OVk4NWFtR3VlTFY5UU5xTTRfWDZ3MFpCcXFjRGJaM0w5VjR0MlhVTkRZS0ZSVTU3Q1hlOWV4M3pNNHZXZ1RWR2tZ?oc=5",
+      "source": "ELLE",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T09:15:00Z",
+      "image": "",
+      "score": 122.69,
+      "matched_keywords": [
+        "archives"
+      ]
+    },
+    {
+      "id": "112d639552d15ce5ce",
+      "title": "Annemasse agglomération. Il remonte le fil du temps avec la généalogie",
+      "summary": "Annemasse agglomération. Il remonte le fil du temps avec la généalogie Le Dauphiné Libéré",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNemZDT0ZJdllGN2xld2N6X1hkYUtZOUxjZXJlWUJtUW93RjY4a3RFNFJ3aDR0RHRrTnQxeDJyRTB1WUU4UDFRdUVsZGVpNldhTFlsV0JIMmpGRmdLUjVGRFk3ZzlkUjNuZXM5UEUxUm03Nm5qRjFWaWdROUFUcS1TUktLYk1WZWlFSzFaXzh2dTBTalZVNjgxUUIzMW9RTzl6?oc=5",
+      "source": "Le Dauphiné Libéré",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T09:08:09Z",
+      "image": "",
+      "score": 122.67,
+      "matched_keywords": [
+        "généalogie"
+      ]
+    },
+    {
+      "id": "34867f017064843405",
+      "title": "Une conférence sur la généalogie des familles Itard au Castellet",
+      "summary": "Une conférence sur la généalogie des familles Itard au Castellet La Provence",
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxONFFaaUFwS3l1OTZKMXFHX0QtNWt5b0ZqMVBMbkMwWllUbElpaDI2RWhUUFVHenpiZzNEM0dYVnhrclgtYk9YWWk1X1o2UEp6ZUI4ZldaV1dWdjNrZ1dTTThHY1NSS0J2TGphNzh3b1U2R0ZYcVN6UG1MWDhxVHU1dE94Nm13ZzVCVUozMjktVmdweldYOS1IWGhoSEhMdkVhTWh4QTMwS1hoVTdUSUtXM09aX3dUOHpJbjJSRW9B?oc=5",
+      "source": "La Provence",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T06:05:02Z",
+      "image": "",
+      "score": 122.29,
+      "matched_keywords": [
+        "généalogie"
+      ]
+    },
+    {
+      "id": "c23fc44f336743af23",
+      "title": "\"Découvrir l’homme au-delà de la stature du grand Résistant\" : les Archives d'Eure-et-Loir ont acheté des lettres adressées à Jean Moulin",
+      "summary": "\"Découvrir l’homme au-delà de la stature du grand Résistant\" : les Archives d'Eure-et-Loir ont acheté des lettres adressées à Jean Moulin L’Écho Républicain",
+      "url": "https://news.google.com/rss/articles/CBMiowJBVV95cUxPSVIyNC1neVVYaVFkWHNheXJvUW4tZWxSNjBuZTBuM29MbmUwWUVyYkxmWUladGRLWU1xNjdGS3pzdnZhdjVJVWc5UjJLVVpTUUNCd1A1Z1kxYTRvTm51d3BGQmhlMmdKaThwcHlZdG5pUVJDOG10UHJfejRXQlJkaUliREdnVWxIbUJWNzFpQ1ZTdW9MaWJZYndNZ1FieEtpRlB3ZDJQQlo4Z1V0ZFNhVUlDdWRvZF8yZVR2Vm43QllsVWs0b044X1I0Vm1YeWpudzVaNjFOV2EyQlZkNk5XRlB1dEFjZzJlc1hTNUJYQ0Y1SWRiclRObmYxUDhMZURFV0NHOS1KeHlnVWE3SDhEV0FtbUJYVlFrUERCSlg5MC1zenc?oc=5",
+      "source": "L’Écho Républicain",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T05:56:00Z",
+      "image": "",
+      "score": 122.27,
+      "matched_keywords": [
+        "archives"
+      ]
+    },
+    {
+      "id": "83ff13bc09fb9ac44e",
+      "title": "Mystères d’archives : notre cliché mystère a été pris à Wimereux",
+      "summary": "Mystères d’archives : notre cliché mystère a été pris à Wimereux La Voix du Nord",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQN2hVSG54VHRwazlMRl93aDlKa09oaG5CV1ZhZVI3RFhCTVVWNm1GWlZYWm5UdFVlQ1hRNnhQYXJneEZBZl9IWXZ1NW5nY2xnSXFvRU5lcUkwOW5ia2pnZ3pobW1QRjgwVWYtY0hkX0dBNDMtVHY1cldLX25WTmE2eS1LWkZCajIzUGdLVGdETWJCcHlZa29tdy1BSGkxdWtKUWVzaGlOZDczV3gzeFBpVS1ySQ?oc=5",
+      "source": "La Voix du Nord",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T05:00:00Z",
+      "image": "",
+      "score": 122.16,
+      "matched_keywords": [
+        "archives"
       ]
     },
     {
@@ -164,173 +223,38 @@
       "category": "local",
       "published_at": "2026-09-12T10:00:06Z",
       "image": "",
-      "score": 123.33,
+      "score": 121.98,
       "matched_keywords": [
         "loire",
         "puy-de-dôme"
       ]
     },
     {
-      "id": "d85d799de4dd5814a4",
-      "title": "Découvrez les trésors cachés des archives de Remiremont 2026 : programme, date, horaire",
-      "summary": "Découvrez les trésors cachés des archives de Remiremont 2026 : programme, date, horaire jds.fr",
-      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPX2c2dXR0OXU3Y01EMHM5N25yanFwRGJ3ZlZ2WEpheTNZSzdIZkFBdmsyeWk0dUY5UEJBZXZGaTNpY0xHYURvWjVPSk5aYlhTYXVBTThWTXpONjRvR041WGdKTU15NThnOEZlTnRpbFZaZVhIc05kbG1SaTBxM1hRMEhKeHd3X25mVnVwdkFuWjVFZkFKeEJIZHRVQmxBdXozMWN5V3VkMVY2TUhad3IxbTFkWDRLNVMtUmlPVXFqOGJ5VEZobzNHbHBVZHJUQQ?oc=5",
-      "source": "jds.fr",
+      "id": "d1b2462e0c3d4285b9",
+      "title": "Archives Remasterisées : 2015",
+      "summary": "Archives Remasterisées : 2015 RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNaDJMcjk2cHcwUmczVHNXNDdYVGhBYk9EVV8yNFpiQzhtZlFQZXc3SXlkWTgyb24xN3JKSEJFX0M5VlFUczJyWTZ3aGVFNHNBcXRpZnhSc0Z6eEdJVkZTYW5IVGVXc3Jycm9ha0dFV0NIZjZ1bjdLREpQZmg2cUdDX1dobzh0b1VX?oc=5",
+      "source": "RobbieWilliamsLive.com",
       "source_id": "news-genealogie",
       "category": "genealogie",
-      "published_at": "2026-09-12T22:31:11Z",
+      "published_at": "2026-09-12T17:40:02Z",
       "image": "",
-      "score": 122.7,
+      "score": 120.74,
       "matched_keywords": [
         "archives"
       ]
     },
     {
-      "id": "69d6b84906630d15b9",
-      "title": "Exposition sur les affaires judiciaires de la Marne aux Archives départementales de Reims",
-      "summary": "Exposition sur les affaires judiciaires de la Marne aux Archives départementales de Reims jds.fr",
-      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNOUo0SlYyeGlURXBqQWNmZEQ2RV9YQXc5VkVqYWs1bjlDcVd4bXo2NUM3WnVGVVd2eUF2M2g5Yzg3T01fQUc0MVVRN0lvQUt2cFd3akJVNTBYaGFLM1JqeVp5bHBuVEx5bmU2MWpnZ0pxeHZUSmJka04wLU9qZzFGZVdxX05OZFN1QUQtNGNPbThzRlc5djc2NWtRT3VmUG15SDdRRllvU1U4M2g5SVgwOEtjM3ZYUjBVbTlZRTBTaS1NOEZpSHkyRGVn?oc=5",
-      "source": "jds.fr",
+      "id": "1187aa792defe9efae",
+      "title": "Archives Remasterisées : 2013",
+      "summary": "Archives Remasterisées : 2013 RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOdmhNLVlDc2JIZXFWTC05VDFfZ3IwOFhJNlIzM3Q0eElyOXVLdWNaVm00VXJwLWpadk56WTVSNnI2aXVBSko0SXpraElKLTVBd0JITXRIZDZvSEJrT0RVRUxpUjhWSXlITko4dXZOa1VQRmthM2paaHc5eU9JME43aVB1UkVYQ2Zp?oc=5",
+      "source": "RobbieWilliamsLive.com",
       "source_id": "news-genealogie",
       "category": "genealogie",
-      "published_at": "2026-09-12T22:11:52Z",
+      "published_at": "2026-09-12T17:39:19Z",
       "image": "",
-      "score": 122.65,
-      "matched_keywords": [
-        "archives"
-      ]
-    },
-    {
-      "id": "e1ca055affe5aff5be",
-      "title": "Allan. Focus sur les archives d’Allan",
-      "summary": "Allan. Focus sur les archives d’Allan Le Dauphiné Libéré",
-      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPRUdRM3Y2TURoekZwZEQ2ZzJ0RzNjdzIzV1Y4LUR6NFBjZDRBMUZTRTB5aEJfYU1BcERfdFdzdmFkdHo1U1hJMThLeExkbVRNZ1pjZ0pmQ0gzWUhWNmVZZ0pEal9QdEw5NWNkT1MwMUxmRHFnRWtLRGZ5c2FGQWFEVkFpX21QY0U5YW5VVw?oc=5",
-      "source": "Le Dauphiné Libéré",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T17:44:49Z",
-      "image": "",
-      "score": 122.1,
-      "matched_keywords": [
-        "archives"
-      ]
-    },
-    {
-      "id": "e8893415c399dbcd60",
-      "title": "Sur la place des Palmistes, une exposition donne vie aux archives des scientifiques sur la biodiversité de Guyane",
-      "summary": "Sur la place des Palmistes, une exposition donne vie aux archives des scientifiques sur la biodiversité de Guyane Outre-mer La 1ère",
-      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxOa25PazZkM0dTSHpRTWNtNUxwVUhnVGV5SFZremJjUWh3X2hJY3ZzYXJLWDZKY2ozSHdHejJ3bDNvcFB5dThCWWxXOWVZTDJvTktqMk5rckxzamp0by1aTWQxSmV0NUNMMkxPeXlxTWdSbHNxRm5GMFBBYnJ6MHQ3elU2Ni1CdEFVYXVsWm53SmJ5eFF4UEtDcm5jX3dsOHdBTlhBWGJ3RFlFN2swVnlobk5DUVV4ZXl5YlB4d3JkQjk5ME9YaDhNUVV1RkdLNGJXQUlrWXo0VnJNWTdzNVMxbGdTblRRUE9paHlhN0dMQ3NEZW8?oc=5",
-      "source": "Outre-mer La 1ère",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T13:50:34Z",
-      "image": "",
-      "score": 121.61,
-      "matched_keywords": [
-        "archives"
-      ]
-    },
-    {
-      "id": "f89b9a6e0682d788c3",
-      "title": "Un indice retrouvé dans des archives déclenche une traque de 13 ans jusqu'à une épave nazie unique au monde",
-      "summary": "Un indice retrouvé dans des archives déclenche une traque de 13 ans jusqu'à une épave nazie unique au monde Science et vie",
-      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxOVFVmRmIxNEprY0FualU5OFVlLXNjY3h0ZUZPNV9NRG1RbDdOOER0Wlg0OWQzMnJxNWFNUWt0M1huY1dGZzlrRnRvLVVsanZrNUNLV0tYZTZhNjNRenJGNGdtNmhnZkxSV1hEY3lYaTZ2T05lZV9FcHZueHAwRTFNa1l1MG9ua0owd2hCNG9RYmtzTjBIQlBBSTl5RkJFdDBIc1JqTlJUTFFHOW14d0V1YmZocWFpekl5b2Z1TnpwckV2X2J0NDliRGNRT3I0VklEQ0FncmdHYVBvZnROSGVaNW5ScGxXd1lQZVcwUmZUZlhlTWZmaHc?oc=5",
-      "source": "Science et vie",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T13:30:55Z",
-      "image": "",
-      "score": 121.57,
-      "matched_keywords": [
-        "archives"
-      ]
-    },
-    {
-      "id": "c48140c4e21e353f77",
-      "title": "Mort d’Albert Camus, soucoupes volantes, l’affaire Mis et Thiennot… : les incroyables rapports officiels d’État exhumés et révélées par les archives de la Défense à Châtellerault",
-      "summary": "Mort d’Albert Camus, soucoupes volantes, l’affaire Mis et Thiennot… : les incroyables rapports officiels d’État exhumés et révélées par les archives de la Défense à Châtellerault lanouvellerepublique.fr",
-      "url": "https://news.google.com/rss/articles/CBMi1AJBVV95cUxNOEZFUEVtTDBwbHhXQ1ZUQ0dpTnlJQ2l4WFhWQ0FrWkZGZ3J0ZzZGQTdiUWpLMGh3b3lpYU9HRFpVbTdFUExNOWNOd0dFYmFTNEE3a3lQYjVLcjBsM2xLVTRSa1BkM2FWOGphWE51d2dWV2Vmalh5algxeUt4dERWcGxTQWhXRWg4bGt5c2U1bW1XU2RCTTkwUnBma1ZESUJFRjRVMmhEN3lxczNMQVROVzNVMlp5MDcwLXFhb3FPbGFhOC1MVGk3dzExRWQ1MnBDUFRCQkNNNnk1MWY4a2t4YjNQVUo4Y1JUcXJORVQ2dC1RVjAwUjl5aThSZ2pkV3c1UmpreXNqSzc4bXZZaDMwd3MtaFJkODhsbFVRQWdweEhCNmtmU01oM2xvbkNWdVYzSEw1SUs3bm93UG9MOTVQaVJhY3NTelRtcnIyeFJJVll2SllR?oc=5",
-      "source": "lanouvellerepublique.fr",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T13:18:29Z",
-      "image": "",
-      "score": 121.54,
-      "matched_keywords": [
-        "archives"
-      ]
-    },
-    {
-      "id": "7647d6810bfb431dd0",
-      "title": "CARMAUX. Les archives du Cercle Jaurès aux archives municipales de Carmaux",
-      "summary": "CARMAUX. Les archives du Cercle Jaurès aux archives municipales de Carmaux letarnlibre.com",
-      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQT2JKVTJIZDVGSE9Hc3JCd3hpZWRvaUR1MWMtUEowelo2djZFUGxDOU1Ma3JXMmtUajdoWThkUmNvMXM2RDFacVdYU0JNR3JoZmQ2OENZR1ZMV3d4ejRJcXZSU3ZFcmZFdkkxRHNZVDVDRzNSaGJfWG56aXZhSUN4ek5mNWhzQ203cEc3azFadHhxZThOLTlaazhZcmlIMGpKSnpLNTBjWFZKQWszU2E5TUhPblNBRTlt?oc=5",
-      "source": "letarnlibre.com",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T11:00:00Z",
-      "image": "",
-      "score": 121.26,
-      "matched_keywords": [
-        "archives"
-      ]
-    },
-    {
-      "id": "7875e2c7d017629ba6",
-      "title": "Plus de 100 heures d’archives inédites d’Oasis aux enchères malgré les objections du groupe",
-      "summary": "Plus de 100 heures d’archives inédites d’Oasis aux enchères malgré les objections du groupe Le Figaro",
-      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPREs1LTVPc05BTmNyWEN5cGJqbnp1Y3NnS0h6TlFOd18zMVg1TDY5Y0N6bXZyLWFoV2RlNG1oUDNoQ01LaTEtS0pkMWQzZGF5UlJIbkhESzQtbm5sMWJXOWJLbVRYdTBCRVY2NjUwRFpIUVRzWVNYNW9FVnMwcnBUVll4Q1ZDSmpJMlFnN0tYTTFqLTZtc0xJZmVvS2ZsZ251Tzl6WlFxWHk3WWo0Ul9NVWFEQlY2dVI3Ujc1YXdXWlNlUFliTFBCeG8zVHNRTDRQWFloT3dURzU?oc=5",
-      "source": "Le Figaro",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T10:00:04Z",
-      "image": "",
-      "score": 121.13,
-      "matched_keywords": [
-        "archives"
-      ]
-    },
-    {
-      "id": "aa08654f48d112482e",
-      "title": "Toul . A l’état civil de la ville de Toul : les naissances et les décès de la semaine",
-      "summary": "Toul . A l’état civil de la ville de Toul : les naissances et les décès de la semaine L'Est Républicain",
-      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxON3pVc0I5U3k2QzhfdkQwblp6ZkFKTkZ4S19rYzVwRnlYQlU0a2xOU050aE5qU1dGc2dOazNWNThjZW1iQVlOY1VZRFp0YWxuZjZINzdEUHowZXV6QU5tU1p2c2t2dzdzOVJYbGNsalE4QlBRYlUtdVFvZzA4ZTZWbnlUZ0tFM3BTVlNV?oc=5",
-      "source": "L'Est Républicain",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T09:51:37Z",
-      "image": "",
-      "score": 121.11,
-      "matched_keywords": [
-        "état civil"
-      ]
-    },
-    {
-      "id": "d18e2619b1fabbb718",
-      "title": "L’Âge d’or, le film événement : cent ans d’archives pour une seule vie",
-      "summary": "L’Âge d’or, le film événement : cent ans d’archives pour une seule vie TIME France",
-      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1qLUphblE1N1V4Q3dGZVUtODhMc3BQa0p4WEdEY3NwNlpsaU5zb2haQ2tDV0RaSGd6dEpzTm16d3Y5bTBRUzB6X21LTEZiR1RkNFdxQkttNEFrUkJsYmhxMkNSVGU0aXByTmpsQW9qeDkxa0hUYWt3?oc=5",
-      "source": "TIME France",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T09:17:54Z",
-      "image": "",
-      "score": 121.04,
-      "matched_keywords": [
-        "archives"
-      ]
-    },
-    {
-      "id": "835ffa504d55bdc8bf",
-      "title": "'Livicated' : un docu sur les archives reggae de Roger Steffens",
-      "summary": "'Livicated' : un docu sur les archives reggae de Roger Steffens Reggae.fr",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOZkp3N2sxdFg1c214MUpSYXBwVEJVWlBtc3VsU0NQZXlWV2Z2Nl9GaFVCa0dGSFMzaGNZeGphU0JsM2JPRGtGVEh1aUE4bFd2cmQ3LTFROGhZWVFkY0JLcTNsckk4T3lpSldILWlKeTNlMlc4dW9rR0gtU04wWmtzVkI2bFJfQWk4b2Joa055S3FWNUlmMWF4QUkwMlJOV0FiYko4OHNCMGoxMnhBclE?oc=5",
-      "source": "Reggae.fr",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T07:51:33Z",
-      "image": "",
-      "score": 120.86,
+      "score": 120.74,
       "matched_keywords": [
         "archives"
       ]
@@ -345,7 +269,7 @@
       "category": "genealogie",
       "published_at": "2026-09-12T06:45:00Z",
       "image": "",
-      "score": 120.72,
+      "score": 119.37,
       "matched_keywords": [
         "archives"
       ]
@@ -360,7 +284,7 @@
       "category": "genealogie",
       "published_at": "2026-09-11T17:38:46Z",
       "image": "",
-      "score": 119.09,
+      "score": 117.74,
       "matched_keywords": [
         "archives"
       ]
@@ -368,17 +292,32 @@
     {
       "id": "a66bea665fc00afc23",
       "title": "Puy-de-Dôme : l’église Saint-Jean-Baptiste d’Esteil retenue pour le Loto du patrimoine 2026",
-      "summary": "Puy-de-Dôme : l’église Saint-Jean-Baptiste d’Esteil retenue pour le Loto du patrimoine 2026 lemoniteur.fr",
+      "summary": "Puy-de-Dôme : l’église Saint-Jean-Baptiste d’Esteil retenue pour le Loto du patrimoine 2026 Le Moniteur",
       "url": "https://news.google.com/rss/articles/CBMiigJBVV95cUxOVnNnX2oyUndrd1BlQ0dvcmZuc1BKdVhsMnV1ZEtjblNyZHQtUkw5X0I2ZVlaRlIzR09JaWYteUNVc0diUlgyUXdhYkVWWHJaeGgtTTItQWFuUmZtVldaelJlU01FUUhmLVZvME1nZEVzdmpxNmV0MUhUZ0JxUXItMm5uWVRoOEkxSWY3NS1kNVU3SE0wblFmdE5kYlk1T1M1dWlzTHZlQUptX0ZSUmR0ekRuTGgxTDZpMFZweUxaMWY1VWxYTjRmZmgxeFB4eldjdm56QWlkUnI1dWw2VGhJTFRUbVlKcURNV0xiZkw1VjJtOVBvTXRneUtRRDFob01wZzJOc19oQW1xdw?oc=5",
-      "source": "lemoniteur.fr",
+      "source": "Le Moniteur",
       "source_id": "news-puy-de-dome",
       "category": "local",
       "published_at": "2026-09-10T15:41:23Z",
       "image": "",
-      "score": 118.04,
+      "score": 116.69,
       "matched_keywords": [
         "puy-de-dôme",
         "patrimoine"
+      ]
+    },
+    {
+      "id": "36b1b7821722ef5d32",
+      "title": "Météo. La météo du dimanche 13 septembre 2026 à Clermont-Ferrand et ses environs",
+      "summary": "Météo. La météo du dimanche 13 septembre 2026 à Clermont-Ferrand et ses environs Ouest-France",
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPQWktc3BIcDVMZUtxVU9JbDNzcUMzN2NRVDRUd3RzaGdOR05iOUstYjgwTWo5M2pZWXdnTGU0UVVRVmExSm5kRVhQVUxwUFFvTldnT0ZOM2lWNkpSQ0oxcS1aWi12dHZ2MWxiN2JXaHJ6ZXhhd2hHb3NYRkpuNEt0Z2pDemVsdTlvVHRpVmtsNldqMmZxQXZTTjhjR1BqQnFEdHMtc3F1STdwa05mbFlNTmtoRHpnWVdKRC1SWUotd3M3WEdIY3dYSDZSR3BlRlpYa2ZGbmQ2NlBnV1hZejF1S2tEZks?oc=5",
+      "source": "Ouest-France",
+      "source_id": "news-clermont",
+      "category": "local",
+      "published_at": "2026-09-13T02:34:41Z",
+      "image": "",
+      "score": 115.05,
+      "matched_keywords": [
+        "clermont-ferrand"
       ]
     },
     {
@@ -391,7 +330,7 @@
       "category": "genealogie",
       "published_at": "2026-09-10T08:45:52Z",
       "image": "",
-      "score": 114.98,
+      "score": 113.63,
       "matched_keywords": [
         "archives"
       ]
@@ -406,7 +345,7 @@
       "category": "local",
       "published_at": "2026-09-12T15:02:00Z",
       "image": "",
-      "score": 114.96,
+      "score": 113.61,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -421,7 +360,7 @@
       "category": "local",
       "published_at": "2026-09-12T15:00:00Z",
       "image": "",
-      "score": 114.96,
+      "score": 113.61,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -436,7 +375,7 @@
       "category": "local",
       "published_at": "2026-09-12T13:54:00Z",
       "image": "",
-      "score": 114.82,
+      "score": 113.47,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -451,7 +390,7 @@
       "category": "local",
       "published_at": "2026-09-12T05:00:11Z",
       "image": "",
-      "score": 113.71,
+      "score": 112.36,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -466,40 +405,24 @@
       "category": "local",
       "published_at": "2026-09-12T04:30:00Z",
       "image": "",
-      "score": 113.64,
+      "score": 112.29,
       "matched_keywords": [
         "clermont-ferrand"
       ]
     },
     {
-      "id": "bd0d67e7ad7ff3934e",
-      "title": "Météo. Quel temps est-il prévu à Clermont-Ferrand et ses environs le samedi 12 septembre 2026 ?",
-      "summary": "Météo. Quel temps est-il prévu à Clermont-Ferrand et ses environs le samedi 12 septembre 2026 ? Ouest-France",
-      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPU0MyZVBGQm4tUDJNS2J3YWtkRVViSklKN1ZvMXhzclpnQllJVkVoNGcweVhXMzJrb1RsSnlKSEFhX0k4aUFxYlZhby1YMmN3cmlONFBSV2p2UkQ4YW5lWXNPaFZ6Ul9qalpfM2p2dUR4SWcwM3NXZUFyUlh4dEk2THM0MFYyVlB0Y3luSWFaQzJ2ODZ6a3NUX3FaY3Z5UlZ4Wk9IeHl3WXB5QUgxYzhNUzN5eEdKeFBCSzJqTmg4OVNrRTlqR3h0a0lKRHh0bk9kVHduUk84dE1GbkFzeFMyTW45Mm0?oc=5",
-      "source": "Ouest-France",
+      "id": "a65f3fea282a23a4d6",
+      "title": "Fin de grève à la T2C, durcissement de la répression routière, victoire de l'ASM... les cinq infos à retenir cette semaine dans le Puy-de-Dôme",
+      "summary": "Fin de grève à la T2C, durcissement de la répression routière, victoire de l'ASM... les cinq infos à retenir cette semaine dans le Puy-de-Dôme La Montagne",
+      "url": "https://news.google.com/rss/articles/CBMisAJBVV95cUxQbTVaTkZSaVhoU0FRWnc2bTBIM255M1dLRElKR1JfT2Z1MXhyM1YyTThIUDl0TnNPNjBvOTdBLURTY2hvWjIza2NJc0NHQjl3OTQxVXIya3VVQmtadFBGWWVhTjFYeFNTZHJkMGNfTDdQcWs5WDYzRERoR1FuMlNteFFlY0M0bzVvMFdfV2V2aGp5UEhCSWZqZnJEaFZaZVJKaTA3ZUdhaHB5TlhaRmVNRTBxRUQtZzZ0YUk2eHh3RF9iN0pmQXF3SDBDT3F0Ym55RGhrNms2MHNvZnFPandSaGRFQ1FDazRuOFF3WGdaUXVsN2h1ZS1kZHh6ckNwN0NneU1RQnB0UTlxVVZzWTZTaWlrZXAyQ0VkYjFGRDVXblBqVG9FZ0RsRlNsMVlLVHhM?oc=5",
+      "source": "La Montagne",
       "source_id": "news-clermont",
       "category": "local",
-      "published_at": "2026-09-12T04:17:57Z",
+      "published_at": "2026-09-13T09:25:00Z",
       "image": "",
-      "score": 113.62,
+      "score": 111.91,
       "matched_keywords": [
-        "clermont-ferrand"
-      ]
-    },
-    {
-      "id": "c0c07e98da51ca87ca",
-      "title": "La Peste : l’Europe face à la mort 1/12 : Présentation - La Peste : l’Europe face à la mort",
-      "summary": "L’histoire est jalonnée de grandes épidémies de peste. Cette sélection d'archives sonores nous les raconte, de l'époque de Justinien à la grande peste de Marseille en 1720. Des démographes, des historiens et des médecins analysent l'histoire scientifique, sociale et culturelle de ce terrible fléau.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-nuits-de-france-culture/presentation-la-peste-l-europe-face-a-la-mort-1ere-diffusion-13-09-2026-3216530",
-      "source": "France Culture",
-      "source_id": "france-culture",
-      "category": "histoire",
-      "published_at": "2026-09-12T22:00:18Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/aed1cdd3-615e-4e86-92b6-0f276e2192ca/720x405?webp=false",
-      "score": 113.43,
-      "matched_keywords": [
-        "archives",
-        "histoire"
+        "puy-de-dôme"
       ]
     },
     {
@@ -512,7 +435,7 @@
       "category": "local",
       "published_at": "2026-09-11T20:30:19Z",
       "image": "",
-      "score": 112.64,
+      "score": 111.29,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -527,7 +450,7 @@
       "category": "local",
       "published_at": "2026-09-11T19:22:00Z",
       "image": "",
-      "score": 112.5,
+      "score": 111.15,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -542,7 +465,7 @@
       "category": "local",
       "published_at": "2026-09-11T16:00:00Z",
       "image": "",
-      "score": 112.08,
+      "score": 110.73,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -557,7 +480,7 @@
       "category": "local",
       "published_at": "2026-09-11T15:09:00Z",
       "image": "",
-      "score": 111.97,
+      "score": 110.62,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -565,14 +488,14 @@
     {
       "id": "de61cc966f6d4abdf4",
       "title": "Près de Clermont-Ferrand : la grande vente d'Emmaüs revient ce samedi",
-      "summary": "Près de Clermont-Ferrand : la grande vente d'Emmaüs revient ce samedi radioscoop.com",
+      "summary": "Près de Clermont-Ferrand : la grande vente d'Emmaüs revient ce samedi Radio SCOOP",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNSDhhNDNQQVVVS01fT2RmS2lFSU1wakRYUkNseV9iTnlCc2lPRjJOcDNUYlB6VlBHUFd2VVpwV3RUU0lhenNjWk5xRWFQeXdwMXJwaEpCVXQtS2N3cVpOeTFjVkdYTkpNNDBhRjRXQjRnTkEtWWd4NEt3dWM5dWJVT0lSeURVQjVVREFWSlFFOEFaZEhhT1NQUDI2UHZIV01fekJ5NGtER1NJRkU?oc=5",
-      "source": "radioscoop.com",
+      "source": "Radio SCOOP",
       "source_id": "news-clermont",
       "category": "local",
       "published_at": "2026-09-11T13:47:00Z",
       "image": "",
-      "score": 111.8,
+      "score": 110.45,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -587,7 +510,7 @@
       "category": "genealogie",
       "published_at": "2026-09-09T07:00:00Z",
       "image": "",
-      "score": 111.76,
+      "score": 110.41,
       "matched_keywords": [
         "archives"
       ]
@@ -602,7 +525,7 @@
       "category": "local",
       "published_at": "2026-09-11T10:00:00Z",
       "image": "",
-      "score": 111.33,
+      "score": 109.98,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -617,39 +540,54 @@
       "category": "local",
       "published_at": "2026-09-11T09:12:34Z",
       "image": "",
-      "score": 111.23,
+      "score": 109.88,
       "matched_keywords": [
         "clermont-ferrand"
       ]
     },
     {
-      "id": "a2d16a442a76bc6444",
-      "title": "Rixe à Clermont-Ferrand : un trentenaire dans un état critique après une agression au couteau",
-      "summary": "Rixe à Clermont-Ferrand : un trentenaire dans un état critique après une agression au couteau France 3 Régions",
-      "url": "https://news.google.com/rss/articles/CBMinAJBVV95cUxQU1Fka182MDl1Wi05aUpXYUIwMHlGR2E2SGFHTnlWUHVPa3paX1Jtb1RSdVFoT1dkTE50cHJSTnFfNTFFV2Jqd1YxOHowSDdyYjRSdmx4WmlHR0dxVmNKR1RSZ2dzU3FZRllXYmY1NUl5YWQ5WGR4YTZocmxSOVV1czUwejFPNUNJaHZRODU0anZEcTI5Q1hGX2owMFl5Zjl0MFhGUW0zbTBfcWRabnNBMkdvOG4tYnR1Q21vYlItZi1JUjl4eWdwa1B4M3JGNGUySVZPdmY1bUF5eHhJdUNheDhqbFNUUDJidFpHWUxhbzY0TWJEN2s0dVB2N2JLYXF5OU5ENndVWmpFSUhrVlNfOVVxZnlSazJfN0YxWQ?oc=5",
+      "id": "06bb48ecf60f2dc3dc",
+      "title": "Puy-de-Dôme. L'actualité en bref du Puy-de-Dôme",
+      "summary": "Puy-de-Dôme. L'actualité en bref du Puy-de-Dôme semeur.com",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOdEk1NW0xYjlTTzNWdzlNWENZOXdlU0hjQzF2SHh6cEhJdUVrMEFNOTFLQjdaTVBKN3ZhS0NBaDltNjF6c3ZTbWZxUjRoNzNrN3g4MEJQZWVPcUtiM3c1bXhwN0c2Um1zQ2U0cG5TYm9zWE5hemRNR21xc2w3RXNHR2hSQW9hRjdUam9Gdw?oc=5",
+      "source": "semeur.com",
+      "source_id": "news-puy-de-dome",
+      "category": "local",
+      "published_at": "2026-09-13T10:00:00Z",
+      "image": "",
+      "score": 108.98,
+      "matched_keywords": [
+        "puy-de-dôme"
+      ]
+    },
+    {
+      "id": "93b7efc9abbc86872e",
+      "title": "24 heures sur un tracteur-tondeuse : un défi fou organisé dans le Puy-de-Dôme",
+      "summary": "24 heures sur un tracteur-tondeuse : un défi fou organisé dans le Puy-de-Dôme France 3 Régions",
+      "url": "https://news.google.com/rss/articles/CBMihwJBVV95cUxOYlpXLUotMlhRZnZkRU5EekdfUUtqU1lEckdHT2JhX2pHWF9UQTFrdWR1VXFMYng1TXRIQTlBcEtteDM4NjdMYUpseUQ0NmE0Tm1qTzNEVnV0VGYxY2hYazZweHJtZkVabFAyMVZGZ1NpR2xQYmNGWmp4WjF0WE50VFJVbHltRzJYdVVFX043TW1CSnVhQzdpWmNEbVppNGhBUTZCa1c1Rm9VNXEwdGZmWFN3cjhwNlJYSmNDbTZOcTVtbk1CXzdydk5lcHIyeFI4YXVGZ0RLYXlfd0tiMjRid0k1Z08zSXFmN1Q2NTF3S1djX1RPcXNPRVdTYncxSWpPNGQxZGNMZw?oc=5",
       "source": "France 3 Régions",
-      "source_id": "news-clermont",
+      "source_id": "news-puy-de-dome",
       "category": "local",
-      "published_at": "2026-09-11T07:53:21Z",
+      "published_at": "2026-09-13T08:47:30Z",
       "image": "",
-      "score": 111.07,
+      "score": 108.83,
       "matched_keywords": [
-        "clermont-ferrand"
+        "puy-de-dôme"
       ]
     },
     {
-      "id": "9cdc1212dbf884bd86",
-      "title": "Clermont-Ferrand : un homme agressé à l'arme blanche près de la gare",
-      "summary": "Clermont-Ferrand : un homme agressé à l'arme blanche près de la gare radioscoop.com",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOMlJyOXlJNURNQ0dsalBjZ0JQYXFVSXhpRVdZNGd5aU94VFhESTlsT3YzY1BhekVsTkRGclJuTkVxeFJTUVBkcWJaVGVQVkREQld3RnFqZVlxWF9IcnFwb0FuZUpQRy02MzVYcmNkT1FJczhQa0hkX0Z3QkJsbXVQbUJDQXprclduNVhzQW5MaFZiNTRabjZmYzNJOVhmYnUtR3dodjlGLUUwQQ?oc=5",
-      "source": "radioscoop.com",
-      "source_id": "news-clermont",
+      "id": "1b12eec363a187faa8",
+      "title": "Concerts, spectacles, bals, randonnées... Que faire ce dimanche dans le Puy-de-Dôme ?",
+      "summary": "Concerts, spectacles, bals, randonnées... Que faire ce dimanche dans le Puy-de-Dôme ? La Montagne",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOa2pYNWJpRFlxRTF4RjRtUEJvb1pHaEdoYjA4aDZTV0lPRFhDTVZMbGFuSExkdlNlRlVtWUlZdGJRR3VtWExzaHJEd2lOQ1k3RWFvSHlENVlnZGhJWWtGYndxQkQwb2I4VE1TZjRGV2VOcUR2ajFtdEhBNmtGaHVacWJ4QXFjbC1ER003cnVkWW5GYW03MHA0em8waWx0TXRubU44UEs5MzQyd3F2dTNQRXA1NnYxeGlJek1GOHdBd1p6N2hnOW02dTJWbFVWeDg?oc=5",
+      "source": "La Montagne",
+      "source_id": "news-puy-de-dome",
       "category": "local",
-      "published_at": "2026-09-11T06:36:00Z",
+      "published_at": "2026-09-13T04:02:00Z",
       "image": "",
-      "score": 110.91,
+      "score": 108.23,
       "matched_keywords": [
-        "clermont-ferrand"
+        "puy-de-dôme"
       ]
     },
     {
@@ -662,7 +600,7 @@
       "category": "local",
       "published_at": "2026-09-10T16:08:00Z",
       "image": "",
-      "score": 109.1,
+      "score": 107.75,
       "matched_keywords": [
         "clermont-ferrand"
       ]
@@ -677,7 +615,7 @@
       "category": "local",
       "published_at": "2026-09-12T17:05:01Z",
       "image": "",
-      "score": 108.22,
+      "score": 106.87,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -692,7 +630,7 @@
       "category": "local",
       "published_at": "2026-09-12T16:45:00Z",
       "image": "",
-      "score": 108.17,
+      "score": 106.82,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -700,14 +638,14 @@
     {
       "id": "df5c50aec3de6815f1",
       "title": "Week-end du 12-13 septembre : que faire dans le Puy-de-Dôme ?",
-      "summary": "Week-end du 12-13 septembre : que faire dans le Puy-de-Dôme ? radioscoop.com",
+      "summary": "Week-end du 12-13 septembre : que faire dans le Puy-de-Dôme ? Radio SCOOP",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPcUVGVmtjcEtiX0hZRlNBOUJ1MS1qa29oYUZpb3JEek1TSkd1eVFXVkxlazU5WnhhampXNDhGV1drM2JHYzZ1X20tMmZrUTlOTjZVX2JsX2hXelp6VlRRYk9WbjNqMlhtWjdiWlVJaHFrOUoxR0stVlQyNVRRdVZpZzNOTXVBczlCbjJ0Q1NsWEh1Rkp5RllILW8weF9kZw?oc=5",
-      "source": "radioscoop.com",
+      "source": "Radio SCOOP",
       "source_id": "news-clermont",
       "category": "local",
       "published_at": "2026-09-11T15:56:00Z",
       "image": "",
-      "score": 108.07,
+      "score": 106.72,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -722,40 +660,9 @@
       "category": "local",
       "published_at": "2026-09-12T14:01:00Z",
       "image": "",
-      "score": 107.83,
+      "score": 106.48,
       "matched_keywords": [
         "puy-de-dôme"
-      ]
-    },
-    {
-      "id": "3aecfb2846192d2853",
-      "title": "Loire. L’octogénaire grièvement blessé après une chute à la sortie d’un bus à Roanne est décédé à l’hôpital",
-      "summary": "Loire. L’octogénaire grièvement blessé après une chute à la sortie d’un bus à Roanne est décédé à l’hôpital Le Progrès",
-      "url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxOTXhsQV9RcnNXTEE5RWl2YzB5TW9qemwtd2Rjc19UY0lVbXFSM20xbVc4dGtmNi1jc2tDNWRQd1NoeDFjN1pQOVR5NlhlOFBfYXNZRTdwV2xJaG01M0x6Y0RIQWFmU1lJaS1CY0dNak00X0lPVkk5QXdMbzRBem12UE5KZmpWXzFTeE1EbkpsN3BrYmlzal9jd1BFYWZ0eHpNOWFiM0hsNDBsbEJzSHlHU2tzY2dWWXUxbDduX1RKeVQxZll2WHBPblRub3NfMmV3bUNZV2RZZnZEUzVGbmtrOVY3SjI1aHpMbnYtb2p2MWE?oc=5",
-      "source": "Le Progrès",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-09T15:47:00Z",
-      "image": "",
-      "score": 107.45,
-      "matched_keywords": [
-        "loire",
-        "roanne"
-      ]
-    },
-    {
-      "id": "7c635933f163b68fa3",
-      "title": "\"La saison prochaine, on s'en fout\" : les réactions après la victoire de l'ASM Clermont face au Stade Français",
-      "summary": "\"La saison prochaine, on s'en fout\" : les réactions après la victoire de l'ASM Clermont face au Stade Français L’Éveil de la Haute-Loire",
-      "url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxPbURBUzczN2dZckdaTXllX2tHZUtqWHZ5aXNmT2ZiVThwRlZPZ0h0aks0Z3Z6YVdyZFZzSWg5VWtrOHVobV9jN2JqNk81ZElHc3NfWjNrMmxMLUVrR0lxZEhnU04tTkVBV3ZLUW5sQU40bjg5SHQ2Nlh0NkhFZGdHaUx5NDhiYjl3NWd0Q1BBYnB5UDFaV3ZrQUg5b3BzdEhRc2pOV0xiRk1JSHNPNXlIeFQ0UThVVUwtQzVQWVNNSzR6eEpaay04MElIQTlxNlhiR21GVnNnWkhKQ2pFQlRVQVNQNkk2RG1BMUUyQVE1ak5yWXNEQ3ItWDh4WQ?oc=5",
-      "source": "L’Éveil de la Haute-Loire",
-      "source_id": "news-clermont",
-      "category": "local",
-      "published_at": "2026-09-12T18:53:00Z",
-      "image": "",
-      "score": 107.44,
-      "matched_keywords": [
-        "loire"
       ]
     },
     {
@@ -768,7 +675,53 @@
       "category": "local",
       "published_at": "2026-09-12T05:00:00Z",
       "image": "",
-      "score": 106.71,
+      "score": 105.36,
+      "matched_keywords": [
+        "puy-de-dôme"
+      ]
+    },
+    {
+      "id": "09db56204704601ec8",
+      "title": "À Clermont-Ferrand, la résidence qui promettait de \"vivre sa retraite en toute sérénité\" va fermer ses portes",
+      "summary": "À Clermont-Ferrand, la résidence qui promettait de \"vivre sa retraite en toute sérénité\" va fermer ses portes La Montagne",
+      "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxORVk2eDdOSWdhVjVlN2Z0OHFKS1A5MV8tSWtwd3VFeHNfSmFxbXFibVhDOGxwUk1BUnRibzZQX0ZtNXl6S2ppaGs4bDRFLTY5emFPME16T21xMWlCdy1Ncl9CeVltS1R2elFYNVJYMU9DWXk5Tk9vTnhjT21pN3pIb21GbHo5dVpBWXR4aDlyM2ZBd055WFFRa1JsZXExOWxBbWdtZk1CMDkySGhFajl6ZEtWaTlORV9XZFlQVGxld19kaXEtSGY5SVFJNEhRX3dMdWFEd3A5RDNfQUVGbTdjUExQZ015c2lScFc4ei1yc19QQVU0dktIVXI1dmNkYlJodWs0?oc=5",
+      "source": "La Montagne",
+      "source_id": "news-clermont",
+      "category": "local",
+      "published_at": "2026-09-09T12:41:00Z",
+      "image": "",
+      "score": 104.32,
+      "matched_keywords": [
+        "clermont-ferrand"
+      ]
+    },
+    {
+      "id": "2cd06d88362fdbdddd",
+      "title": "Statues, décors, objets... Ces vestiges archéologiques lèvent le voile sur des traditions antiques en Provence",
+      "summary": "Envie d'en apprendre plus sur la vie antique ? Un musée gallo-romain est ouvert à Sisteron, commune du sud-est de la France, appelée \"porte de la Provence\". Précisions.",
+      "url": "https://actu.fr/provence-alpes-cote-d-azur/sisteron_04209/statues-decors-objets-ces-vestiges-archeologiques-levent-le-voile-sur-des-traditions-antiques-en-provence_64778237.html",
+      "source": "actu.fr — Histoire & patrimoine",
+      "source_id": "actu-histoire",
+      "category": "histoire",
+      "published_at": "2026-09-13T09:56:02Z",
+      "image": "https://static.actu.fr/uploads/2026/09/musee-gallo-romain-c-office-de-tourisme-sisteron-les-alpes-provencales-8-1024x557.jpg",
+      "score": 103.97,
+      "matched_keywords": [
+        "histoire",
+        "patrimoine"
+      ]
+    },
+    {
+      "id": "8deb04f74b1f6165c1",
+      "title": "\"Tolérance zéro\" pour les délits routiers dans le Puy-de-Dôme : concrètement, qu'est-ce qui change",
+      "summary": "\"Tolérance zéro\" pour les délits routiers dans le Puy-de-Dôme : concrètement, qu'est-ce qui change La Montagne",
+      "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxQT3B6LTkyVzlVc3ctdXlRSVNRY0dVclFmU1R0bkVRRnoxVmpLdndoSGhGdHVxYWt4MkhxZ0N2WDhmdWpVcGZKdm9fSm92d2EtdEZ6LWFDOUE0TnVYSGlXTWh5VEthNGgxTE45MjVEUUdvQWEycjF4T2ZBd3Z5djVicmkwT01TMXlQYlU4al9XanNJRXA2WHhPUGNySmxuaVRndGRvZGgyQUV3cllubzJqbk1Ebi0xbkg0c0g4b2RVNXJYRy1XazA4MURSWnoyS1dnSjU1Nk92UXM2Y19UM2RrUWx5Y3QteUw4SUdj?oc=5",
+      "source": "La Montagne",
+      "source_id": "news-clermont",
+      "category": "local",
+      "published_at": "2026-09-10T15:55:00Z",
+      "image": "",
+      "score": 103.72,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -783,7 +736,7 @@
       "category": "local",
       "published_at": "2026-09-11T13:53:40Z",
       "image": "",
-      "score": 104.82,
+      "score": 103.47,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -798,24 +751,25 @@
       "category": "local",
       "published_at": "2026-09-11T13:46:00Z",
       "image": "",
-      "score": 104.8,
+      "score": 103.45,
       "matched_keywords": [
         "puy-de-dôme"
       ]
     },
     {
-      "id": "b6938228645c20962e",
-      "title": "Puy-de-Dôme : un homme retrouvé mort dans un appartement",
-      "summary": "Puy-de-Dôme : un homme retrouvé mort dans un appartement radioscoop.com",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQOFFYVW9EX3JIcG5mbkc3b29seUhDNmRYX1NUYmpGQUs1VHRyWC1GNkVhdHpfTzdVSTBBUE5vbm9KRkx4V2RFSVJYcFMzeU9jMzYzdXY5QkVubXhlbHFIM2VhY3UxcG0zWmJTRjBJSV9CaFNRVFUzc2Fza0xwQ21hNHZKVTk2cFBkZlBlc3h3YS1qVVYwMy02c0Fn?oc=5",
-      "source": "radioscoop.com",
-      "source_id": "news-puy-de-dome",
-      "category": "local",
-      "published_at": "2026-09-11T10:48:00Z",
-      "image": "",
-      "score": 104.43,
+      "id": "80a7b361db6b9202ce",
+      "title": "Bien avant les constructions de Vauban, cette ville du Béarn fut l'une des premières cités bastionnées de France",
+      "summary": "Ce \"Plus beau village de France\", situé au cœur du Béarn, possède de magnifiques remparts, précurseurs des ouvrages de Vauban. Suivez le guide !",
+      "url": "https://actu.fr/nouvelle-aquitaine/navarrenx_64416/bien-avant-les-constructions-de-vauban-cette-ville-du-bearn-fut-l-une-des-premieres-cites-bastionnees-de-france_64781444.html",
+      "source": "actu.fr — Histoire & patrimoine",
+      "source_id": "actu-histoire",
+      "category": "histoire",
+      "published_at": "2026-09-13T03:22:01Z",
+      "image": "https://static.actu.fr/uploads/2026/09/adobestock-318209820-1024x557.jpeg",
+      "score": 103.15,
       "matched_keywords": [
-        "puy-de-dôme"
+        "histoire",
+        "patrimoine"
       ]
     },
     {
@@ -828,7 +782,7 @@
       "category": "histoire",
       "published_at": "2026-09-12T17:04:02Z",
       "image": "https://static.actu.fr/uploads/2026/09/doc-pompei-1024x557.png",
-      "score": 103.21,
+      "score": 101.86,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -844,10 +798,55 @@
       "category": "histoire",
       "published_at": "2026-09-12T14:20:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/saul-1024x557.jpeg",
-      "score": 102.87,
+      "score": 101.52,
       "matched_keywords": [
         "histoire",
         "patrimoine"
+      ]
+    },
+    {
+      "id": "7fc51501151b70624a",
+      "title": "Loire. Entre Saint-Étienne et Lyon, Terrain neutre, le restaurant qui redonne vie au village de Saint-Joseph",
+      "summary": "Loire. Entre Saint-Étienne et Lyon, Terrain neutre, le restaurant qui redonne vie au village de Saint-Joseph Le Progrès",
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOd1BtN3A2ZEVkSW9FM0lZa1l6eGg5bGs5N1Z3cjdxTTV3eEVVcXFjM3BDWjBXM2FGT2N2ZjVSbkkxMVpGX2huekc2TjBUZlZLeFpGQmw1QzlFMDZUQmZGdEF2VGFCWm9sZ2JxQ2xfYlBETUpxSkV5eWxCNExYTXdIUHhCVGNoQ2dfMk9hTGpXWXVSNEUtdmRyZ3RIUVlIYW5maWZhVkQ0TXRhZ0cwN1pUTXlxSktYUWNfaXZuZVdn?oc=5",
+      "source": "Le Progrès",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-13T10:02:40Z",
+      "image": "",
+      "score": 101.39,
+      "matched_keywords": [
+        "loire"
+      ]
+    },
+    {
+      "id": "5c6f9898a8be79d8c4",
+      "title": "Val Grangent : 13 000 billets déjà vendus pour son prochain spectacle à Saint-Étienne",
+      "summary": "Val Grangent : 13 000 billets déjà vendus pour son prochain spectacle à Saint-Étienne TL7, Télévision loire 7",
+      "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNenB4ZnFDNFpSZUM5M2ZuZkdlZXdQZ01HTmlUTTJJeWlJeW1WczJtdmpaMVBSM1JsX3hMOWZYbVE1elppNVpDdDEtSGhQZXpPbWtPdmdGYzZVSzRMYTRfbTl3YUtlSFlqczE1OElQbnNHemppT2FXOTl5SXRmV3pYQTVaNzJOUzJqVENJeHNibnc0QkFBQTI3NkNZRF94RVR5TXZhV2F3SmFKbGxLZ2RuSEtLbDF2SWVHbDZtcDg3VlhQXzZ6NDRaWENtaW1hV0dMc1JJMHdXcHZYRmpOZWF3QmY4WEhDUQ?oc=5",
+      "source": "TL7, Télévision loire 7",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-13T08:37:41Z",
+      "image": "",
+      "score": 101.21,
+      "matched_keywords": [
+        "loire"
+      ]
+    },
+    {
+      "id": "2745c9a443d4f271ee",
+      "title": "ROANNE : Jean AUROUX - L'architecte des 39 heures et des congés payés se livre",
+      "summary": "ROANNE : Jean AUROUX - L'architecte des 39 heures et des congés payés se livre Presse Agence",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPb0ZqZEFHUXBycnl5Mmp6X3FQNEd2NmpXY0JPN3RibWkzY2tXVFNHRFR6ejdjRnNsQm44VGVBbmdneV9rWDBXaTlyZE1sM2VjN0FoX2FwOTFqSGlELTl3elA2UFg4Zm9BQjFRNDVtWFI2UTBvemxrVjVBTjZvZHJka2huOHk2UVhLSm1zNUVHNWNtTTVXOXVlVVdSSVdQblk?oc=5",
+      "source": "Presse Agence",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-13T08:00:00Z",
+      "image": "",
+      "score": 101.13,
+      "matched_keywords": [
+        "roanne"
       ]
     },
     {
@@ -860,70 +859,55 @@
       "category": "histoire",
       "published_at": "2026-09-12T10:02:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/chateau-ducs-lorraine-sierck-les-bains-1-avachez-actufr-patrimoine-3-1024x557.jpeg",
-      "score": 102.33,
+      "score": 100.98,
       "matched_keywords": [
         "histoire",
         "patrimoine"
       ]
     },
     {
-      "id": "1e818c55def95171ee",
-      "title": "\"Sans permis, plus besoin de faire le plein !\" : réactions contrastées aux annonces de la préfecture du Puy-de-Dôme",
-      "summary": "\"Sans permis, plus besoin de faire le plein !\" : réactions contrastées aux annonces de la préfecture du Puy-de-Dôme La Montagne",
-      "url": "https://news.google.com/rss/articles/CBMiigJBVV95cUxOdHlSeGFNWnFGbXpZUi1CTmFCN2lfWFpEeEtDWnc3QUVPTm9EdDBTb1djdktxdE1rdmdsX1hGblJaTlRKZnFkTGUtS1FYcHVmbkNvaGhlSDNQVml1S2ZIZmp3ZjhEOV9jU0hnR3Fwd3pwZ05UejVheWdNczUwQjRnQ2lQOUNUSVF6cmQzT0xkcFRwUDJqMkdLNlAwVnc2NERhRm51ck1vRlh0bTRlemJjT29pYnRKRVZKTHh3dlBNaFFkZjFpdXk3QjVJN2RoU2pUU0ZKTE9XZ2l0a1RTZU83LW9lTEl0RU4zYVV3ZWZwQWh3QW5mX1JSZ1VldWJVTVRtbkZPb2VreUlvUQ?oc=5",
-      "source": "La Montagne",
-      "source_id": "news-puy-de-dome",
+      "id": "f936d02f566ed092d6",
+      "title": "Regarder Roanne vs. Lyon-Villeurbanne en Direct Live | DAZN FR",
+      "summary": "Regarder Roanne vs. Lyon-Villeurbanne en Direct Live | DAZN FR DAZN",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNNFNnbDdFakxsVGFDZTJBSFA4OFc3OHdHM3NybF9lajVmdmlIUVlUcUZTbHh6aDJmWHpaQUF6dzk2T1Z2eEtMQ0VuNFAyOG53X2xpU3p4bzZiQ0NHVHI3NmUzeEpOVENCeUdIZFNnX1FjTC1nNmVhOF9scHN6cHpfZGpCLThvSGRzR05NQQ?oc=5",
+      "source": "DAZN",
+      "source_id": "news-loire-roannais",
       "category": "local",
-      "published_at": "2026-09-10T18:00:00Z",
+      "published_at": "2026-09-13T06:25:16Z",
       "image": "",
-      "score": 102.33,
+      "score": 100.93,
       "matched_keywords": [
-        "puy-de-dôme"
-      ]
-    },
-    {
-      "id": "1bc850bb1c2e3e59e7",
-      "title": "\"Tolérance zéro\" pour les délits routiers dans le Puy-de-Dôme : concrètement, qu'est-ce qui change",
-      "summary": "\"Tolérance zéro\" pour les délits routiers dans le Puy-de-Dôme : concrètement, qu'est-ce qui change La Montagne",
-      "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxQT3B6LTkyVzlVc3ctdXlRSVNRY0dVclFmU1R0bkVRRnoxVmpLdndoSGhGdHVxYWt4MkhxZ0N2WDhmdWpVcGZKdm9fSm92d2EtdEZ6LWFDOUE0TnVYSGlXTWh5VEthNGgxTE45MjVEUUdvQWEycjF4T2ZBd3Z5djVicmkwT01TMXlQYlU4al9XanNJRXA2WHhPUGNySmxuaVRndGRvZGgyQUV3cllubzJqbk1Ebi0xbkg0c0g4b2RVNXJYRy1XazA4MURSWnoyS1dnSjU1Nk92UXM2Y19UM2RrUWx5Y3QteUw4SUdj?oc=5",
-      "source": "La Montagne",
-      "source_id": "news-puy-de-dome",
-      "category": "local",
-      "published_at": "2026-09-10T15:55:00Z",
-      "image": "",
-      "score": 102.07,
-      "matched_keywords": [
-        "puy-de-dôme"
+        "roanne"
       ]
     },
     {
       "id": "127cc402c6c2ca350d",
       "title": "Puy-de-Dôme : rénovation de la chaussée sur l’A711, entre Lempdes et Pont-du-Château",
-      "summary": "Puy-de-Dôme : rénovation de la chaussée sur l’A711, entre Lempdes et Pont-du-Château lemoniteur.fr",
+      "summary": "Puy-de-Dôme : rénovation de la chaussée sur l’A711, entre Lempdes et Pont-du-Château Le Moniteur",
       "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxQZE5KWjBZdGFpRlkxZGc3ZDVIaWNBR0xINFQwVXR1OWJidHJJa09DMTBLdS1HVlFLMElZb1pYeDQzVUJvcDQtMXRXNVVPSV95alJ2TnZYaGlabVFJaG9oY1I3alNDT1FUY1d6aFd5cklzdkZjangtZ0lsUzFvbVdLbzA0MXkxTFRKVDBxajVEVE9tUjB5aENja1g1LWY4LXJUa091eGJBbUw4MVpKelRGcFJjUy1oenNCQ21pNE9oME9UQ1Fscy1pZWM5QmlHRXhpQXlBNmw1cERTNVZldHBxT0Y0b2ZtcmJWQk1kQ19kdUNhMU1TRFU2RTNzMTRyUkdM?oc=5",
-      "source": "lemoniteur.fr",
+      "source": "Le Moniteur",
       "source_id": "news-puy-de-dome",
       "category": "local",
       "published_at": "2026-09-10T15:31:24Z",
       "image": "",
-      "score": 102.02,
+      "score": 100.67,
       "matched_keywords": [
         "puy-de-dôme"
       ]
     },
     {
-      "id": "7b09f076fd6fe5d921",
-      "title": "Puy-de-Dôme : réhabilitation et extension de la Maison des associations à Ennezat",
-      "summary": "Puy-de-Dôme : réhabilitation et extension de la Maison des associations à Ennezat lemoniteur.fr",
-      "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxOeDlwU0g2bDBka3FLc20zUzQ1X1hFS3o3YzV1SkY1azJkMkdrWHo0U3NqUjZDV29aV3k0R3FwX1NCRmd5a1pTMThjLUxSVkN5bGFIRzhBVHdHaEVkTkpwZG13VnZKNFE3LXdSWklHcHZpN2Vrd2l3YnVnRGx0OHgwUVNrTjlIRVUtMHRVVUgyTFJ6MUlfd0tLempuZGtCaGRsZXJlWkdmYTUzX2xaUm5wVEcwUnIxRHZ4NkVyeTZTRjJyajVONmszZllHQmFRRWtDOWlnOTlTdUJESXJISi12cW14TEFqX2x4RE5lNHZESUV4ZXN5V1VxQTJNXzU3eTQ?oc=5",
-      "source": "lemoniteur.fr",
-      "source_id": "news-puy-de-dome",
+      "id": "a4ee40ed83bd06166f",
+      "title": "Météo. Les prévisions météorologiques du dimanche 13 septembre 2026 à Roanne et ses environs",
+      "summary": "Météo. Les prévisions météorologiques du dimanche 13 septembre 2026 à Roanne et ses environs Ouest-France",
+      "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxPdmdhZGc3dVBFV0FMakZUN1FsazZITGIwalNlcUFod3J5RG8tLUJ3S2tTTWladXVlYlBkVzVaeHZweDE3T3ZGSFY1NlBvZ1ZmTGlGZWg5bk1aeFNsZzRCalpua01FQVVjaDJxd1UwZ1NlQ2szcUdkMi1leFR2bFdvV1N6RENEUlJMWlk0RlphSFhTZ1JzangyR3hKb3pFUzhmdUJock9zTGhRcFA3MEdoYkpaM0xVQTdwNHlqTFZIb2xjb2FmUktqUTJLdWVvdGV4M1pURmFfNHB0d2JG?oc=5",
+      "source": "Ouest-France",
+      "source_id": "news-loire-roannais",
       "category": "local",
-      "published_at": "2026-09-10T12:37:03Z",
+      "published_at": "2026-09-13T03:56:23Z",
       "image": "",
-      "score": 101.66,
+      "score": 100.62,
       "matched_keywords": [
-        "puy-de-dôme"
+        "roanne"
       ]
     },
     {
@@ -936,7 +920,7 @@
       "category": "histoire",
       "published_at": "2026-09-12T03:20:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/adobestock-673677158-editorial-use-only-1024x557.jpeg",
-      "score": 101.5,
+      "score": 100.15,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -952,7 +936,7 @@
       "category": "local",
       "published_at": "2026-09-10T10:06:00Z",
       "image": "",
-      "score": 101.34,
+      "score": 99.99,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -967,7 +951,7 @@
       "category": "local",
       "published_at": "2026-09-10T09:32:00Z",
       "image": "",
-      "score": 101.27,
+      "score": 99.92,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -982,7 +966,7 @@
       "category": "local",
       "published_at": "2026-09-10T09:14:13Z",
       "image": "",
-      "score": 101.23,
+      "score": 99.89,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -997,7 +981,7 @@
       "category": "local",
       "published_at": "2026-09-10T08:05:00Z",
       "image": "",
-      "score": 101.09,
+      "score": 99.74,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -1012,7 +996,7 @@
       "category": "local",
       "published_at": "2026-09-10T07:29:16Z",
       "image": "",
-      "score": 101.02,
+      "score": 99.67,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -1027,7 +1011,22 @@
       "category": "local",
       "published_at": "2026-09-12T18:10:00Z",
       "image": "",
-      "score": 100.75,
+      "score": 99.4,
+      "matched_keywords": [
+        "roanne"
+      ]
+    },
+    {
+      "id": "72cbc04a6bb0f934d5",
+      "title": "Roanne. Initiation à la voltige, spectacle, défilé... « On a envie que la Fête du cheval prenne de l’ampleur »",
+      "summary": "Roanne. Initiation à la voltige, spectacle, défilé... « On a envie que la Fête du cheval prenne de l’ampleur » Le Progrès",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOYm1EWGFQYVVFaUVtVWx5OUhzdDA0LXc5emE0U05FQzZ1bm5ja2hoUkJXMnQ3TklDOWFweGh5V1ZyVlV6ZEFIRWk3ZGJ6emwzWE1pR0JlLVNEeEZxcFUwbXV5NjBjUjJQcnM5V1pDcU1vbWNlMlZLU0htU0s1RzhUcE9iQ0NndUpIOEtBV0xmalVHRUoxSXBtanRoRzR5VDYycGhpeENjbWRkRGtHRHhqZjBPZm1RdVNmMXV3MWhmS1hocDBEeGRkdXkySUNWeVZnVjFj?oc=5",
+      "source": "Le Progrès",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-12T17:01:01Z",
+      "image": "",
+      "score": 99.26,
       "matched_keywords": [
         "roanne"
       ]
@@ -1042,7 +1041,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T18:02:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/coup-pouce-illustration-pixabay-1024x557.jpg",
-      "score": 100.33,
+      "score": 98.98,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -1058,9 +1057,25 @@
       "category": "local",
       "published_at": "2026-09-12T13:57:00Z",
       "image": "",
-      "score": 100.22,
+      "score": 98.87,
       "matched_keywords": [
         "roanne"
+      ]
+    },
+    {
+      "id": "3c2249a77b733c1777",
+      "title": "Une commune, 14 églises : comment financer la restauration des édifices religieux ?",
+      "summary": "Plus d'une église sur 10 pourrait être abandonnée, vendue ou détruite d'ici 2030, d'après l'observatoire du patrimoine religieux. À Vexin-sur-Epte dans l'Eure, la commune compte 14 bâtiments religieux à entretenir ou restaurer. La municipalité est tenue de faire des choix.",
+      "url": "https://france3-regions.franceinfo.fr/normandie/eure/une-commune-14-eglises-comment-financer-la-restauration-des-edifices-religieux-3415595.html",
+      "source": "France 3 — Histoire",
+      "source_id": "france3-histoire",
+      "category": "histoire",
+      "published_at": "2026-09-11T16:36:59Z",
+      "image": "https://france3-regions.franceinfo.fr/image/Vsho32-1vTWVIsJiF3BlbUV7JpE/930x620/filters:format(webp)/regions/2026/09/11/6aa42ca1f3989877269246.jpg",
+      "score": 98.81,
+      "matched_keywords": [
+        "histoire",
+        "patrimoine"
       ]
     },
     {
@@ -1073,7 +1088,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T15:02:02Z",
       "image": "https://static.actu.fr/uploads/2026/09/adobestock-22639480-1024x557.jpeg",
-      "score": 99.96,
+      "score": 98.61,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -1089,7 +1104,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T09:56:02Z",
       "image": "https://static.actu.fr/uploads/2026/09/singin-in-the-rain-domaine-public-1024x557.png",
-      "score": 99.32,
+      "score": 97.97,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -1105,7 +1120,7 @@
       "category": "local",
       "published_at": "2026-09-09T16:42:31Z",
       "image": "",
-      "score": 99.17,
+      "score": 97.82,
       "matched_keywords": [
         "puy-de-dôme"
       ]
@@ -1120,24 +1135,9 @@
       "category": "local",
       "published_at": "2026-09-09T15:42:40Z",
       "image": "",
-      "score": 99.04,
+      "score": 97.69,
       "matched_keywords": [
         "puy-de-dôme"
-      ]
-    },
-    {
-      "id": "b46f8176eb834bb5ea",
-      "title": "Roanne. Après 38 ans, ils tournent la page de Couleur café : « C'est une fierté d'avoir tenu aussi longtemps »",
-      "summary": "Roanne. Après 38 ans, ils tournent la page de Couleur café : « C'est une fierté d'avoir tenu aussi longtemps » Le Progrès",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOSnV0RTBpTUdmWTJHY1N3VkZWaFQ0b2JscTIydVJINmVLRGYzdmFwZkpsb1B3R3VyOFZOcnNwM3Z0VHl0YjlRZjJwLXhYelRreVhWclVSTVFWSzZrWUE1a2hEMVgzTVQ4cm1ZZGEtNEJmWkZmTFl0YTNvdWcxVmM3RlZCSjJINlZMZWpHSkRULWdRejhUOEhvSkktOXR2aUwtZG9aeUdZVlVTSV9mZXVRcURNQnM?oc=5",
-      "source": "Le Progrès",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-12T04:01:55Z",
-      "image": "",
-      "score": 98.98,
-      "matched_keywords": [
-        "roanne"
       ]
     },
     {
@@ -1150,7 +1150,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T04:02:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/victor-hugo-par-nadar-environ-1884-domaine-public-1024x557.png",
-      "score": 98.58,
+      "score": 97.23,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -1166,7 +1166,7 @@
       "category": "histoire",
       "published_at": "2026-09-10T17:56:02Z",
       "image": "https://static.actu.fr/uploads/2026/09/manuscrit-bnf-1024x557.jpg",
-      "score": 97.32,
+      "score": 95.97,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -1182,7 +1182,7 @@
       "category": "histoire",
       "published_at": "2026-09-10T16:42:02Z",
       "image": "https://static.actu.fr/uploads/2026/09/sarah-bernhardt-par-nadar-photo-gallica-bnf-1024x557.png",
-      "score": 97.17,
+      "score": 95.82,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -1198,10 +1198,25 @@
       "category": "histoire",
       "published_at": "2026-09-10T15:09:03Z",
       "image": "https://static.actu.fr/uploads/2026/09/louis-xv-1024x557.png",
-      "score": 96.97,
+      "score": 95.62,
       "matched_keywords": [
         "histoire",
         "patrimoine"
+      ]
+    },
+    {
+      "id": "fe74ff93cf12066413",
+      "title": "Vosges. Remiremont : les naissances et les décès inscrits à l’état civil cette semaine",
+      "summary": "Vosges. Remiremont : les naissances et les décès inscrits à l’état civil cette semaine Vosges Matin",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPM255WG1RX0ozMU5VZzI0dTdCbFlZLTVQUGM0Slk1MF9nOFFjRWRyYkZfVFIwcXktdld6OGZqZ0RKVU5neEVuX0MtdVlyR1lhU2VPX3MtNGVhS1VnZk1IVzVwTjgyeEl0ZUo5bzBDYjFTNUhMU0lpRWhULWlBT2M1dWhrQzVyeTNFNVNLQng2RmxiSVgza1NweGRrT0liZFM4THl4S2g4MkxaOWFEamJfUGRyczdmd0VSVkZJcG1RTXNVb0ZLQmQ1M2FzN2M1a0c3?oc=5",
+      "source": "Vosges Matin",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-02T07:00:00Z",
+      "image": "",
+      "score": 95.0,
+      "matched_keywords": [
+        "état civil"
       ]
     },
     {
@@ -1214,11 +1229,115 @@
       "category": "histoire",
       "published_at": "2026-09-10T09:54:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/capture-decran-2026-09-10-110153-1024x557.png",
-      "score": 96.32,
+      "score": 94.97,
       "matched_keywords": [
         "histoire",
         "patrimoine"
       ]
+    },
+    {
+      "id": "b52c885cdfc0a281d9",
+      "title": "Photos pour Gala",
+      "summary": "Photos pour Gala RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNRGVicWFwcU1rWS1kZ1VUeDdIQjVtZUlYTTdBLTBpOFgzd2lfUmJxTlJyNDRad080ZFpGejZLMGpwWXJVTlFIVUlkbjRoVkdLeWxvOGVhd2RIMUVMakVPQWNlUi1Mci02c2RtaS1nY2JXWDdvNi1VMFYzOXQxMDVuelVVT1FoSUR4Mmk1Rg?oc=5",
+      "source": "RobbieWilliamsLive.com",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T10:29:45Z",
+      "image": "",
+      "score": 94.84,
+      "matched_keywords": []
+    },
+    {
+      "id": "1dfd7eea67a63573dc",
+      "title": "Diffusion de Lovelight sur W9",
+      "summary": "Diffusion de Lovelight sur W9 RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNMWVJcXcyUzJZRXhPajI5djdBME1DN1kydm5PTjRXaWphR3pwTE1zVnA0NFprV0FOZlpGbjNpUlBNNXZXUWVTaHpRS3VlYkdMdkM1d3hzZTBQcXhrU3RHUl9KY05Xa1djenJVTWhyQzJfUnFRR3dOa01wQzFzZHVaRXlScER4amswQXNfRGh4ajktU1FiSExTM05OcnBEMU9mX2pTTEoxLVZxM3Iy?oc=5",
+      "source": "RobbieWilliamsLive.com",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T10:24:41Z",
+      "image": "",
+      "score": 94.83,
+      "matched_keywords": []
+    },
+    {
+      "id": "bc2305ee1c839ba6f7",
+      "title": "Robbie arrête de fumer",
+      "summary": "Robbie arrête de fumer RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPVU1CWkllOHBnNkEzd2JLdDg0X0NiQmFjTkhBdmtBX3c1MVB0cHlueU1hVlNBMV9ycG5hMkJfTkxQdW5lRkVlbGoybS1uMEJNZlQ3SmdKLWZkYkEwZmhWX09TdjlxaHhzUTk3R2ZQX05nV25PbkNqR2FpSVlKYjdUVURsZDRTZTI0Y2E0ZGVKcXR4ZFJa?oc=5",
+      "source": "RobbieWilliamsLive.com",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T10:04:52Z",
+      "image": "",
+      "score": 94.79,
+      "matched_keywords": []
+    },
+    {
+      "id": "fc1bfe2be372aff544",
+      "title": "25 ans de mémoire auboise",
+      "summary": "25 ans de mémoire auboise Canal 32",
+      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQdkdHT2t6MHVHbTIyZk8yVFp2OVNpR1IzNUxKWFhHWTNFbnVDVjRPSGdlWl9QbF9Md09mTkxGbHJkOWtOT3l3UWZFY0ZTTF95eHBSLWp0VGJGZGZWMVFiTVpaUlhHWDd5RTQzcUFkSmo5Q2VjX1B6Wk5jemdWV0U4M0xQWFktUTBxemZjbTVpOA?oc=5",
+      "source": "Canal 32",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T09:55:29Z",
+      "image": "",
+      "score": 94.77,
+      "matched_keywords": []
+    },
+    {
+      "id": "a0af3658a18219d83e",
+      "title": "Soccer Aid : Le Match!",
+      "summary": "Soccer Aid : Le Match! RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPZ0x6cE5HalhtSjhrb1AzSGpxRU85cWIxVEdBbjJyRzRDYURYY1B3RnZwUVk5RXZteTdtLU5wWXJRZFM4Qm1SQU1DbExkaW9qQmUtY2NGTmNhRDBnakhsS3czTFR3NzVhaS0xLVVWMklENTg3QjdlVXBLWEtuU1BCRDV1ckk3RndqVHZJZnYzYTE4OTg?oc=5",
+      "source": "RobbieWilliamsLive.com",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T08:49:30Z",
+      "image": "",
+      "score": 94.63,
+      "matched_keywords": []
+    },
+    {
+      "id": "f7a355d6552d7c80ea",
+      "title": "Sondage RWL : les meilleurs albums / singles / clips",
+      "summary": "Sondage RWL : les meilleurs albums / singles / clips RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNaG4xNlR5SVJOLVE1LVRQVnNIeGFDb1AzT3hJZGpXZFoxSExiNk9kalE0TWZoU05hdVVIQ29JcEc5bVpqRDNVZl9HQ0lTZTZRQ3l0STE1ckNpQU5QV3otZ2ZPVldkTkpFYVBsWl9OYXNxWllMVFZvMTB4VUVDZ0xhSHdqaDV1Q2RuSld5VGZhem1WMnJiemQ1NEQzbGpnU3dGTU1IN1VBZHBwQnMxSy1YVg?oc=5",
+      "source": "RobbieWilliamsLive.com",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T08:19:13Z",
+      "image": "",
+      "score": 94.57,
+      "matched_keywords": []
+    },
+    {
+      "id": "ec3f89930a0ea50c15",
+      "title": "Les Versions",
+      "summary": "Les Versions RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPYlEtVERJSnBHNzRoZlB3SVdVWHVlSm1KWXJsX2JqZnpUZVFhQ2FsUmZaSWxGRDlBNElPLThtWmNQLU1DVFlsbGtRbE1TMWtVaTJicHZha2EwLUZXN3ZTVmNWLTZCanBPOVMtbFB2cjdZOFp0RjZlbFZZWWg5RGVaUmg3OU1uTjc0ZzE0Z2gyYWFyWmM?oc=5",
+      "source": "RobbieWilliamsLive.com",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T07:24:16Z",
+      "image": "",
+      "score": 94.46,
+      "matched_keywords": []
+    },
+    {
+      "id": "f1cbdbb417316982c2",
+      "title": "Changement de Date à Abou Dabi",
+      "summary": "Changement de Date à Abou Dabi RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPcE9qRFVHWWZSdEFmaThoUFVOVzN3dFlWbE5hYWhnc0lrbnBqZTFQNmV2U1JjTUdfaF9wTy1qTlVUMV9XRWpwcFlKWU1MSmo1cGctTjVLWDlIcWlPYlNXUkpEMW1zeFcwYmxPSWI4ZTVQSV96QUlQcHN1S0Yxb0ZRYWFGVzZxcWtOVjV6YWlrOUt5VnpwN3NHQmJuVW50a3F3?oc=5",
+      "source": "RobbieWilliamsLive.com",
+      "source_id": "news-genealogie",
+      "category": "genealogie",
+      "published_at": "2026-09-13T07:04:06Z",
+      "image": "",
+      "score": 94.41,
+      "matched_keywords": []
     },
     {
       "id": "fe20ecb3756bdb27e9",
@@ -1230,75 +1349,75 @@
       "category": "histoire",
       "published_at": "2026-09-10T04:02:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/maisons-penchees-amsterdam-avec-crochet-photo-par-eduard-shelesnjak-adobe-stock-1024x557.jpeg",
-      "score": 95.58,
+      "score": 94.23,
       "matched_keywords": [
         "histoire",
         "patrimoine"
       ]
     },
     {
-      "id": "97f23e3b8523a866e4",
-      "title": "Lisbonne : 40 minutes en vidéo!",
-      "summary": "Lisbonne : 40 minutes en vidéo! RobbieWilliamsLive.com",
-      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOMGljR2d6RVBXT01INEF2QkFYZ0t4WHVtMEFsejNpUXpmaHdRSzZJY1A3VHNPYjNWV3N0TW5WbXlpRk56WnpEdUdEMWdYSVpocVYxaE9fQTAtUXRhNXE2aGEybUx5XzhKRHRRWkt0dllCMnJoLXZLdmxsNGhHVmdqbnJzRTJOckUxMjQtTmhVeEtQSTFtY3FhRmo3eDU4QQ?oc=5",
+      "id": "7331605ab7fe7c2208",
+      "title": "Bientôt mariés ??",
+      "summary": "Bientôt mariés ?? RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNRzZmRTZZS0ZiRWphOWtuRWt3aWUtcHZnUGJUY25Qc2VyazhYcWdjS3BhM0hodUxFTGNBWkp3dmFpZFVFSm9QZG9Mdi1MZTlUblluVk5LQVh2VU9KaUVFQWc1WEdKT1d6ZXlSRFlHdmlWWG82eE9NTW9yclcybHZQV1ZHV1hhUQ?oc=5",
       "source": "RobbieWilliamsLive.com",
       "source_id": "news-genealogie",
       "category": "genealogie",
-      "published_at": "2026-09-12T23:47:30Z",
+      "published_at": "2026-09-13T05:18:51Z",
       "image": "",
-      "score": 94.85,
+      "score": 94.19,
       "matched_keywords": []
     },
     {
-      "id": "6cc7b018d4ebaef4fc",
-      "title": "Bodies : Semaine 5",
-      "summary": "Bodies : Semaine 5 RobbieWilliamsLive.com",
-      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPYWI0ZF92Ymp2QThsOC1UUnBQbnlJT2ZtQ2lnRTJ3TjZNUWNOVU56a0VQb1ozVkFfS0JSNW15cEpDWFI0b3ZQb0hTSkFUN1VmSGVucnh3X2hnQWpELTQ2WUJUSHdfZ3B4cEJOb2Z5ZFdHTXE0dHhTbG05bENYdVRUOG9UVU41VjEyaGxiOQ?oc=5",
+      "id": "3439719730cee24153",
+      "title": "Tallinn : Vidéo du Prologue!",
+      "summary": "Tallinn : Vidéo du Prologue! RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQbHFaRV9lbFFXbWZybDVxYm9YeFJ1M3AtNkFrN1lLaWNjWnFBNmRUNVRXTUtsZEgtOGVHNGh1V3J2a1NLblhXbkh2S3ppMzBCa2x6VUc0azdPcW03VllUbC1BZ0NjbHc1NFVhdERTOU1pS0xvYVRlaHpxNWdLcWJSb1VyLTlkYi1SRUR3Uzl1MC1ZeEN0b0kwV3J3?oc=5",
       "source": "RobbieWilliamsLive.com",
       "source_id": "news-genealogie",
       "category": "genealogie",
-      "published_at": "2026-09-12T21:26:54Z",
+      "published_at": "2026-09-13T04:58:16Z",
       "image": "",
-      "score": 94.56,
+      "score": 94.15,
       "matched_keywords": []
     },
     {
-      "id": "b1f218e95c751353f0",
-      "title": "Article : Hello! - Edition russe",
-      "summary": "Article : Hello! - Edition russe RobbieWilliamsLive.com",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPRVZOMHNONk1lYXZlWk1LOTAyODlFSmZBY2NULUtyd3NiMlBxOXlaaWxET3I4R0R6dndqZmh3WVJDMGRuZVhwcWJDaXJjTWhUZENpMU8xWUEwWkZBU19DR0E0UTVOVUs0UExSUklyU1J6QzQ0OV9IcWdlS3RCanlydjg4aG9vTXB3b0k1TFZvU3hHY2ZSWV9hbmN0cw?oc=5",
+      "id": "d9c1f479f0b4ad0a83",
+      "title": "Café Royal : Les photos Promo",
+      "summary": "Café Royal : Les photos Promo RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQM0FkQnhJX3p2LUd5VVBLZGNDamZQbEhfRWRsOFowSUlTSUxxMmdyNUtUR2RES1hOUURydFFkdkxqV1dfSlhDN1Nrd2N3RWhhR1A1Y0ZRWjF2clU1akpjUFlRa05XbmRIWEtseWhzMU1QM2hFdEoyWGVGZlpEaW05TVYwVWFHUlJKUVg3SWFJbkp6WDNSd1BxMWFn?oc=5",
       "source": "RobbieWilliamsLive.com",
       "source_id": "news-genealogie",
       "category": "genealogie",
-      "published_at": "2026-09-12T20:56:57Z",
+      "published_at": "2026-09-13T04:43:33Z",
       "image": "",
-      "score": 94.5,
+      "score": 94.12,
       "matched_keywords": []
     },
     {
-      "id": "e13361376f987cb36d",
-      "title": "Des places à gagner pour le concert de Robbie",
-      "summary": "Des places à gagner pour le concert de Robbie RobbieWilliamsLive.com",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOdUFpaURFdFBydXNwaUhuY2EwQzU0R0UzS0FUVm5jd19mNHoxYklpcDBuMFUyNVhmY1FPWGVQSm1xOG9CMUFUZzdSRjFXWVlOazQwWmF3bGJBeFdJMlNZM196VHpGU3cyVXg4VlE2Uzk4dmJhUXMyVUhnelVtYkQ2V2F2MzhpcmhUTV9qLWZxaE9OVjlwRjdXUWUyR3UyeFNEb0dvVlI0cEZyTXBITHZzS0dR?oc=5",
+      "id": "0f8f5cd3844a09b8ef",
+      "title": "[LIVE] Robbie à Melbourne!",
+      "summary": "[LIVE] Robbie à Melbourne! RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOakljSjNMTnZqNWZNRVdzLThjRGZWRUxWS2xzWFlra3IxaU1XOWdyb2ljYzFKcmtqQzFiOE95YjJHSXFrS3ZwZmdJZFVxNU9mSEgwMzNpTE5UbTIwYlpEd2NVMzVkTjdxb3pqUHpwTWNEVGJHS0N3N3doeVRYZ21reDZYeWVWc28zLWhZcVFaZXJzZDlGMXc?oc=5",
       "source": "RobbieWilliamsLive.com",
       "source_id": "news-genealogie",
       "category": "genealogie",
-      "published_at": "2026-09-12T20:46:42Z",
+      "published_at": "2026-09-13T04:33:33Z",
       "image": "",
-      "score": 94.48,
+      "score": 94.1,
       "matched_keywords": []
     },
     {
-      "id": "ba07f7f2e5f05c10c0",
-      "title": "Quand un T-Shirt dévoile une nouvelle date!",
-      "summary": "Quand un T-Shirt dévoile une nouvelle date! RobbieWilliamsLive.com",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOWUR4OW1CN0sxbV9vQ1pnVllpRDlEOVZ5TGV5cnBOaWcwWXE1SDhOQmpNN1UybHZHa0N0RTNpWmZaZ2pmUWpXZjAwSm1QVHA5WE1GdTJQOHVXZkZvdHZwckhTNTFXelFXMHV2SVdaUXd1U2pvYm9zNnp4LS1OSzljV0YyV2hRaDNfTnVfNG1HZ21lb1R2SW1HRWhsSUVwb0dkQ3FINjdkcTdsUmpKc0VTeA?oc=5",
+      "id": "d1a9d5bdafc3b2d6d4",
+      "title": "Making of Different",
+      "summary": "Making of Different RobbieWilliamsLive.com",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxObEpURGJmTERuZ28wNS01QWNVc2xLeTdzclpidmRnb1RNLTlZRVIzMlZRei1DY3RDNGRLZlRSTnJmMlE4eXFkc1BEZUZra3NJVDJxMC01NHM2eTlwOW42V1M4ak1aNjdmaExaaFNjUTFCUVRLMWdkTXgzUVB0dFBsSVRlcm1DSGtHMXYyRHh3?oc=5",
       "source": "RobbieWilliamsLive.com",
       "source_id": "news-genealogie",
       "category": "genealogie",
-      "published_at": "2026-09-12T20:26:33Z",
+      "published_at": "2026-09-13T04:23:13Z",
       "image": "",
-      "score": 94.44,
+      "score": 94.08,
       "matched_keywords": []
     },
     {
@@ -1311,36 +1430,10 @@
       "category": "local",
       "published_at": "2026-09-10T15:19:00Z",
       "image": "",
-      "score": 94.39,
+      "score": 93.05,
       "matched_keywords": [
         "roanne"
       ]
-    },
-    {
-      "id": "9d8d3f15d4e78cbcc5",
-      "title": "Quelques changements sur RWL!",
-      "summary": "Quelques changements sur RWL! RobbieWilliamsLive.com",
-      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQODVxdDM3TktYNlAtRWtwaFF4cWt2ZHo5TG1uZTJMVG04QlNtVkk1WEpjYkhNVDVYSlViWXBFQUlKVmwxXzRKcWlDekJDbVgzejBhZl9MbVY3STJ5bHN5ZnRJTGpNOFhWQ19DM0JzRlJzODRpN2tzQ00zLXhjQlRkR1JsQ1JqWGs5Qjd3RWUyclRMNXBtdXNZRA?oc=5",
-      "source": "RobbieWilliamsLive.com",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T19:46:31Z",
-      "image": "",
-      "score": 94.35,
-      "matched_keywords": []
-    },
-    {
-      "id": "f06aed64dffc2f7986",
-      "title": "Article : Robbie Video Nasty",
-      "summary": "Article : Robbie Video Nasty RobbieWilliamsLive.com",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOSHNMbzhGRktxbE5PRUEyQnJjblNVekw5cUczTUZFdGF3ZXphaG5STmotZmMwQlBRd01lNlR4OUVad3VFeDBSb2ZSLXFJVE5tNU1Pc1g0UDRvajJ0UlRFM3VOd19hbnExNko3MEpqekMyQ3RFVTlyRW1Ga01kVnZqV0pSZFJCcHRnSnNIcVhyb0tRX3FnTFBNR1F3?oc=5",
-      "source": "RobbieWilliamsLive.com",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T19:41:23Z",
-      "image": "",
-      "score": 94.34,
-      "matched_keywords": []
     },
     {
       "id": "6e8930e295219a903f",
@@ -1352,7 +1445,23 @@
       "category": "histoire",
       "published_at": "2026-09-09T17:58:26Z",
       "image": "https://france3-regions.franceinfo.fr/image/YLyopdX_3db07bKGWbCxQhRf7Cg/930x620/filters:format(webp)/regions/2026/09/08/6aa02bca93084921886240.jpg",
-      "score": 94.33,
+      "score": 92.98,
+      "matched_keywords": [
+        "histoire",
+        "patrimoine"
+      ]
+    },
+    {
+      "id": "0b1ae92e5ecd74f6fa",
+      "title": "\"Le miracle est arrivé !\" : retenue au Loto du Patrimoine, cette église romane devrait rouvrir ses portes, après 20 ans de fermeture",
+      "summary": "Notre-Dame des Escaliers, charmante et modeste église romane catalane a séduit le Loto du Patrimoine, cet été. Elle figure parmi les 14 sites sélectionnés en Occitanie. Le soutien financier de cette opération devrait lui redonner vie et visiteurs.",
+      "url": "https://france3-regions.franceinfo.fr/occitanie/pyrenees-orientales/perpignan/le-miracle-est-arrive-retenue-au-loto-du-patrimoine-cette-eglise-romane-devrait-rouvrir-ses-portes-apres-20-ans-de-fermeture-3414161.html",
+      "source": "France 3 — Histoire",
+      "source_id": "france3-histoire",
+      "category": "histoire",
+      "published_at": "2026-09-09T17:56:48Z",
+      "image": "https://france3-regions.franceinfo.fr/image/awT_7DFolMv0fLoZo1Haqy7k72M/930x620/filters:format(webp)/regions/2026/09/09/6aa14365931d4690913434.jpg",
+      "score": 92.97,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -1368,24 +1477,11 @@
       "category": "histoire",
       "published_at": "2026-09-09T17:44:01Z",
       "image": "https://static.actu.fr/uploads/2026/07/elodie-cornez-photo-specialiste-theatre-italien-1024x557.jpg",
-      "score": 94.3,
+      "score": 92.95,
       "matched_keywords": [
         "histoire",
         "patrimoine"
       ]
-    },
-    {
-      "id": "8da464ca681d489636",
-      "title": "En Live depuis l'Australie",
-      "summary": "En Live depuis l'Australie RobbieWilliamsLive.com",
-      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNRUZXWTg0OEZ0YWcySXNtSF9peHVOSkJlWE5kcm44b1FBbEI2ZFdwZVFYY29va0VQa1JKUGZ2UjUtOG9nYW9RWnFQMVhwVmtrbGNWNTBmUkFtRE04ZERadkxDRElqWlZrblJ2Y3I0eVhCQzhvUGhKc0FCQkpXUUc4emp6T0hibUJoeWtfWm12aGh0SmRkZ2pZZA?oc=5",
-      "source": "RobbieWilliamsLive.com",
-      "source_id": "news-genealogie",
-      "category": "genealogie",
-      "published_at": "2026-09-12T19:01:19Z",
-      "image": "",
-      "score": 94.26,
-      "matched_keywords": []
     },
     {
       "id": "1a053bc6eaafdb4171",
@@ -1397,23 +1493,7 @@
       "category": "histoire",
       "published_at": "2026-09-09T16:58:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/grande-loge-de-france-1024x557.jpg",
-      "score": 94.2,
-      "matched_keywords": [
-        "histoire",
-        "patrimoine"
-      ]
-    },
-    {
-      "id": "74e95586af0ca6e221",
-      "title": "Le combat du souvenir : une collecte pour conserver la mémoire du maquis de Lorris",
-      "summary": "La fondation du patrimoine lance dimanche 13 septembre une collecte. Les fonds doivent permettre le financement du projet \"Aux sources de la mémoire\" de l'association des familles et amis des anciens du maquis de Lorris. Il s'agit de permettre la restauration des lieux et des bâtiments où 600 résistants réfugiés dans la forêt d'Orléans ont combattu l'armée allemande.",
-      "url": "https://france3-regions.franceinfo.fr/centre-val-de-loire/le-combat-du-souvenir-une-collecte-pour-conserver-la-memoire-du-maquis-de-lorris-3414050.html",
-      "source": "France 3 — Histoire",
-      "source_id": "france3-histoire",
-      "category": "histoire",
-      "published_at": "2026-09-09T16:07:13Z",
-      "image": "https://france3-regions.franceinfo.fr/image/JGYg4VyF8B3rf0n_yVF5_uDrdPU/930x620/filters:format(webp)/regions/2026/09/09/6aa1565f5ea14485411744.jpg",
-      "score": 94.1,
+      "score": 92.85,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -1429,7 +1509,7 @@
       "category": "histoire",
       "published_at": "2026-09-09T15:02:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/trajansthermen-1024x557.jpg",
-      "score": 93.96,
+      "score": 92.61,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -1445,7 +1525,7 @@
       "category": "local",
       "published_at": "2026-09-10T10:00:00Z",
       "image": "",
-      "score": 93.73,
+      "score": 92.38,
       "matched_keywords": [
         "loire"
       ]
@@ -1460,7 +1540,7 @@
       "category": "histoire",
       "published_at": "2026-09-09T09:46:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/louvre-1024x557.jpeg",
-      "score": 93.3,
+      "score": 91.95,
       "matched_keywords": [
         "histoire",
         "patrimoine"
@@ -1476,40 +1556,24 @@
       "category": "histoire",
       "published_at": "2026-09-09T03:46:01Z",
       "image": "https://static.actu.fr/uploads/2026/09/statues-tetes-decapitees-amiens-cathedrale-somme-avachez-patrimoine-actufr-1-1024x557.jpeg",
-      "score": 92.55,
+      "score": 91.2,
       "matched_keywords": [
         "histoire",
         "patrimoine"
       ]
     },
     {
-      "id": "f6c93747613d9a73c4",
-      "title": "Hockey sur glace : en amical, une fin de match cruelle pour les Sangliers Arvernes devant Vaujany",
-      "summary": "Hockey sur glace : en amical, une fin de match cruelle pour les Sangliers Arvernes devant Vaujany La Montagne",
-      "url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxPVHB2a1dsMWlGRWNNZzVRamM0LWtaTnVBNkw2d1F3MWVQOW01dG1FTjNWUGUwV3ZpbXo1aVlqMjBQdkZVUFl3X1RydnpPZDBJSTg2MWlOUjBxbG1BWV81N3Q1REs0ekJQMHF2S01jRXpKeGZuM0RMa0dfVW4wblZzVlNRQ1hKV0ZQVTNwZHhnY1ZRemhGUExMOUNKWEwtdmR0QjJvUlVVMVlLY3hKdHdKdHF0Y3FQai1CaE85dktjbG5mckg4TldnQkhnYlB2OTVmaFh4X09waldNYXNVbkhVaUpNbkJ1ZlY0d0N0aG1ubw?oc=5",
+      "id": "6016a717a5343514b9",
+      "title": "\"La saison prochaine, on s'en fout\" : les réactions après la victoire de l'ASM Clermont face au Stade Français",
+      "summary": "\"La saison prochaine, on s'en fout\" : les réactions après la victoire de l'ASM Clermont face au Stade Français La Montagne",
+      "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxPclYtVHRlWWZIVk43SVU2VGFuRnpMLWhzX2ozbnotRnY2aUpITXRfYlFERjc1YmhQc3NTVXdUU3hJUUJfd3NjUHVPTU9ZNmU1cHBOWksxV0ZiczdTYlBKZmpQTlluMlRnYjJ5U1RoOXVTZFA4SW5acHhOOS1aTmQtUExydFJPaWdxSE1DcVBxREotSkxfUEc3NHAxUmZ1UmFlelhicjhkNGR6c2sxa3VUT3RkN2JXVkdnajlwcFNiU0V2Rk1Yem4yc2MtZ3NvN2MtM1hkTDhOdDV6X3J1aktlUUlyRWNJa3VQTXRKU3gtbGNKMUNqMFR2Y1BvX3VUUXBW?oc=5",
       "source": "La Montagne",
       "source_id": "news-clermont",
       "category": "local",
-      "published_at": "2026-09-12T19:47:00Z",
+      "published_at": "2026-09-12T18:53:00Z",
       "image": "",
-      "score": 91.55,
+      "score": 90.09,
       "matched_keywords": []
-    },
-    {
-      "id": "f640291412c78ba1c5",
-      "title": "Des archéologues mettent la main sur les plus anciens outils en bois portatifs jamais découverts : ils ont 43 000 ans !",
-      "summary": "Deux morceaux de bois travaillé, découverts sur les rives d'un lac préhistorique du sud de la Grèce, ont été identifiés comme les plus anciens outils en bois portatifs connus.",
-      "url": "https://actu.fr/histoire-patrimoine/archeologie/des-archeologues-mettent-la-main-sur-les-plus-anciens-outils-en-bois-portatifs-jamais-decouverts-ils-ont-43-000-ans_64762463.html",
-      "source": "actu.fr — Histoire & patrimoine",
-      "source_id": "actu-histoire",
-      "category": "histoire",
-      "published_at": "2026-09-08T17:50:01Z",
-      "image": "https://static.actu.fr/uploads/2026/09/marathousa-figure-2-1024x575-1-1024x557.png",
-      "score": 91.31,
-      "matched_keywords": [
-        "histoire",
-        "patrimoine"
-      ]
     },
     {
       "id": "dca39e2b85ac18ca2e",
@@ -1521,7 +1585,7 @@
       "category": "local",
       "published_at": "2026-09-09T14:29:00Z",
       "image": "",
-      "score": 91.29,
+      "score": 89.94,
       "matched_keywords": [
         "roanne"
       ]
@@ -1536,24 +1600,8 @@
       "category": "local",
       "published_at": "2026-09-12T17:33:00Z",
       "image": "",
-      "score": 91.27,
+      "score": 89.92,
       "matched_keywords": []
-    },
-    {
-      "id": "30ceadf9af6cf35184",
-      "title": "Duels, camp napoléonien, Mérovingiens... Cinq reconstitutions historiques à voir pour les Journées du patrimoine",
-      "summary": "Envie de replonger dans une autre époque ? À l’occasion des Journées européennes du patrimoine, des reconstitutions sont prévues à plusieurs endroits de France. Notre sélection.",
-      "url": "https://actu.fr/histoire-patrimoine/visites-decouvertes/duels-camp-napoleonien-merovingiens-cinq-reconstitutions-historiques-a-voir-pour-les-journees-du-patrimoine_64757161.html",
-      "source": "actu.fr — Histoire & patrimoine",
-      "source_id": "actu-histoire",
-      "category": "histoire",
-      "published_at": "2026-09-08T16:44:01Z",
-      "image": "https://static.actu.fr/uploads/2026/09/napoleon-illustration-histoire-par-de-art-adobestock-248075307-1024x557.jpeg",
-      "score": 91.17,
-      "matched_keywords": [
-        "histoire",
-        "patrimoine"
-      ]
     },
     {
       "id": "f0b65c43aaf77da536",
@@ -1565,24 +1613,21 @@
       "category": "local",
       "published_at": "2026-09-12T16:30:00Z",
       "image": "",
-      "score": 91.14,
+      "score": 89.79,
       "matched_keywords": []
     },
     {
-      "id": "6caa28242e82220bf1",
-      "title": "Pour ou contre la réunion de la Loire-Atlantique et de la Bretagne ? Une pétition lancée sur le site de l'Assemblée nationale",
-      "summary": "L'association nantaise Bretagne réunie annonce avoir déposé, le 5 septembre dernier, une pétition sur le site de l'Assemblée nationale dans l'espoir d'obtenir une consultation démocratique officielle au sujet d'un potentiel retour de la Loire-Atlantique en Bretagne.",
-      "url": "https://france3-regions.franceinfo.fr/pays-de-la-loire/loire-atlantique/nantes/pour-ou-contre-la-reunion-de-la-loire-atlantique-et-de-la-bretagne-une-petition-lancee-sur-le-site-de-l-assemblee-nationale-3413660.html",
-      "source": "France 3 — Histoire",
-      "source_id": "france3-histoire",
-      "category": "histoire",
-      "published_at": "2026-09-08T16:15:06Z",
-      "image": "https://france3-regions.franceinfo.fr/image/OwOLwElFH997IhT5BGblY474-2o/930x620/filters:format(webp)/regions/2026/09/08/6aa0347229ab1750234434.png",
-      "score": 91.11,
-      "matched_keywords": [
-        "loire",
-        "histoire"
-      ]
+      "id": "50af6abfb468f395d1",
+      "title": "La Yellow church est née : elle a une \"Prière des supporters\" pour soutenir les rugbymen de l'ASM",
+      "summary": "La Yellow church est née : elle a une \"Prière des supporters\" pour soutenir les rugbymen de l'ASM La Montagne",
+      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxQajgyeW5DMnEwYVl4MTBaMEtTdnJBRmJnblU5WFpjbEVFcTVORGJRU2h4UFhHX2dPOHdWVk9pdEYxclpzWnNlaTVZZU5MaThHUHVKVU53OHphV0F0NHZKQlpSOGhTdXhNMWQzZmltRFlUZVB4aFNGbzhBUUhwR041b2w2UEdoVGFVaXloeUpsQ3k5c1JsaEt0NUctaWZ0YnBLRDFIMDhucjZSOUYzbUcwVWt3WG9WZkw4SFNtX1pXeDBwZDBDbGluYjQ0NmViUnItTHlSUmVUMEozREVFYVV0N2tLX19qSFZtam5pQXpsZV83cFU?oc=5",
+      "source": "La Montagne",
+      "source_id": "news-clermont",
+      "category": "local",
+      "published_at": "2026-09-12T15:52:00Z",
+      "image": "",
+      "score": 89.71,
+      "matched_keywords": []
     },
     {
       "id": "4acb1e7709542dd455",
@@ -1594,7 +1639,7 @@
       "category": "local",
       "published_at": "2026-09-12T09:00:00Z",
       "image": "",
-      "score": 90.21,
+      "score": 88.86,
       "matched_keywords": []
     },
     {
@@ -1607,7 +1652,7 @@
       "category": "local",
       "published_at": "2026-09-12T07:45:00Z",
       "image": "",
-      "score": 90.05,
+      "score": 88.7,
       "matched_keywords": []
     },
     {
@@ -1620,20 +1665,7 @@
       "category": "local",
       "published_at": "2026-09-12T05:02:00Z",
       "image": "",
-      "score": 89.71,
-      "matched_keywords": []
-    },
-    {
-      "id": "337474d4b31f3a1f87",
-      "title": "A89 fermeture direction Clermont-Fd entre La Tour-de-Salvagny/Lentilly n°38 et Tarare N°35",
-      "summary": "A89 fermeture direction Clermont-Fd entre La Tour-de-Salvagny/Lentilly n°38 et Tarare N°35 Radio VINCI Autoroutes",
-      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOVXJOR2lwdldHOG93N1NnVFJkdjUwZ21tX2dBMDdpZG1CUWxyVWExc1FoOWhtQUlYVk8xUXh3TElHbjg0MzNmMTBEN2tmNlBDaVlJeHczS1JBUThiZEtYTHZ2NG1hVkMwalF5MEtFSlJTWWhiY2FwZGY1RUdlUlliemdmZ3ZDSmx3ZHRKSlJjdzN2T0tma3I2MUtrenNmaWZnSGFlak95Q1JubDFoSzlhaDU4bVBSY0FLN1R4bmp6cFZwSHRHR3lSc3kzRG92aWNjS1BsZlpB?oc=5",
-      "source": "Radio VINCI Autoroutes",
-      "source_id": "news-clermont",
-      "category": "local",
-      "published_at": "2026-09-12T04:00:00Z",
-      "image": "",
-      "score": 89.58,
+      "score": 88.36,
       "matched_keywords": []
     },
     {
@@ -1646,20 +1678,20 @@
       "category": "local",
       "published_at": "2026-09-12T03:30:00Z",
       "image": "",
-      "score": 89.52,
+      "score": 88.17,
       "matched_keywords": []
     },
     {
-      "id": "311f13ae0c2bc9481b",
-      "title": "5.000 personnes ont chanté avec Black M lors du festival Five O’Kloeck sur le campus des Cézeaux",
-      "summary": "5.000 personnes ont chanté avec Black M lors du festival Five O’Kloeck sur le campus des Cézeaux La Montagne",
-      "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPcnp1WHRWLWNodlFlVHhoT2hFQ2x0aWN3Qk9sV3lKTDRnVFNtNjZWSE9haVBTanZtRmViYnZqUjF4Ylh3R05fSElQdWw1UnVSTnUxOEV1MzJ5dmJ1cVF1NVRNSHZ4N1dhb2t4NWJlSzlkQjM1amxaY0lUMzdqbVN1WnNHMDVrT3dJbTZvMHkwLWZna2FkbTN3LUxkN3UtVS1wUmYteklVbjlLX0NNaHBBQVo4dDdfaktwcktPZVJlMC16OWhYbEpDVTZid2pWYnl1aktBR3ozaVBsX2NSanc5WkFfZlV2R3dyQUNlN0ZjdXFia0Zw?oc=5",
+      "id": "2107c89e98f6b46724",
+      "title": "Ligue 2 : toujours pas de victoire, une attaque encore inefficace... ce qu'il faut retenir du nul entre Clermont et Boulogne",
+      "summary": "Ligue 2 : toujours pas de victoire, une attaque encore inefficace... ce qu'il faut retenir du nul entre Clermont et Boulogne La Montagne",
+      "url": "https://news.google.com/rss/articles/CBMiqgJBVV95cUxNbXZYOGxQSkQtdkdxbWxOLXBOYzIwSHFPOHB1T3RkbmZadzNYQmlOQ0dud1hvV2dtdndQdUVIUDVGNExBVEdQdXVYX0N5WHhBeE1rdnNpY2FqdTdwc1Y4YXhSN0ktUGhzTHRIQTJBbk5MeFlqOTRvczA2ZGpPRFlQOU82dk9rbmpOZHJjZ1BDRWZWWmJmVXAyOU5UYzRSVkZBRGdjWkpXOVE3SjlsZ3ZMMENkaTg1d3c0R3ZWWkpiaXdydVFmZ0RMSjdGY3VOR1Q4WDFoNW5SNHZkVmhibTA2VENsRFlnYUxhbEo5Ym82d0FlUlJxNlFnSHozS3pPX3N2ak85UUxacklPTGVrVldUM2h4RzBTQURaNXVLQTZXc05kZUJ2ZFRfV3NB?oc=5",
       "source": "La Montagne",
       "source_id": "news-clermont",
       "category": "local",
-      "published_at": "2026-09-11T20:09:00Z",
+      "published_at": "2026-09-11T20:26:00Z",
       "image": "",
-      "score": 88.6,
+      "score": 87.28,
       "matched_keywords": []
     },
     {
@@ -1672,7 +1704,7 @@
       "category": "local",
       "published_at": "2026-09-11T19:03:00Z",
       "image": "",
-      "score": 88.46,
+      "score": 87.11,
       "matched_keywords": []
     },
     {
@@ -1685,10 +1717,51 @@
       "category": "local",
       "published_at": "2026-09-08T14:30:00Z",
       "image": "",
-      "score": 88.29,
+      "score": 86.94,
       "matched_keywords": [
         "roanne"
       ]
+    },
+    {
+      "id": "8ed2608e1824070505",
+      "title": "Sebastião Salgado, réparateur de monde",
+      "summary": "Des décennies durant, le photographe Sebastião Salgado parcourut les continents pour photographier les mouvements et bouleversements du monde, construisant une œuvre où l’histoire collective passait par les visages, les corps et les paysages, mais son accomplissement majeur fut peut-être ailleurs.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/une-histoire-truculente/sebastiao-salgado-reparateur-de-monde-9047453",
+      "source": "France Culture",
+      "source_id": "france-culture",
+      "category": "histoire",
+      "published_at": "2026-09-13T10:45:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/7256be51-dae5-406e-a089-b9a4969f354e/720x405?webp=false",
+      "score": 85.67,
+      "matched_keywords": [
+        "histoire"
+      ]
+    },
+    {
+      "id": "57c80e1d86564f985a",
+      "title": "Allan Linguet, après la victoire contre Saint-Étienne : « On a montré du caractère et de la personnalité",
+      "summary": "Allan Linguet, après la victoire contre Saint-Étienne : « On a montré du caractère et de la personnalité La Voix du Nord",
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQYXMzVHdSN1c5eFVvNldLd2JxTktrV2NFU3FyN0luMVQzRjlrWjh1Q1J3c3pfbnBkd3l4MUJKTUFyN25HajlXMlI3ajNIREdCMlF4eW1QbmFtNEJWdVZweVZMaDU0ZHpwdnU1Nk44aTF2dkE0UHY2ejFMYXZfSkJTQWNQempiRWhMV0FLaHNEU1BzajM1YjRpR1lFMjltVHRZMTJ3SHBxSGZxbXdudTU2MkgyaW1Sd0ZueDkwRmMxWGhlMTNzM1ZBZ1JyaG5qUQ?oc=5",
+      "source": "La Voix du Nord",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-13T09:02:30Z",
+      "image": "",
+      "score": 85.26,
+      "matched_keywords": []
+    },
+    {
+      "id": "272a94212c831e7cae",
+      "title": "« Saint-Étienne est favori et possède le plus gros budget du groupe » : Le Mans FC passe au révélateur en Seconde Ligue",
+      "summary": "« Saint-Étienne est favori et possède le plus gros budget du groupe » : Le Mans FC passe au révélateur en Seconde Ligue Ouest-France",
+      "url": "https://news.google.com/rss/articles/CBMirAJBVV95cUxNYjRvbDhhbmxrWWRfS2lSRVNyY0RKVlVoVFloSFctSGZBLTFGMVNJZ1dSSFNDLWthWXpaMHJMSml2eW1valdvR1lOWXdyTzFuQWxfR0FfSkN1NmZ0WlN0SUpXOE11UEFWUFlkQ1B4X1VtOEI2bDFOclBlTDVIQXI3Q3o0WnRGUTE5a1R1cG9PUVNFZUhrOEpmeUNwckpMbXMwU1hjU3pnTzR2aFI4OEp0bm9pTUNrXzAzNHFVWWVYNGkxVEdoZzNyM2NpQm1PSDhMajVXaWNBTnV6bi0yMllwOUZkMWE3OU1BUFFfMzR4YmMwZ2U1dUJ2UWZNZy1Cc3RaaWdOV2tLZFZEVkQ3Q3QxQUUyQXg1UWdXUW9RYzZHc0JNR1ZNX3FmRTdNOGI?oc=5",
+      "source": "Ouest-France",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-13T07:17:01Z",
+      "image": "",
+      "score": 85.04,
+      "matched_keywords": []
     },
     {
       "id": "767598a8dedde31a74",
@@ -1700,10 +1773,79 @@
       "category": "histoire",
       "published_at": "2026-09-12T10:25:10Z",
       "image": "https://france3-regions.franceinfo.fr/image/t3eJsgj25bh3ZhtQM1EG_z_0vKQ/930x620/filters:format(webp)/regions/2026/09/12/6aa520d0101f9444359120.jpg",
-      "score": 86.38,
+      "score": 85.03,
       "matched_keywords": [
         "histoire"
       ]
+    },
+    {
+      "id": "0303aaf9118a11170d",
+      "title": "Épidémies et société 1/5 : La peste, une histoire de puces",
+      "summary": "Deux espèces de puces sont les principales responsables de la transmission de la peste. On a cru d'abord à la contamination par des miasmes, le contact, voire le regard ! L'historienne spécialiste de la peste Jacqueline Brossollet raconte ce récit passionnant au micro de Francesca Isidori en 1993.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-nuits-de-france-culture/la-peste-une-histoire-de-puces-3172798",
+      "source": "France Culture",
+      "source_id": "france-culture",
+      "category": "histoire",
+      "published_at": "2026-09-13T05:00:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/ab72c655-64f4-41c2-9481-8c70c392a5a0/720x405?webp=false",
+      "score": 84.96,
+      "matched_keywords": [
+        "histoire"
+      ]
+    },
+    {
+      "id": "afa641380fd5155dac",
+      "title": "La rue Michelet s'anime pour la braderie de Saint-Étienne",
+      "summary": "La rue Michelet s'anime pour la braderie de Saint-Étienne ici.fr",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPSHVMcE96elc4TUNqMl8xMXdsS0ZhTXdnUWc5RVJhTlc0X3RYLThpS1VtTnVnN1c5dEVBdFRpazVmYVp0VzQ4Q2lsZVZmdEdsc2ZJZFU5bm15NDYwZkw0dlY5cThOdF9xUnc4Yzk1RS1XY0lheTVnZ1ZtQlo1N1pHc1ZKUEZTajVNZXVxNzh4R3JfLUpZWTBSM3Z1OTI5ci1BNWdyMHI3R2JsOXlVWXI5V3dDa2U5SmE0SDVfa0lreS1wTTJUMm5xaElucw?oc=5",
+      "source": "ici.fr",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-13T06:32:30Z",
+      "image": "",
+      "score": 84.95,
+      "matched_keywords": []
+    },
+    {
+      "id": "efd5de9c70e53c7c1d",
+      "title": "Saint-Étienne tombe pour la première fois de la saison, battu par Dunkerque",
+      "summary": "Saint-Étienne tombe pour la première fois de la saison, battu par Dunkerque Flashscore.fr",
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOMHFNTWs3R1E4VUdQZnpwR1BZVmdLYmlKWF9ua3ljc19maEV5QloyWElYTVBBV3NnbXdLVE9WZFF3OUNXRFVBaE1aX1hsWFNuQ0VWTU4wamRKcVpZMHp1ZWx0RDc1bFlnMEpPMTJwRWpXb2l4Q205Q3lyS3R6OVpjWDZGYjNCc3VpMTliT3VyZmxaRHdmdHFRYmJYRlVkNWhORFVwQ2JydEhiM0NzeXJRT1RZNXlWWS1sNi1hVVNR?oc=5",
+      "source": "Flashscore.fr",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-13T05:14:52Z",
+      "image": "",
+      "score": 84.79,
+      "matched_keywords": []
+    },
+    {
+      "id": "f95ff5cc9b5ca8b8dc",
+      "title": "La grande peur des épidémies 1/5 : Les épidémies dans l’histoire",
+      "summary": "Peste, choléra, syphilis, grippe, tuberculose, l’histoire humaine est scandée par des grandes épidémies. Cette émission les analyse comme des miroirs reflétant les peurs et les modes de pensée des sociétés, avec l'historien François Delporte et l'épistémologue et Jean-Pierre Peter.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-nuits-de-france-culture/les-epidemies-dans-l-histoire-5918834",
+      "source": "France Culture",
+      "source_id": "france-culture",
+      "category": "histoire",
+      "published_at": "2026-09-13T02:42:58Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/07d5044b-86ee-4022-a605-757eb8192a67/720x405?webp=false",
+      "score": 84.67,
+      "matched_keywords": [
+        "histoire"
+      ]
+    },
+    {
+      "id": "c7b827128cf4e742fa",
+      "title": "« Cela devient invivable » : au Clapier, des riverains à bout face aux nuisances nocturnes",
+      "summary": "« Cela devient invivable » : au Clapier, des riverains à bout face aux nuisances nocturnes Le Progrès",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPeGFPTWhzdEdrdklRMmNVdkRQWV9HdTZ4dnBVRkVXNDl1MEdDaEtNbElHXzZpMVdUaUExQzZsN2l0LTFwZEtQd1FjaGhHQ1NjY25xT1RuZ3pQX0VhbGlEQUNtY2VySkJEOTF0RVUxWFlBWm1zR1JwNXBjaGlHTDNMU3hfWm5kdFZHT3NqblhpMDgyaHZkcjdzMWQ5S3FuQ1BUVk9SRXptRVBtVWxTWEdaa0NSRUtyTk14WDA5V3lBREJnOUd5eW55VQ?oc=5",
+      "source": "Le Progrès",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-13T04:01:50Z",
+      "image": "",
+      "score": 84.63,
+      "matched_keywords": []
     },
     {
       "id": "ab8fa79df9ec33c011",
@@ -1715,50 +1857,7 @@
       "category": "histoire",
       "published_at": "2026-09-13T00:02:40Z",
       "image": "https://www.radiofrance.fr/pikapi/images/2341d32f-2cd3-48b2-ac40-dedf32696cb2/720x405?webp=false",
-      "score": 85.69,
-      "matched_keywords": [
-        "histoire"
-      ]
-    },
-    {
-      "id": "fb15d03e755d1d8614",
-      "title": "La Peste : l’Europe face à la mort 3/12 : Une histoire anthropologique de la peste par Jean-Charles Sournia",
-      "summary": "La plus grande catastrophe démographique de l'histoire européenne a laissé des traces sur les corps, les esprits, les modes de vie, la littérature. Jean-Charles Sournia, auteur d'une histoire des épidémies, nous raconte la peste dans ce volet des \"Chemins de la connaissance\", en 1985.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-nuits-de-france-culture/une-histoire-anthropologique-de-la-peste-par-jean-charles-sournia-2176423",
-      "source": "France Culture",
-      "source_id": "france-culture",
-      "category": "histoire",
-      "published_at": "2026-09-12T23:32:32Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/9f04b3ba-b69c-47e0-a419-a214c8200986/720x405?webp=false",
-      "score": 85.62,
-      "matched_keywords": [
-        "histoire"
-      ]
-    },
-    {
-      "id": "94a8adff029d9b3926",
-      "title": "L2 : Saint-Étienne connaît sa première défaite de la saison",
-      "summary": "L2 : Saint-Étienne connaît sa première défaite de la saison Sport.fr",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQNkJRbTRPc25vQnkzUE9ieG45MXFpYnBnVGM2dTdHTkRIZ1pEdGI2RkQyUkhvWHVxYzZiYjBFTlA3Qk40QTRrdkdWMy1zdW5mb0tWeDFucy1wcHIxLXVGMGY2MF9uZUw3a2FqU19rNDZwRkJIM05tQUhSZV95VFhBeG5vUnFTZUdRTDg1d2wzQzRxa3Z6ZjFGbWlROEhUUHlNdmc?oc=5",
-      "source": "Sport.fr",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-13T00:06:24Z",
-      "image": "",
-      "score": 85.49,
-      "matched_keywords": []
-    },
-    {
-      "id": "0c96d8a2a24a6618d7",
-      "title": "La Peste : l’Europe face à la mort 2/12 : La peste ce \"grand et terrible personnage historique\"",
-      "summary": "La peste est un grand et terrible personnage historique auxquels s'intéressent démographes, médecins et historiens. Une approche pluridisciplinaire qui nourrit ce débat des \"Lundis de l'histoire\" en 1976, alors que parait l'ouvrage \"Les hommes et la peste en France et dans les pays européens\".",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-nuits-de-france-culture/la-peste-ce-grand-et-terrible-personnage-historique-9660330",
-      "source": "France Culture",
-      "source_id": "france-culture",
-      "category": "histoire",
-      "published_at": "2026-09-12T22:05:31Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/b36dae2f-2f55-42de-897e-82db3152b9a9/720x405?webp=false",
-      "score": 85.44,
+      "score": 84.34,
       "matched_keywords": [
         "histoire"
       ]
@@ -1773,20 +1872,20 @@
       "category": "local",
       "published_at": "2026-09-12T21:00:15Z",
       "image": "",
-      "score": 85.11,
+      "score": 83.76,
       "matched_keywords": []
     },
     {
-      "id": "8c24f19b9fb68eb074",
-      "title": "Première défaite de la saison pour Saint-Étienne, battu à Dunkerque",
-      "summary": "Première défaite de la saison pour Saint-Étienne, battu à Dunkerque Yahoo Actualités",
-      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNSVJOeVBWT2hCd3g1aDNSSzFHY1hOU1dTSlVZS0FZRWh2bFh4TWxYV1ZsUHMyNF9aaUI1TzZEUFNYa1M3T2hEdEhPcVVUVVRyUUlEUDRlbWJCNmpFbExmRFZpc0lvOVNqazJtZzlMVTdia0czV3NWRXU1eHZMaml2eEZfaTlhZjAyZkdWdzVpZG05bHJZZXBhTQ?oc=5",
-      "source": "Yahoo Actualités",
+      "id": "94a8adff029d9b3926",
+      "title": "L2 : Saint-Étienne connaît sa première défaite de la saison",
+      "summary": "L2 : Saint-Étienne connaît sa première défaite de la saison Sport.fr",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQNkJRbTRPc25vQnkzUE9ieG45MXFpYnBnVGM2dTdHTkRIZ1pEdGI2RkQyUkhvWHVxYzZiYjBFTlA3Qk40QTRrdkdWMy1zdW5mb0tWeDFucy1wcHIxLXVGMGY2MF9uZUw3a2FqU19rNDZwRkJIM05tQUhSZV95VFhBeG5vUnFTZUdRTDg1d2wzQzRxa3Z6ZjFGbWlROEhUUHlNdmc?oc=5",
+      "source": "Sport.fr",
       "source_id": "news-loire-roannais",
       "category": "local",
-      "published_at": "2026-09-12T20:20:35Z",
+      "published_at": "2026-09-12T20:26:58Z",
       "image": "",
-      "score": 85.02,
+      "score": 83.69,
       "matched_keywords": []
     },
     {
@@ -1799,20 +1898,7 @@
       "category": "local",
       "published_at": "2026-09-12T20:18:30Z",
       "image": "",
-      "score": 85.02,
-      "matched_keywords": []
-    },
-    {
-      "id": "4388fc1e5dfeab401e",
-      "title": "Dunkerque fait tomber Saint-Étienne pour la première fois de la saison en Ligue 2",
-      "summary": "Dunkerque fait tomber Saint-Étienne pour la première fois de la saison en Ligue 2 Foot National",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNMktDUWs5NEgyclVETS1kRmU0cmJTSDVNREp4cnFUVlFVd0NKX2o0cW1OMzd4ZzM0TEx3RWZVUmJIZ3FzNDBZOVptRzFZZ0ZhRnhBT0JLSVhhRzg1UzNkdHdGQkpaeHRjM19xdXhHZjB6SGszcGhNU21rUEYtUUcwQ1ZHMHduQlpJQ2g3M21nZ2ZuUDF5eGU3aEpmejVlRzFhb3ZLUTRfTF92TGtOZWlKekkwWGlNTmdDbkNpdHdoVjVGdw?oc=5",
-      "source": "Foot National",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-12T20:07:09Z",
-      "image": "",
-      "score": 85.0,
+      "score": 83.67,
       "matched_keywords": []
     },
     {
@@ -1825,20 +1911,7 @@
       "category": "local",
       "published_at": "2026-09-12T20:06:29Z",
       "image": "",
-      "score": 84.99,
-      "matched_keywords": []
-    },
-    {
-      "id": "4d823ed8abef5d9586",
-      "title": "FOOTBALL : DUNKERQUE RÉALISE L’EXPLOIT FACE À SAINT-ÉTIENNE (2-1)",
-      "summary": "FOOTBALL : DUNKERQUE RÉALISE L’EXPLOIT FACE À SAINT-ÉTIENNE (2-1) sports 59/62",
-      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBBY2xYMFA3NUdRWEpiNzZOcVRoSHZyZFBhNnZWOEtFanRheXJKUkUyRUdLTml0cVl6czBzR1k1UUFELVJRZDdwX1gxMXVBX05mZTNWcDBtWHc1U2U4T01SLVB0eWJmZHJGMzZNOWNxSFJsTlhsN0tIMmloakM?oc=5",
-      "source": "sports 59/62",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-12T20:02:12Z",
-      "image": "",
-      "score": 84.98,
+      "score": 83.64,
       "matched_keywords": []
     },
     {
@@ -1851,33 +1924,20 @@
       "category": "local",
       "published_at": "2026-09-12T19:57:02Z",
       "image": "",
-      "score": 84.97,
+      "score": 83.62,
       "matched_keywords": []
     },
     {
-      "id": "0805ab117a60f64358",
-      "title": "Un motard tourangeau tué dans une collision en Loir-et-Cher, à Saint-Étienne-des-Guérets, la passagère en urgence absolue",
-      "summary": "Un motard tourangeau tué dans une collision en Loir-et-Cher, à Saint-Étienne-des-Guérets, la passagère en urgence absolue lanouvellerepublique.fr",
-      "url": "https://news.google.com/rss/articles/CBMiqgJBVV95cUxQZ2pvQnV5MnotYWhkQlV3amxjbzVwcjhzejBQU3dhQm1iNUg2VmozaUt3dlRCSW9XTDNGdndhLV9NY21CVGdUQm0wVWU3ZlAyQjFqdklkQ0tLNTNaWGY4ZFdnVWVyZlN3V0x1bUhTdld3NC1rTldqQi1HZlBJci1LUEZKR2NoSkpSeGdHMnhvRVMyNW9kTWVQXzNRSWhDQnZoZVNqZldIdzhUZUE3UlFzOG44SWtWLU5kbmRudU14Mlhrb2kwLUZJc1hqOU03Y1o3amVmMmhLWDM3RVIzMWhNN0FGOHhFQTdDSEEzTUVoaURVV3k3UW5mUHk0UUg3eDBxMjdSVktJeGFEY1RHTXdNZEpiZzJOeXBFT3c1OURwSnhIS2dya0pqNWNn?oc=5",
-      "source": "lanouvellerepublique.fr",
+      "id": "540c889b7b046dc443",
+      "title": "Saint-Étienne-du-Bois | Naissance. Bienvenue à Enes",
+      "summary": "Saint-Étienne-du-Bois | Naissance. Bienvenue à Enes Le Progrès",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1BalhZVFZHLVl2RHdPeEVpYW5fS0JIXzNVVElMSnJFaTdGMHp6VmdVTjhLY1BSaU5sTDRaWU94eElFWUtOc1F3cmJSZVh4VklPWFl2MDFSSDRURHpSQ29rOHBmc0JJTVY4MWVURQ?oc=5",
+      "source": "Le Progrès",
       "source_id": "news-loire-roannais",
       "category": "local",
-      "published_at": "2026-09-12T17:34:29Z",
+      "published_at": "2026-09-12T19:32:50Z",
       "image": "",
-      "score": 84.68,
-      "matched_keywords": []
-    },
-    {
-      "id": "b9e38c84c4fb553eeb",
-      "title": "Saint-Étienne-de-Saint-Geoirs. L’air de la Provence a soufflé sur La Caravelle",
-      "summary": "Saint-Étienne-de-Saint-Geoirs. L’air de la Provence a soufflé sur La Caravelle Le Dauphiné Libéré",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNb1BqZ3dGUFV0bVQ5aEd0WTg2UERlMWtMWEVPNnNGQVRjVXUzZ3ppOGdRUUJ5QlBLemdsbWpkcGNCWm5VektTRFFSR0Z1MThLSmg1MDZkMktOU2VHSVpxakpJb0RFcGVXYml6RER3eVdpUkNuMldhNVdnZVR0UmpYQ3FwMl9hTWR4cElTaEJqSGY1QXBqRVpvZUlibkEwN3ZUTllr?oc=5",
-      "source": "Le Dauphiné Libéré",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-12T17:33:17Z",
-      "image": "",
-      "score": 84.67,
+      "score": 83.57,
       "matched_keywords": []
     },
     {
@@ -1890,7 +1950,20 @@
       "category": "local",
       "published_at": "2026-09-12T17:30:19Z",
       "image": "",
-      "score": 84.67,
+      "score": 83.32,
+      "matched_keywords": []
+    },
+    {
+      "id": "dd5d10cc451f427292",
+      "title": "Collision au Coteau : un couple de sexagénaires et une mère avec ses deux enfants pris en charge par les secours",
+      "summary": "Collision au Coteau : un couple de sexagénaires et une mère avec ses deux enfants pris en charge par les secours Le Progrès",
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQN1RzSXhGV0VfNFRuemtFcXJSTU94NTFrWjBvRmN0bTFOclJmVG03WGhyVjdNU3NiVnhOUkR2amEtMF9KYjVWYTl0SWFKR2gtaHliZVI3RU5PX2k2Z1RsUXpTYUVxMnJuOFJKdm5odE1DLTNHeGUtOGI1djlOVXkwMkxQaU1aLVdfcG84M3VhVFVzUjVuaHNNTWUzRW9LcHlZRkdxVFNtQnlNdV8xa1JRdlNLUHk2MExRNUU1emN3?oc=5",
+      "source": "Le Progrès",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-12T17:08:10Z",
+      "image": "",
+      "score": 83.27,
       "matched_keywords": []
     },
     {
@@ -1903,7 +1976,7 @@
       "category": "local",
       "published_at": "2026-09-12T17:00:44Z",
       "image": "",
-      "score": 84.61,
+      "score": 83.26,
       "matched_keywords": []
     },
     {
@@ -1916,7 +1989,7 @@
       "category": "local",
       "published_at": "2026-09-12T15:00:00Z",
       "image": "",
-      "score": 84.36,
+      "score": 83.01,
       "matched_keywords": []
     },
     {
@@ -1929,7 +2002,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T17:26:46Z",
       "image": "https://france3-regions.franceinfo.fr/image/kdynTk8WRSvFd859xaTlsgFBrhQ/930x620/filters:format(webp)/regions/2026/09/11/6aa42e45e807b673857901.jpg",
-      "score": 84.26,
+      "score": 82.91,
       "matched_keywords": [
         "histoire"
       ]
@@ -1944,7 +2017,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T17:08:33Z",
       "image": "https://france3-regions.franceinfo.fr/image/l5HP97g_B9OEaPY94xDd6dd7aMk/930x620/filters:format(webp)/regions/2026/09/11/6aa43589e137b103749946.png",
-      "score": 84.22,
+      "score": 82.87,
       "matched_keywords": [
         "histoire"
       ]
@@ -1959,7 +2032,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T16:58:34Z",
       "image": "https://france3-regions.franceinfo.fr/image/8l-0WojSLW6aFBEeqNjgc9TKOxk/930x620/filters:format(webp)/regions/2026/09/11/6aa42d39cefd8237443705.jpg",
-      "score": 84.2,
+      "score": 82.85,
       "matched_keywords": [
         "histoire"
       ]
@@ -1974,7 +2047,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T16:04:51Z",
       "image": "https://france3-regions.franceinfo.fr/image/mCVtIs_nIaSChih3STqt0kXb4HE/930x620/filters:format(webp)/regions/2026/09/11/6aa423016c74a856690139.png",
-      "score": 84.09,
+      "score": 82.74,
       "matched_keywords": [
         "histoire"
       ]
@@ -1989,21 +2062,23 @@
       "category": "local",
       "published_at": "2026-09-10T07:54:54Z",
       "image": "",
-      "score": 84.07,
+      "score": 82.72,
       "matched_keywords": []
     },
     {
-      "id": "efd5de9c70e53c7c1d",
-      "title": "Saint-Étienne tombe pour la première fois de la saison, battu par Dunkerque",
-      "summary": "Saint-Étienne tombe pour la première fois de la saison, battu par Dunkerque Flashscore.fr",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOMHFNTWs3R1E4VUdQZnpwR1BZVmdLYmlKWF9ua3ljc19maEV5QloyWElYTVBBV3NnbXdLVE9WZFF3OUNXRFVBaE1aX1hsWFNuQ0VWTU4wamRKcVpZMHp1ZWx0RDc1bFlnMEpPMTJwRWpXb2l4Q205Q3lyS3R6OVpjWDZGYjNCc3VpMTliT3VyZmxaRHdmdHFRYmJYRlVkNWhORFVwQ2JydEhiM0NzeXJRT1RZNXlWWS1sNi1hVVNR?oc=5",
-      "source": "Flashscore.fr",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-12T11:12:00Z",
-      "image": "",
-      "score": 83.88,
-      "matched_keywords": []
+      "id": "1c1d2a36343c7513c1",
+      "title": "ENTRETIEN. \"Je travaillais pour le Président\", rencontre avec Bernard Rogel, Brestois modeste devenu chef d'état-major particulier de F. Hollande et d'E. Macron",
+      "summary": "La Marine Nationale a su porter et promouvoir dans son histoire des hommes et des femmes au destin incroyable. Bernard Rogel en est un parfait exemple. Il a grandi dans une famille brestoise modeste et a terminé sa carrière comme chef d’état-major particulier à l’Elysée entre 2016 et 2020. Quatre années durant lesquelles il a été tous les jours au côté des Présidents François Hollande puis Emmanuel Macron. Quel a pu être…",
+      "url": "https://france3-regions.franceinfo.fr/bretagne/finistere/brest/entretien-je-travaillais-pour-le-president-rencontre-avec-bernard-rogel-brestois-modeste-devenu-chef-d-etat-major-particulier-de-f-hollande-et-d-e-macron-3411248.html",
+      "source": "France 3 — Histoire",
+      "source_id": "france3-histoire",
+      "category": "histoire",
+      "published_at": "2026-09-11T14:27:49Z",
+      "image": "https://france3-regions.franceinfo.fr/image/UILaF_54DIXsHGMVjhimkFRfmPA/930x620/filters:format(webp)/regions/2026/09/04/6a9a763ce5806806023348.png",
+      "score": 82.54,
+      "matched_keywords": [
+        "histoire"
+      ]
     },
     {
       "id": "858595401d23f0de20",
@@ -2015,7 +2090,22 @@
       "category": "histoire",
       "published_at": "2026-09-11T14:15:40Z",
       "image": "https://france3-regions.franceinfo.fr/image/4o8gw9ID_u9UWvRQQ6sVL3Qhqdk/930x620/filters:format(webp)/regions/2026/09/11/6aa3fdf118b5c365418147.jpg",
-      "score": 83.86,
+      "score": 82.51,
+      "matched_keywords": [
+        "histoire"
+      ]
+    },
+    {
+      "id": "72fbdd119d0f1a31d1",
+      "title": "\"Le niveau de la mer va encore s'accélérer\", des scientifiques découvrent que Giens était une île et pourrait le redevenir",
+      "summary": "Avant d'être rattaché au continent, Giens, dans le Var, était une île. À l'initiative du CNRS, des études ont été menées pour dater et comprendre sa formation unique. Une merveille géologique rare et menacée par le dérèglement climatique et l'érosion.",
+      "url": "https://france3-regions.franceinfo.fr/provence-alpes-cote-d-azur/var/toulon/le-niveau-de-la-mer-va-encore-s-accelerer-des-scientifiques-decouvrent-que-giens-etait-une-ile-et-pourrait-le-redevenir-3415400.html",
+      "source": "France 3 — Histoire",
+      "source_id": "france3-histoire",
+      "category": "histoire",
+      "published_at": "2026-09-11T13:44:17Z",
+      "image": "https://france3-regions.franceinfo.fr/image/w50r2hKiJ9Ejf-746nJXXAKrwp4/930x620/filters:format(webp)/regions/2026/09/11/6aa3dac371ef4414145216.jpg",
+      "score": 82.45,
       "matched_keywords": [
         "histoire"
       ]
@@ -2030,34 +2120,23 @@
       "category": "local",
       "published_at": "2026-09-12T10:30:22Z",
       "image": "",
-      "score": 83.79,
+      "score": 82.44,
       "matched_keywords": []
     },
     {
-      "id": "7f236dad37d56818f6",
-      "title": "Saint-Étienne. Il vole pour 2 000 euros de doudounes : un trentenaire interpellé",
-      "summary": "Saint-Étienne. Il vole pour 2 000 euros de doudounes : un trentenaire interpellé Le Progrès",
-      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPZlIxR2xXMVUyaVFCWWlSLWJ1a3IxdjV1LTJIb3hhQmxFbXJRRmgwdUxwdmx5YUZRMzAtQjlZMVBLeTViWjBmd0h3ekJNcFN2S3pGYl96SWFjSWlrR3BVUlJjajNiZlpubk10VWQwQ1RrYS11UVBKdUcwTGdGU1k4V3BRenJCc3ZSaGVfdC1yY1RlZzlBMHhSRjdaVjc0NnJrZHM2V2F6X1FDNTRaOWxhMVhaRHFvVmZ0WkVv?oc=5",
-      "source": "Le Progrès",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-12T10:03:19Z",
-      "image": "",
-      "score": 83.74,
-      "matched_keywords": []
-    },
-    {
-      "id": "fce24c628e25cd0f6c",
-      "title": "Suivez #USLDASSE dans nos bars partenaires !",
-      "summary": "Suivez #USLDASSE dans nos bars partenaires ! ASSE",
-      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNeF9JZElrU21fcVZOM3lSRkwyYU9tLTBhRHE0OVRPeFZFVno0SGkzd3pfNVBpVXMtQTdBcjZ6bnJDbTV4d1VKMmlFZlFLQ24wV2N6NEpqSUhzRHEtemp5U2I1U3lnaVFsY2Jta3VmYXFfR2JWMzJxSnlFT211eEVoOXhlTHdjTWlV?oc=5",
-      "source": "ASSE",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-12T09:48:00Z",
-      "image": "",
-      "score": 83.71,
-      "matched_keywords": []
+      "id": "965c6ea32a4763e738",
+      "title": "Après la Seconde Guerre mondiale, la douloureuse épreuve de la Reconstruction filmée par les Normands eux-mêmes",
+      "summary": "Ces images, vous ne les avez jamais vues. Ce sont des films de famille, patiemment collectés et conservés par Normandie Images. Ces films constituent la matière première de l'incroyable série documentaire \"Sous nos yeux\". Après \"Filmer la guerre\", consacré aux années 1939-1945, place à \"Naître des ruines\" qui couvre la période 1945-1960.",
+      "url": "https://france3-regions.franceinfo.fr/normandie/seine-maritime/rouen/apres-la-seconde-guerre-mondiale-la-douloureuse-epreuve-de-la-reconstruction-filmee-par-les-normands-eux-memes-3415358.html",
+      "source": "France 3 — Histoire",
+      "source_id": "france3-histoire",
+      "category": "histoire",
+      "published_at": "2026-09-11T13:20:28Z",
+      "image": "https://france3-regions.franceinfo.fr/image/vN6t0c7kM5e0JdCyeSpjHlza-3E/930x620/filters:format(webp)/regions/2026/09/11/6aa3c15498ed6500154550.png",
+      "score": 82.4,
+      "matched_keywords": [
+        "histoire"
+      ]
     },
     {
       "id": "b9c6637a8e289d24b6",
@@ -2069,7 +2148,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T12:47:45Z",
       "image": "https://france3-regions.franceinfo.fr/image/GrSljWo2vSIeEwQPXnRuMpAOHsg/930x620/filters:format(webp)/regions/2026/09/04/6a9a809a3b4df174642656.jpg",
-      "score": 83.68,
+      "score": 82.33,
       "matched_keywords": [
         "histoire"
       ]
@@ -2084,22 +2163,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T12:43:38Z",
       "image": "https://france3-regions.franceinfo.fr/image/0ofudvT-oUQapG8Yn8CgoGkPJN0/930x620/filters:format(webp)/regions/2026/09/10/6aa290132f643890104736.jpg",
-      "score": 83.67,
-      "matched_keywords": [
-        "histoire"
-      ]
-    },
-    {
-      "id": "087af33ed06c96afcc",
-      "title": "Nombre de places réduit, locaux vétustes, pas de sanitaires pour les femmes... On vous raconte l'histoire de l'ancien CRA de Nantes, fermé en 2009",
-      "summary": "Si le projet de construction d'un nouveau centre de rétention administrative (CRA) à Nantes fait actuellement l'objet de nombreuses critiques, il n'est pas le premier à établir ses quartiers dans la capitale régionale. Nous vous proposons de revenir sur l'histoire du premier CRA ouvert à Nantes en 1984.",
-      "url": "https://france3-regions.franceinfo.fr/pays-de-la-loire/loire-atlantique/nantes/nombre-de-places-reduit-locaux-vetustes-pas-de-sanitaires-pour-les-femmes-on-vous-raconte-l-histoire-de-l-ancien-cra-de-nantes-ferme-en-2009-3406964.html",
-      "source": "France 3 — Histoire",
-      "source_id": "france3-histoire",
-      "category": "histoire",
-      "published_at": "2026-09-11T11:40:00Z",
-      "image": "https://france3-regions.franceinfo.fr/image/FXWyqnXik7Vm15To2BL_qa-g-H8/930x620/filters:format(webp)/regions/2026/09/09/6aa1921f281c6085583242.jpg",
-      "score": 83.54,
+      "score": 82.32,
       "matched_keywords": [
         "histoire"
       ]
@@ -2114,7 +2178,7 @@
       "category": "histoire",
       "published_at": "2026-09-11T10:53:13Z",
       "image": "https://france3-regions.franceinfo.fr/image/Lawq-57Rs0NsI77FaztzI3jLk5c/930x620/filters:format(webp)/regions/2026/09/11/6aa3d64b34947971433194.jpg",
-      "score": 83.44,
+      "score": 82.09,
       "matched_keywords": [
         "histoire"
       ]
@@ -2129,56 +2193,32 @@
       "category": "histoire",
       "published_at": "2026-09-11T09:34:16Z",
       "image": "https://france3-regions.franceinfo.fr/image/MTlPuDaFOcOOKa8-i-G27LMowrE/930x620/filters:format(webp)/regions/2026/09/11/6aa3c8ee34d09065702750.jpg",
-      "score": 83.28,
+      "score": 81.93,
       "matched_keywords": [
         "histoire"
       ]
     },
     {
-      "id": "25ceb836a50f634556",
-      "title": "Football. Seconde Ligue : Le Mans FC face à « l’ogre du championnat » Saint-Étienne",
-      "summary": "Football. Seconde Ligue : Le Mans FC face à « l’ogre du championnat » Saint-Étienne Ouest-France",
-      "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxOa3NUV3pobVNIMTZtQTZNVHlRUkxuS3JEOVNMcVR2MEh5cHVIdDcxWFdKNFhsTlQzci1NeVpQRVdRdUpGTkIxRnlMcFU5UE5tYjY3NTU0SkVpaDhJdjFxTzhSc25OSFlJRlNqYUkyTm4xdUl6ZWdOQ2FueHdsLXhHUjItTXlHRzVGNm9IQURLWnJFTW95TDJNNWJfRnBnTkZ4c0Y3YmVoTmRWYjlpTUgyVXlrWW9lMnF5ZFFkODJ1YzAyaFlianlfanVmN0hMRVZUcjB2TWp1bmFjM1BRWndRbHlxT1pBNklEZzRQbG5ob3NaYzJySjV1Rnln?oc=5",
-      "source": "Ouest-France",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-12T06:18:01Z",
-      "image": "",
-      "score": 83.27,
-      "matched_keywords": []
+      "id": "397b7fa263b6339185",
+      "title": "\"Retrouver l'image d'Ornans à l'époque de Courbet\" : dans le Doubs, des bénévoles font renaître un vignoble disparu depuis près d'un siècle",
+      "summary": "Autrefois riche en vignes, Ornans (Doubs) a vu son vignoble disparaître, notamment à cause des maladies. Plantées en 2015, les vignes municipales contribuent à faire renaître cette tradition. Mardi 8 septembre, une vingtaine de bénévoles ont récolté plus d'une tonne de pinot noir dans une ambiance très chaleureuse.",
+      "url": "https://france3-regions.franceinfo.fr/bourgogne-franche-comte/doubs/besancon/retrouver-l-image-d-ornans-a-l-epoque-de-courbet-dans-le-doubs-des-benevoles-font-renaitre-un-vignoble-disparu-depuis-pres-d-un-siecle-3414689.html",
+      "source": "France 3 — Histoire",
+      "source_id": "france3-histoire",
+      "category": "histoire",
+      "published_at": "2026-09-11T08:16:12Z",
+      "image": "https://france3-regions.franceinfo.fr/image/4o3xL9foibxVcaJQkFybt0a8sC8/930x620/filters:format(webp)/regions/2026/09/10/6aa2dd69bbe4a319315530.png",
+      "score": 81.76,
+      "matched_keywords": [
+        "histoire"
+      ]
     },
     {
-      "id": "fbba5fa498bcaad36a",
-      "title": "Ligue 2 : Saint-Étienne se rend à Tribut, priez pour Dunkerque !",
-      "summary": "Ligue 2 : Saint-Étienne se rend à Tribut, priez pour Dunkerque ! La Voix du Nord",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNU1UyRFZ3eWJhcFo2MmctXzJmd2Y2YkRkUVR2TjBnYVFMRkI4UDItLTZoYUhPQmNDZXNQLWZVaWwzVDUxdnVmclRSRjZ3YzBwcEdTRmxNRHFxSkF3d3pxaHRHZEtKeW9Obk5odFVnT1NxUGM0Z21yR2NvZy1tOUlZNzdibFZzUVFxUzdNUlBEMF83MzVkZEh6SkE0emd4Q3AxdEtJME1CZWlPYzl5R01ka2FR?oc=5",
-      "source": "La Voix du Nord",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-12T05:30:00Z",
-      "image": "",
-      "score": 83.17,
-      "matched_keywords": []
-    },
-    {
-      "id": "315132ac9a1b2e49a3",
-      "title": "USL Dunkerque - AS Saint-Étienne. À quelle heure et sur quelle chaîne suivre le match de la sixième journée de Ligue 2 ?",
-      "summary": "USL Dunkerque - AS Saint-Étienne. À quelle heure et sur quelle chaîne suivre le match de la sixième journée de Ligue 2 ? Ouest-France",
-      "url": "https://news.google.com/rss/articles/CBMiqwJBVV95cUxObXlULWZQZFVfbjhCOUlkRlJDNE1lMjk3ZjdzQ0ZmTURHUHhuS2kxN1Qwc3hGaGhvX3hOb05kcXpPNEZONVQ3NGlEWVoyb3RiWWlhVzZodWZ2ZGl4VXlyRXhKcXY2dmJPMUc5OHBmOUxkNzhKMUkydG1BR1JIRTd0YzU4QW1RUkkxWkd2VXd6QUhpNlgxZzJDNVZQOEp4ZnotN3RHMmVHMERncnI2VHhxaDRIVDdMck9yQkZOdklyaUVKMkphOG16UkM5Uy1KcXRsZkphLWc0WTl4cms4aGMxZkZTMUV4TzZlRTVWWWdwTUNacjdYRHRlRWk0ZmNGVHFJOWVTbUx1WjdvVXIta3hyaG1YNUV3dlRlb21IbTJ2bk1FRW1vTTZUQ3VJVQ?oc=5",
-      "source": "Ouest-France",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-12T04:41:04Z",
-      "image": "",
-      "score": 83.07,
-      "matched_keywords": []
-    },
-    {
-      "id": "af5652e42c22a67d4a",
-      "title": "Puy-de-Dôme : une maire agressée alors qu’elle intervenait face à l’installation de caravanes",
-      "summary": "Puy-de-Dôme : une maire agressée alors qu’elle intervenait face à l’installation de caravanes lejdd.fr",
-      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQM1BTbEV5X2t2OWZicHN3V3gxTUtEWGFnMnVwREVCWHRFOGJUbHpWSTBtSzE3RkJDcDRQd1B1QktmR2k0RUpjQm02Qk1xNTRnUmFwb0ItbUk1Sk43MGY2NGQyeXN6bEtTRnhIVkMxbW9rak5KSEZCc1FGbHRpS2JxMW4tdFY2YlRHMjRWZW9PSTJfc2dxb0ROcUxxSXlHMkoyR3lqOWk0bVYyOENMTDZ5RWVXWjVZLXhBLWE2OXJRS3pzQ1k?oc=5",
-      "source": "lejdd.fr",
+      "id": "482a815a0ac3bf8cac",
+      "title": "Une trentaine de gendarmes mobilisés : des contrôles coordonnés sur les axes autoroutiers du Puy-de-Dôme",
+      "summary": "Une trentaine de gendarmes mobilisés : des contrôles coordonnés sur les axes autoroutiers du Puy-de-Dôme La Montagne",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNd2wwb0IteDZ4X3NLRnhHbjZOS2xLVXpQOFM4bGtOQnVCanp2aWdNQnI1U2l3QnBWYVhnZElVZ1VCQU1BOTNQcVpCemN0UzNSOVNwdGxsS2lyZ1lRdDd1ZGZZOElCWDRtX2Fnc21VQkVCNTZFMkRQOWptalhnZkVzVGdpTlNLaGVhSG5NTmtQVzlVUXRzdjdGX2pReUItdUZjbm9LNUxNUUZBZUhxcDJiRXp5cFl3LXFvdm1lOG44Rl9jOGJ3amc?oc=5",
+      "source": "La Montagne",
       "source_id": "news-puy-de-dome",
       "category": "local",
       "published_at": "2026-09-02T07:00:00Z",
@@ -2189,11 +2229,11 @@
       ]
     },
     {
-      "id": "482a815a0ac3bf8cac",
-      "title": "Une trentaine de gendarmes mobilisés : des contrôles coordonnés sur les axes autoroutiers du Puy-de-Dôme",
-      "summary": "Une trentaine de gendarmes mobilisés : des contrôles coordonnés sur les axes autoroutiers du Puy-de-Dôme La Montagne",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNd2wwb0IteDZ4X3NLRnhHbjZOS2xLVXpQOFM4bGtOQnVCanp2aWdNQnI1U2l3QnBWYVhnZElVZ1VCQU1BOTNQcVpCemN0UzNSOVNwdGxsS2lyZ1lRdDd1ZGZZOElCWDRtX2Fnc21VQkVCNTZFMkRQOWptalhnZkVzVGdpTlNLaGVhSG5NTmtQVzlVUXRzdjdGX2pReUItdUZjbm9LNUxNUUZBZUhxcDJiRXp5cFl3LXFvdm1lOG44Rl9jOGJ3amc?oc=5",
-      "source": "La Montagne",
+      "id": "af5652e42c22a67d4a",
+      "title": "Puy-de-Dôme : une maire agressée alors qu’elle intervenait face à l’installation de caravanes",
+      "summary": "Puy-de-Dôme : une maire agressée alors qu’elle intervenait face à l’installation de caravanes lejdd.fr",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQM1BTbEV5X2t2OWZicHN3V3gxTUtEWGFnMnVwREVCWHRFOGJUbHpWSTBtSzE3RkJDcDRQd1B1QktmR2k0RUpjQm02Qk1xNTRnUmFwb0ItbUk1Sk43MGY2NGQyeXN6bEtTRnhIVkMxbW9rak5KSEZCc1FGbHRpS2JxMW4tdFY2YlRHMjRWZW9PSTJfc2dxb0ROcUxxSXlHMkoyR3lqOWk0bVYyOENMTDZ5RWVXWjVZLXhBLWE2OXJRS3pzQ1k?oc=5",
+      "source": "lejdd.fr",
       "source_id": "news-puy-de-dome",
       "category": "local",
       "published_at": "2026-09-02T07:00:00Z",
@@ -2213,7 +2253,7 @@
       "category": "histoire",
       "published_at": "2026-09-10T16:32:41Z",
       "image": "https://france3-regions.franceinfo.fr/image/XjzcJkS8pYnt7foiCAx5V4As7WM/930x620/filters:format(webp)/regions/2021/11/08/6189597fc3fd4_000-8uv9ay.jpg",
-      "score": 81.15,
+      "score": 79.8,
       "matched_keywords": [
         "histoire"
       ]
@@ -2228,7 +2268,22 @@
       "category": "histoire",
       "published_at": "2026-09-10T16:05:34Z",
       "image": "https://france3-regions.franceinfo.fr/image/diWRqU08lLP3SWbJIygbdphKdkg/930x620/filters:format(webp)/regions/2026/09/10/6aa2b688867e3989044729.jpg",
-      "score": 81.09,
+      "score": 79.74,
+      "matched_keywords": [
+        "histoire"
+      ]
+    },
+    {
+      "id": "2665367122e4781161",
+      "title": "\"L’histoire des femmes est assez mal documentée\" : une exposition rend hommage aux générations d'enseignantes",
+      "summary": "Pendant des décennies, des jeunes femmes ont été formées au métier d’enseignante à La Rochelle. Pourtant leur histoire est méconnue.",
+      "url": "https://france3-regions.franceinfo.fr/nouvelle-aquitaine/charente-maritime/la-rochelle/l-histoire-des-femmes-est-assez-mal-documentee-une-exposition-rend-hommage-aux-generations-d-enseignantes-3414965.html",
+      "source": "France 3 — Histoire",
+      "source_id": "france3-histoire",
+      "category": "histoire",
+      "published_at": "2026-09-10T15:14:59Z",
+      "image": "https://france3-regions.franceinfo.fr/image/0jv-p_fEIo1oRdi97YzvR0WFZRY/930x620/filters:format(webp)/regions/2026/09/10/6aa2bb8181e65604810453.jpg",
+      "score": 79.64,
       "matched_keywords": [
         "histoire"
       ]
@@ -2243,7 +2298,7 @@
       "category": "local",
       "published_at": "2026-09-10T03:30:00Z",
       "image": "",
-      "score": 80.52,
+      "score": 79.17,
       "matched_keywords": []
     },
     {
@@ -2256,23 +2311,10 @@
       "category": "histoire",
       "published_at": "2026-09-10T10:51:22Z",
       "image": "https://france3-regions.franceinfo.fr/image/rznI6Ei2emwtn_TiT6ZDXNGcasg/930x620/filters:format(webp)/regions/2026/09/03/6a9941aec80d2803390748.jpg",
-      "score": 80.44,
+      "score": 79.09,
       "matched_keywords": [
         "histoire"
       ]
-    },
-    {
-      "id": "ecf4cc391344c0a6b8",
-      "title": "Saint-Étienne-du-Rouvray : Rayione industrialise le stockage par batte ...",
-      "summary": "Saint-Étienne-du-Rouvray : Rayione industrialise le stockage par batte ... La Gazette France",
-      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNbkFaa3JsM09mQnpoVDZLZzdKUFNFUzBhWlotVm1NU2cwZ000N2Y2ZFA4LWEwbHZtMkFudE43WUpUMjRXdTdlalZtSGtnUTBYd0JxUmk2ZFhrbXJ6aEw1bV9ieHp3WndIckdjNGRhYWttVjNJNG13WVJVaVZBVkZoODNvLXJuYkxZN1MtdTV5TWRISG81R3M2cExUai1DdjVxUHFSUFkxcW9wS1I3MGFBeHcwcnJSOWxWUzJUUHFUaVdVdkE?oc=5",
-      "source": "La Gazette France",
-      "source_id": "news-loire-roannais",
-      "category": "local",
-      "published_at": "2026-09-11T07:17:22Z",
-      "image": "",
-      "score": 80.39,
-      "matched_keywords": []
     },
     {
       "id": "537565a59ecb8b0861",
@@ -2284,22 +2326,7 @@
       "category": "histoire",
       "published_at": "2026-09-10T09:49:44Z",
       "image": "https://france3-regions.franceinfo.fr/image/vWvNFC-WnPKvitstIiQo1Q4dEe0/930x620/filters:format(webp)/regions/2026/08/28/6a914a43d8a67442063008.jpg",
-      "score": 80.31,
-      "matched_keywords": [
-        "histoire"
-      ]
-    },
-    {
-      "id": "d1b4215602763d1718",
-      "title": "VIDEO. \"C'est l'histoire d'une trahison\" : on vous résume les 70 mètres de la Tapisserie de Bayeux en moins de 3 minutes",
-      "summary": "Ce jeudi 10 septembre 2026 marque l'ouverture officielle de l'exposition de la Tapisserie de Bayeux au British Museum de Londres. Mais connaissez-vous bien l'histoire racontée par l'œuvre millénaire ? Ne serait-ce qu'un peu ? Quoiqu'il en soit, pas de panique, on vous résume la lutte fratricide entre Guillaume et Harold en moins de 3 minutes.",
-      "url": "https://france3-regions.franceinfo.fr/normandie/calvados/bayeux/video-c-est-l-histoire-d-une-trahison-on-vous-resume-les-70-metres-de-la-tapisserie-de-bayeux-en-moins-de-3-minutes-3414650.html",
-      "source": "France 3 — Histoire",
-      "source_id": "france3-histoire",
-      "category": "histoire",
-      "published_at": "2026-09-10T09:29:20Z",
-      "image": "https://france3-regions.franceinfo.fr/image/WKET2lykm69xJ_negqeqMDbrcNk/930x620/filters:format(webp)/regions/2026/09/10/6aa270bc1e167096885323.jpg",
-      "score": 80.27,
+      "score": 78.96,
       "matched_keywords": [
         "histoire"
       ]
@@ -2314,85 +2341,94 @@
       "category": "histoire",
       "published_at": "2026-09-10T09:16:03Z",
       "image": "https://france3-regions.franceinfo.fr/image/EGaE6gT4EfmJ5qt-k4Ixoy7WuXE/930x620/filters:format(webp)/regions/2026/09/09/6aa189cd679c9903137473.jpg",
-      "score": 80.24,
+      "score": 78.89,
       "matched_keywords": [
         "histoire"
       ]
     },
     {
-      "id": "6d766ff34e264d9e2c",
-      "title": "Libération de la Corse en 1943 : on vous explique les dates à retenir",
-      "summary": "Du 8 septembre au 4 octobre 1943, les combats ont fait rage à travers toute l'île. Une opération militaire, nom de code Vésuve, menée par l'armée française de la libération, les résistants corses, et l'aide des forces armées italiennes, au cours des derniers jours. Retour sur un moment décisif.",
-      "url": "https://france3-regions.franceinfo.fr/corse/liberation-de-la-corse-en-1943-on-vous-explique-les-dates-a-retenir-3414095.html",
+      "id": "0c8ed2b7696e84cd85",
+      "title": "\"Au péril de sa vie, il a caché une famille juive\" : l'histoire de Pierre Ratier, industriel de Figeac, reconnu Juste parmi les Nations",
+      "summary": "À Figeac (Lot) et dans la vallée du Célé, son nom est surtout associé à l’histoire industrielle de la ville. Pierre Ratier est désormais aussi reconnu pour un acte de courage accompli dans l’ombre, pendant l’Occupation. Entre 1943 et 1944, il a caché une famille juive dans une maison de Corn. Décédé en 1967, il vient d’être reconnu à titre posthume Juste parmi les Nations.",
+      "url": "https://france3-regions.franceinfo.fr/occitanie/lot/cahors/au-peril-de-sa-vie-il-a-cache-une-famille-juive-l-histoire-de-pierre-ratier-industriel-de-figeac-reconnu-juste-parmi-les-nations-3413975.html",
       "source": "France 3 — Histoire",
       "source_id": "france3-histoire",
       "category": "histoire",
-      "published_at": "2026-09-09T16:33:08Z",
-      "image": "https://france3-regions.franceinfo.fr/image/oe9yf8jwX2Kv44d8VOBYsRAMvwA/930x620/filters:format(webp)/regions/2023/10/03/08-goumiers-a-bastia-3-scaled-651bce0e5a319505910276.jpg",
-      "score": 78.15,
+      "published_at": "2026-09-09T19:26:20Z",
+      "image": "https://france3-regions.franceinfo.fr/image/MpjAQ-7O3GTihA2PcsFod0FoXA0/930x620/filters:format(webp)/regions/2026/09/09/6aa1840aaf233602927889.jpg",
+      "score": 77.16,
       "matched_keywords": [
         "histoire"
       ]
     },
     {
-      "id": "af743fb62ea385ff98",
-      "title": "\"Une part de mystère, une part de miracle\" : entre guerres, vols et révolutions, comment la Tapisserie de Bayeux a traversé les siècles",
-      "summary": "La Tapisserie de Bayeux est le récit historique en broderie de la Conquête de l'Angleterre par les Normands. Si sa toile de lin et les fils de laine montrent des signes d'usure, cette œuvre textile a échappé au cours de son histoire millénaire à de nombreux périls, dont une tentative de spoliation par les Allemands en 1944.",
-      "url": "https://france3-regions.franceinfo.fr/normandie/calvados/une-part-de-mystere-une-part-de-miracle-entre-guerres-vols-et-revolutions-comment-la-tapisserie-de-bayeux-a-traverse-les-siecles-3409118.html",
+      "id": "034aacb7f425e71d6a",
+      "title": "Le passé maritime méconnu d'Abbeville : port européen au centre d'un \"très intense trafic commercial\" pendant des siècles",
+      "summary": "Au IXᵉ siècle, la mer est encore à Abbeville, la bien nommée capitale de la Picardie maritime. Située au fond de l'estuaire de la Somme, et traversée par le Scardon, son affluent, la cité bénéficie pendant des siècles du flux et du reflux des marées de la Manche, toute proche. Jusqu’à l'inexorable ensablement, et le recul de plus de 10 kilomètres du trait de côte, la ville abritera un intense trafic maritime et fluvial.…",
+      "url": "https://france3-regions.franceinfo.fr/hauts-de-france/somme/abbeville/le-passe-maritime-meconnu-d-abbeville-port-europeen-au-centre-d-un-tres-intense-trafic-commercial-pendant-des-siecles-3410312.html",
       "source": "France 3 — Histoire",
       "source_id": "france3-histoire",
       "category": "histoire",
-      "published_at": "2026-09-09T16:03:17Z",
-      "image": "https://france3-regions.franceinfo.fr/image/P7gGl5giqMybDCOLhlQzSpUd1bI/930x620/filters:format(webp)/regions/2026/08/31/6a95a18f82735579224040.jpg",
-      "score": 78.09,
+      "published_at": "2026-09-09T08:50:37Z",
+      "image": "https://france3-regions.franceinfo.fr/image/0AYKafkW1KvLg_oU_Z8XbLy6QHs/930x620/filters:format(webp)/regions/2026/09/07/6a9eb1f704273573146978.jpg",
+      "score": 75.84,
       "matched_keywords": [
         "histoire"
       ]
     },
     {
-      "id": "5e9b2eabe3ac999152",
-      "title": "VIDÉO. #MEMORIA - La libération de la Corse en images",
-      "summary": "#MEMORIA - Da l'ottu di sittembre à u 4 d'ottobre di u 1943 i cumbatti per a liberazione di a Corsica funi numerosi. Vultemu nantu à sta stonda maiò di a storia di l'isula",
-      "url": "https://france3-regions.franceinfo.fr/corse/video-memoria-la-liberation-de-la-corse-en-images-3414146.html",
+      "id": "6d79c0a825710e9bbc",
+      "title": "Valençay, le château de Talleyrand que Napoléon a transformé en \"prison dorée\" pour les princes d’Espagne retenus en captivité",
+      "summary": "À Valençay, Napoléon et Talleyrand ont écrit une page étonnante de l’Histoire de France. Le château fut la \"prison de luxe\" des princes d’Espagne, retenus en captivité loin de leur cour.",
+      "url": "https://france3-regions.franceinfo.fr/centre-val-de-loire/indre/chateauroux/valencay-le-chateau-de-talleyrand-que-napoleon-a-transforme-en-prison-doree-pour-les-princes-d-espagne-retenus-en-captivite-3413564.html",
       "source": "France 3 — Histoire",
       "source_id": "france3-histoire",
       "category": "histoire",
-      "published_at": "2026-09-09T10:35:23Z",
-      "image": "https://france3-regions.franceinfo.fr/image/RaHB5uSEJy8D_4KGrRkNraPzYtU/930x620/filters:format(webp)/regions/2026/09/09/6aa136314130e235225879.png",
-      "score": 77.4,
+      "published_at": "2026-09-09T07:47:46Z",
+      "image": "https://france3-regions.franceinfo.fr/image/s_uUbzJwB2ezcT5ThQ0s58eJpiQ/930x620/filters:format(webp)/regions/2026/09/08/6aa017fdadb52598180426.jpg",
+      "score": 75.71,
       "matched_keywords": [
         "histoire"
       ]
     },
     {
-      "id": "f45124ca74093e7da6",
-      "title": "9 septembre 1943 : Ajaccio, première ville française libérée",
-      "summary": "Retour sur la journée du 9 septembre 1943, où la cité impériale devint la première ville française libérée.",
-      "url": "https://france3-regions.franceinfo.fr/corse/9-septembre-1943-ajaccio-premiere-ville-francaise-liberee-3414092.html",
-      "source": "France 3 — Histoire",
-      "source_id": "france3-histoire",
-      "category": "histoire",
-      "published_at": "2026-09-09T10:10:08Z",
-      "image": "https://france3-regions.franceinfo.fr/image/UGgc-CncXsS9lT8KCybe8avB6dU/930x620/filters:format(webp)/regions/2022/09/09/631ae2421de41_affiche-liberation.jpg",
-      "score": 77.35,
-      "matched_keywords": [
-        "histoire"
-      ]
+      "id": "6708e1a9f7102554ff",
+      "title": "Septembre bouge",
+      "summary": "Septembre bouge saint-etienne.fr",
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1rczJNT21KNGI5anpMLVVxMWYteVZFUnJncVk2SFd0RTNCUEdaajFCUERUZ0FJUjlnME5ubHZKYUFiemd2Qko1YU1NWExwWW5vSzhDWmtUTC1qSkQ2YzlBNw?oc=5",
+      "source": "saint-etienne.fr",
+      "source_id": "news-loire-roannais",
+      "category": "local",
+      "published_at": "2026-09-10T01:42:57Z",
+      "image": "",
+      "score": 75.35,
+      "matched_keywords": []
     },
     {
-      "id": "471435c4e6608d6cf2",
-      "title": "L'histoire du Vœu des Échevins à Lyon : entre laïcité et tradition, le débat persiste",
-      "summary": "La traditionnelle cérémonie du vœu des échevins s'est déroulée à Lyon, ce mardi 8 septembre. Une tradition ancienne qui trouve son origine au XVIIe siècle lorsque la ville a été épargnée par la peste. Et qui suscite toujours le débat.",
-      "url": "https://france3-regions.franceinfo.fr/auvergne-rhone-alpes/rhone/lyon/l-histoire-du-v-u-des-echevins-a-lyon-entre-laicite-et-tradition-le-debat-persiste-3413498.html",
-      "source": "France 3 — Histoire",
-      "source_id": "france3-histoire",
+      "id": "1fdf81f428b5a5647e",
+      "title": "Le monde à table",
+      "summary": "On se retrouve rarement autour d’une table par hasard. Dans les relations internationales, un dîner d’État, le choix d’un menu ou le fait de s’asseoir à la même table peuvent ainsi devenir des moyens d’affirmer une alliance, d’envoyer un signal politique ou, au contraire, de marquer une distance.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-bonnes-choses/le-monde-a-table-2814462",
+      "source": "France Culture",
+      "source_id": "france-culture",
       "category": "histoire",
-      "published_at": "2026-09-08T15:51:25Z",
-      "image": "https://france3-regions.franceinfo.fr/image/MPgzwjvOK8rd7ILnZZsiF99SexE/930x620/filters:format(webp)/regions/2026/09/08/6aa02eb6e5745468910962.jpg",
-      "score": 75.06,
-      "matched_keywords": [
-        "histoire"
-      ]
+      "published_at": "2026-09-13T10:00:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/9075d10e-a084-4675-9af1-fd1a124a0020/720x405?webp=false",
+      "score": 73.58,
+      "matched_keywords": []
+    },
+    {
+      "id": "cf43ad45cc809c8e74",
+      "title": "Le Rassemblement national est-il prêt à gouverner ? / Le climat a-t-il déjà disparu de la campagne présidentielle ?",
+      "summary": "Alors que s'ouvre la rentrée politique du Rassemblement national le 13 septembre à Hénin-Beaumont, le Rassemblement national est-il prêt à gouverner ? Après un été où se sont succédés canicules et incendies, le climat a-t-il déjà disparu de la campagne présidentielle ?",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/l-esprit-public/le-rassemblement-national-est-il-pret-a-gouverner-le-climat-a-t-il-deja-disparu-de-la-campagne-4544337",
+      "source": "France Culture",
+      "source_id": "france-culture",
+      "category": "histoire",
+      "published_at": "2026-09-13T09:00:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/48dc9258-8121-42f1-a75b-8b31a1dab7eb/720x405?webp=false",
+      "score": 73.46,
+      "matched_keywords": []
     },
     {
       "id": "b2927afaae86b74a15",
@@ -2404,40 +2440,88 @@
       "category": "histoire",
       "published_at": "2026-09-08T13:38:07Z",
       "image": "https://france3-regions.franceinfo.fr/image/59oI0y-v2Cn6qwQbJEaMv-TM-gU/930x620/filters:format(webp)/regions/2026/09/08/6aa00dd8bfe76757875936.jpg",
-      "score": 74.78,
+      "score": 73.44,
       "matched_keywords": [
         "histoire"
       ]
     },
     {
-      "id": "1f73888eee23a40830",
-      "title": "Un monument du Pas-de-Calais s'invite sur le nouveau billet de 20 dollars canadiens",
-      "summary": "Le nouveau billet de 20 dollars canadiens, dévoilé le 3 septembre 2026, met à l'honneur le Mémorial national du Canada à Vimy, dans le Pas-de-Calais, en hommage aux soldats canadiens tombés pendant la Première Guerre mondiale.",
-      "url": "https://france3-regions.franceinfo.fr/hauts-de-france/pas-calais/arras/un-monument-du-pas-de-calais-s-invite-sur-le-nouveau-billet-de-20-dollars-canadiens-3413426.html",
-      "source": "France 3 — Histoire",
-      "source_id": "france3-histoire",
+      "id": "79d06f36be649d205c",
+      "title": "La Libre Pensée - Le droit de mourir dans la dignité",
+      "summary": "Avec Elsa Walter, Vice-présidente de l’Association pour le Droit de Mourir dans la Dignité.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/divers-aspects-de-la-pensee-contemporaine/la-libre-pensee-le-droit-de-mourir-dans-la-dignite-9510870",
+      "source": "France Culture",
+      "source_id": "france-culture",
       "category": "histoire",
-      "published_at": "2026-09-08T13:20:58Z",
-      "image": "https://france3-regions.franceinfo.fr/image/SbP3PnQflQ3KidvJsPX1jfn6Tzc/930x620/filters:format(webp)/regions/2026/09/08/6a9fe2275853c896535153.jpg",
-      "score": 74.75,
-      "matched_keywords": [
-        "histoire"
-      ]
+      "published_at": "2026-09-13T07:42:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/53ee495e-2526-41ba-8849-4d965a7cd34c/720x405?webp=false",
+      "score": 73.29,
+      "matched_keywords": []
     },
     {
-      "id": "ac635e481c08ad5ff1",
-      "title": "\"Repenser l'espace et révéler sa magnifique structure\" : après trois ans de travaux le restaurant universitaire historique rennais fait peau neuve",
-      "summary": "Construit en 1963 par l'architecte Georges Maillols, le restaurant universitaire L'Étoile avait bien besoin d'un rafraîchissement. En travaux depuis 2023, afin de repenser son organisation et lui donner une seconde jeunesse, le restaurant universitaire à rouvert le 7 septembre 2026.",
-      "url": "https://france3-regions.franceinfo.fr/bretagne/ille-et-vilaine/rennes/repenser-l-espace-et-reveler-sa-magnifique-structure-apres-trois-ans-de-travaux-le-restaurant-universitaire-historique-rennais-fait-peau-neuve-3413477.html",
-      "source": "France 3 — Histoire",
-      "source_id": "france3-histoire",
+      "id": "5d358e731679ccc015",
+      "title": "Les synagoques de France depuis le XVIIIe siècle 2/2 Exils et migrations.",
+      "summary": "Marc-Alain Ouaknin poursuit son entretien avec Dominique Jarrassé.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/talmudiques/les-synagoques-de-france-depuis-le-xviiie-siecle-2-2-exils-et-migrations-9167578",
+      "source": "France Culture",
+      "source_id": "france-culture",
       "category": "histoire",
-      "published_at": "2026-09-08T13:19:38Z",
-      "image": "https://france3-regions.franceinfo.fr/image/61RMApQrW5Lvn-MASe4VpjxXfuo/930x620/filters:format(webp)/regions/2026/09/08/6a9fea4b80363284640872.jpg",
-      "score": 74.75,
-      "matched_keywords": [
-        "histoire"
-      ]
+      "published_at": "2026-09-13T07:10:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/d724b149-73f6-487a-8378-d6f120cdaa0a/720x405?webp=false",
+      "score": 73.23,
+      "matched_keywords": []
+    },
+    {
+      "id": "459efa5920e16bb940",
+      "title": "Le patron d'Anthropic, l'américain Dario Amodei, appelle à ralentir la vitesse de développement de l'IA",
+      "summary": "De grands patrons américains de la tech lancent une nouvelle mise en garde contre l'intelligence artificielle. Celui d'Anthropic, Dario Amodei, appelle à ralentir sa vitesse de développement.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/journal-de-9h/le-patron-d-anthropic-dario-amodei-appelle-a-ralentir-la-vitesse-de-developpement-de-l-ia-9079560",
+      "source": "France Culture",
+      "source_id": "france-culture",
+      "category": "histoire",
+      "published_at": "2026-09-13T07:00:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/0e919c76-9c7a-4ab1-af01-0059fcb3d32b/720x405?webp=false",
+      "score": 73.21,
+      "matched_keywords": []
+    },
+    {
+      "id": "2fb8a434c757844196",
+      "title": "Femme, foi, résistance : retour sur Marie Durand",
+      "summary": "En direct de Mialet pour vivre le culte de l’Assemblée du Désert 2026",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/solae-le-rendez-vous-protestant/femme-foi-resistance-retour-sur-marie-durand-1619595",
+      "source": "France Culture",
+      "source_id": "france-culture",
+      "category": "histoire",
+      "published_at": "2026-09-13T06:30:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/0d004d53-d8cb-4dfa-94ed-aee0339dd888/720x405?webp=false",
+      "score": 73.14,
+      "matched_keywords": []
+    },
+    {
+      "id": "167c5a6b3c5072a36f",
+      "title": "L'Institut chrétiens d'Orient : transmettre une culture, défendre une mémoire",
+      "summary": "Qu'est-ce que l'Institut chrétiens d'Orient ? Quelle est la genèse de sa fondation ? Quels champs recouvre t-elle dans sa cartographie ? De quel Orient parlons-nous ?",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/chretiens-d-orient/l-institut-chretiens-d-orient-transmettre-une-culture-defendre-une-memoire-5046854",
+      "source": "France Culture",
+      "source_id": "france-culture",
+      "category": "histoire",
+      "published_at": "2026-09-13T06:07:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/696fe74f-63c9-4192-b277-e5f57b0cdca4/720x405?webp=false",
+      "score": 73.1,
+      "matched_keywords": []
+    },
+    {
+      "id": "12dd224e99b8778ffa",
+      "title": "JOURNAL DE 8H du dimanche 13 septembre 2026",
+      "summary": "",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/journal-de-8-h/journal-de-8h-du-dimanche-13-septembre-2026-5295608",
+      "source": "France Culture",
+      "source_id": "france-culture",
+      "category": "histoire",
+      "published_at": "2026-09-13T06:00:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/f51e4165-46c0-442e-9f2a-5964c510eec6/720x405?webp=false",
+      "score": 73.08,
+      "matched_keywords": []
     },
     {
       "id": "75628f930e057f3176",
@@ -2449,191 +2533,98 @@
       "category": "local",
       "published_at": "2026-09-09T07:00:00Z",
       "image": "",
-      "score": 74.36,
+      "score": 73.01,
       "matched_keywords": []
     },
     {
-      "id": "ee68732fe83c663d5f",
-      "title": "Fréquence ZX, un moteur en commun",
-      "summary": "Un ancien hangar agricole breton converti en garage-atelier, où résonnent les ondes de Fréquence ZX. Une Expérience vrombissante parmi une communauté de bidouilleurs DIY dont le cœur bat pour un modèle des 90's : la bonne vieille Citroën ZX. Derrière la mécanique, le son du savoir-faire collectif.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/l-experience/frequence-zx-un-moteur-en-commun-4645866",
+      "id": "c4768b9436583403ee",
+      "title": "L'islam à l'épreuve de l'intelligence artificielle",
+      "summary": "Comment une orthodoxie religieuse conservatrice qui a confisqué la raison pourra-t-elle réagir face à une intelligence artificielle dont la puissance procède précisément de la raison ?",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/questions-d-islam/l-islam-a-l-epreuve-de-l-intelligence-artificielle-8303841",
       "source": "France Culture",
       "source_id": "france-culture",
       "category": "histoire",
-      "published_at": "2026-09-12T19:00:31Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/81f34c0e-8e8d-4968-b034-2634aeff37a7/720x405?webp=false",
-      "score": 73.06,
+      "published_at": "2026-09-13T05:05:00Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/2961c6d5-409a-4580-8520-f6b3ca53a1e1/720x405?webp=false",
+      "score": 72.97,
       "matched_keywords": []
     },
     {
-      "id": "05ed4f820cb2abc052",
-      "title": "L'or du démon : rencontre avec Ian McGuire",
-      "summary": "Après le huis clos du baleiner de \"Dans les eaux du Grand Nord\", une évocation de l'Irlande indépendantiste avec \"Celui qui sait\", Ian McGuire se lance dans la peinture d'une colonie anglaise du grand nord canadien au XVIIᵉ siècle, rendue folle par la découverte d'un fragment de roche aurifère.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/mauvais-genres/l-or-du-demon-rencontre-avec-ian-mcguire-9391974",
-      "source": "France Culture",
-      "source_id": "france-culture",
-      "category": "histoire",
-      "published_at": "2026-09-12T18:00:00Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/1b1e9a6e-440b-4ea9-a74e-563626164763/720x405?webp=false",
-      "score": 72.93,
-      "matched_keywords": []
-    },
-    {
-      "id": "06797f10361346dcd0",
-      "title": "L'AVANT-SCENE, émission du samedi 12 septembre 2026",
+      "id": "b541335146c65056cd",
+      "title": "JOURNAL DE 7H, du dimanche 13 septembre 2026",
       "summary": "",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/l-avant-scene/l-avant-scene-emission-du-samedi-12-septembre-2026-1363106",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/journal-de-7-h/journal-de-7h-du-dimanche-13-septembre-2026-6693310",
       "source": "France Culture",
       "source_id": "france-culture",
       "category": "histoire",
-      "published_at": "2026-09-12T17:46:00Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/8e53116f-b097-4742-ab73-157a35a8d27e/720x405?webp=false",
-      "score": 72.9,
+      "published_at": "2026-09-13T05:00:00Z",
+      "image": "",
+      "score": 72.96,
       "matched_keywords": []
     },
     {
-      "id": "3fa1bc705c500135fc",
-      "title": "Dynamite Shakers secoue le rock français",
-      "summary": "La belle promesse du garage rock français Dynamite Shakers est à découvrir en live à l'occasion de la sortie de leur nouvel album \"MARILYN\" (Barclay).",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/comme-un-samedi-le-live/dynamite-shakers-secoue-le-rock-francais-6691912",
+      "id": "a19bfff6a88c62dfd2",
+      "title": "La Peste : l’Europe face à la mort 12/12 : La peste de l’animal aux humains : un inquiétant précédent ?",
+      "summary": "Jean-Noël Jeanneney reçoit Frédérique Audouin-Rouzeau, alias Fred Vargas, chercheuse au CNRS, pour aborder la question de la transmission de la peste entre l'animal et l'homme depuis l'Antiquité jusqu'aux Temps modernes.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-nuits-de-france-culture/la-peste-de-l-animal-aux-humains-un-inquietant-precedent-8809539",
       "source": "France Culture",
       "source_id": "france-culture",
       "category": "histoire",
-      "published_at": "2026-09-12T16:43:00Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/cb916233-7151-41c4-a006-f536e743930c/720x405?webp=false",
+      "published_at": "2026-09-13T03:56:31Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/774c0a1d-cbb6-46fb-9241-e9e32a7262fd/720x405?webp=false",
+      "score": 72.82,
+      "matched_keywords": []
+    },
+    {
+      "id": "bb34426f2e65c63ee3",
+      "title": "La grande peur des épidémies 3/5 : Vivre en temps de peste",
+      "summary": "L'épidémie se caractérise par une grande violence : morts massives et brutales. La société se désorganise, les solidarités sont brisées, les divisions et le contrôle policier s'accentuent, la panique explose. Les historiens Jean Delumeau et Jean-Noël Biraben nous racontent la vie sous la peste.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-nuits-de-france-culture/vivre-en-temps-de-peste-3393054",
+      "source": "France Culture",
+      "source_id": "france-culture",
+      "category": "histoire",
+      "published_at": "2026-09-13T03:32:22Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/266aa189-722f-404b-a512-7f174f0dfec1/720x405?webp=false",
       "score": 72.77,
       "matched_keywords": []
     },
     {
-      "id": "4d6fc60016c6f3a0f8",
-      "title": "Maigret, rideau de douche et pamplemousse jaune avec Philippe Jaenada",
-      "summary": "Philippe Jaenada est notre invité fil rouge, à l'occasion de la sortie de L'Inconnue du Quai de Javel chez Flammarion. Au programme : l'art d'être casanier, une fausse vocation scientifique et une vraie méthodologie d'enquête, des obsessions et le rire, toujours.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/comme-un-samedi/maigret-rideau-de-douche-et-pamplemousse-jaune-avec-philippe-jaenada-2035332",
+      "id": "6f2d2063f90a266c19",
+      "title": "La grande peur des épidémies 2/5 : La peste, fléau de Dieu ?",
+      "summary": "La peste est la plus grande tueuse de tous les temps. La plus meurtrière, la peste noire, a fait 25 millions de victimes entre 1348 et 1352. Dans cette émission de 2002, l'historien Jean Delumeau analyse la façon dont la religion a expliqué et instrumentalisé ce fléau.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-nuits-de-france-culture/la-peste-fleau-de-dieu-2146124",
       "source": "France Culture",
       "source_id": "france-culture",
       "category": "histoire",
-      "published_at": "2026-09-12T16:10:00Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/64879724-4896-4a1c-8cb0-3d8538dc427c/720x405?webp=false",
-      "score": 72.7,
+      "published_at": "2026-09-13T03:07:27Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/c226cc4d-f8bb-4f09-bb1c-dc227118f113/720x405?webp=false",
+      "score": 72.72,
       "matched_keywords": []
     },
     {
-      "id": "a45a11511b1d54a112",
-      "title": "En Seine-Maritime, l'enquête se poursuit après le déraillement d'un TER entre Rouen et Caen",
-      "summary": "C'est un morceau de rail de 300 kilos qui serait à l'origine du déraillement de ce TER à Cléon qui transportait 186 passagers. L'hypothèse criminelle est privilégiée par les enquêteurs. 44 personnes ont été blessées dont une jeune femme en urgence absolue.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/journal-de-18h/journal-de-18h-emission-du-samedi-12-septembre-2026-2046265",
+      "id": "6edb11eda3dae86d59",
+      "title": "La Peste : l’Europe face à la mort 8/12 : La Grande peste de Marseille",
+      "summary": "Ce numéro de \"Mémoire d’homme\" de Vincent Charpentier revient sur la Grande peste de Marseille avec le paléopathologiste Olivier Dutour et l'archéologue Michel Signoli qui reconstituent le tableau chaotique de ces deux années dramatiques.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-nuits-de-france-culture/la-grande-peste-de-marseille-2822171",
       "source": "France Culture",
       "source_id": "france-culture",
       "category": "histoire",
-      "published_at": "2026-09-12T16:00:00Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/4de5fc40-7f7c-40d8-9b3a-4c8d68a798ee/720x405?webp=false",
-      "score": 72.68,
+      "published_at": "2026-09-13T02:10:15Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/4d272ee4-097f-42af-9e6e-97020db69a52/720x405?webp=false",
+      "score": 72.6,
       "matched_keywords": []
     },
     {
-      "id": "68b1c106c673660cd2",
-      "title": "Pour la sociologue Angèle Christin, \"Une IA terminator est un risque très très faible aujourd'hui\"",
-      "summary": "Un discours apocalyptique croît autour de l'intelligence artificielle, alimenté par des déclarations croissantes de professionnels. Mais, entre perte de contrôle de l'outil et marketing de la peur, quels sont réellement les risques ? Entretien avec une sociologue, chercheuse associée à Stanford.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/l-info-de-france-culture/une-ia-terminator-est-un-risque-tres-tres-faible-aujourd-hui-souligne-la-sociologue-angele-christin-4964279",
+      "id": "4c79a82282abbc7cdb",
+      "title": "Épidémies et société : La peste et les hommes",
+      "summary": "On peut résumer l’impact de la peste noire qui sévit de 1347 à 1352 au nombre morts : un tiers de la population européenne ! Tout le monde est concerné, la peste ne fait pas de discrimination. En 1993, le démographe Jean-Noël Biraben analyse ce bouleversement sociétal.",
+      "url": "https://www.radiofrance.fr/franceculture/podcasts/les-nuits-de-france-culture/la-peste-et-les-hommes-9224983",
       "source": "France Culture",
       "source_id": "france-culture",
       "category": "histoire",
-      "published_at": "2026-09-12T15:01:00Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/7a8f6396-03bc-4d14-81d4-b41f7a41ead0/720x405?webp=false",
-      "score": 72.56,
-      "matched_keywords": []
-    },
-    {
-      "id": "a543708e3a95f050a4",
-      "title": "OWASP ZAP : Sécuriser une API REST en 13 Étapes [2026]",
-      "summary": "OWASP ZAP : Sécuriser une API REST en 13 Étapes [2026] tech-insider.org",
-      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9ocTRGV0hyX29PY2pUZnBxRW5DelI0U3VPanJETnBTUkNvQm92XzgxaW51Y1ZxbFZxVmZzYVV5WnVKVWhnQzRneXNya0NNVGRPQ3FIUllEUUh6WGVZQzlWRWE2SlBEdVFMZ1kyVlpJZw?oc=5",
-      "source": "tech-insider.org",
-      "source_id": "news-github-pages",
-      "category": "tech",
-      "published_at": "2026-09-11T08:39:29Z",
-      "image": "",
-      "score": 72.56,
-      "matched_keywords": []
-    },
-    {
-      "id": "45da2e760a44373434",
-      "title": "L'adolescence chez Truffaut",
-      "summary": "L'adolescence telle que vécue, vue et représentée par François Truffaut, et son influence dans le cinéma qui l’a suivi, en France comme à l’étranger, avec Antoine de Baecque.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/grand-angle/l-adolescence-chez-truffaut-1591164",
-      "source": "France Culture",
-      "source_id": "france-culture",
-      "category": "histoire",
-      "published_at": "2026-09-12T11:45:00Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/e028aedb-04ed-4190-afe1-eff8a7e4df80/720x405?webp=false",
-      "score": 72.15,
-      "matched_keywords": []
-    },
-    {
-      "id": "136ab294efffa6cb1e",
-      "title": "Félix de Givry :\" j'aime le rapport un peu sacré au cinéma\"",
-      "summary": "Dans son premier long-métrage romanesque et intemporel aux allures de conte, \"Adieu monde cruel\", Félix de Givry suit Otto, victime de harcèlement, qui se réinvente une vie, dans un réel comme suspendu, suite à son suicide raté, en trouvant refuge auprès d'une élève de son collège.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/le-film-de-la-semaine/adieu-monde-cruel-de-felix-de-givry-7901136",
-      "source": "France Culture",
-      "source_id": "france-culture",
-      "category": "histoire",
-      "published_at": "2026-09-12T11:32:00Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/59e5a7f6-4000-4d7d-8813-391dd4b517cb/720x405?webp=false",
-      "score": 72.12,
-      "matched_keywords": []
-    },
-    {
-      "id": "aad49b41d80e409c53",
-      "title": "\"Adieux monde cruel\" de Félix de Givry, une adolescence à la Truffaut",
-      "summary": "A l'occasion de la sortie en salles d'\"Adieu monde cruel\", entretien avec Félix de Givry, suivi d'un \"Grand Angle\" sur la figure adolescente chez Truffaut avec Antoine de Baecque, avec aussi Sandra Onana.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/plan-large/adieux-monde-cruel-de-felix-de-givry-une-adolescence-a-la-truffaut-5457670",
-      "source": "France Culture",
-      "source_id": "france-culture",
-      "category": "histoire",
-      "published_at": "2026-09-12T11:30:00Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/32e7b2ed-4ff8-4b10-813d-a75f120b77eb/720x405?webp=false",
-      "score": 72.12,
-      "matched_keywords": []
-    },
-    {
-      "id": "bb9c68c160772be5ec",
-      "title": "Lyon sous l'œil de Doisneau : une exposition inédite qui révèle des trésors cachés",
-      "summary": "L'un des plus grands maîtres de la photographie, Robert Doisneau, est exposé à Lyon depuis début septembre. Plus de 400 clichés relatent le quotidien des Français du XXe siècle. Un espace dédié à la ville de Lyon révèle des images inédites de la ville.",
-      "url": "https://france3-regions.franceinfo.fr/auvergne-rhone-alpes/rhone/lyon/lyon-sous-l-il-de-doisneau-une-exposition-inedite-qui-revele-des-tresors-caches-3412826.html",
-      "source": "France 3 — Histoire",
-      "source_id": "france3-histoire",
-      "category": "histoire",
-      "published_at": "2026-09-07T16:02:59Z",
-      "image": "https://france3-regions.franceinfo.fr/image/u4V1vjSLCBloyAwBD-Uj0iCOyNA/930x620/filters:format(webp)/regions/2026/09/07/6a9ed3354355a978408290.jpg",
-      "score": 72.09,
-      "matched_keywords": [
-        "histoire"
-      ]
-    },
-    {
-      "id": "274d14135154020c78",
-      "title": "Classement PISA : comment penser l'école de demain ?",
-      "summary": "Alors que l'étude Pisa confirme un recul de la France dans l'apprentissage en compréhension de l’écrit et en mathématiques, comment penser l'école de demain, à l'heure où l'IA est au cœur des préoccupations.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/sans-prejuger/comment-penser-l-ecole-de-demain-5127454",
-      "source": "France Culture",
-      "source_id": "france-culture",
-      "category": "histoire",
-      "published_at": "2026-09-12T10:46:10Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/743419b6-3379-497a-ab77-b2c2ebd6d046/720x405?webp=false",
-      "score": 72.03,
-      "matched_keywords": []
-    },
-    {
-      "id": "83aadadcaed2a04ecc",
-      "title": "Déraillement d'un train en Normandie : la piste criminelle est privilégiée",
-      "summary": "La piste criminelle est privilégiée après le déraillement vendredi soir d'un train en Normandie. Pour l'instant, 44 blessés sont recensés, dont une jeune femme en urgence absolue.",
-      "url": "https://www.radiofrance.fr/franceculture/podcasts/journal-de-12h30/journal-de-12h30-du-samedi-12-septembre-2026-4180664",
-      "source": "France Culture",
-      "source_id": "france-culture",
-      "category": "histoire",
-      "published_at": "2026-09-12T10:30:00Z",
-      "image": "https://www.radiofrance.fr/pikapi/images/606045e5-2556-45f1-b562-25eff8e5b422/720x405?webp=false",
-      "score": 71.99,
+      "published_at": "2026-09-13T01:40:14Z",
+      "image": "https://www.radiofrance.fr/pikapi/images/bcf1c4ef-1e88-4a92-ac3f-67d201cf1242/720x405?webp=false",
+      "score": 72.54,
       "matched_keywords": []
     }
   ]
