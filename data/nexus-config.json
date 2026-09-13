@@ -1,0 +1,59 @@
+{
+  "version": 2,
+  "publishedAt": null,
+  "site": {
+    "title": "3615 LÉNAÏC",
+    "subtitle": "PORTAIL PERSONNEL // TERMINAL LOCAL",
+    "footerLeft": "3615 LÉNAÏC // VERSION 7.0",
+    "footerRight": "DONNÉES LOCALES · BUS PARTAGÉ",
+    "showBusStatus": true
+  },
+  "content": {
+    "officialMessage": "",
+    "greetings": {
+      "morning": "Bien dormi ? Commence la journée par ta nuit, puis laisse CAP faire le calcul.",
+      "noon": "Le terminal est prêt. Repas, activité et actualités sont à portée de touche.",
+      "afternoon": "Tes services personnels sont en ligne. Choisis un terminal ou saisis une commande.",
+      "evening": "Fin de journée : CAP, Culina et le bureau généalogique restent accessibles depuis ce terminal."
+    }
+  },
+  "homeBlocks": [
+    {"id":"greeting","label":"Bonjour / contexte","visible":true,"order":10},
+    {"id":"official","label":"Message d’accueil officiel","visible":true,"order":20},
+    {"id":"horoscope","label":"Horoscope Gémeaux","visible":true,"order":30},
+    {"id":"sleep","label":"Question sommeil","visible":true,"order":40},
+    {"id":"cap","label":"CAP — récapitulatif","visible":true,"order":50},
+    {"id":"culina","label":"Culina — repas","visible":true,"order":60},
+    {"id":"stylia","label":"Stylia — tenue","visible":true,"order":70},
+    {"id":"express","label":"Lénaïc Express — actualités","visible":true,"order":80},
+    {"id":"genealogy","label":"Bureau généalogique","visible":true,"order":90},
+    {"id":"ariane","label":"Le Fil d’Ariane — enquête","visible":true,"order":100}
+  ],
+  "categories": [
+    {"id":"daily","label":"QUOTIDIEN","order":10,"visible":true},
+    {"id":"genealogy","label":"BUREAU GÉNÉALOGIQUE","order":20,"visible":true},
+    {"id":"archives","label":"ARCHIVES","order":30,"visible":true},
+    {"id":"games","label":"DÉTENTE","order":40,"visible":true},
+    {"id":"admin","label":"ADMINISTRATION","order":50,"visible":true}
+  ],
+  "applications": [
+    {"id":"cap","name":"CAP","description":"Sport, nutrition, sommeil, mesures","url":"../cap/","command":"CAP","category":"daily","order":10,"visible":true,"version":""},
+    {"id":"culina","name":"CULINA","description":"Recettes, stocks et repas","url":"../culina/","command":"CULINA","category":"daily","order":20,"visible":true,"version":""},
+    {"id":"stylia","name":"STYLIA","description":"Assistant de tenues","url":"../stylia/","command":"STYLIA","category":"daily","order":30,"visible":true,"version":""},
+    {"id":"express","name":"LÉNAÏC EXPRESS","description":"Actualités personnalisées","url":"../lenaic-express/","command":"EXPRESS","category":"daily","order":40,"visible":true,"version":""},
+    {"id":"arboris","name":"ARBORIS","description":"Généalogie personnelle","url":"../bureau-genealogique/index.html","command":"ARBORIS","category":"genealogy","order":10,"visible":true,"version":""},
+    {"id":"scriptoria","name":"SCRIPTORIA","description":"Registres et actes","url":"../bureau-genealogique/index2.html","command":"SCRIPTORIA","category":"genealogy","order":20,"visible":true,"version":""},
+    {"id":"pistoria","name":"PISTORIA","description":"Assistant des ancêtres directs","url":"../bureau-genealogique/index3.html","command":"PISTORIA","category":"genealogy","order":30,"visible":true,"version":""},
+    {"id":"ariane","name":"LE FIL D’ARIANE","description":"Enquêtes et pistes documentaires","url":"../aide_archive/Ariane.html","command":"ARIANE","category":"archives","order":10,"visible":true,"version":""},
+    {"id":"scribe","name":"SCRIBE","description":"Aide au travail d’archives","url":"../aide_archive/Scribe-v3.html","command":"SCRIBE","category":"archives","order":20,"visible":true,"version":""},
+    {"id":"uchronies","name":"UCHRONIES","description":"Bibliothèque des jeux historiques","url":"../uchronies/","command":"UCHRONIES","category":"games","order":10,"visible":true,"version":""},
+    {"id":"nexus","name":"3615 NEXUS","description":"CMS, sauvegardes, données et automatisations","url":"cms.html","command":"NEXUS","category":"admin","order":10,"visible":true,"version":"2.0"}
+  ],
+  "automations": {
+    "autoSnapshotHours": 3,
+    "retentionPerDataset": 20,
+    "autoSnapshotOnChange": true,
+    "changeDelaySeconds": 30,
+    "publicMirrorsEnabled": true
+  }
+}
