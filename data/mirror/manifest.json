@@ -1,4 +1,45 @@
 {
-  "generatedAt": null,
-  "items": []
+  "generatedAt": "2026-09-13T04:42:47.707177+00:00",
+  "items": [
+    {
+      "id": "culina-recipes",
+      "label": "Recettes Culina",
+      "source": "https://ikare63.github.io/culina/recettes.json",
+      "mirror": "data/mirror/culina-recettes.json",
+      "ok": true,
+      "bytes": 451067,
+      "sha256": "3b1452ac65d802c84527427713ddf910e61d1f63aa7ded6c8f4238f8faf6e231",
+      "fetchedAt": "2026-09-13T04:42:47.984768+00:00"
+    },
+    {
+      "id": "express-news",
+      "label": "Actualités Lénaïc Express",
+      "source": "https://ikare63.github.io/lenaic-express/data/actualites.json",
+      "mirror": "data/mirror/express-actualites.json",
+      "ok": true,
+      "bytes": 164998,
+      "sha256": "9f0cb5f8aef2b399cae23e5f281677fc1e48c3f9d0a1b257a47c6d124258a7ac",
+      "fetchedAt": "2026-09-13T04:42:48.129109+00:00"
+    },
+    {
+      "id": "express-preferences",
+      "label": "Préférences Lénaïc Express",
+      "source": "https://ikare63.github.io/lenaic-express/preferences.json",
+      "mirror": "data/mirror/express-preferences.json",
+      "ok": true,
+      "bytes": 1855,
+      "sha256": "9bc010fd7fdb0b582c1b5256fd118cdb1d3ec73d3ee9edff523d5745b5091033",
+      "fetchedAt": "2026-09-13T04:42:48.262471+00:00"
+    },
+    {
+      "id": "express-sources",
+      "label": "Sources Lénaïc Express",
+      "source": "https://ikare63.github.io/lenaic-express/sources.json",
+      "mirror": "data/mirror/express-sources.json",
+      "ok": true,
+      "bytes": 2859,
+      "sha256": "a1d7c0a5c21d08417e068396b51531af2e0ea858d870df208eede983bdff25fe",
+      "fetchedAt": "2026-09-13T04:42:48.382410+00:00"
+    }
+  ]
 }
