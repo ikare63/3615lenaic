@@ -34,6 +34,7 @@ function migrateConfig(base,old){
  const oldApps=new Map((old.applications||[]).map(a=>[a.id,a]));next.applications=(base.applications||[]).map(a=>{const x=oldApps.get(a.id);if(!x)return clone(a);const keep={};for(const k of ['name','description','url','command','visible','version'])if(x[k]!==undefined)keep[k]=x[k];return {...clone(a),...keep,category:a.category,order:a.order}});
  const oldBlocks=new Map((old.homeBlocks||[]).map(b=>[b.id,b]));next.homeBlocks=(base.homeBlocks||[]).map(b=>oldBlocks.has(b.id)?{...clone(b),visible:oldBlocks.get(b.id).visible!==false}:clone(b));
  const oldTabs=new Map((old.portalTabs||[]).map(t=>[t.id,t]));next.portalTabs=(base.portalTabs||[]).map(t=>{const x=oldTabs.get(t.id);return x?{...clone(t),label:x.label||t.label,visible:x.visible!==false,order:Number.isFinite(Number(x.order))?Number(x.order):t.order}:clone(t)});renumber(next.portalTabs.sort((a,b)=>(a.order||0)-(b.order||0)));
+ next.modules=Array.isArray(old.modules)?clone(old.modules):clone(base.modules||[]);
  next.publishedAt=old.publishedAt||null;next.migratedAt=new Date().toISOString();return next;
 }
 async function hash(raw){if(globalThis.crypto?.subtle){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(raw));return [...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,'0')).join('')}let h=2166136261;for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16)}
@@ -145,7 +146,7 @@ async function renderMirrors(){
  try{mirrorManifest=await fetch(`data/mirror/manifest.json?ts=${Date.now()}`,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject())}catch{mirrorManifest={items:[],generatedAt:null}}
  const enabled=bool(draft?.automations?.publicMirrorsEnabled),map=new Map((mirrorManifest.items||[]).map(x=>[x.id,x]));$('mirrorStatus').textContent=enabled?(mirrorManifest.generatedAt?fmtDate(mirrorManifest.generatedAt):'EN ATTENTE'):'DÉSACTIVÉS';$('mirrorList').innerHTML=registry.publicJson.map(item=>{const m=map.get(item.id);return `<div class="mirror-row"><div><strong>${safe(item.label)}</strong><div class="dataset-meta">${safe(item.url)}</div></div><div class="mirror-size">${m?.ok?fmtBytes(m.bytes):'—'}</div><div class="mirror-time ${m?.ok?'ok':'ko'}">${enabled?(m?.ok?fmtDate(m.fetchedAt):(m?.error?'ERREUR':'PAS ENCORE SYNCHRONISÉ')):'DÉSACTIVÉ DANS LE CMS'}</div><div class="row-actions"><a class="mini" href="${safe(item.url)}" target="_blank">SOURCE</a><a class="mini" href="${safe(item.mirror)}" target="_blank">MIROIR</a></div></div>`}).join('')
 }
-function readBus(){try{const a=JSON.parse(localStorage.getItem('lenaic-bus-v1')||'[]');return Array.isArray(a)?a:[]}catch{return[]}}
+function readBus(){if(window.LenaicBus)return LenaicBus.list();try{const a=JSON.parse(localStorage.getItem('lenaic-bus-v2')||localStorage.getItem('lenaic-bus-v1')||'[]');return Array.isArray(a)?a:[]}catch{return[]}}
 function renderBus(){const items=readBus().sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));$('busList').innerHTML=items.length?items.slice(0,100).map(e=>`<div class="bus-row"><div><strong>${safe(e.type||'event')}</strong><small>${fmtDate(e.createdAt)}</small></div><code>${safe(JSON.stringify(e.payload||{}))}</code><div><strong>${safe(e.status||'pending')}</strong><small>${safe(e.source||'?')} → ${safe(e.target||'*')}</small></div></div>`).join(''):'<div class="notice">Aucun événement dans le bus.</div>'}
 async function refreshStatus(){const all=await allSnapshots();$('vaultCount').textContent=`${all.length} SNAPSHOT${all.length>1?'S':''}`;renderCmsState()}
 async function refreshRuntime(){await Promise.all([renderDashboard(),renderDatasets(),renderMirrors(),refreshStatus()]);renderBus()}
@@ -246,14 +247,20 @@ function bind(){
  $('downloadDatasetBtn').onclick=()=>{if(!currentEditor)return;download(`${currentEditor.key}-${new Date().toISOString().slice(0,10)}.json`,prettyRaw(readRaw(currentEditor.key)))};
  $('cleanupBtn').onclick=async()=>{for(const d of dataDefs())await enforceRetention(d.key);await refreshRuntime();toast('Historique nettoyé')};
  $('importAllInput').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const p=JSON.parse(await f.text());if(!Array.isArray(p.datasets))throw new Error('Format NEXUS invalide');if(!confirm(`Restaurer ${p.datasets.length} jeux de données depuis ce fichier ?`))return;await sweep('before-global-import');let n=0;for(const x of p.datasets){if(byKey(x.key)&&typeof x.raw==='string'){localStorage.setItem(x.key,x.raw);n++}}await sweep('global-import');toast(`${n} jeux de données restaurés`)}catch(err){toast(`Import impossible : ${err.message}`)}finally{e.target.value=''}};
- $('refreshBusBtn').onclick=renderBus;$('purgeBusBtn').onclick=()=>{const a=readBus(),keep=a.filter(e=>e.status==='pending');localStorage.setItem('lenaic-bus-v1',JSON.stringify(keep));renderBus();renderDashboard();toast(`${a.length-keep.length} événement(s) traité(s) supprimé(s)`)};
+ $('refreshBusBtn').onclick=renderBus;$('purgeBusBtn').onclick=()=>{const a=readBus(),keep=a.filter(e=>e.status==='pending');localStorage.setItem('lenaic-bus-v2',JSON.stringify(keep));localStorage.setItem('lenaic-bus-v1',JSON.stringify(keep));renderBus();renderDashboard();toast(`${a.length-keep.length} événement(s) traité(s) supprimé(s)`)};
  $('exportConfigBtn').onclick=()=>download(`nexus-config-${new Date().toISOString().slice(0,10)}.json`,JSON.stringify(draft,null,2));
  $('importConfigInput').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const c=JSON.parse(await f.text());if(Number(c.version)<2||!Array.isArray(c.applications)||!Array.isArray(c.homeBlocks))throw new Error('Ce fichier n’est pas une configuration NEXUS compatible');draft=c;saveDraft();renderAllCms();toast('Configuration importée dans le brouillon')}catch(err){toast(err.message)}finally{e.target.value=''}};
  $('revertPublishedBtn').onclick=()=>{if(isDirty()&&!confirm('Abandonner les modifications du brouillon ?'))return;draft=clone(publishedConfig);writeJson(DRAFT_KEY,draft);renderAllCms();toast('Brouillon rechargé depuis la version publiée')};
  $('resetConfigBtn').onclick=()=>{if(!confirm('Réinitialiser le CMS à sa configuration par défaut ? Les données des applications ne seront pas supprimées.'))return;localStorage.removeItem(PUBLISHED_KEY);localStorage.removeItem(DRAFT_KEY);publishedConfig=clone(defaultConfig);draft=clone(defaultConfig);renderAllCms();toast('Configuration CMS réinitialisée')};
- window.addEventListener('storage',e=>{if(e.key)scheduleChangedKey(e.key);if(e.key==='lenaic-bus-v1'){renderBus();renderDashboard()}});document.addEventListener('visibilitychange',()=>{if(!document.hidden)maybeSweep()});setInterval(()=>maybeSweep(),15*60*1000);
+ window.addEventListener('storage',e=>{if(e.key)scheduleChangedKey(e.key);if(e.key==='lenaic-bus-v1'||e.key==='lenaic-bus-v2'){renderBus();renderDashboard()}});document.addEventListener('visibilitychange',()=>{if(!document.hidden)maybeSweep()});setInterval(()=>maybeSweep(),15*60*1000);
 }
 function showTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===`panel-${id}`));window.scrollTo({top:0,behavior:'smooth'})}
+
+window.NexusCMS={
+ getDraft:()=>draft, getPublished:()=>publishedConfig, getDefault:()=>defaultConfig,
+ mutate(fn){if(typeof fn==='function')fn(draft);saveDraft();renderCmsState();try{window.dispatchEvent(new CustomEvent('nexuscmschange'))}catch{}},
+ render:()=>renderAllCms(), publish:()=>publish(), toast
+};
 
 (async function init(){
  try{
