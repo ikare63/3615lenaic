@@ -7,7 +7,7 @@
 <meta content="#07151a" name="theme-color"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
 <link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=90" rel="stylesheet"/>
+<link href="css/style.css?v=91" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -91,6 +91,16 @@
 </div>
 <a class="inline-link" href="../cap/">OUVRIR CAP →</a>
 </div>
+</section><section class="minitel-card savings52-card" data-home-block="savings" hidden id="savings52Card">
+<div class="retro-head"><span>EPARGNE.52</span><strong id="savings52State">DÉFI 52 SEMAINES</strong></div>
+<div class="savings52-main">
+<div class="savings52-amount"><span>CETTE SEMAINE</span><strong id="savings52Amount">— €</strong><small id="savings52Week">SEMAINE — / 52</small></div>
+<div class="savings52-total"><span>CUMUL ÉPARGNÉ</span><strong id="savings52Saved">0 € / 1 378 €</strong><small id="savings52After">Objectif final · 1 378 €</small></div>
+</div>
+<div class="savings52-progress" aria-label="Progression du défi épargne"><i id="savings52Bar"></i></div>
+<div class="savings52-progress-meta"><span id="savings52ProgressText">0 € réellement validés</span><strong id="savings52Percent">0,0 %</strong></div>
+<label class="savings52-check" for="savings52Done"><input id="savings52Done" type="checkbox"/><span>ÉPARGNÉ</span></label>
+<p class="savings52-hint" id="savings52Hint">Le défi commence le lundi 14 septembre 2026.</p>
 </section><article class="minitel-card otarie-home-card" data-home-block="otarie" id="homeBlock-otarie">
 <div class="retro-head"><span>OTARIE.LIVE</span><strong id="otarieHomeMood">BAIGNADE EN COURS</strong></div>
 <div class="otarie-home-layout">
@@ -307,18 +317,18 @@
 <article class="minitel-card"><div class="retro-head"><span>BUS</span><strong id="systemBusState">—</strong></div><div class="health-lines" id="systemBusDetail"></div></article>
 <article class="minitel-card"><div class="retro-head"><span>SAUVEGARDES</span><strong>COFFRE NEXUS</strong></div><div class="health-lines" id="systemBackupDetail"></div><a class="inline-link" href="cms.html#data">GÉRER DANS NEXUS →</a></article>
 </div>
-<article class="minitel-card command-help-card"><div class="retro-head"><span>COMMANDES</span><strong>AIDE TERMINAL</strong></div><div class="command-chips"><span>0 ACCUEIL</span><span>1 AUJOURD’HUI</span><span>2 QUOTIDIEN</span><span>3 SANTÉ</span><span>4 INFOS</span><span>5 GÉNÉALOGIE</span><span>6 ARCHIVES</span><span>7 DÉTENTE</span><span>9 SYSTÈME</span><span>METEO</span><span>MEDITATION</span><span>CAP</span><span>CULINA</span><span>STYLIA</span><span>SCRIBE</span><span>ARIANE</span><span>NEXUS</span><span>OTARIE</span></div></article>
+<article class="minitel-card command-help-card"><div class="retro-head"><span>COMMANDES</span><strong>AIDE TERMINAL</strong></div><div class="command-chips"><span>0 ACCUEIL</span><span>1 AUJOURD’HUI</span><span>2 QUOTIDIEN</span><span>3 SANTÉ</span><span>4 INFOS</span><span>5 GÉNÉALOGIE</span><span>6 ARCHIVES</span><span>7 DÉTENTE</span><span>9 SYSTÈME</span><span>METEO</span><span>MEDITATION</span><span>EPARGNE</span><span>CAP</span><span>CULINA</span><span>STYLIA</span><span>SCRIBE</span><span>ARIANE</span><span>NEXUS</span><span>OTARIE</span></div></article>
 </section></main>
 <footer class="terminal-footer">
 <form class="command-line" id="commandForm">
 <label for="commandInput">COMMANDE &gt;</label>
-<input autocomplete="off" id="commandInput" placeholder="0–7, 9, METEO, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
+<input autocomplete="off" id="commandInput" placeholder="0–7, 9, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.0</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.1</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=2"></script>
-<script src="js/app.js?v=30"></script>
+<script src="js/app.js?v=31"></script>
 </body>
 </html>
