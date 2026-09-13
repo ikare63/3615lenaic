@@ -8,6 +8,62 @@
     ariane:'../aide_archive/Ariane.html',scribe:'../aide_archive/Scribe-v3.html',nexus:'cms.html'
   };
 
+  const NEXUS_CONFIG_KEY='lenaic-nexus-published-v2';
+  const NEXUS_CONFIG_URL='data/nexus-config.json';
+  let nexusConfig=null;
+  let dynamicCommands={};
+
+  function readJsonStorage(key){try{return JSON.parse(localStorage.getItem(key)||'null')}catch{return null}}
+  function htmlSafe(value){return String(value??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+  function currentCmsGreeting(slot,fallback){const v=nexusConfig?.content?.greetings?.[slot];return typeof v==='string'&&v.trim()?v.trim():fallback}
+
+  function renderCmsDirectory(){
+    const box=$('servicesDirectory')||document.querySelector('.directory-grid');
+    if(!box||!nexusConfig)return;
+    const cats=[...(nexusConfig.categories||[])].filter(c=>c.visible!==false).sort((a,b)=>(a.order||0)-(b.order||0));
+    const apps=nexusConfig.applications||[];
+    let number=0;
+    box.innerHTML=cats.map(cat=>{
+      const items=apps.filter(a=>a.visible!==false&&a.category===cat.id).sort((a,b)=>(a.order||0)-(b.order||0));
+      if(!items.length)return '';
+      number++;
+      const links=items.map(a=>`<a href="${htmlSafe(a.url||'#')}"><b>${htmlSafe(a.name||a.id)}</b><small>${htmlSafe(a.description||'')}</small></a>`).join('');
+      return `<article class="directory-card${cat.id==='admin'?' nexus-directory':''}"><div class="directory-head"><span>[${String(number).padStart(2,'0')}]</span><strong>${htmlSafe(cat.label||cat.id)}</strong></div>${links}</article>`;
+    }).join('');
+  }
+
+  function applyNexusConfig(cfg){
+    if(!cfg)return;
+    nexusConfig=cfg;
+    const site=cfg.site||{};
+    const brand=document.querySelector('.brand-block h1');if(brand&&site.title)brand.textContent=site.title;
+    const sub=document.querySelector('.brand-sub');if(sub&&site.subtitle)sub.textContent=site.subtitle;
+    const foot=document.querySelectorAll('.footer-line span');if(foot[0]&&site.footerLeft)foot[0].textContent=site.footerLeft;if(foot[1]&&site.footerRight)foot[1].textContent=site.footerRight;
+    const bus=document.querySelector('.line-status');if(bus)bus.dataset.cmsHidden=site.showBusStatus===false?'1':'0';
+    const official=cfg.content?.officialMessage;if(typeof official==='string'&&official.trim())setText('absurdWelcome',official.trim());else renderAbsurdities();
+    renderContext();
+    const flow=$('homeCmsFlow');
+    if(flow){
+      const defs=[...(cfg.homeBlocks||[])].sort((a,b)=>(a.order||0)-(b.order||0));
+      defs.forEach((def,i)=>{const el=flow.querySelector(`[data-home-block="${def.id}"]`);if(el){el.style.order=String(i+1);el.dataset.cmsHidden=def.visible===false?'1':'0'}});
+    }
+    dynamicCommands={};
+    for(const a of (cfg.applications||[])){
+      if(a.visible===false||!a.url)continue;
+      const cmd=String(a.command||a.name||a.id).trim().toLowerCase();
+      if(cmd)dynamicCommands[cmd]=a.url;
+      dynamicCommands[String(a.id||'').toLowerCase()]=a.url;
+      dynamicCommands[String(a.name||'').toLowerCase()]=a.url;
+    }
+    renderCmsDirectory();
+  }
+
+  async function loadNexusConfig(){
+    let base=null;try{const r=await fetch(`${NEXUS_CONFIG_URL}?v=${Date.now()}`,{cache:'no-store'});if(r.ok)base=await r.json()}catch(e){}
+    const local=readJsonStorage(NEXUS_CONFIG_KEY);
+    applyNexusConfig(local||base);
+  }
+
   function localDateKey(date=new Date()){
     const d=new Date(date);
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -106,10 +162,10 @@
 
   function currentContext(){
     const h=new Date().getHours();
-    if(h>=4&&h<12)return {code:'MATIN.01',title:'BONJOUR LÉNAÏC',text:'Bien dormi ? Commence la journée par ta nuit, puis laisse CAP faire le calcul.'};
-    if(h<14)return {code:'MIDI.02',title:'BONJOUR LÉNAÏC',text:'Le terminal est prêt. Repas, activité et actualités sont à portée de touche.'};
-    if(h<19)return {code:'APRÈS-MIDI.03',title:'BON APRÈS-MIDI LÉNAÏC',text:'Tes services personnels sont en ligne. Choisis un terminal ou saisis une commande.'};
-    return {code:'SOIR.04',title:'BONSOIR LÉNAÏC',text:'Fin de journée : CAP, Culina et le bureau généalogique restent accessibles depuis ce terminal.'};
+    if(h>=4&&h<12)return {code:'MATIN.01',title:'BONJOUR LÉNAÏC',text:currentCmsGreeting('morning','Bien dormi ? Commence la journée par ta nuit, puis laisse CAP faire le calcul.')};
+    if(h<14)return {code:'MIDI.02',title:'BONJOUR LÉNAÏC',text:currentCmsGreeting('noon','Le terminal est prêt. Repas, activité et actualités sont à portée de touche.')};
+    if(h<19)return {code:'APRÈS-MIDI.03',title:'BON APRÈS-MIDI LÉNAÏC',text:currentCmsGreeting('afternoon','Tes services personnels sont en ligne. Choisis un terminal ou saisis une commande.')};
+    return {code:'SOIR.04',title:'BONSOIR LÉNAÏC',text:currentCmsGreeting('evening','Fin de journée : CAP, Culina et le bureau généalogique restent accessibles depuis ce terminal.')};
   }
   function renderContext(){const c=currentContext();setText('contextCode',c.code);setText('greetingTitle',c.title);setText('greetingText',c.text)}
 
@@ -610,6 +666,7 @@
   }
   if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive()});
   window.addEventListener('storage',e=>{
+    if(e.key===NEXUS_CONFIG_KEY)loadNexusConfig();
     if(e.key==='cap-data'){renderSleepPanel();renderBusStatus()}
     if(e.key===CAP_SNAPSHOT_KEY)renderCapLive();
     if(e.key===CULINA_SNAPSHOT_KEY){renderCulinaLive();renderBusStatus()}
@@ -622,12 +679,10 @@
   const commandMap={
     '0':()=>showSection('home'),'accueil':()=>showSection('home'),'home':()=>showSection('home'),
     '1':()=>showSection('services'),'services':()=>showSection('services'),
-    '2':()=>showSection('otarie'),'otarie':()=>showSection('otarie'),
-    'cap':PATHS.cap,'culina':PATHS.culina,'stylia':PATHS.stylia,'express':PATHS.express,'lenaic express':PATHS.express,'lénaïc express':PATHS.express,
-    'uchronies':PATHS.uchronies,'nexus':PATHS.nexus,'cms':PATHS.nexus,'admin':PATHS.nexus,'arboris':PATHS.arboris,'scriptoria':PATHS.scriptoria,'pistoria':PATHS.pistoria,'ariane':PATHS.ariane,'fil d ariane':PATHS.ariane,'scribe':PATHS.scribe
+    '2':()=>showSection('otarie'),'otarie':()=>showSection('otarie')
   };
   $('commandForm').addEventListener('submit',e=>{
-    e.preventDefault();const raw=$('commandInput').value.trim().toLowerCase();const dest=commandMap[raw];
+    e.preventDefault();const raw=$('commandInput').value.trim().toLowerCase();const dest=dynamicCommands[raw]??commandMap[raw];
     if(typeof dest==='function')dest();else if(typeof dest==='string')location.href=dest;else{setText('greetingText',`Commande « ${raw||'vide'} » inconnue. Essaie CAP, CULINA, ARBORIS, OTARIE…`)}
     $('commandInput').value='';
   });
@@ -672,6 +727,7 @@
   setInterval(renderOtarieStatus,60000);
 
   renderContext();renderAbsurdities();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderBusStatus();renderOtarieStatus();
+  loadNexusConfig();
   setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderBusStatus();},60000);
   setInterval(renderCulinaLive,3000);
 })();
