@@ -7,7 +7,7 @@
 <meta content="#07151a" name="theme-color"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
 <link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=91" rel="stylesheet"/>
+<link href="css/style.css?v=94" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -43,7 +43,7 @@
 <button class="service-key" data-section="archives">[6] ARCHIVES</button>
 <button class="service-key" data-section="detente">[7] DÉTENTE</button>
 <button class="service-key" data-section="systeme">[9] SYSTÈME</button>
-<span class="line-status"><i></i> BUS LOCAL ACTIF</span>
+<button class="notification-bell" id="notificationBell" type="button" title="Notifications">✉ <b>0</b></button><span class="line-status"><i></i> BUS V2 ACTIF</span>
 </nav>
 <main>
 <section class="terminal-section active" id="home">
@@ -101,7 +101,7 @@
 <div class="savings52-progress-meta"><span id="savings52ProgressText">0 € réellement validés</span><strong id="savings52Percent">0,0 %</strong></div>
 <label class="savings52-check" for="savings52Done"><input id="savings52Done" type="checkbox"/><span>ÉPARGNÉ</span></label>
 <p class="savings52-hint" id="savings52Hint">Le défi commence le lundi 14 septembre 2026.</p>
-</section><article class="minitel-card otarie-home-card" data-home-block="otarie" id="homeBlock-otarie">
+</section><div class="nexus-modules-zone" data-home-block="modules" id="homeBlock-modules" hidden></div><article class="minitel-card otarie-home-card" data-home-block="otarie" id="homeBlock-otarie">
 <div class="retro-head"><span>OTARIE.LIVE</span><strong id="otarieHomeMood">BAIGNADE EN COURS</strong></div>
 <div class="otarie-home-layout">
 <div class="mini-aquarium-frame"><canvas aria-label="Otarie animée dans son bassin" height="180" id="otarieMiniCanvas" width="720"></canvas><span>BASSIN // DIRECT</span></div>
@@ -177,6 +177,7 @@
 <div class="cap-live-foot"><span id="expressLiveFoot">5 TITRES MAXIMUM · APERÇU</span><a href="../lenaic-express/">VOIR TOUTE L’ACTUALITÉ →</a></div>
 </section><section aria-label="Bureau généalogique" class="minitel-card genealogy-office-card" data-home-block="genealogy" id="homeBlock-genealogy">
 <div class="retro-head"><span>BUREAU.GENEALOGIQUE</span><strong id="genealogyOfficeState">LECTURE LOCALE…</strong></div>
+<div class="home-genealogy-context" id="homeGenealogyContext" hidden></div>
 <div class="genealogy-office-grid">
 <a class="genealogy-app-row" href="../bureau-genealogique/index.html">
 <span class="genealogy-app-code">ARBORIS</span>
@@ -228,6 +229,7 @@
 <div class="retro-head"><span>PROGRAMME</span><strong id="programState">AUJOURD’HUI</strong></div>
 <div class="program-grid" id="programGrid"><div class="express-empty">Construction du programme…</div></div>
 </article>
+<div class="today-nexus-modules" id="todayNexusModules" hidden></div>
 <article class="minitel-card tomorrow-card">
 <div class="retro-head"><span>DEMAIN</span><strong id="tomorrowState">APERÇU</strong></div>
 <div class="tomorrow-grid" id="tomorrowGrid"><div class="express-empty">Préparation de demain…</div></div>
@@ -278,14 +280,15 @@
 <article class="minitel-card sync-card"><div class="retro-head"><span>DERNIERE.MAJ</span><strong id="infoLastUpdate">—</strong></div><p id="infoUpdateMeta">Lénaïc Express n’a pas encore publié d’édition.</p></article>
 </section><section class="terminal-section" id="genealogie">
 <div class="section-title"><span>3615.G05</span><h2>GÉNÉALOGIE</h2></div>
-<p class="section-lead">Anniversaires familiaux, état du Bureau généalogique et recherche transversale.</p>
+<p class="section-lead">Anniversaires familiaux, contexte de travail partagé, état du Bureau généalogique et recherche transversale.</p>
+<article class="minitel-card genealogy-context-card" id="genealogyContextCard"><div class="retro-head"><span>CONTEXTE.ACTIF</span><strong>CHARGEMENT…</strong></div><p>Lecture du contexte généalogique partagé…</p></article>
 <article class="minitel-card anniversaries-card"><div class="retro-head"><span>ANNIVERSAIRES</span><strong id="anniversaryState">7 PROCHAINS JOURS</strong></div><div class="anniversary-groups" id="anniversaryList"><div class="express-empty">Lecture d’Arboris…</div></div></article>
 <div class="genealogy-detail-grid">
 <article class="minitel-card"><div class="retro-head"><span>ARBORIS</span><strong>ARBRE &amp; FAMILLE</strong></div><strong id="genealogyTabArboris">—</strong><p id="genealogyTabArborisMeta">—</p><a class="inline-link" href="../bureau-genealogique/index.html">OUVRIR ARBORIS →</a></article>
 <article class="minitel-card"><div class="retro-head"><span>SCRIPTORIA</span><strong>REGISTRES &amp; ACTES</strong></div><strong id="genealogyTabScriptoria">—</strong><p id="genealogyTabScriptoriaMeta">—</p><a class="inline-link" href="../bureau-genealogique/index2.html">OUVRIR SCRIPTORIA →</a></article>
 <article class="minitel-card"><div class="retro-head"><span>PISTORIA</span><strong>PISTES SOSA</strong></div><strong id="genealogyTabPistoria">—</strong><p id="genealogyTabPistoriaMeta">—</p><a class="inline-link" href="../bureau-genealogique/index3.html">OUVRIR PISTORIA →</a></article>
 </div>
-<article class="minitel-card universal-search-card"><div class="retro-head"><span>RECHERCHE.UNIVERSELLE</span><strong>ARBORIS + SCRIPTORIA + PISTORIA</strong></div><form class="universal-search" id="genealogySearchForm"><input autocomplete="off" id="genealogySearchInput" placeholder="Nom, prénom, lieu, cote…" type="search"/><button type="submit">CHERCHER</button></form><div class="search-results" id="genealogySearchResults"><div class="express-empty">Saisis une recherche pour interroger les trois bases locales.</div></div></article>
+<article class="minitel-card universal-search-card"><div class="retro-head"><span>RECHERCHE.UNIVERSELLE</span><strong>5 BASES LOCALES</strong></div><form class="universal-search" id="genealogySearchForm"><input autocomplete="off" id="genealogySearchInput" placeholder="Nom, prénom, lieu, cote…" type="search"/><button type="submit">CHERCHER</button></form><div class="search-results" id="genealogySearchResults"><div class="express-empty">Saisis une recherche pour interroger Arboris, Scriptoria, Pistoria, Ariane et Scribe.</div></div></article>
 </section><section class="terminal-section" id="archives">
 <div class="section-title"><span>3615.A06</span><h2>ARCHIVES</h2></div>
 <p class="section-lead">Enquêtes Ariane, requêtes Scribe et activité documentaire récente.</p>
@@ -325,10 +328,11 @@
 <input autocomplete="off" id="commandInput" placeholder="0–7, 9, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.3</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.4</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=2"></script>
 <script src="js/app.js?v=33"></script>
+<script src="js/ecosystem-v2.js?v=1"></script>
 </body>
 </html>
