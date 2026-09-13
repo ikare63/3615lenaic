@@ -4,76 +4,165 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#061015">
-<title>3615 NEXUS — Centre de contrôle</title>
-<link rel="stylesheet" href="css/cms.css?v=1">
+<title>3615 NEXUS — CMS</title>
+<link rel="stylesheet" href="css/cms.css?v=2">
 </head>
 <body>
 <div class="scanlines"></div>
 <header class="cms-head">
   <div>
     <div class="eyebrow">3615 LÉNAÏC // ADMINISTRATION</div>
-    <h1>NEXUS</h1>
-    <p>Centre névralgique des applications et des données.</p>
+    <h1>NEXUS <small>V2</small></h1>
+    <p>CMS, centre de contrôle, sauvegardes et automatisations.</p>
   </div>
   <div class="head-actions">
     <a class="btn ghost" href="./">← 3615</a>
-    <button class="btn" id="snapshotAllBtn">SAUVEGARDER MAINTENANT</button>
+    <button class="btn ghost" id="saveDraftBtn">ENREGISTRER LE BROUILLON</button>
+    <button class="btn publish" id="publishBtn">PUBLIER</button>
   </div>
 </header>
 
 <main>
-  <section class="status-strip" id="statusStrip">
-    <div><span>AUTO</span><strong id="autoStatus">3 H</strong></div>
-    <div><span>DERNIER PASSAGE</span><strong id="lastSweep">—</strong></div>
-    <div><span>COFFRE LOCAL</span><strong id="vaultCount">—</strong></div>
-    <div><span>JSON PUBLICS</span><strong id="mirrorStatus">—</strong></div>
+  <section class="status-strip">
+    <div><span>ÉTAT CMS</span><strong id="cmsState">CHARGEMENT</strong></div>
+    <div><span>DERNIÈRE PUBLICATION</span><strong id="lastPublish">—</strong></div>
+    <div><span>SAUVEGARDES</span><strong id="vaultCount">—</strong></div>
+    <div><span>MIROIRS PUBLICS</span><strong id="mirrorStatus">—</strong></div>
   </section>
 
   <nav class="cms-tabs" aria-label="Sections NEXUS">
-    <button class="tab active" data-tab="apps">APPLICATIONS</button>
-    <button class="tab" data-tab="data">COFFRE JSON</button>
-    <button class="tab" data-tab="mirrors">MIROIRS 3 H</button>
+    <button class="tab active" data-tab="dashboard">TABLEAU DE BORD</button>
+    <button class="tab" data-tab="apps">APPLICATIONS</button>
+    <button class="tab" data-tab="content">CONTENU</button>
+    <button class="tab" data-tab="navigation">NAVIGATION</button>
+    <button class="tab" data-tab="automation">AUTOMATISATIONS</button>
+    <button class="tab" data-tab="data">DONNÉES</button>
     <button class="tab" data-tab="bus">BUS</button>
+    <button class="tab" data-tab="maintenance">MAINTENANCE</button>
   </nav>
 
-  <section class="panel active" id="panel-apps">
-    <div class="panel-head"><div><span>INDEX.01</span><h2>APPLICATIONS</h2></div><p>État des données locales et accès direct.</p></div>
-    <div class="apps-grid" id="appsGrid"></div>
+  <section class="panel active" id="panel-dashboard">
+    <div class="panel-head"><div><span>CMS.00</span><h2>TABLEAU DE BORD</h2></div><p>Vue synthétique de tout l’écosystème.</p></div>
+    <div class="dashboard-grid">
+      <article class="dash-card hero"><span>PUBLICATION</span><strong id="dashPublishState">—</strong><p id="dashPublishText">Chargement de la configuration…</p><button class="btn" id="dashPublishBtn">PUBLIER LE BROUILLON</button></article>
+      <article class="dash-card"><span>APPLICATIONS</span><strong id="dashAppsCount">—</strong><p id="dashAppsText">—</p></article>
+      <article class="dash-card"><span>DONNÉES</span><strong id="dashDataCount">—</strong><p id="dashDataText">—</p></article>
+      <article class="dash-card"><span>BUS</span><strong id="dashBusCount">—</strong><p id="dashBusText">—</p></article>
+    </div>
+    <div class="two-col">
+      <article class="admin-block"><div class="block-title"><span>MODIFICATIONS RÉCENTES</span><button class="mini" id="refreshRecentBtn">ACTUALISER</button></div><div id="recentChanges" class="recent-list"></div></article>
+      <article class="admin-block"><div class="block-title"><span>ACTIONS RAPIDES</span></div><div class="quick-actions">
+        <button class="quick" data-jump="content">ÉDITER L’ACCUEIL<small>Textes et blocs de 3615</small></button>
+        <button class="quick" data-jump="navigation">GÉRER LE MENU<small>Ordre et visibilité des services</small></button>
+        <button class="quick" id="snapshotAllBtn">SAUVEGARDER MAINTENANT<small>Snapshot de toutes les données détectées</small></button>
+        <button class="quick" id="exportAllBtn">EXPORT GLOBAL<small>Télécharger une sauvegarde complète</small></button>
+      </div></article>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-apps">
+    <div class="panel-head"><div><span>CMS.01</span><h2>APPLICATIONS</h2></div><p>Le catalogue central utilisé par 3615.</p></div>
+    <div class="toolbar"><button class="btn" id="addAppBtn">+ AJOUTER UNE APPLICATION</button></div>
+    <div class="cms-apps" id="cmsApps"></div>
+  </section>
+
+  <section class="panel" id="panel-content">
+    <div class="panel-head"><div><span>CMS.02</span><h2>CONTENU</h2></div><p>Modifier les textes visibles sans toucher au HTML.</p></div>
+    <div class="form-grid">
+      <label><span>TITRE DU PORTAIL</span><input id="siteTitle" type="text"></label>
+      <label><span>SOUS-TITRE</span><input id="siteSubtitle" type="text"></label>
+      <label class="wide"><span>MESSAGE D’ACCUEIL OFFICIEL PERSONNALISÉ</span><textarea id="officialMessage" rows="4" placeholder="Laisser vide pour conserver le message absurde automatique du jour."></textarea><small>Vide = génération automatique quotidienne conservée.</small></label>
+    </div>
+    <h3 class="subhead">TEXTES DU BONJOUR SELON L’HEURE</h3>
+    <div class="form-grid">
+      <label><span>MATIN</span><textarea id="greetMorning" rows="3"></textarea></label>
+      <label><span>MIDI</span><textarea id="greetNoon" rows="3"></textarea></label>
+      <label><span>APRÈS-MIDI</span><textarea id="greetAfternoon" rows="3"></textarea></label>
+      <label><span>SOIR</span><textarea id="greetEvening" rows="3"></textarea></label>
+    </div>
+    <h3 class="subhead">BLOCS DE L’ACCUEIL</h3>
+    <p class="muted">Utilise ↑ et ↓ pour changer l’ordre. Masquer un bloc ne supprime aucune donnée.</p>
+    <div class="sortable-list" id="homeBlocks"></div>
+  </section>
+
+  <section class="panel" id="panel-navigation">
+    <div class="panel-head"><div><span>CMS.03</span><h2>NAVIGATION</h2></div><p>Catégories et ordre du répertoire « Services ».</p></div>
+    <div class="two-col nav-layout">
+      <article class="admin-block"><div class="block-title"><span>CATÉGORIES</span><button class="mini" id="addCategoryBtn">+ AJOUTER</button></div><div id="categoryList" class="sortable-list"></div></article>
+      <article class="admin-block"><div class="block-title"><span>APERÇU</span></div><div id="navPreview" class="nav-preview"></div></article>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-automation">
+    <div class="panel-head"><div><span>CMS.04</span><h2>AUTOMATISATIONS</h2></div><p>Règles propres à NEXUS et fréquence de sauvegarde.</p></div>
+    <div class="form-grid compact">
+      <label><span>SNAPSHOT GÉNÉRAL TOUTES LES…</span><div class="inline-input"><input id="autoHours" type="number" min="1" max="24" step="1"><b>HEURES</b></div></label>
+      <label><span>VERSIONS CONSERVÉES PAR DONNÉE</span><input id="retentionCount" type="number" min="3" max="100" step="1"></label>
+      <label class="switch-row"><span>SAUVEGARDE APRÈS MODIFICATION DÉTECTÉE</span><input id="autoOnChange" type="checkbox"></label>
+      <label><span>DÉLAI APRÈS MODIFICATION</span><div class="inline-input"><input id="changeDelay" type="number" min="5" max="300" step="5"><b>SECONDES</b></div></label>
+      <label class="switch-row"><span>MIROIRS JSON PUBLICS</span><input id="publicMirrors" type="checkbox"></label>
+      <label class="switch-row"><span>STATUT DU BUS DANS 3615</span><input id="showBusStatus" type="checkbox"></label>
+    </div>
+    <div class="notice">Les snapshots locaux sont gérés par NEXUS. La copie des JSON publics reste assurée par GitHub Actions environ toutes les 3 h.</div>
+    <div class="mirror-list" id="mirrorList"></div>
   </section>
 
   <section class="panel" id="panel-data">
-    <div class="panel-head"><div><span>DATA.02</span><h2>COFFRE JSON</h2></div><p>Snapshots locaux automatiques, historiques, restauration et export.</p></div>
+    <div class="panel-head"><div><span>DATA.05</span><h2>DONNÉES & SAUVEGARDES</h2></div><p>Le coffre JSON de la V1 reste entièrement disponible.</p></div>
     <div class="toolbar">
-      <button class="btn" id="exportAllBtn">EXPORT GLOBAL JSON</button>
+      <button class="btn" id="snapshotAllBtn2">SAUVEGARDER MAINTENANT</button>
+      <button class="btn" id="exportAllBtn2">EXPORT GLOBAL JSON</button>
       <label class="btn ghost file-btn">IMPORT GLOBAL<input type="file" id="importAllInput" accept="application/json,.json" hidden></label>
-      <button class="btn ghost" id="cleanupBtn">NETTOYER LES ANCIENS SNAPSHOTS</button>
+      <button class="btn ghost" id="cleanupBtn">NETTOYER L’HISTORIQUE</button>
     </div>
     <div class="dataset-list" id="datasetList"></div>
   </section>
 
-  <section class="panel" id="panel-mirrors">
-    <div class="panel-head"><div><span>MIRROR.03</span><h2>MIROIRS JSON PUBLICS</h2></div><p>Copie GitHub automatique, planifiée environ toutes les trois heures.</p></div>
-    <div class="notice">Les JSON publics sont recopiés par GitHub Actions. Les données privées de tes applications ne sont jamais envoyées dans le dépôt par ce mécanisme.</div>
-    <div class="mirror-list" id="mirrorList"></div>
-  </section>
-
   <section class="panel" id="panel-bus">
-    <div class="panel-head"><div><span>BUS.04</span><h2>BUS COMMUN</h2></div><p>Événements échangés entre CAP, Culina, Stylia, 3615 et les outils généalogiques.</p></div>
+    <div class="panel-head"><div><span>BUS.06</span><h2>BUS COMMUN</h2></div><p>Événements échangés entre les applications.</p></div>
     <div class="toolbar"><button class="btn ghost" id="refreshBusBtn">ACTUALISER</button><button class="btn danger" id="purgeBusBtn">PURGER LES ÉVÉNEMENTS TRAITÉS</button></div>
     <div class="bus-list" id="busList"></div>
   </section>
+
+  <section class="panel" id="panel-maintenance">
+    <div class="panel-head"><div><span>SYS.07</span><h2>MAINTENANCE</h2></div><p>Configuration, versions et retour arrière.</p></div>
+    <div class="two-col">
+      <article class="admin-block"><div class="block-title"><span>CONFIGURATION CMS</span></div><div class="stack-actions">
+        <button class="btn" id="exportConfigBtn">EXPORTER LA CONFIGURATION</button>
+        <label class="btn ghost file-btn">IMPORTER UNE CONFIG<input type="file" id="importConfigInput" accept="application/json,.json" hidden></label>
+        <button class="btn ghost" id="revertPublishedBtn">RECHARGER LA VERSION PUBLIÉE</button>
+        <button class="btn danger" id="resetConfigBtn">RÉINITIALISER LE CMS</button>
+      </div></article>
+      <article class="admin-block"><div class="block-title"><span>VERSIONS DES APPLICATIONS</span></div><div id="versionList" class="version-list"></div></article>
+    </div>
+    <div class="notice"><strong>Publication NEXUS :</strong> « Publier » applique la configuration à 3615 immédiatement sur ce navigateur. « Exporter la configuration » produit aussi le JSON que tu peux conserver ou déposer dans <code>data/nexus-config.json</code>.</div>
+  </section>
 </main>
+
+<dialog id="appDialog">
+  <form method="dialog" class="dialog-shell" id="appForm">
+    <div class="dialog-head"><div><span>APPLICATION</span><h3 id="appDialogTitle">Modifier</h3></div><button class="xbtn" value="cancel">×</button></div>
+    <input type="hidden" id="editAppId">
+    <div class="form-grid">
+      <label><span>NOM</span><input id="editAppName" required></label>
+      <label><span>IDENTIFIANT</span><input id="editAppSlug" required pattern="[a-z0-9_-]+"></label>
+      <label class="wide"><span>DESCRIPTION</span><input id="editAppDesc"></label>
+      <label class="wide"><span>URL</span><input id="editAppUrl" required></label>
+      <label><span>COMMANDE 3615</span><input id="editAppCommand"></label>
+      <label><span>CATÉGORIE</span><select id="editAppCategory"></select></label>
+      <label><span>VERSION</span><input id="editAppVersion" placeholder="facultatif"></label>
+      <label class="switch-row"><span>VISIBLE DANS 3615</span><input id="editAppVisible" type="checkbox"></label>
+    </div>
+    <div class="dialog-actions"><button class="btn ghost" value="cancel">ANNULER</button><button class="btn" type="submit">ENREGISTRER</button></div>
+  </form>
+</dialog>
 
 <dialog id="jsonDialog">
   <form method="dialog" class="dialog-shell">
     <div class="dialog-head"><div><span id="dialogKey">JSON</span><h3 id="dialogTitle">Éditeur</h3></div><button class="xbtn" value="cancel">×</button></div>
     <textarea id="jsonEditor" spellcheck="false"></textarea>
     <div class="dialog-note" id="dialogNote"></div>
-    <div class="dialog-actions">
-      <button class="btn ghost" type="button" id="downloadDatasetBtn">TÉLÉCHARGER</button>
-      <button class="btn" type="button" id="saveDatasetBtn">VALIDER DANS LE STOCKAGE LOCAL</button>
-      <button class="btn ghost" value="cancel">FERMER</button>
-    </div>
+    <div class="dialog-actions"><button class="btn ghost" type="button" id="downloadDatasetBtn">TÉLÉCHARGER</button><button class="btn" type="button" id="saveDatasetBtn">VALIDER DANS LE STOCKAGE LOCAL</button><button class="btn ghost" value="cancel">FERMER</button></div>
   </form>
 </dialog>
 
@@ -86,6 +175,6 @@
 </dialog>
 
 <div class="toast" id="toast"></div>
-<script src="js/cms.js?v=1"></script>
+<script src="js/cms.js?v=2"></script>
 </body>
 </html>

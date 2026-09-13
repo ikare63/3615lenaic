@@ -1,287 +1,260 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#07151a">
-  <title>3615 LÉNAÏC — Portail personnel</title>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/style.css?v=6">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#07151a" name="theme-color"/>
+<title>3615 LÉNAÏC — Portail personnel</title>
+<link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="css/style.css?v=7" rel="stylesheet"/>
 </head>
-<body>
-  <div class="terminal-shell">
-    <header class="terminal-head">
-      <div class="brand-block">
-        <div class="brand-kicker">CONNEXION ÉTABLIE</div>
-        <h1>3615 LÉNAÏC</h1>
-        <div class="brand-sub">PORTAIL PERSONNEL // TERMINAL LOCAL</div>
-      </div>
-      <div class="head-meta">
-        <div class="dual-clock" aria-live="polite">
-          <div class="clock-block">
-            <span class="clock-label">CALENDRIER GRÉGORIEN</span>
-            <strong id="clockDate">--/--/----</strong>
-            <div id="clockTime" class="clock">--:--:--</div>
-          </div>
-          <div class="clock-block clock-block-alt">
-            <span class="clock-label">CALENDRIER RÉPUBLICAIN</span>
-            <strong id="republicanDate">--</strong>
-            <div id="decimalTime" class="clock">--:--:--</div>
-          </div>
-        </div>
-        <button class="key-button" id="paletteBtn" type="button">COULEUR</button>
-      </div>
-    </header>
+<body data-nexus-cms="v2">
+<div class="terminal-shell">
+<header class="terminal-head">
+<div class="brand-block">
+<div class="brand-kicker">CONNEXION ÉTABLIE</div>
+<h1>3615 LÉNAÏC</h1>
+<div class="brand-sub">PORTAIL PERSONNEL // TERMINAL LOCAL</div>
+</div>
+<div class="head-meta">
+<div aria-live="polite" class="dual-clock">
+<div class="clock-block">
+<span class="clock-label">CALENDRIER GRÉGORIEN</span>
+<strong id="clockDate">--/--/----</strong>
+<div class="clock" id="clockTime">--:--:--</div>
+</div>
+<div class="clock-block clock-block-alt">
+<span class="clock-label">CALENDRIER RÉPUBLICAIN</span>
+<strong id="republicanDate">--</strong>
+<div class="clock" id="decimalTime">--:--:--</div>
+</div>
+</div>
+<button class="key-button" id="paletteBtn" type="button">COULEUR</button>
+</div>
+</header>
+<nav aria-label="Navigation 3615" class="service-line">
+<button class="service-key active" data-section="home">[0] ACCUEIL</button>
+<button class="service-key" data-section="services">[1] SERVICES</button>
+<button class="service-key" data-section="otarie">[2] OTARIE</button>
+<span class="line-status"><i></i> BUS LOCAL ACTIF</span>
+</nav>
+<main>
+<section class="terminal-section active" id="home">
+<div class="home-cms-flow" id="homeCmsFlow"><div class="context-panel" data-home-block="greeting" id="homeBlock-greeting">
+<div class="context-code" id="contextCode">SYS.00</div>
+<div>
+<h2 id="greetingTitle">BONJOUR LÉNAÏC</h2>
+<p id="greetingText">Initialisation du terminal…</p>
+</div>
+</div><article class="minitel-card whimsy-card" data-home-block="official" id="homeBlock-official">
+<div class="retro-head"><span>MESSAGE.SYS</span><strong>MESSAGE D’ACCUEIL OFFICIEL</strong></div>
+<p id="absurdWelcome">Le terminal consulte le comité des phrases inutiles…</p>
+</article><article class="minitel-card horoscope-card" data-home-block="horoscope" id="homeBlock-horoscope">
+<div class="retro-head"><span>ASTRES.♊</span><strong>HOROSCOPE PERSONNEL — GÉMEAUX</strong></div>
+<div aria-hidden="true" class="horoscope-sign">♊</div>
+<p id="geminiHoroscope">Les astres consultent encore leurs dossiers.</p>
+<small id="geminiLucky">Calcul du trombone protecteur…</small>
+</article><section class="minitel-card sleep-panel" data-home-block="sleep" hidden="" id="sleepPanel">
+<div class="card-head">
+<div>
+<span class="service-number">QUESTION.01</span>
+<h3>BIEN DORMI ?</h3>
+</div>
+<span class="card-state" id="sleepState">À RENSEIGNER</span>
+</div>
+<form class="sleep-form" id="sleepForm">
+<label>
+<span>HEURES</span>
+<input id="sleepHours3615" inputmode="decimal" max="16" min="0" placeholder="7,5" required="" step="0.25" type="number"/>
+</label>
+<label>
+<span>QUALITÉ %</span>
+<input id="sleepQuality3615" inputmode="numeric" max="100" min="0" placeholder="80" required="" step="1" type="number"/>
+</label>
+<label>
+<span>RÉCUP. PHYSIQUE %</span>
+<input id="sleepPhysical3615" inputmode="numeric" max="100" min="0" placeholder="80" required="" step="1" type="number"/>
+</label>
+<label>
+<span>RÉCUP. MENTALE %</span>
+<input id="sleepMental3615" inputmode="numeric" max="100" min="0" placeholder="80" required="" step="1" type="number"/>
+</label>
+<button class="minitel-action" type="submit">ENVOYER À CAP →</button>
+</form>
+<div class="sleep-result" hidden="" id="sleepResult">
+<div class="big-value" id="sleepResultScore">—</div>
+<div>
+<strong id="sleepResultLabel">NUIT TRANSMISE</strong>
+<p id="sleepResultText">CAP calculera le score de sommeil.</p>
+</div>
+<a class="inline-link" href="../cap/">OUVRIR CAP →</a>
+</div>
+</section><section aria-label="Récapitulatif CAP" class="minitel-card cap-summary-card" data-home-block="cap" id="capSummaryCard">
+<div class="retro-head"><span>CAP.RÉCAP</span><strong id="capRecapState">SYNCHRONISATION…</strong></div>
+<div class="cap-summary-activity">
+<span class="cap-live-icon" id="capActivityIcon">◌</span>
+<div>
+<span class="cap-summary-label">SÉANCE DU JOUR</span>
+<strong id="capActivityTitle">ACTIVITÉ DU JOUR</strong>
+<small id="capActivityMeta">Ouvre CAP une fois pour synchroniser.</small>
+</div>
+</div>
+<div class="cap-progress"><i id="capActivityBar"></i></div>
+<div class="cap-summary-subline"><span id="capActivityProgress">—</span><strong id="capActivityState">—</strong></div>
+<div class="cap-summary-divider"></div>
+<div class="cap-summary-score">
+<div>
+<span class="cap-summary-label">SCORE CAP D’HIER</span>
+<div class="cap-score-line"><span id="capYesterdayScore">—</span><div><strong id="capYesterdayLabel">EN ATTENTE</strong><small id="capYesterdayMeta">Score Cap d’hier</small></div></div>
+</div>
+<span class="cap-score-coverage" id="capYesterdayCoverage">—</span>
+</div>
+<div class="cap-measure-alert" hidden="" id="capMeasuresReminder">
+<span class="cap-summary-label">RAPPEL MESURES</span>
+<strong id="capMeasuresValue">—</strong>
+<p id="capMeasuresText">Échéance des prochaines mensurations.</p>
+<small id="capMeasuresLast">—</small>
+</div>
+<div class="cap-live-foot"><span>SPORT · SCORE · MESURES SI ÉCHÉANCE PROCHE</span><a href="../cap/">OUVRIR CAP →</a></div>
+</section><section aria-label="Repas programmés dans Culina" class="minitel-card culina-live-card" data-home-block="culina" id="homeBlock-culina">
+<div class="retro-head"><span>CULINA.REPAS</span><strong id="culinaLiveState">SYNCHRONISATION…</strong></div>
+<div class="culina-meal-slots">
+<article class="culina-meal-slot" id="culinaLunchSlot">
+<span>CE MIDI</span><strong id="culinaLunchName">RIEN DE PROGRAMMÉ</strong><small id="culinaLunchMeta">Programme un repas dans Culina.</small>
+</article>
+<article class="culina-meal-slot" id="culinaDinnerSlot">
+<span>CE SOIR</span><strong id="culinaDinnerName">RIEN DE PROGRAMMÉ</strong><small id="culinaDinnerMeta">Programme un repas dans Culina.</small>
+</article>
+</div>
+<div class="cap-live-foot"><span id="culinaLiveFoot">REPAS PRÉVUS · NON COMPTABILISÉS DANS CAP</span><a href="../culina/">OUVRIR CULINA →</a></div>
+</section><section aria-label="Tenue proposée par Stylia" class="minitel-card stylia-live-card" data-home-block="stylia" id="homeBlock-stylia">
+<div class="retro-head"><span>STYLIA.TENUE</span><strong id="styliaLiveState">EN ATTENTE</strong></div>
+<div class="stylia-outfit-grid" id="styliaOutfitGrid">
+<div class="stylia-outfit-title"><span class="stylia-signal">◇</span><div><strong id="styliaOutfitName">AUCUNE TENUE DU JOUR</strong><small id="styliaOutfitWhy">Valide une tenue dans Stylia pour l’afficher ici.</small></div></div>
+<div class="stylia-parts" id="styliaParts"></div>
+</div>
+<div class="cap-live-foot"><span id="styliaLiveFoot">DERNIÈRE TENUE VALIDÉE</span><a href="../stylia/">OUVRIR STYLIA →</a></div>
+</section><section aria-label="Actualités de Lénaïc Express" class="minitel-card express-live-card" data-home-block="express" id="homeBlock-express">
+<div class="retro-head"><span>EXPRESS.ACTU</span><strong id="expressLiveState">CHARGEMENT…</strong></div>
+<div class="express-headlines" id="expressHeadlines">
+<div class="express-empty">Récupération de l’édition personnalisée…</div>
+</div>
+<div class="cap-live-foot"><span id="expressLiveFoot">5 TITRES MAXIMUM · APERÇU</span><a href="../lenaic-express/">VOIR TOUTE L’ACTUALITÉ →</a></div>
+</section><section aria-label="Bureau généalogique" class="minitel-card genealogy-office-card" data-home-block="genealogy" id="homeBlock-genealogy">
+<div class="retro-head"><span>BUREAU.GENEALOGIQUE</span><strong id="genealogyOfficeState">LECTURE LOCALE…</strong></div>
+<div class="genealogy-office-grid">
+<a class="genealogy-app-row" href="../bureau-genealogique/index.html">
+<span class="genealogy-app-code">ARBORIS</span>
+<div><strong id="arborisSummaryTitle">AUCUNE DONNÉE</strong><small id="arborisSummaryMeta">Dernier individu ajouté</small></div>
+<b>→</b>
+</a>
+<a class="genealogy-app-row" href="../bureau-genealogique/index2.html">
+<span class="genealogy-app-code">SCRIPTORIA</span>
+<div><strong id="scriptoriaSummaryTitle">AUCUNE DONNÉE</strong><small id="scriptoriaSummaryMeta">Registre et actes</small></div>
+<b>→</b>
+</a>
+<a class="genealogy-app-row" href="../bureau-genealogique/index3.html">
+<span class="genealogy-app-code">PISTORIA</span>
+<div><strong id="pistoriaSummaryTitle">AUCUNE PISTE</strong><small id="pistoriaSummaryMeta">Piste prioritaire</small></div>
+<b>→</b>
+</a>
+</div>
+<div class="cap-live-foot"><span id="genealogyOfficeFoot">DONNÉES LOCALES DU BUREAU</span><a href="../bureau-genealogique/">OUVRIR LE BUREAU →</a></div>
+</section><section aria-label="Enquête active dans Le Fil d’Ariane" class="minitel-card ariane-live-card" data-home-block="ariane" id="homeBlock-ariane">
+<div class="retro-head"><span>ARIANE.ENQUETE</span><strong id="arianeLiveState">LECTURE LOCALE…</strong></div>
+<div class="ariane-case-box">
+<span class="ariane-case-kicker">ENQUÊTE ACTIVE</span>
+<strong id="arianeCaseTitle">AUCUNE ENQUÊTE ACTIVE</strong>
+<small id="arianeCaseMeta">Ouvre Ariane pour sélectionner un dossier.</small>
+</div>
+<div class="ariane-next" hidden="" id="arianeNextBox">
+<span>PROCHAINE ACTION</span>
+<strong id="arianeNextAction">—</strong>
+<small id="arianeNextRef">—</small>
+</div>
+<div class="cap-live-foot"><span id="arianeLiveFoot">DOSSIERS D’ENQUÊTES</span><a href="../aide_archive/Ariane.html">OUVRIR ARIANE →</a></div>
+</section></div>
 
-    <nav class="service-line" aria-label="Navigation 3615">
-      <button class="service-key active" data-section="home">[0] ACCUEIL</button>
-      <button class="service-key" data-section="services">[1] SERVICES</button>
-      <button class="service-key" data-section="otarie">[2] OTARIE</button>
-      <span class="line-status"><i></i> BUS LOCAL ACTIF</span>
-    </nav>
-
-    <main>
-      <section class="terminal-section active" id="home">
-        <div class="context-panel">
-          <div class="context-code" id="contextCode">SYS.00</div>
-          <div>
-            <h2 id="greetingTitle">BONJOUR LÉNAÏC</h2>
-            <p id="greetingText">Initialisation du terminal…</p>
-          </div>
-        </div>
-
-        <section class="retro-grid" aria-label="Fantaisies du terminal">
-          <article class="minitel-card whimsy-card">
-            <div class="retro-head"><span>MESSAGE.SYS</span><strong>MESSAGE D’ACCUEIL OFFICIEL</strong></div>
-            <p id="absurdWelcome">Le terminal consulte le comité des phrases inutiles…</p>
-          </article>
-          <article class="minitel-card horoscope-card">
-            <div class="retro-head"><span>ASTRES.♊</span><strong>HOROSCOPE PERSONNEL — GÉMEAUX</strong></div>
-            <div class="horoscope-sign" aria-hidden="true">♊</div>
-            <p id="geminiHoroscope">Les astres consultent encore leurs dossiers.</p>
-            <small id="geminiLucky">Calcul du trombone protecteur…</small>
-          </article>
-        </section>
-
-        <section id="sleepPanel" class="minitel-card sleep-panel" hidden>
-          <div class="card-head">
-            <div>
-              <span class="service-number">QUESTION.01</span>
-              <h3>BIEN DORMI ?</h3>
-            </div>
-            <span class="card-state" id="sleepState">À RENSEIGNER</span>
-          </div>
-
-          <form id="sleepForm" class="sleep-form">
-            <label>
-              <span>HEURES</span>
-              <input id="sleepHours3615" type="number" inputmode="decimal" min="0" max="16" step="0.25" placeholder="7,5" required>
-            </label>
-            <label>
-              <span>QUALITÉ %</span>
-              <input id="sleepQuality3615" type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="80" required>
-            </label>
-            <label>
-              <span>RÉCUP. PHYSIQUE %</span>
-              <input id="sleepPhysical3615" type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="80" required>
-            </label>
-            <label>
-              <span>RÉCUP. MENTALE %</span>
-              <input id="sleepMental3615" type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="80" required>
-            </label>
-            <button class="minitel-action" type="submit">ENVOYER À CAP →</button>
-          </form>
-
-          <div id="sleepResult" class="sleep-result" hidden>
-            <div class="big-value" id="sleepResultScore">—</div>
-            <div>
-              <strong id="sleepResultLabel">NUIT TRANSMISE</strong>
-              <p id="sleepResultText">CAP calculera le score de sommeil.</p>
-            </div>
-            <a class="inline-link" href="../cap/">OUVRIR CAP →</a>
-          </div>
-        </section>
-
-        <section class="minitel-card cap-summary-card" id="capSummaryCard" aria-label="Récapitulatif CAP">
-          <div class="retro-head"><span>CAP.RÉCAP</span><strong id="capRecapState">SYNCHRONISATION…</strong></div>
-
-          <div class="cap-summary-activity">
-            <span class="cap-live-icon" id="capActivityIcon">◌</span>
-            <div>
-              <span class="cap-summary-label">SÉANCE DU JOUR</span>
-              <strong id="capActivityTitle">ACTIVITÉ DU JOUR</strong>
-              <small id="capActivityMeta">Ouvre CAP une fois pour synchroniser.</small>
-            </div>
-          </div>
-          <div class="cap-progress"><i id="capActivityBar"></i></div>
-          <div class="cap-summary-subline"><span id="capActivityProgress">—</span><strong id="capActivityState">—</strong></div>
-
-          <div class="cap-summary-divider"></div>
-
-          <div class="cap-summary-score">
-            <div>
-              <span class="cap-summary-label">SCORE CAP D’HIER</span>
-              <div class="cap-score-line"><span id="capYesterdayScore">—</span><div><strong id="capYesterdayLabel">EN ATTENTE</strong><small id="capYesterdayMeta">Score Cap d’hier</small></div></div>
-            </div>
-            <span class="cap-score-coverage" id="capYesterdayCoverage">—</span>
-          </div>
-
-          <div class="cap-measure-alert" id="capMeasuresReminder" hidden>
-            <span class="cap-summary-label">RAPPEL MESURES</span>
-            <strong id="capMeasuresValue">—</strong>
-            <p id="capMeasuresText">Échéance des prochaines mensurations.</p>
-            <small id="capMeasuresLast">—</small>
-          </div>
-
-          <div class="cap-live-foot"><span>SPORT · SCORE · MESURES SI ÉCHÉANCE PROCHE</span><a href="../cap/">OUVRIR CAP →</a></div>
-        </section>
-
-        <section class="minitel-card culina-live-card" aria-label="Repas programmés dans Culina">
-          <div class="retro-head"><span>CULINA.REPAS</span><strong id="culinaLiveState">SYNCHRONISATION…</strong></div>
-          <div class="culina-meal-slots">
-            <article class="culina-meal-slot" id="culinaLunchSlot">
-              <span>CE MIDI</span><strong id="culinaLunchName">RIEN DE PROGRAMMÉ</strong><small id="culinaLunchMeta">Programme un repas dans Culina.</small>
-            </article>
-            <article class="culina-meal-slot" id="culinaDinnerSlot">
-              <span>CE SOIR</span><strong id="culinaDinnerName">RIEN DE PROGRAMMÉ</strong><small id="culinaDinnerMeta">Programme un repas dans Culina.</small>
-            </article>
-          </div>
-          <div class="cap-live-foot"><span id="culinaLiveFoot">REPAS PRÉVUS · NON COMPTABILISÉS DANS CAP</span><a href="../culina/">OUVRIR CULINA →</a></div>
-        </section>
-
-        <section class="minitel-card stylia-live-card" aria-label="Tenue proposée par Stylia">
-          <div class="retro-head"><span>STYLIA.TENUE</span><strong id="styliaLiveState">EN ATTENTE</strong></div>
-          <div class="stylia-outfit-grid" id="styliaOutfitGrid">
-            <div class="stylia-outfit-title"><span class="stylia-signal">◇</span><div><strong id="styliaOutfitName">AUCUNE TENUE DU JOUR</strong><small id="styliaOutfitWhy">Valide une tenue dans Stylia pour l’afficher ici.</small></div></div>
-            <div class="stylia-parts" id="styliaParts"></div>
-          </div>
-          <div class="cap-live-foot"><span id="styliaLiveFoot">DERNIÈRE TENUE VALIDÉE</span><a href="../stylia/">OUVRIR STYLIA →</a></div>
-        </section>
-
-        <section class="minitel-card express-live-card" aria-label="Actualités de Lénaïc Express">
-          <div class="retro-head"><span>EXPRESS.ACTU</span><strong id="expressLiveState">CHARGEMENT…</strong></div>
-          <div class="express-headlines" id="expressHeadlines">
-            <div class="express-empty">Récupération de l’édition personnalisée…</div>
-          </div>
-          <div class="cap-live-foot"><span id="expressLiveFoot">5 TITRES MAXIMUM · APERÇU</span><a href="../lenaic-express/">VOIR TOUTE L’ACTUALITÉ →</a></div>
-        </section>
 
 
-        <section class="minitel-card genealogy-office-card" aria-label="Bureau généalogique">
-          <div class="retro-head"><span>BUREAU.GENEALOGIQUE</span><strong id="genealogyOfficeState">LECTURE LOCALE…</strong></div>
-          <div class="genealogy-office-grid">
-            <a class="genealogy-app-row" href="../bureau-genealogique/index.html">
-              <span class="genealogy-app-code">ARBORIS</span>
-              <div><strong id="arborisSummaryTitle">AUCUNE DONNÉE</strong><small id="arborisSummaryMeta">Dernier individu ajouté</small></div>
-              <b>→</b>
-            </a>
-            <a class="genealogy-app-row" href="../bureau-genealogique/index2.html">
-              <span class="genealogy-app-code">SCRIPTORIA</span>
-              <div><strong id="scriptoriaSummaryTitle">AUCUNE DONNÉE</strong><small id="scriptoriaSummaryMeta">Registre et actes</small></div>
-              <b>→</b>
-            </a>
-            <a class="genealogy-app-row" href="../bureau-genealogique/index3.html">
-              <span class="genealogy-app-code">PISTORIA</span>
-              <div><strong id="pistoriaSummaryTitle">AUCUNE PISTE</strong><small id="pistoriaSummaryMeta">Piste prioritaire</small></div>
-              <b>→</b>
-            </a>
-          </div>
-          <div class="cap-live-foot"><span id="genealogyOfficeFoot">DONNÉES LOCALES DU BUREAU</span><a href="../bureau-genealogique/">OUVRIR LE BUREAU →</a></div>
-        </section>
 
-        <section class="minitel-card ariane-live-card" aria-label="Enquête active dans Le Fil d’Ariane">
-          <div class="retro-head"><span>ARIANE.ENQUETE</span><strong id="arianeLiveState">LECTURE LOCALE…</strong></div>
-          <div class="ariane-case-box">
-            <span class="ariane-case-kicker">ENQUÊTE ACTIVE</span>
-            <strong id="arianeCaseTitle">AUCUNE ENQUÊTE ACTIVE</strong>
-            <small id="arianeCaseMeta">Ouvre Ariane pour sélectionner un dossier.</small>
-          </div>
-          <div class="ariane-next" id="arianeNextBox" hidden>
-            <span>PROCHAINE ACTION</span>
-            <strong id="arianeNextAction">—</strong>
-            <small id="arianeNextRef">—</small>
-          </div>
-          <div class="cap-live-foot"><span id="arianeLiveFoot">DOSSIERS D’ENQUÊTES</span><a href="../aide_archive/Ariane.html">OUVRIR ARIANE →</a></div>
-        </section>
 
-        <div class="more-line">
-          <button class="minitel-action secondary" type="button" data-go="services">VOIR TOUS LES SERVICES →</button>
-          <button class="minitel-action secondary" type="button" data-go="otarie">VOIR L’OTARIE →</button>
-        </div>
-      </section>
 
-      <section class="terminal-section" id="services">
-        <div class="section-title">
-          <span>INDEX.01</span>
-          <h2>SERVICES DISPONIBLES</h2>
-        </div>
 
-        <div class="directory-grid">
-          <article class="directory-card">
-            <div class="directory-head"><span>[01]</span><strong>QUOTIDIEN</strong></div>
-            <a href="../cap/"><b>CAP</b><small>Sport, nutrition, sommeil, mesures</small></a>
-            <a href="../culina/"><b>CULINA</b><small>Recettes, stocks et repas</small></a>
-            <a href="../stylia/"><b>STYLIA</b><small>Assistant de tenues</small></a>
-            <a href="../lenaic-express/"><b>LÉNAÏC EXPRESS</b><small>Actualités personnalisées</small></a>
-          </article>
 
-          <article class="directory-card">
-            <div class="directory-head"><span>[02]</span><strong>BUREAU GÉNÉALOGIQUE</strong></div>
-            <a href="../bureau-genealogique/index.html"><b>ARBORIS</b><small>Généalogie personnelle</small></a>
-            <a href="../bureau-genealogique/index2.html"><b>SCRIPTORIA</b><small>Registres et actes</small></a>
-            <a href="../bureau-genealogique/index3.html"><b>PISTORIA</b><small>Assistant des ancêtres directs</small></a>
-          </article>
 
-          <article class="directory-card">
-            <div class="directory-head"><span>[03]</span><strong>ARCHIVES</strong></div>
-            <a href="../aide_archive/Ariane.html"><b>LE FIL D’ARIANE</b><small>Enquêtes et pistes documentaires</small></a>
-            <a href="../aide_archive/Scribe-v3.html"><b>SCRIBE</b><small>Aide au travail d’archives</small></a>
-          </article>
 
-          <article class="directory-card">
-            <div class="directory-head"><span>[04]</span><strong>DÉTENTE</strong></div>
-            <a href="../uchronies/"><b>UCHRONIES</b><small>Bibliothèque des jeux historiques</small></a>
-          </article>
 
-          <article class="directory-card nexus-directory">
-            <div class="directory-head"><span>[05]</span><strong>ADMINISTRATION</strong></div>
-            <a href="cms.html"><b>3615 NEXUS</b><small>CMS, sauvegardes, JSON, bus et état des applications</small></a>
-          </article>
-        </div>
-      </section>
-
-      <section class="terminal-section" id="otarie">
-        <div class="section-title">
-          <span>OTARIE.EXE</span>
-          <h2>BASSIN DE L’OTARIE</h2>
-        </div>
-        <article class="minitel-card otarie-card">
-          <div class="aquarium-frame">
-            <canvas id="aquariumCanvas" width="900" height="360" aria-label="Otarie animée dans son bassin"></canvas>
-            <div class="screen-label">CAMÉRA BASSIN // DIRECT</div>
-          </div>
-          <div class="otarie-panel">
-            <div class="otarie-stat"><span>FAIM</span><strong id="otarieHunger">— %</strong></div>
-            <div class="meter"><i id="otarieMeter"></i></div>
-            <div class="otarie-stat"><span>DERNIER REPAS</span><strong id="otarieLastFed">JAMAIS</strong></div>
-            <button class="minitel-action" id="feedOtarieBtn" type="button">NOURRIR L’OTARIE</button>
-            <p id="otarieMessage" class="terminal-message">L’otarie nage tranquillement.</p>
-          </div>
-        </article>
-      </section>
-    </main>
-
-    <footer class="terminal-footer">
-      <form id="commandForm" class="command-line">
-        <label for="commandInput">COMMANDE &gt;</label>
-        <input id="commandInput" autocomplete="off" spellcheck="false" placeholder="CAP, CULINA, NEXUS, ARBORIS, OTARIE…">
-        <button type="submit">ENVOI</button>
-      </form>
-      <div class="footer-line"><span>3615 LÉNAÏC // VERSION 6.9</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
-    </footer>
-  </div>
-
-  <script src="js/lenaic-bus.js?v=1"></script>
-  <script src="js/app.js?v=10"></script>
+<div class="more-line">
+<button class="minitel-action secondary" data-go="services" type="button">VOIR TOUS LES SERVICES →</button>
+<button class="minitel-action secondary" data-go="otarie" type="button">VOIR L’OTARIE →</button>
+</div>
+</section>
+<section class="terminal-section" id="services">
+<div class="section-title">
+<span>INDEX.01</span>
+<h2>SERVICES DISPONIBLES</h2>
+</div>
+<div class="directory-grid" id="servicesDirectory">
+<article class="directory-card">
+<div class="directory-head"><span>[01]</span><strong>QUOTIDIEN</strong></div>
+<a href="../cap/"><b>CAP</b><small>Sport, nutrition, sommeil, mesures</small></a>
+<a href="../culina/"><b>CULINA</b><small>Recettes, stocks et repas</small></a>
+<a href="../stylia/"><b>STYLIA</b><small>Assistant de tenues</small></a>
+<a href="../lenaic-express/"><b>LÉNAÏC EXPRESS</b><small>Actualités personnalisées</small></a>
+</article>
+<article class="directory-card">
+<div class="directory-head"><span>[02]</span><strong>BUREAU GÉNÉALOGIQUE</strong></div>
+<a href="../bureau-genealogique/index.html"><b>ARBORIS</b><small>Généalogie personnelle</small></a>
+<a href="../bureau-genealogique/index2.html"><b>SCRIPTORIA</b><small>Registres et actes</small></a>
+<a href="../bureau-genealogique/index3.html"><b>PISTORIA</b><small>Assistant des ancêtres directs</small></a>
+</article>
+<article class="directory-card">
+<div class="directory-head"><span>[03]</span><strong>ARCHIVES</strong></div>
+<a href="../aide_archive/Ariane.html"><b>LE FIL D’ARIANE</b><small>Enquêtes et pistes documentaires</small></a>
+<a href="../aide_archive/Scribe-v3.html"><b>SCRIBE</b><small>Aide au travail d’archives</small></a>
+</article>
+<article class="directory-card">
+<div class="directory-head"><span>[04]</span><strong>DÉTENTE</strong></div>
+<a href="../uchronies/"><b>UCHRONIES</b><small>Bibliothèque des jeux historiques</small></a>
+</article>
+<article class="directory-card nexus-directory">
+<div class="directory-head"><span>[05]</span><strong>ADMINISTRATION</strong></div>
+<a href="cms.html"><b>3615 NEXUS</b><small>CMS, sauvegardes, JSON, bus et état des applications</small></a>
+</article>
+</div>
+</section>
+<section class="terminal-section" id="otarie">
+<div class="section-title">
+<span>OTARIE.EXE</span>
+<h2>BASSIN DE L’OTARIE</h2>
+</div>
+<article class="minitel-card otarie-card">
+<div class="aquarium-frame">
+<canvas aria-label="Otarie animée dans son bassin" height="360" id="aquariumCanvas" width="900"></canvas>
+<div class="screen-label">CAMÉRA BASSIN // DIRECT</div>
+</div>
+<div class="otarie-panel">
+<div class="otarie-stat"><span>FAIM</span><strong id="otarieHunger">— %</strong></div>
+<div class="meter"><i id="otarieMeter"></i></div>
+<div class="otarie-stat"><span>DERNIER REPAS</span><strong id="otarieLastFed">JAMAIS</strong></div>
+<button class="minitel-action" id="feedOtarieBtn" type="button">NOURRIR L’OTARIE</button>
+<p class="terminal-message" id="otarieMessage">L’otarie nage tranquillement.</p>
+</div>
+</article>
+</section>
+</main>
+<footer class="terminal-footer">
+<form class="command-line" id="commandForm">
+<label for="commandInput">COMMANDE &gt;</label>
+<input autocomplete="off" id="commandInput" placeholder="CAP, CULINA, NEXUS, ARBORIS, OTARIE…" spellcheck="false"/>
+<button type="submit">ENVOI</button>
+</form>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 7.0</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+</footer>
+</div>
+<script src="js/lenaic-bus.js?v=1"></script>
+<script src="js/app.js?v=11"></script>
 </body>
 </html>
