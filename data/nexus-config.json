@@ -1,10 +1,10 @@
 {
-  "version": 6,
+  "version": 8,
   "publishedAt": null,
   "site": {
     "title": "3615 LÉNAÏC",
     "subtitle": "TABLEAU DE BORD PERSONNEL // TERMINAL LOCAL",
-    "footerLeft": "3615 LÉNAÏC // VERSION 9.1",
+    "footerLeft": "3615 LÉNAÏC // VERSION 9.3",
     "footerRight": "DONNÉES LOCALES · BUS PARTAGÉ",
     "showBusStatus": true
   },
@@ -103,6 +103,71 @@
       "order": 35
     }
   ],
+  "portalTabs": [
+    {
+      "id": "home",
+      "code": "0",
+      "label": "ACCUEIL",
+      "order": 10,
+      "visible": true
+    },
+    {
+      "id": "aujourdhui",
+      "code": "1",
+      "label": "AUJOURD’HUI",
+      "order": 20,
+      "visible": true
+    },
+    {
+      "id": "quotidien",
+      "code": "2",
+      "label": "QUOTIDIEN",
+      "order": 30,
+      "visible": true
+    },
+    {
+      "id": "sante",
+      "code": "3",
+      "label": "SANTÉ",
+      "order": 40,
+      "visible": true
+    },
+    {
+      "id": "informations",
+      "code": "4",
+      "label": "INFORMATIONS",
+      "order": 50,
+      "visible": true
+    },
+    {
+      "id": "genealogie",
+      "code": "5",
+      "label": "GÉNÉALOGIE",
+      "order": 60,
+      "visible": true
+    },
+    {
+      "id": "archives",
+      "code": "6",
+      "label": "ARCHIVES",
+      "order": 70,
+      "visible": true
+    },
+    {
+      "id": "detente",
+      "code": "7",
+      "label": "DÉTENTE",
+      "order": 80,
+      "visible": true
+    },
+    {
+      "id": "systeme",
+      "code": "9",
+      "label": "SYSTÈME",
+      "order": 90,
+      "visible": true
+    }
+  ],
   "categories": [
     {
       "id": "daily",
@@ -123,15 +188,21 @@
       "visible": true
     },
     {
-      "id": "leisure",
-      "label": "DÉTENTE",
+      "id": "archives",
+      "label": "ARCHIVES",
       "order": 40,
       "visible": true
     },
     {
-      "id": "admin",
-      "label": "ADMINISTRATION",
+      "id": "leisure",
+      "label": "DÉTENTE",
       "order": 50,
+      "visible": true
+    },
+    {
+      "id": "admin",
+      "label": "SYSTÈME",
+      "order": 60,
       "visible": true
     }
   ],
@@ -219,7 +290,7 @@
       "description": "Enquêtes et pistes documentaires",
       "url": "../aide_archive/Ariane.html",
       "command": "ARIANE",
-      "category": "genealogy",
+      "category": "archives",
       "order": 10,
       "visible": true,
       "version": ""
@@ -230,7 +301,7 @@
       "description": "Assistant de requêtes aux archives",
       "url": "../aide_archive/Scribe-v3.html",
       "command": "SCRIBE",
-      "category": "genealogy",
+      "category": "archives",
       "order": 20,
       "visible": true,
       "version": ""
@@ -255,7 +326,7 @@
       "category": "admin",
       "order": 10,
       "visible": true,
-      "version": "3.0"
+      "version": "4.0"
     }
   ],
   "automations": {

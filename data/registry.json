@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "name": "3615 NEXUS",
   "autoSnapshotHours": 3,
   "retentionPerDataset": 20,
@@ -228,28 +228,124 @@
       "app": "culina",
       "label": "Recettes Culina",
       "url": "/culina/recettes.json",
-      "mirror": "data/mirror/culina-recettes.json"
+      "mirror": "data/mirror/culina-recettes.json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "culina",
+        "branch": "main",
+        "path": "recettes.json",
+        "editable": true
+      }
     },
     {
       "id": "express-news",
       "app": "express",
       "label": "Actualités Lénaïc Express",
       "url": "/lenaic-express/data/actualites.json",
-      "mirror": "data/mirror/express-actualites.json"
+      "mirror": "data/mirror/express-actualites.json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "lenaic-express",
+        "branch": "main",
+        "path": "data/actualites.json",
+        "editable": false
+      }
     },
     {
       "id": "express-preferences",
       "app": "express",
       "label": "Préférences Lénaïc Express",
       "url": "/lenaic-express/preferences.json",
-      "mirror": "data/mirror/express-preferences.json"
+      "mirror": "data/mirror/express-preferences.json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "lenaic-express",
+        "branch": "main",
+        "path": "preferences.json",
+        "editable": true
+      }
     },
     {
       "id": "express-sources",
       "app": "express",
       "label": "Sources Lénaïc Express",
       "url": "/lenaic-express/sources.json",
-      "mirror": "data/mirror/express-sources.json"
+      "mirror": "data/mirror/express-sources.json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "lenaic-express",
+        "branch": "main",
+        "path": "sources.json",
+        "editable": true
+      }
+    }
+  ],
+  "github": {
+    "owner": "ikare63",
+    "repo": "3615lenaic",
+    "branch": "main",
+    "configPath": "data/nexus-config.json"
+  },
+  "cmsFiles": [
+    {
+      "id": "nexus-config",
+      "label": "Configuration officielle 3615 / NEXUS",
+      "kind": "json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "3615lenaic",
+        "branch": "main",
+        "path": "data/nexus-config.json",
+        "editable": false
+      }
+    },
+    {
+      "id": "culina-recipes",
+      "label": "Recettes Culina",
+      "kind": "json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "culina",
+        "branch": "main",
+        "path": "recettes.json",
+        "editable": true
+      }
+    },
+    {
+      "id": "express-news",
+      "label": "Actualités Lénaïc Express",
+      "kind": "json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "lenaic-express",
+        "branch": "main",
+        "path": "data/actualites.json",
+        "editable": false
+      }
+    },
+    {
+      "id": "express-preferences",
+      "label": "Préférences Lénaïc Express",
+      "kind": "json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "lenaic-express",
+        "branch": "main",
+        "path": "preferences.json",
+        "editable": true
+      }
+    },
+    {
+      "id": "express-sources",
+      "label": "Sources Lénaïc Express",
+      "kind": "json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "lenaic-express",
+        "branch": "main",
+        "path": "sources.json",
+        "editable": true
+      }
     }
   ]
 }
