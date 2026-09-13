@@ -1,10 +1,10 @@
 {
-  "version": 3,
+  "version": 4,
   "publishedAt": null,
   "site": {
     "title": "3615 LÉNAÏC",
     "subtitle": "TABLEAU DE BORD PERSONNEL // TERMINAL LOCAL",
-    "footerLeft": "3615 LÉNAÏC // VERSION 8.0",
+    "footerLeft": "3615 LÉNAÏC // VERSION 8.1",
     "footerRight": "DONNÉES LOCALES · BUS PARTAGÉ",
     "showBusStatus": true
   },
@@ -89,6 +89,12 @@
       "label": "Le Fil d’Ariane — enquête",
       "visible": true,
       "order": 120
+    },
+    {
+      "id": "scribe",
+      "label": "Scribe — requêtes aux archives",
+      "visible": true,
+      "order": 130
     }
   ],
   "categories": [
@@ -215,7 +221,7 @@
     {
       "id": "scribe",
       "name": "SCRIBE",
-      "description": "Aide au travail d’archives",
+      "description": "Assistant de requêtes aux archives",
       "url": "../aide_archive/Scribe-v3.html",
       "command": "SCRIBE",
       "category": "genealogy",
@@ -251,7 +257,8 @@
     "retentionPerDataset": 20,
     "autoSnapshotOnChange": true,
     "changeDelaySeconds": 30,
-    "publicMirrorsEnabled": true
+    "publicMirrorsEnabled": true,
+    "scribeReminderDays": 30
   },
   "dashboard": {
     "weatherCity": "Clermont-Ferrand",
