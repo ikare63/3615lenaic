@@ -19,6 +19,14 @@ function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('sho
 function download(name,text,type='application/json'){const b=new Blob([text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 function readJson(key,fallback=null){try{const v=JSON.parse(localStorage.getItem(key)||'null');return v??fallback}catch{return fallback}}
 function writeJson(key,value){localStorage.setItem(key,JSON.stringify(value))}
+function migrateConfig(base,old){
+ if(!old)return clone(base);if(Number(old.version||0)>=Number(base.version||0))return old;
+ const next=clone(base);if(old.site?.title)next.site.title=old.site.title;
+ next.content={...clone(base.content),...(old.content||{}),greetings:{...clone(base.content?.greetings||{}),...(old.content?.greetings||{})}};
+ next.automations={...clone(base.automations||{}),...(old.automations||{})};
+ const oldApps=new Map((old.applications||[]).map(a=>[a.id,a]));next.applications=(base.applications||[]).map(a=>{const x=oldApps.get(a.id);if(!x)return clone(a);const keep={};for(const k of ['name','description','url','command','visible','version'])if(x[k]!==undefined)keep[k]=x[k];return {...clone(a),...keep,category:a.category,order:a.order}});
+ const oldBlocks=new Map((old.homeBlocks||[]).map(b=>[b.id,b]));next.homeBlocks=(base.homeBlocks||[]).map(b=>oldBlocks.has(b.id)?{...clone(b),visible:oldBlocks.get(b.id).visible!==false}:clone(b));next.publishedAt=old.publishedAt||null;next.migratedAt=new Date().toISOString();return next;
+}
 async function hash(raw){if(globalThis.crypto?.subtle){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(raw));return [...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,'0')).join('')}let h=2166136261;for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16)}
 function dataDefs(){return registry.apps.flatMap(app=>app.storage.map(s=>({...s,appId:app.id,appName:app.name,appUrl:app.url})))}
 function byKey(key){return dataDefs().find(d=>d.key===key)||null}
@@ -141,7 +149,7 @@ function bind(){
  $('importAllInput').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const p=JSON.parse(await f.text());if(!Array.isArray(p.datasets))throw new Error('Format NEXUS invalide');if(!confirm(`Restaurer ${p.datasets.length} jeux de données depuis ce fichier ?`))return;await sweep('before-global-import');let n=0;for(const x of p.datasets){if(byKey(x.key)&&typeof x.raw==='string'){localStorage.setItem(x.key,x.raw);n++}}await sweep('global-import');toast(`${n} jeux de données restaurés`)}catch(err){toast(`Import impossible : ${err.message}`)}finally{e.target.value=''}};
  $('refreshBusBtn').onclick=renderBus;$('purgeBusBtn').onclick=()=>{const a=readBus(),keep=a.filter(e=>e.status==='pending');localStorage.setItem('lenaic-bus-v1',JSON.stringify(keep));renderBus();renderDashboard();toast(`${a.length-keep.length} événement(s) traité(s) supprimé(s)`)};
  $('exportConfigBtn').onclick=()=>download(`nexus-config-${new Date().toISOString().slice(0,10)}.json`,JSON.stringify(draft,null,2));
- $('importConfigInput').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const c=JSON.parse(await f.text());if(c.version!==2||!Array.isArray(c.applications)||!Array.isArray(c.homeBlocks))throw new Error('Ce fichier n’est pas une configuration NEXUS V2');draft=c;saveDraft();renderAllCms();toast('Configuration importée dans le brouillon')}catch(err){toast(err.message)}finally{e.target.value=''}};
+ $('importConfigInput').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const c=JSON.parse(await f.text());if(Number(c.version)<2||!Array.isArray(c.applications)||!Array.isArray(c.homeBlocks))throw new Error('Ce fichier n’est pas une configuration NEXUS compatible');draft=c;saveDraft();renderAllCms();toast('Configuration importée dans le brouillon')}catch(err){toast(err.message)}finally{e.target.value=''}};
  $('revertPublishedBtn').onclick=()=>{if(isDirty()&&!confirm('Abandonner les modifications du brouillon ?'))return;draft=clone(publishedConfig);writeJson(DRAFT_KEY,draft);renderAllCms();toast('Brouillon rechargé depuis la version publiée')};
  $('resetConfigBtn').onclick=()=>{if(!confirm('Réinitialiser le CMS à sa configuration par défaut ? Les données des applications ne seront pas supprimées.'))return;localStorage.removeItem(PUBLISHED_KEY);localStorage.removeItem(DRAFT_KEY);publishedConfig=clone(defaultConfig);draft=clone(defaultConfig);renderAllCms();toast('Configuration CMS réinitialisée')};
  window.addEventListener('storage',e=>{if(e.key)scheduleChangedKey(e.key);if(e.key==='lenaic-bus-v1'){renderBus();renderDashboard()}});document.addEventListener('visibilitychange',()=>{if(!document.hidden)maybeSweep()});setInterval(()=>maybeSweep(),15*60*1000);
@@ -151,7 +159,8 @@ function showTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.to
 (async function init(){
  try{
   [registry,defaultConfig]=await Promise.all([fetch('data/registry.json',{cache:'no-store'}).then(r=>r.json()),fetch('data/nexus-config.json',{cache:'no-store'}).then(r=>r.json())]);
-  db=await openDb();publishedConfig=readJson(PUBLISHED_KEY,null)||clone(defaultConfig);draft=readJson(DRAFT_KEY,null)||clone(publishedConfig);
+  db=await openDb();publishedConfig=migrateConfig(defaultConfig,readJson(PUBLISHED_KEY,null));draft=migrateConfig(defaultConfig,readJson(DRAFT_KEY,null)||publishedConfig);
+  if(Number(readJson(PUBLISHED_KEY,{}).version||0)<Number(defaultConfig.version||0)){writeJson(PUBLISHED_KEY,publishedConfig);writeJson(DRAFT_KEY,draft)}
   // Migration douce si une future config par défaut introduit des champs.
   draft.site={...clone(defaultConfig.site),...(draft.site||{})};draft.content={...clone(defaultConfig.content),...(draft.content||{}),greetings:{...clone(defaultConfig.content.greetings),...(draft.content?.greetings||{})}};draft.automations={...clone(defaultConfig.automations),...(draft.automations||{})};
   bind();renderAllCms();await refreshRuntime();await maybeSweep();
