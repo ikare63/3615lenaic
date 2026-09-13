@@ -1,10 +1,10 @@
 {
-  "version": 5,
+  "version": 6,
   "publishedAt": null,
   "site": {
     "title": "3615 LÉNAÏC",
     "subtitle": "TABLEAU DE BORD PERSONNEL // TERMINAL LOCAL",
-    "footerLeft": "3615 LÉNAÏC // VERSION 9.0",
+    "footerLeft": "3615 LÉNAÏC // VERSION 9.1",
     "footerRight": "DONNÉES LOCALES · BUS PARTAGÉ",
     "showBusStatus": true
   },
@@ -95,6 +95,12 @@
       "label": "Scribe — requêtes aux archives",
       "visible": true,
       "order": 130
+    },
+    {
+      "id": "savings",
+      "label": "Épargne — défi 52 semaines",
+      "visible": true,
+      "order": 35
     }
   ],
   "categories": [

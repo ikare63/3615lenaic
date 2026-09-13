@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "name": "3615 NEXUS",
   "autoSnapshotHours": 3,
   "retentionPerDataset": 20,
@@ -18,6 +18,11 @@
           "key": "3615-meditation-v1",
           "label": "Méditation",
           "critical": false
+        },
+        {
+          "key": "3615-savings52-v1",
+          "label": "Défi épargne 52 semaines",
+          "critical": true
         },
         {
           "key": "lenaic-nexus-published-v2",
