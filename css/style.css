@@ -450,7 +450,7 @@ body[data-palette="green"]{--ink:#8cff8c;--ink-soft:#56b756;--cyan:#a8ffb0;--gre
 
 /* Navigation V8 */
 .service-line{position:sticky;top:0;z-index:25}.service-key{min-height:34px}
-body[data-nexus-cms="v2"] .brand-sub::after{content:" · V8";color:var(--amber)}
+body[data-nexus-cms="v2"] .brand-sub::after{content:" · V9.1";color:var(--amber)}
 
 @media(max-width:760px){
   .otarie-home-layout,.daily-tools-grid,.otarie-full-layout,.leisure-grid{grid-template-columns:1fr}.today-overview-grid{grid-template-columns:1fr 1fr}.today-mini:last-child{grid-column:1/-1}.daily-tools-grid>.meditation-card{grid-column:auto}.portal-app-grid{grid-template-columns:1fr 1fr}.genealogy-tab-grid{grid-template-columns:1fr}.genealogy-tab-grid>div.wide{grid-column:auto}.mini-aquarium-frame{height:145px}.weather-now{grid-template-columns:58px 1fr}.weather-now>span{width:58px;height:58px;font-size:2rem}.ephemeris-lines>div{grid-template-columns:105px 1fr}
@@ -499,3 +499,23 @@ body[data-nexus-cms="v2"] .brand-sub::after{content:" · V8";color:var(--amber)}
  .today-page-grid,.health-grid,.genealogy-detail-grid,.info-split,.system-grid,.program-grid,.tomorrow-grid{grid-template-columns:1fr}
  .macro-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.meal-line{grid-template-columns:58px 1fr}.meal-line b{grid-column:2}.daily-stylia-hero{display:block}.universal-search{grid-template-columns:1fr}.universal-search button{min-height:42px}
 }
+
+
+/* === V9.1 · Défi épargne 52 semaines === */
+.savings52-card{border-color:color-mix(in srgb,var(--amber) 68%,var(--line));background:linear-gradient(180deg,rgba(255,209,102,.045),#061319)}
+.savings52-main{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.savings52-amount,.savings52-total{border:1px solid var(--line);background:#031015;padding:12px;min-width:0}
+.savings52-amount>span,.savings52-total>span{display:block;color:var(--amber);font-size:.56rem;font-weight:900;letter-spacing:.08em}
+.savings52-amount>strong{display:block;margin:7px 0 3px;color:var(--green);font-size:clamp(1.75rem,7vw,3.2rem);line-height:1}
+.savings52-total>strong{display:block;margin:9px 0 4px;color:var(--cyan);font-size:1rem;line-height:1.15}
+.savings52-amount small,.savings52-total small{display:block;color:var(--ink-soft);font-size:.56rem;line-height:1.35}
+.savings52-progress{height:14px;margin-top:11px;padding:2px;border:1px solid var(--line-strong);background:#01080b;overflow:hidden}
+.savings52-progress i{display:block;width:0;height:100%;background:var(--green);transition:width .25s ease}
+.savings52-progress-meta{display:flex;justify-content:space-between;gap:10px;margin:6px 0 11px;color:var(--ink-soft);font-size:.56rem}
+.savings52-progress-meta strong{color:var(--green);white-space:nowrap}
+.savings52-check{display:flex;align-items:center;gap:10px;width:max-content;max-width:100%;border:1px solid var(--green);background:rgba(91,255,168,.035);padding:10px 13px;color:var(--green);font-size:.72rem;font-weight:900;letter-spacing:.08em;cursor:pointer;user-select:none}
+.savings52-check input{width:20px;height:20px;margin:0;accent-color:var(--green)}
+.savings52-check:has(input:checked){background:rgba(91,255,168,.14)}
+.savings52-hint{margin:9px 0 0;color:var(--ink-soft);font-size:.58rem;line-height:1.45}
+.savings52-card.is-done .retro-head strong,.savings52-card.is-done .savings52-hint{color:var(--green)}
+@media(max-width:520px){.savings52-main{grid-template-columns:1fr}.savings52-progress-meta{align-items:flex-start;flex-direction:column;gap:3px}}
