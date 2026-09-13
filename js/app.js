@@ -77,6 +77,7 @@
     }
     renderCmsDirectory();
     renderCmsSectionServices();
+    renderSavings52();
   }
 
   function migrateNexusConfig(base,local){
@@ -802,6 +803,64 @@
     renderSleepPanel();renderBusStatus();
   });
 
+  // Défi des 52 semaines — lundi 14/09/2026 → semaine 52 à 52 €.
+  const SAVINGS52_KEY='3615-savings52-v1';
+  const SAVINGS52_START_UTC=Date.UTC(2026,8,14);
+  const SAVINGS52_WEEKS=52;
+  const SAVINGS52_TARGET=1378;
+  function savings52Store(){
+    const raw=readJsonStorage(SAVINGS52_KEY);
+    return raw&&typeof raw==='object'?raw:{version:1,startDate:'2026-09-14',completed:{}};
+  }
+  function saveSavings52(state){
+    state.version=1;state.startDate='2026-09-14';state.completed=state.completed&&typeof state.completed==='object'?state.completed:{};
+    localStorage.setItem(SAVINGS52_KEY,JSON.stringify(state));
+  }
+  function savings52Info(date=new Date()){
+    const todayUtc=Date.UTC(date.getFullYear(),date.getMonth(),date.getDate());
+    const diffDays=Math.floor((todayUtc-SAVINGS52_START_UTC)/86400000);
+    const week=diffDays<0?0:Math.floor(diffDays/7)+1;
+    const state=savings52Store(),completed=state.completed||{};
+    let saved=0;for(let i=1;i<=SAVINGS52_WEEKS;i++)if(completed[String(i)])saved+=i;
+    const active=week>=1&&week<=SAVINGS52_WEEKS;
+    const done=active&&Boolean(completed[String(week)]);
+    const missed=[];if(active)for(let i=1;i<week;i++)if(!completed[String(i)])missed.push(i);
+    const missedAmount=missed.reduce((a,b)=>a+b,0);
+    return {state,active,week,amount:active?week:0,done,saved,percent:SAVINGS52_TARGET?saved/SAVINGS52_TARGET*100:0,isMonday:date.getDay()===1,missed,missedAmount};
+  }
+  function renderSavings52(){
+    const card=$('savings52Card');if(!card)return;
+    const info=savings52Info(),cmsHidden=card.dataset.cmsHidden==='1';
+    // Le lundi, le module reste visible même une fois coché. Sinon il reste affiché tant que la semaine n'est pas validée.
+    const shouldShow=info.active&&(info.isMonday||!info.done);
+    card.hidden=cmsHidden||!shouldShow;
+    if(!info.active)return;
+    card.classList.toggle('is-done',info.done);
+    setText('savings52State',`SEMAINE ${String(info.week).padStart(2,'0')} · ${info.done?'VALIDÉE':'À FAIRE'}`);
+    setText('savings52Amount',`${info.amount} €`);
+    setText('savings52Week',`SEMAINE ${String(info.week).padStart(2,'0')} / 52`);
+    setText('savings52Saved',`${info.saved.toLocaleString('fr-FR')} € / ${SAVINGS52_TARGET.toLocaleString('fr-FR')} €`);
+    setText('savings52After',info.done?`Objectif final · ${SAVINGS52_TARGET.toLocaleString('fr-FR')} €`:`Après validation · ${(info.saved+info.amount).toLocaleString('fr-FR')} €`);
+    if($('savings52Bar'))$('savings52Bar').style.width=`${Math.max(0,Math.min(100,info.percent))}%`;
+    setText('savings52ProgressText',`${info.saved.toLocaleString('fr-FR')} € réellement validés`);
+    setText('savings52Percent',`${info.percent.toLocaleString('fr-FR',{minimumFractionDigits:1,maximumFractionDigits:1})} %`);
+    const cb=$('savings52Done');if(cb)cb.checked=info.done;
+    if(info.done){
+      const at=info.state.completed?.[String(info.week)],d=at?new Date(at):null,label=d&&Number.isFinite(d.getTime())?d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'}):'aujourd’hui';
+      setText('savings52Hint',`Épargne de ${info.amount} € validée le ${label}. ${SAVINGS52_WEEKS-info.week} semaine${SAVINGS52_WEEKS-info.week>1?'s':''} restante${SAVINGS52_WEEKS-info.week>1?'s':''}.`);
+    }else if(info.missed.length){
+      setText('savings52Hint',`À faire cette semaine. ${info.missed.length} semaine${info.missed.length>1?'s':''} précédente${info.missed.length>1?'s':''} non cochée${info.missed.length>1?'s':''} · ${info.missedAmount} € non comptabilisés.`);
+    }else{
+      setText('savings52Hint',`Coche « ÉPARGNÉ » une fois les ${info.amount} € mis de côté.`);
+    }
+  }
+  $('savings52Done')?.addEventListener('change',e=>{
+    const info=savings52Info();if(!info.active)return;
+    const state=info.state;state.completed=state.completed||{};
+    if(e.target.checked)state.completed[String(info.week)]=new Date().toISOString();else delete state.completed[String(info.week)];
+    saveSavings52(state);renderSavings52();renderV9Today();renderV9System();
+  });
+
   function renderBusStatus(){
     if(!window.LenaicBus){setText('busStatus','HORS LIGNE');setText('busStatusDetail','Bus non chargé');return}
     const pending=LenaicBus.pending();
@@ -826,6 +885,7 @@
     if(e.key===ARIANE_DATA_KEY){renderArianeLive();syncGenealogyTab();renderV9Archives()}
     if(e.key===SCRIBE_DATA_KEY||e.key===SCRIBE_SNAPSHOT_KEY){renderScribeLive();renderV9Archives();renderV9Today();renderV9System()}
     if(e.key===MEDITATION_KEY)renderMeditation();
+    if(e.key===SAVINGS52_KEY){renderSavings52();renderV9Today();renderV9System()}
   });
 
 
@@ -860,7 +920,8 @@
   function plansOnDate(key){const snap=readCulinaSnapshot();return Array.isArray(snap?.planned)?snap.planned.filter(p=>localDateKey(new Date(Number(p.at)))===key).sort((a,b)=>a.at-b.at):[]}
   function renderV9Today(){
     const snap=readCapSnapshot()||{},a=snap.activity||{},m=snap.measurements||{},plans=plansOnDate(localDateKey()),scribe=readScribeSnapshot()||{},received=Array.isArray(scribe.received)?scribe.received:[],pending=Array.isArray(scribe.pending)?scribe.pending:[],threshold=scribeReminderDays(),overdue=pending.filter(x=>Number(x.ageDays)>=threshold);
-    const rows=[];
+    const rows=[],saving=savings52Info();
+    if(saving.active&&(saving.isMonday||!saving.done))rows.push({k:'ÉPARGNE',t:`${saving.amount} € à mettre de côté`,s:`Cumul validé : ${saving.saved.toLocaleString('fr-FR')} / ${SAVINGS52_TARGET.toLocaleString('fr-FR')} €`,b:saving.done?'ÉPARGNÉ':'À FAIRE'});
     rows.push({k:'CAP',t:a.title||'Activité du jour à synchroniser',s:a.title?`${Math.round(Number(a.progress)||0)} % · ${a.label||''}`:'Ouvre CAP pour actualiser',b:a.completed?'TERMINÉE':'AUJOURD’HUI'});
     plans.forEach(p=>rows.push({k:p.mealType==='lunch'?'CE MIDI':p.mealType==='dinner'?'CE SOIR':'REPAS',t:p.name||'Repas Culina',s:`${formatClock(p.at)} · ${Math.round(Number(p.calories)||0)} kcal`,b:Number(p.missingCount)?`${p.missingCount} MANQUANT${p.missingCount>1?'S':''}`:'PRÊT'}));
     if(m.latestDate&&Number(m.daysUntil)<=1)rows.push({k:'MESURES',t:Number(m.daysUntil)<=0?'Mensurations à faire':'Mensurations demain',s:`Dernière : ${formatShortDate(m.latestDate)}`,b:Number(m.daysUntil)<=0?'ÉCHÉANCE':'J-1'});
@@ -935,6 +996,7 @@
   }
   function renderV9System(){
     const pending=window.LenaicBus?LenaicBus.pending():[],scribe=readScribeSnapshot()||{},overdue=(scribe.pending||[]).filter(x=>Number(x.ageDays)>=scribeReminderDays()),m=readCapSnapshot()?.measurements||{},notifs=[];
+    const saving=savings52Info();if(saving.active&&!saving.done)notifs.push(`Défi 52 semaines : ${saving.amount} € à épargner cette semaine`);
     if(overdue.length)notifs.push(`${overdue.length} relance${overdue.length>1?'s':''} Scribe à envisager`);if((scribe.received||[]).length)notifs.push(`${scribe.received.length} réponse${scribe.received.length>1?'s':''} Scribe reçue${scribe.received.length>1?'s':''}`);if(m.latestDate&&Number(m.daysUntil)<=1)notifs.push(Number(m.daysUntil)<=0?'Mensurations CAP à faire':'Mensurations CAP demain');if(pending.length)notifs.push(`${pending.length} message${pending.length>1?'s':''} sur le bus`);
     setText('systemNotifState',notifs.length?`${notifs.length} À VOIR`:'RAS');const nb=$('systemNotifications');if(nb)nb.innerHTML=notifs.length?notifs.map(x=>`<div class="activity-item"><div><span>ATTENTION</span><strong>${escapeHtml3615(x)}</strong></div></div>`).join(''):'<div class="express-empty">Aucune action urgente.</div>';
     setText('systemBusState',window.LenaicBus?'ACTIF':'HORS LIGNE');const bd=$('systemBusDetail');if(bd)bd.innerHTML=`<div><span>MESSAGES EN ATTENTE</span><b>${pending.length}</b></div><div><span>CANAL</span><b>lenaic-bus-v1</b></div><div><span>MODE</span><b>LOCAL + BROADCAST</b></div>`;
@@ -944,7 +1006,7 @@
 
   const commandMap={
     '0':()=>showSection('home'),'accueil':()=>showSection('home'),'home':()=>showSection('home'),
-    '1':()=>showSection('aujourdhui'),'aujourdhui':()=>showSection('aujourdhui'),'aujourd’hui':()=>showSection('aujourdhui'),'today':()=>showSection('aujourdhui'),'meteo':()=>showSection('aujourdhui'),'météo':()=>showSection('aujourdhui'),
+    '1':()=>showSection('aujourdhui'),'aujourdhui':()=>showSection('aujourdhui'),'aujourd’hui':()=>showSection('aujourdhui'),'today':()=>showSection('aujourdhui'),'meteo':()=>showSection('aujourdhui'),'météo':()=>showSection('aujourdhui'),'epargne':()=>{showSection('home');setTimeout(()=>$('savings52Card')?.scrollIntoView({behavior:'smooth',block:'center'}),50)},'épargne':()=>{showSection('home');setTimeout(()=>$('savings52Card')?.scrollIntoView({behavior:'smooth',block:'center'}),50)},
     '2':()=>showSection('quotidien'),'quotidien':()=>showSection('quotidien'),'daily':()=>showSection('quotidien'),
     '3':()=>showSection('sante'),'sante':()=>showSection('sante'),'santé':()=>showSection('sante'),'meditation':()=>showSection('sante'),'méditation':()=>showSection('sante'),'nutrition':()=>showSection('sante'),
     '4':()=>showSection('informations'),'info':()=>showSection('informations'),'infos':()=>showSection('informations'),'informations':()=>showSection('informations'),
@@ -1035,8 +1097,8 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
+  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
   loadNexusConfig();loadWeather();loadNameday();
-  setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderV9All();},60000);
+  setInterval(()=>{renderContext();renderSavings52();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderV9All();},60000);
   setInterval(renderCulinaLive,3000);
 })();
