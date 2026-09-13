@@ -7,7 +7,7 @@
 <meta content="#07151a" name="theme-color"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
 <link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=81" rel="stylesheet"/>
+<link href="css/style.css?v=90" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -35,10 +35,14 @@
 </header>
 <nav aria-label="Navigation 3615" class="service-line">
 <button class="service-key active" data-section="home">[0] ACCUEIL</button>
-<button class="service-key" data-category-tab="daily" data-section="quotidien">[1] QUOTIDIEN</button>
-<button class="service-key" data-category-tab="information" data-section="informations">[2] INFORMATIONS</button>
-<button class="service-key" data-category-tab="genealogy" data-section="genealogie">[3] GÉNÉALOGIE</button>
-<button class="service-key" data-category-tab="leisure" data-section="detente">[4] DÉTENTE</button>
+<button class="service-key" data-section="aujourdhui">[1] AUJOURD’HUI</button>
+<button class="service-key" data-section="quotidien">[2] QUOTIDIEN</button>
+<button class="service-key" data-section="sante">[3] SANTÉ</button>
+<button class="service-key" data-section="informations">[4] INFORMATIONS</button>
+<button class="service-key" data-section="genealogie">[5] GÉNÉALOGIE</button>
+<button class="service-key" data-section="archives">[6] ARCHIVES</button>
+<button class="service-key" data-section="detente">[7] DÉTENTE</button>
+<button class="service-key" data-section="systeme">[9] SYSTÈME</button>
 <span class="line-status"><i></i> BUS LOCAL ACTIF</span>
 </nav>
 <main>
@@ -52,21 +56,6 @@
 </div><article class="minitel-card whimsy-card" data-home-block="official" id="homeBlock-official">
 <div class="retro-head"><span>MESSAGE.SYS</span><strong>MESSAGE D’ACCUEIL OFFICIEL</strong></div>
 <p id="absurdWelcome">Le terminal consulte le comité des phrases inutiles…</p>
-</article><article class="minitel-card otarie-home-card" data-home-block="otarie" id="homeBlock-otarie">
-<div class="retro-head"><span>OTARIE.LIVE</span><strong id="otarieHomeMood">BAIGNADE EN COURS</strong></div>
-<div class="otarie-home-layout">
-<div class="mini-aquarium-frame"><canvas aria-label="Otarie animée dans son bassin" height="180" id="otarieMiniCanvas" width="720"></canvas><span>BASSIN // DIRECT</span></div>
-<div class="otarie-home-info">
-<div><span>FAIM</span><strong id="otarieHomeHunger">— %</strong></div>
-<div><span>DERNIER REPAS</span><strong id="otarieHomeLastFed">—</strong></div>
-<button class="minitel-action secondary" data-go="detente" type="button">VISITER LE BASSIN →</button>
-</div>
-</div>
-</article><article class="minitel-card horoscope-card" data-home-block="horoscope" id="homeBlock-horoscope">
-<div class="retro-head"><span>ASTRES.♊</span><strong>HOROSCOPE PERSONNEL — GÉMEAUX</strong></div>
-<div aria-hidden="true" class="horoscope-sign">♊</div>
-<p id="geminiHoroscope">Les astres consultent encore leurs dossiers.</p>
-<small id="geminiLucky">Calcul du trombone protecteur…</small>
 </article><section class="minitel-card sleep-panel" data-home-block="sleep" hidden="" id="sleepPanel">
 <div class="card-head">
 <div>
@@ -102,14 +91,29 @@
 </div>
 <a class="inline-link" href="../cap/">OUVRIR CAP →</a>
 </div>
-</section><section class="minitel-card today-overview-card" data-home-block="today" id="homeBlock-today">
+</section><article class="minitel-card otarie-home-card" data-home-block="otarie" id="homeBlock-otarie">
+<div class="retro-head"><span>OTARIE.LIVE</span><strong id="otarieHomeMood">BAIGNADE EN COURS</strong></div>
+<div class="otarie-home-layout">
+<div class="mini-aquarium-frame"><canvas aria-label="Otarie animée dans son bassin" height="180" id="otarieMiniCanvas" width="720"></canvas><span>BASSIN // DIRECT</span></div>
+<div class="otarie-home-info">
+<div><span>FAIM</span><strong id="otarieHomeHunger">— %</strong></div>
+<div><span>DERNIER REPAS</span><strong id="otarieHomeLastFed">—</strong></div>
+<button class="minitel-action secondary" data-go="detente" type="button">VISITER LE BASSIN →</button>
+</div>
+</div>
+</article><article class="minitel-card horoscope-card" data-home-block="horoscope" id="homeBlock-horoscope">
+<div class="retro-head"><span>ASTRES.♊</span><strong>HOROSCOPE PERSONNEL — GÉMEAUX</strong></div>
+<div aria-hidden="true" class="horoscope-sign">♊</div>
+<p id="geminiHoroscope">Les astres consultent encore leurs dossiers.</p>
+<small id="geminiLucky">Calcul du trombone protecteur…</small>
+</article><section class="minitel-card today-overview-card" data-home-block="today" id="homeBlock-today">
 <div class="retro-head"><span>AUJOURD.HUI</span><strong id="todayOverviewState">CLERMONT-FERRAND</strong></div>
 <div class="today-overview-grid">
 <article class="today-mini"><span>MÉTÉO</span><div class="today-value"><b id="homeWeatherIcon">◌</b><strong id="homeWeatherTemp">—°</strong></div><p id="homeWeatherLabel">Chargement…</p><small id="homeWeatherMeta">Max/min · pluie</small></article>
 <article class="today-mini"><span>ÉPHÉMÉRIDE</span><strong id="homeEphemerisDate">—</strong><p id="homeEphemerisSeason">—</p><small id="homeEphemerisSun">Soleil —</small></article>
-<article class="today-mini"><span>MÉDITATION</span><strong id="homeMeditationState">PRÊT</strong><p id="homeMeditationMeta">Aucune séance aujourd’hui.</p><button class="text-key" data-go="quotidien" type="button">OUVRIR LE MINUTEUR →</button></article>
+<article class="today-mini"><span>PROGRAMME</span><strong id="homeProgramState">—</strong><p id="homeProgramMeta">Construction du programme…</p><button class="text-key" data-go="aujourdhui" type="button">VOIR LA JOURNÉE →</button></article>
 </div>
-<div class="today-attention" id="todayScribeAlert" hidden><strong>📨 SCRIBE</strong><span id="todayScribeAlertText">Une réponse d’archives est à traiter.</span><a href="../aide_archive/Scribe-v3.html">OUVRIR →</a></div>
+<div class="today-attention" hidden="" id="todayScribeAlert"><strong>📨 SCRIBE</strong><span id="todayScribeAlertText">Une réponse d’archives est à traiter.</span><a href="../aide_archive/Scribe-v3.html">OUVRIR →</a></div>
 </section><section aria-label="Récapitulatif CAP" class="minitel-card cap-summary-card" data-home-block="cap" id="capSummaryCard">
 <div class="retro-head"><span>CAP.RÉCAP</span><strong id="capRecapState">SYNCHRONISATION…</strong></div>
 <div class="cap-summary-activity">
@@ -181,110 +185,105 @@
 </a>
 </div>
 <div class="cap-live-foot"><span id="genealogyOfficeFoot">DONNÉES LOCALES DU BUREAU</span><a href="../bureau-genealogique/">OUVRIR LE BUREAU →</a></div>
-</section><section aria-label="Enquête active dans Le Fil d’Ariane" class="minitel-card ariane-live-card" data-home-block="ariane" id="homeBlock-ariane">
-<div class="retro-head"><span>ARIANE.ENQUETE</span><strong id="arianeLiveState">LECTURE LOCALE…</strong></div>
-<div class="ariane-case-box">
-<span class="ariane-case-kicker">ENQUÊTE ACTIVE</span>
-<strong id="arianeCaseTitle">AUCUNE ENQUÊTE ACTIVE</strong>
-<small id="arianeCaseMeta">Ouvre Ariane pour sélectionner un dossier.</small>
-</div>
-<div class="ariane-next" hidden="" id="arianeNextBox">
-<span>PROCHAINE ACTION</span>
-<strong id="arianeNextAction">—</strong>
-<small id="arianeNextRef">—</small>
-</div>
-<div class="cap-live-foot"><span id="arianeLiveFoot">DOSSIERS D’ENQUÊTES</span><a href="../aide_archive/Ariane.html">OUVRIR ARIANE →</a></div>
-</section><section aria-label="Suivi des requêtes aux archives dans Scribe" class="minitel-card scribe-live-card" data-home-block="scribe" id="homeBlock-scribe" hidden>
+</section><section aria-label="Suivi des requêtes aux archives dans Scribe" class="minitel-card scribe-live-card" data-home-block="scribe" hidden="" id="homeBlock-scribe">
 <div class="retro-head"><span>SCRIBE.REQUETES</span><strong id="scribeLiveState">SUIVI</strong></div>
 <div class="scribe-attention" id="scribeAttentionList"></div>
 <div class="cap-live-foot"><span id="scribeLiveFoot">REQUÊTES AUX ARCHIVES</span><a href="../aide_archive/Scribe-v3.html">OUVRIR SCRIBE →</a></div>
 </section></div>
 <div class="more-line">
-<button class="minitel-action secondary" data-go="quotidien" type="button">QUOTIDIEN →</button>
-<button class="minitel-action secondary" data-go="informations" type="button">INFORMATIONS →</button>
+<button class="minitel-action secondary" data-go="aujourdhui" type="button">AUJOURD’HUI →</button>
+<button class="minitel-action secondary" data-go="sante" type="button">SANTÉ →</button>
 <button class="minitel-action secondary" data-go="genealogie" type="button">GÉNÉALOGIE →</button>
-<button class="minitel-action secondary" data-go="detente" type="button">DÉTENTE →</button>
+<button class="minitel-action secondary" data-go="archives" type="button">ARCHIVES →</button>
 </div>
 </section>
-
-
-<section class="terminal-section" id="quotidien">
-<div class="section-title"><span>3615.Q01</span><h2>QUOTIDIEN</h2></div>
-<p class="section-lead">Les outils qui servent aujourd’hui : météo, éphéméride, méditation et accès direct à CAP, Culina et Stylia.</p>
-<div class="daily-tools-grid">
+<section class="terminal-section" id="aujourdhui">
+<div class="section-title"><span>3615.J01</span><h2>AUJOURD’HUI</h2></div>
+<p class="section-lead">Le tableau de la journée : ciel, repères du calendrier, programme et aperçu de demain.</p>
+<div class="today-page-grid">
 <article class="minitel-card weather-card">
 <div class="retro-head"><span>METEO.CFD</span><strong id="dailyWeatherState">ACTUALISATION…</strong></div>
 <div class="weather-now"><span id="dailyWeatherIcon">◌</span><div><strong id="dailyWeatherTemp">—°C</strong><small id="dailyWeatherLabel">Clermont-Ferrand</small></div></div>
-<div class="weather-stats">
-<div><span>RESSENTI</span><b id="dailyWeatherFeels">—</b></div><div><span>MAX / MIN</span><b id="dailyWeatherRange">—</b></div>
-<div><span>PLUIE</span><b id="dailyWeatherRain">—</b></div><div><span>VENT</span><b id="dailyWeatherWind">—</b></div>
-</div>
+<div class="weather-stats"><div><span>RESSENTI</span><b id="dailyWeatherFeels">—</b></div><div><span>MAX / MIN</span><b id="dailyWeatherRange">—</b></div><div><span>PLUIE</span><b id="dailyWeatherRain">—</b></div><div><span>VENT</span><b id="dailyWeatherWind">—</b></div></div>
 <div class="weather-forecast" id="dailyWeatherForecast"></div>
-<small class="source-note">Données météo : <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> · Clermont-Ferrand</small>
+<small class="source-note">Données : Open-Meteo · Clermont-Ferrand</small>
 </article>
 <article class="minitel-card ephemeris-card">
 <div class="retro-head"><span>EPHEMERIDE</span><strong id="ephemerisState">AUJOURD’HUI</strong></div>
 <div class="ephemeris-date"><span id="ephemerisDayName">—</span><strong id="ephemerisFullDate">—</strong></div>
-<div class="ephemeris-lines">
-<div><span>FÊTE DU JOUR</span><b id="ephemerisNameday">RECHERCHE…</b></div>
-<div><span>JOUR DE L’ANNÉE</span><b id="ephemerisDayOfYear">—</b></div>
-<div><span>SAISON</span><b id="ephemerisSeason">—</b></div>
-<div><span>SOLEIL</span><b id="ephemerisSun">—</b></div>
-<div><span>LUNE</span><b id="ephemerisMoon">—</b></div>
-<div><span>RÉPUBLICAIN</span><b id="ephemerisRepublican">—</b></div>
-</div><small class="source-note">Fête du jour : <a href="https://dates-des-fetes.com/" target="_blank" rel="noopener">dates-des-fetes.com</a></small>
+<div class="ephemeris-lines"><div><span>FÊTE DU JOUR</span><b id="ephemerisNameday">RECHERCHE…</b></div><div><span>JOUR DE L’ANNÉE</span><b id="ephemerisDayOfYear">—</b></div><div><span>SAISON</span><b id="ephemerisSeason">—</b></div><div><span>SOLEIL</span><b id="ephemerisSun">—</b></div><div><span>LUNE</span><b id="ephemerisMoon">—</b></div><div><span>RÉPUBLICAIN</span><b id="ephemerisRepublican">—</b></div></div>
+</article>
+</div>
+<article class="minitel-card program-card">
+<div class="retro-head"><span>PROGRAMME</span><strong id="programState">AUJOURD’HUI</strong></div>
+<div class="program-grid" id="programGrid"><div class="express-empty">Construction du programme…</div></div>
+</article>
+<article class="minitel-card tomorrow-card">
+<div class="retro-head"><span>DEMAIN</span><strong id="tomorrowState">APERÇU</strong></div>
+<div class="tomorrow-grid" id="tomorrowGrid"><div class="express-empty">Préparation de demain…</div></div>
+</article>
+</section><section class="terminal-section" id="quotidien">
+<div class="section-title"><span>3615.Q02</span><h2>QUOTIDIEN</h2></div>
+<p class="section-lead">Cuisine et tenue : ce qui t’accompagne concrètement au fil de la journée.</p>
+<article class="minitel-card daily-detail-card">
+<div class="retro-head"><span>CULINA.JOUR</span><strong id="dailyCulinaState">SYNCHRONISATION…</strong></div>
+<div class="daily-rows" id="dailyCulinaRows"><div class="express-empty">Lecture de Culina…</div></div>
+<div class="daily-kpis" id="dailyCulinaKpis"></div>
+<div class="cap-live-foot"><span>REPAS · RESTES · COURSES</span><a href="../culina/">OUVRIR CULINA →</a></div>
+</article>
+<article class="minitel-card daily-detail-card">
+<div class="retro-head"><span>STYLIA.JOUR</span><strong id="dailyStyliaState">TENUE</strong></div>
+<div class="daily-stylia" id="dailyStyliaDetail"><div class="express-empty">Aucune tenue validée.</div></div>
+<div class="cap-live-foot"><span>TENUE VALIDÉE · MÉTÉO</span><a href="../stylia/">OUVRIR STYLIA →</a></div>
+</article>
+<div class="section-subtitle"><span>RACCOURCIS</span><strong>APPLICATIONS DU QUOTIDIEN</strong></div>
+<div class="portal-app-grid"><a class="portal-app-card" href="../culina/"><b>CULINA</b><span>Recettes · stocks · repas · courses</span><i>CULINA →</i></a><a class="portal-app-card" href="../stylia/"><b>STYLIA</b><span>Tenue du jour</span><i>STYLIA →</i></a><a class="portal-app-card" href="../cap/"><b>CAP</b><span>Sport · nutrition · sommeil</span><i>CAP →</i></a></div>
+</section><section class="terminal-section" id="sante">
+<div class="section-title"><span>3615.S03</span><h2>SANTÉ</h2></div>
+<p class="section-lead">Tes apports au fil de la journée, la méditation, puis le suivi CAP.</p>
+<article class="minitel-card nutrition-day-card">
+<div class="retro-head"><span>NUTRITION.AUJOURD’HUI</span><strong id="healthNutritionState">CAP</strong></div>
+<div class="macro-grid" id="healthMacroGrid"></div>
+<div class="meal-timeline" id="healthMeals"><div class="express-empty">Aucun repas enregistré.</div></div>
+<div class="cap-live-foot"><span id="healthNutritionFoot">APPORTS DU JOUR</span><a href="../cap/#nutrition">OUVRIR CAP →</a></div>
 </article>
 <article class="minitel-card meditation-card">
 <div class="retro-head"><span>ZEN.EXE</span><strong id="meditationStateLabel">PRÊT</strong></div>
-<div class="meditation-display" id="meditationDisplay">05:00</div>
-<div class="meditation-progress"><i id="meditationProgress"></i></div>
-<div class="meditation-presets">
-<button data-meditation-min="3" type="button">3 MIN</button><button class="active" data-meditation-min="5" type="button">5 MIN</button><button data-meditation-min="10" type="button">10 MIN</button><button data-meditation-min="15" type="button">15 MIN</button><button data-meditation-min="20" type="button">20 MIN</button>
-</div>
+<div class="meditation-display" id="meditationDisplay">05:00</div><div class="meditation-progress"><i id="meditationProgress"></i></div>
+<div class="meditation-presets"><button data-meditation-min="3" type="button">3 MIN</button><button class="active" data-meditation-min="5" type="button">5 MIN</button><button data-meditation-min="10" type="button">10 MIN</button><button data-meditation-min="15" type="button">15 MIN</button><button data-meditation-min="20" type="button">20 MIN</button></div>
 <div class="meditation-custom"><label>PERSONNALISÉ <input id="meditationCustom" inputmode="numeric" max="90" min="1" type="number" value="5"/> MIN</label></div>
 <div class="meditation-actions"><button class="minitel-action" id="meditationStartBtn" type="button">DÉMARRER</button><button class="minitel-action secondary" id="meditationResetBtn" type="button">RÉINITIALISER</button></div>
 <p class="meditation-history" id="meditationHistory">Aucune séance enregistrée aujourd’hui.</p>
 </article>
-</div>
-<div class="section-subtitle"><span>SERVICES DU QUOTIDIEN</span><strong>ACCÈS DIRECT</strong></div>
-<div class="portal-app-grid" id="dailyServicesGrid">
-<a class="portal-app-card" href="../cap/"><b>CAP</b><span>Sport · nutrition · sommeil · mesures</span><i>CAP →</i></a>
-<a class="portal-app-card" href="../culina/"><b>CULINA</b><span>Recettes · stocks · repas</span><i>CULINA →</i></a>
-<a class="portal-app-card" href="../stylia/"><b>STYLIA</b><span>Tenue du jour</span><i>STYLIA →</i></a>
+<div class="health-grid">
+<article class="minitel-card"><div class="retro-head"><span>CAP.SOMMEIL</span><strong id="healthSleepState">—</strong></div><div class="health-lines" id="healthSleepDetail"></div></article>
+<article class="minitel-card"><div class="retro-head"><span>CAP.ACTIVITE</span><strong id="healthActivityState">—</strong></div><div class="health-lines" id="healthActivityDetail"></div></article>
+<article class="minitel-card"><div class="retro-head"><span>CAP.MESURES</span><strong id="healthMeasureState">—</strong></div><div class="health-lines" id="healthMeasureDetail"></div></article>
 </div>
 </section><section class="terminal-section" id="informations">
-<div class="section-title"><span>3615.I02</span><h2>INFORMATIONS</h2></div>
-<p class="section-lead">Ta petite salle de rédaction personnelle. Lénaïc Express reste la source, 3615 en affiche l’essentiel.</p>
-<article class="minitel-card express-info-card">
-<div class="retro-head"><span>EXPRESS.EDITION</span><strong id="expressInfoState">CHARGEMENT…</strong></div>
-<div class="express-headlines express-headlines-large" id="expressInfoHeadlines"><div class="express-empty">Récupération de l’édition personnalisée…</div></div>
-<div class="cap-live-foot"><span id="expressInfoFoot">ÉDITION PERSONNALISÉE</span><a href="../lenaic-express/">OUVRIR LÉNAÏC EXPRESS →</a></div>
-</article>
-<div class="section-subtitle"><span>SERVICES D’INFORMATION</span><strong>ACCÈS DIRECT</strong></div>
-<div class="portal-app-grid" id="infoServicesGrid"><a class="portal-app-card" href="../lenaic-express/"><b>LÉNAÏC EXPRESS</b><span>Actualités personnalisées</span><i>EXPRESS →</i></a></div>
+<div class="section-title"><span>3615.I04</span><h2>INFORMATIONS</h2></div>
+<p class="section-lead">Lénaïc Express déplié en une, actualités locales et sujets généalogiques.</p>
+<article class="minitel-card express-info-card"><div class="retro-head"><span>EXPRESS.EDITION</span><strong id="expressInfoState">CHARGEMENT…</strong></div><div class="express-headlines express-headlines-large" id="expressInfoHeadlines"><div class="express-empty">Récupération de l’édition personnalisée…</div></div><div class="cap-live-foot"><span id="expressInfoFoot">ÉDITION PERSONNALISÉE</span><a href="../lenaic-express/">OUVRIR LÉNAÏC EXPRESS →</a></div></article>
+<div class="info-split"><article class="minitel-card"><div class="retro-head"><span>LOCAL</span><strong>CLERMONT-FERRAND / RÉGION</strong></div><div class="compact-news" id="localNewsList"></div></article><article class="minitel-card"><div class="retro-head"><span>GENEALOGIE.ACTU</span><strong>SÉLECTION</strong></div><div class="compact-news" id="genealogyNewsList"></div></article></div>
+<article class="minitel-card sync-card"><div class="retro-head"><span>DERNIERE.MAJ</span><strong id="infoLastUpdate">—</strong></div><p id="infoUpdateMeta">Lénaïc Express n’a pas encore publié d’édition.</p></article>
 </section><section class="terminal-section" id="genealogie">
-<div class="section-title"><span>3615.G03</span><h2>GÉNÉALOGIE</h2></div>
-<p class="section-lead">Le bureau généalogique et les outils d’archives réunis au même endroit.</p>
-<article class="minitel-card genealogy-workbench">
-<div class="retro-head"><span>BUREAU.EN.COURS</span><strong id="genealogyTabState">SYNCHRONISATION…</strong></div>
-<div class="genealogy-tab-grid">
-<div><span>ARBORIS</span><strong id="genealogyTabArboris">—</strong><small id="genealogyTabArborisMeta">—</small></div>
-<div><span>SCRIPTORIA</span><strong id="genealogyTabScriptoria">—</strong><small id="genealogyTabScriptoriaMeta">—</small></div>
-<div><span>PISTORIA</span><strong id="genealogyTabPistoria">—</strong><small id="genealogyTabPistoriaMeta">—</small></div>
-<div class="wide scribe-tab-panel"><span>SCRIBE · REQUÊTES AUX ARCHIVES</span><div class="scribe-tab-counts"><b><em id="scribeCountDraft">0</em>BROUILLONS</b><b><em id="scribeCountAwaiting">0</em>EN ATTENTE</b><b><em id="scribeCountFollowup">0</em>RELANCÉES</b><b><em id="scribeCountReceived">0</em>RÉPONSES</b></div><small id="genealogyTabScribeMeta">Aucune requête suivie.</small></div>
-<div class="wide"><span>FIL D’ARIANE · PROCHAINE ACTION</span><strong id="genealogyTabAriane">—</strong><small id="genealogyTabArianeMeta">—</small></div>
+<div class="section-title"><span>3615.G05</span><h2>GÉNÉALOGIE</h2></div>
+<p class="section-lead">Anniversaires familiaux, état du Bureau généalogique et recherche transversale.</p>
+<article class="minitel-card anniversaries-card"><div class="retro-head"><span>ANNIVERSAIRES</span><strong id="anniversaryState">7 PROCHAINS JOURS</strong></div><div class="anniversary-groups" id="anniversaryList"><div class="express-empty">Lecture d’Arboris…</div></div></article>
+<div class="genealogy-detail-grid">
+<article class="minitel-card"><div class="retro-head"><span>ARBORIS</span><strong>ARBRE &amp; FAMILLE</strong></div><strong id="genealogyTabArboris">—</strong><p id="genealogyTabArborisMeta">—</p><a class="inline-link" href="../bureau-genealogique/index.html">OUVRIR ARBORIS →</a></article>
+<article class="minitel-card"><div class="retro-head"><span>SCRIPTORIA</span><strong>REGISTRES &amp; ACTES</strong></div><strong id="genealogyTabScriptoria">—</strong><p id="genealogyTabScriptoriaMeta">—</p><a class="inline-link" href="../bureau-genealogique/index2.html">OUVRIR SCRIPTORIA →</a></article>
+<article class="minitel-card"><div class="retro-head"><span>PISTORIA</span><strong>PISTES SOSA</strong></div><strong id="genealogyTabPistoria">—</strong><p id="genealogyTabPistoriaMeta">—</p><a class="inline-link" href="../bureau-genealogique/index3.html">OUVRIR PISTORIA →</a></article>
 </div>
-</article>
-<div class="section-subtitle"><span>SERVICES GÉNÉALOGIQUES</span><strong>BUREAU + ARCHIVES</strong></div>
-<div class="portal-app-grid" id="genealogyServicesGrid">
-<a class="portal-app-card" href="../bureau-genealogique/index.html"><b>ARBORIS</b><span>Arbre et famille</span><i>ARBORIS →</i></a>
-<a class="portal-app-card" href="../bureau-genealogique/index2.html"><b>SCRIPTORIA</b><span>Actes et registres</span><i>SCRIPTORIA →</i></a>
-<a class="portal-app-card" href="../bureau-genealogique/index3.html"><b>PISTORIA</b><span>Pistes Sosa</span><i>PISTORIA →</i></a>
-<a class="portal-app-card" href="../aide_archive/Ariane.html"><b>LE FIL D’ARIANE</b><span>Enquêtes documentaires</span><i>ARIANE →</i></a>
-<a class="portal-app-card" href="../aide_archive/Scribe-v3.html"><b>SCRIBE</b><span>Assistant de requêtes aux archives</span><i>SCRIBE →</i></a>
-</div>
+<article class="minitel-card universal-search-card"><div class="retro-head"><span>RECHERCHE.UNIVERSELLE</span><strong>ARBORIS + SCRIPTORIA + PISTORIA</strong></div><form class="universal-search" id="genealogySearchForm"><input autocomplete="off" id="genealogySearchInput" placeholder="Nom, prénom, lieu, cote…" type="search"/><button type="submit">CHERCHER</button></form><div class="search-results" id="genealogySearchResults"><div class="express-empty">Saisis une recherche pour interroger les trois bases locales.</div></div></article>
+</section><section class="terminal-section" id="archives">
+<div class="section-title"><span>3615.A06</span><h2>ARCHIVES</h2></div>
+<p class="section-lead">Enquêtes Ariane, requêtes Scribe et activité documentaire récente.</p>
+<article aria-label="Enquête active dans Le Fil d’Ariane" class="minitel-card ariane-live-card" id="archivesArianeCard"><div class="retro-head"><span>ARIANE.ENQUETE</span><strong id="arianeLiveState">LECTURE LOCALE…</strong></div><div class="ariane-case-box"><span class="ariane-case-kicker">ENQUÊTE ACTIVE</span><strong id="arianeCaseTitle">AUCUNE ENQUÊTE ACTIVE</strong><small id="arianeCaseMeta">Ouvre Ariane pour sélectionner un dossier.</small></div><div class="ariane-next" hidden="" id="arianeNextBox"><span>PROCHAINE ACTION</span><strong id="arianeNextAction">—</strong><small id="arianeNextRef">—</small></div><div class="cap-live-foot"><span id="arianeLiveFoot">DOSSIERS D’ENQUÊTES</span><a href="../aide_archive/Ariane.html">OUVRIR ARIANE →</a></div></article>
+<article class="minitel-card"><div class="retro-head"><span>SCRIBE.REQUETES</span><strong id="archiveScribeState">SUIVI</strong></div><div class="scribe-tab-counts"><b><em id="scribeCountDraft">0</em>BROUILLONS</b><b><em id="scribeCountAwaiting">0</em>EN ATTENTE</b><b><em id="scribeCountFollowup">0</em>RELANCÉES</b><b><em id="scribeCountReceived">0</em>RÉPONSES</b></div><p id="genealogyTabScribeMeta">Aucune requête suivie.</p><div class="scribe-attention" id="archiveScribeList"></div><div class="cap-live-foot"><span>ASSISTANT DE REQUÊTES AUX ARCHIVES</span><a href="../aide_archive/Scribe-v3.html">OUVRIR SCRIBE →</a></div></article>
+<article class="minitel-card"><div class="retro-head"><span>ACTIVITE.RECENTE</span><strong>ARCHIVES</strong></div><div class="activity-feed" id="archiveActivityFeed"><div class="express-empty">Aucune activité récente détectée.</div></div></article>
 </section><section class="terminal-section" id="detente">
-<div class="section-title"><span>3615.D04</span><h2>DÉTENTE</h2></div>
+<div class="section-title"><span>3615.D07</span><h2>DÉTENTE</h2></div>
 <p class="section-lead">Un peu d’uchronie, une otarie et plusieurs fonctions dont l’utilité n’a pas été démontrée.</p>
 <article class="minitel-card otarie-card" id="otarieFullCard">
 <div class="retro-head"><span>OTARIE.EXE</span><strong>BASSIN DE L’OTARIE</strong></div>
@@ -299,17 +298,27 @@
 </div>
 <div class="section-subtitle"><span>SERVICES DE DÉTENTE</span><strong>ACCÈS DIRECT</strong></div>
 <div class="portal-app-grid" id="leisureServicesGrid"><a class="portal-app-card" href="../uchronies/"><b>UCHRONIES</b><span>Jeux historiques alternatifs</span><i>UCHRONIES →</i></a></div>
+</section><section class="terminal-section" id="systeme">
+<div class="section-title"><span>3615.SYS9</span><h2>SYSTÈME</h2></div>
+<p class="section-lead">NEXUS, notifications, bus, sauvegardes et commandes du terminal.</p>
+<div class="system-grid">
+<article class="minitel-card"><div class="retro-head"><span>NOTIFICATIONS</span><strong id="systemNotifState">—</strong></div><div class="activity-feed" id="systemNotifications"></div></article>
+<article class="minitel-card"><div class="retro-head"><span>NEXUS</span><strong>CMS CENTRAL</strong></div><p>Configuration, contenus, données, automatisations et snapshots.</p><a class="minitel-action" href="cms.html">OUVRIR NEXUS →</a></article>
+<article class="minitel-card"><div class="retro-head"><span>BUS</span><strong id="systemBusState">—</strong></div><div class="health-lines" id="systemBusDetail"></div></article>
+<article class="minitel-card"><div class="retro-head"><span>SAUVEGARDES</span><strong>COFFRE NEXUS</strong></div><div class="health-lines" id="systemBackupDetail"></div><a class="inline-link" href="cms.html#data">GÉRER DANS NEXUS →</a></article>
+</div>
+<article class="minitel-card command-help-card"><div class="retro-head"><span>COMMANDES</span><strong>AIDE TERMINAL</strong></div><div class="command-chips"><span>0 ACCUEIL</span><span>1 AUJOURD’HUI</span><span>2 QUOTIDIEN</span><span>3 SANTÉ</span><span>4 INFOS</span><span>5 GÉNÉALOGIE</span><span>6 ARCHIVES</span><span>7 DÉTENTE</span><span>9 SYSTÈME</span><span>METEO</span><span>MEDITATION</span><span>CAP</span><span>CULINA</span><span>STYLIA</span><span>SCRIBE</span><span>ARIANE</span><span>NEXUS</span><span>OTARIE</span></div></article>
 </section></main>
 <footer class="terminal-footer">
 <form class="command-line" id="commandForm">
 <label for="commandInput">COMMANDE &gt;</label>
-<input autocomplete="off" id="commandInput" placeholder="CAP, CULINA, EXPRESS, GÉNÉALOGIE, OTARIE, NEXUS…" spellcheck="false"/>
+<input autocomplete="off" id="commandInput" placeholder="0–7, 9, METEO, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 8.0</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.0</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=2"></script>
-<script src="js/app.js?v=20"></script>
+<script src="js/app.js?v=30"></script>
 </body>
 </html>
