@@ -7,7 +7,7 @@
 <meta content="#07151a" name="theme-color"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
 <link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=8" rel="stylesheet"/>
+<link href="css/style.css?v=81" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -109,6 +109,7 @@
 <article class="today-mini"><span>ÉPHÉMÉRIDE</span><strong id="homeEphemerisDate">—</strong><p id="homeEphemerisSeason">—</p><small id="homeEphemerisSun">Soleil —</small></article>
 <article class="today-mini"><span>MÉDITATION</span><strong id="homeMeditationState">PRÊT</strong><p id="homeMeditationMeta">Aucune séance aujourd’hui.</p><button class="text-key" data-go="quotidien" type="button">OUVRIR LE MINUTEUR →</button></article>
 </div>
+<div class="today-attention" id="todayScribeAlert" hidden><strong>📨 SCRIBE</strong><span id="todayScribeAlertText">Une réponse d’archives est à traiter.</span><a href="../aide_archive/Scribe-v3.html">OUVRIR →</a></div>
 </section><section aria-label="Récapitulatif CAP" class="minitel-card cap-summary-card" data-home-block="cap" id="capSummaryCard">
 <div class="retro-head"><span>CAP.RÉCAP</span><strong id="capRecapState">SYNCHRONISATION…</strong></div>
 <div class="cap-summary-activity">
@@ -193,6 +194,10 @@
 <small id="arianeNextRef">—</small>
 </div>
 <div class="cap-live-foot"><span id="arianeLiveFoot">DOSSIERS D’ENQUÊTES</span><a href="../aide_archive/Ariane.html">OUVRIR ARIANE →</a></div>
+</section><section aria-label="Suivi des requêtes aux archives dans Scribe" class="minitel-card scribe-live-card" data-home-block="scribe" id="homeBlock-scribe" hidden>
+<div class="retro-head"><span>SCRIBE.REQUETES</span><strong id="scribeLiveState">SUIVI</strong></div>
+<div class="scribe-attention" id="scribeAttentionList"></div>
+<div class="cap-live-foot"><span id="scribeLiveFoot">REQUÊTES AUX ARCHIVES</span><a href="../aide_archive/Scribe-v3.html">OUVRIR SCRIBE →</a></div>
 </section></div>
 <div class="more-line">
 <button class="minitel-action secondary" data-go="quotidien" type="button">QUOTIDIEN →</button>
@@ -266,6 +271,7 @@
 <div><span>ARBORIS</span><strong id="genealogyTabArboris">—</strong><small id="genealogyTabArborisMeta">—</small></div>
 <div><span>SCRIPTORIA</span><strong id="genealogyTabScriptoria">—</strong><small id="genealogyTabScriptoriaMeta">—</small></div>
 <div><span>PISTORIA</span><strong id="genealogyTabPistoria">—</strong><small id="genealogyTabPistoriaMeta">—</small></div>
+<div class="wide scribe-tab-panel"><span>SCRIBE · REQUÊTES AUX ARCHIVES</span><div class="scribe-tab-counts"><b><em id="scribeCountDraft">0</em>BROUILLONS</b><b><em id="scribeCountAwaiting">0</em>EN ATTENTE</b><b><em id="scribeCountFollowup">0</em>RELANCÉES</b><b><em id="scribeCountReceived">0</em>RÉPONSES</b></div><small id="genealogyTabScribeMeta">Aucune requête suivie.</small></div>
 <div class="wide"><span>FIL D’ARIANE · PROCHAINE ACTION</span><strong id="genealogyTabAriane">—</strong><small id="genealogyTabArianeMeta">—</small></div>
 </div>
 </article>
@@ -275,7 +281,7 @@
 <a class="portal-app-card" href="../bureau-genealogique/index2.html"><b>SCRIPTORIA</b><span>Actes et registres</span><i>SCRIPTORIA →</i></a>
 <a class="portal-app-card" href="../bureau-genealogique/index3.html"><b>PISTORIA</b><span>Pistes Sosa</span><i>PISTORIA →</i></a>
 <a class="portal-app-card" href="../aide_archive/Ariane.html"><b>LE FIL D’ARIANE</b><span>Enquêtes documentaires</span><i>ARIANE →</i></a>
-<a class="portal-app-card" href="../aide_archive/Scribe-v3.html"><b>SCRIBE</b><span>Aide au travail d’archives</span><i>SCRIBE →</i></a>
+<a class="portal-app-card" href="../aide_archive/Scribe-v3.html"><b>SCRIBE</b><span>Assistant de requêtes aux archives</span><i>SCRIBE →</i></a>
 </div>
 </section><section class="terminal-section" id="detente">
 <div class="section-title"><span>3615.D04</span><h2>DÉTENTE</h2></div>
