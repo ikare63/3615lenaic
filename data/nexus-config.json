@@ -1,10 +1,10 @@
 {
-  "version": 8,
+  "version": 10,
   "publishedAt": null,
   "site": {
     "title": "3615 LÉNAÏC",
     "subtitle": "TABLEAU DE BORD PERSONNEL // TERMINAL LOCAL",
-    "footerLeft": "3615 LÉNAÏC // VERSION 9.3",
+    "footerLeft": "3615 LÉNAÏC // VERSION 9.4",
     "footerRight": "DONNÉES LOCALES · BUS PARTAGÉ",
     "showBusStatus": true
   },
@@ -101,6 +101,12 @@
       "label": "Épargne — défi 52 semaines",
       "visible": true,
       "order": 35
+    },
+    {
+      "id": "modules",
+      "label": "Modules & rappels NEXUS",
+      "visible": true,
+      "order": 37
     }
   ],
   "portalTabs": [
@@ -326,7 +332,7 @@
       "category": "admin",
       "order": 10,
       "visible": true,
-      "version": "4.0"
+      "version": "5.0"
     }
   ],
   "automations": {
@@ -335,7 +341,8 @@
     "autoSnapshotOnChange": true,
     "changeDelaySeconds": 30,
     "publicMirrorsEnabled": true,
-    "scribeReminderDays": 30
+    "scribeReminderDays": 30,
+    "notificationRetentionDays": 60
   },
   "dashboard": {
     "weatherCity": "Clermont-Ferrand",
@@ -348,5 +355,6 @@
       15,
       20
     ]
-  }
+  },
+  "modules": []
 }

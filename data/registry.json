@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "name": "3615 NEXUS",
   "autoSnapshotHours": 3,
   "retentionPerDataset": 20,
@@ -217,6 +217,36 @@
         {
           "key": "lenaic-culina-snapshot-v1",
           "label": "Snapshot Culina → 3615",
+          "critical": false
+        },
+        {
+          "key": "lenaic-bus-v2",
+          "label": "Bus commun V2",
+          "critical": false
+        },
+        {
+          "key": "lenaic-notifications-v1",
+          "label": "Centre de notifications",
+          "critical": false
+        },
+        {
+          "key": "lenaic-genealogy-context-v1",
+          "label": "Contexte généalogique actif",
+          "critical": false
+        },
+        {
+          "key": "lenaic-search-index-v1",
+          "label": "Index de recherche universelle",
+          "critical": false
+        },
+        {
+          "key": "lenaic-modules-v1",
+          "label": "État des modules et rappels",
+          "critical": true
+        },
+        {
+          "key": "lenaic-app-activity-v1",
+          "label": "Activité des applications",
           "critical": false
         }
       ]
