@@ -272,8 +272,13 @@
     document.querySelectorAll('.terminal-section').forEach(s=>s.classList.toggle('active',s.id===id));
     document.querySelectorAll('.service-key').forEach(b=>b.classList.toggle('active',b.dataset.section===id));
     if(id==='detente')initAquarium();
-    if(id==='quotidien'){loadWeather();renderEphemeris();renderMeditation()}
-    if(id==='genealogie')syncGenealogyTab();
+    if(id==='aujourdhui'){loadWeather();renderEphemeris();renderV9Today()}
+    if(id==='quotidien')renderV9Daily();
+    if(id==='sante'){renderMeditation();renderV9Health()}
+    if(id==='informations')renderV9Info();
+    if(id==='genealogie'){syncGenealogyTab();renderAnniversaries()}
+    if(id==='archives')renderV9Archives();
+    if(id==='systeme')renderV9System();
     window.scrollTo({top:0,behavior:'smooth'});
   }
   document.querySelectorAll('[data-section]').forEach(b=>b.addEventListener('click',()=>showSection(b.dataset.section)));
@@ -491,6 +496,7 @@
     document.querySelector('.express-live-card')?.classList.toggle('ready',homeRows.length>0);
     setText('expressLiveState',homeRows.length?`${homeRows.length} TITRES`:'AUCUN TITRE');setText('expressLiveFoot',homeRows.length?`ÉDITION ${stamp} · APERÇU`:'OUVRE LÉNAÏC EXPRESS POUR ACTUALISER');
     setText('expressInfoState',infoRows.length?`${infoRows.length} TITRE${infoRows.length>1?'S':''}`:'AUCUN TITRE');setText('expressInfoFoot',`ÉDITION ${stamp} · PERSONNALISÉE`);
+    renderInfoBreakdown(all,meta);
   }
 
   function escapeHtml3615(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -808,36 +814,153 @@
     setText('capStatus',hasCompleteSleep(sleep)?'NUIT OK':'PRÊT');
     setText('capStatusDetail',hasCompleteSleep(sleep)?`${sleep.hours} h enregistrées`:'Santé & récupération');
   }
-  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive()});
+  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();renderV9All()});
   window.addEventListener('storage',e=>{
     if(e.key===NEXUS_CONFIG_KEY)loadNexusConfig().then(()=>renderScribeLive());
-    if(e.key==='cap-data'){renderSleepPanel();renderBusStatus()}
-    if(e.key===CAP_SNAPSHOT_KEY)renderCapLive();
-    if(e.key===CULINA_SNAPSHOT_KEY){renderCulinaLive();renderBusStatus()}
-    if(e.key===STYLIA_SNAPSHOT_KEY){renderStyliaLive();renderBusStatus()}
-    if(e.key===EXPRESS_SNAPSHOT_KEY){renderExpressLive();renderBusStatus()}
-    if([ARBORIS_DATA_KEY,SCRIPTORIA_DATA_KEY,PISTORIA_DATA_KEY].includes(e.key)){renderGenealogyOffice();syncGenealogyTab()}
-    if(e.key===ARIANE_DATA_KEY){renderArianeLive();syncGenealogyTab()}
-    if(e.key===SCRIBE_DATA_KEY||e.key===SCRIBE_SNAPSHOT_KEY)renderScribeLive();
+    if(e.key==='cap-data'){renderSleepPanel();renderBusStatus();renderV9Health();renderV9Today();renderV9System()}
+    if(e.key===CAP_SNAPSHOT_KEY){renderCapLive();renderV9Health();renderV9Today();renderV9System()}
+    if(e.key===CULINA_SNAPSHOT_KEY){renderCulinaLive();renderBusStatus();renderV9Daily();renderV9Today()}
+    if(e.key===STYLIA_SNAPSHOT_KEY){renderStyliaLive();renderBusStatus();renderV9Daily()}
+    if(e.key===EXPRESS_SNAPSHOT_KEY){renderExpressLive();renderBusStatus();renderV9Info()}
+    if([ARBORIS_DATA_KEY,SCRIPTORIA_DATA_KEY,PISTORIA_DATA_KEY].includes(e.key)){renderGenealogyOffice();syncGenealogyTab();renderAnniversaries()}
+    if(e.key===ARIANE_DATA_KEY){renderArianeLive();syncGenealogyTab();renderV9Archives()}
+    if(e.key===SCRIBE_DATA_KEY||e.key===SCRIBE_SNAPSHOT_KEY){renderScribeLive();renderV9Archives();renderV9Today();renderV9System()}
     if(e.key===MEDITATION_KEY)renderMeditation();
   });
 
+
+  // === V9 · pages spécialisées =================================================
+  function jsonOr(key,fallback){try{const v=JSON.parse(localStorage.getItem(key)||'null');return v??fallback}catch{return fallback}}
+  function capNutritionDayKey(date=new Date()){const d=new Date(date);if(d.getHours()<1)d.setDate(d.getDate()-1);return localDateKey(d)}
+  function capNutritionSummary(){
+    const st=readCapState()||{}, day=st.daily?.[capNutritionDayKey()]||{}, meals=Array.isArray(day.meals)?day.meals:[];
+    let totals={calories:0,protein:0,carbs:0,fat:0};
+    if(meals.length)for(const m of meals){totals.calories+=Number(m.calories)||0;totals.protein+=Number(m.protein)||0;totals.carbs+=Number(m.carbs)||0;totals.fat+=Number(m.fat)||0}
+    else {const n=day.nutrition||{};for(const k of Object.keys(totals))totals[k]=Number(n[k])||0}
+    const set=st.settings||{},weight=Number(set.weight)||61.8;
+    const goals={calories:Number(set.calories)||2200,protein:weight*(Number(set.proteinRate)||1.8),carbs:weight*(Number(set.carbRate)||5),fat:weight*(Number(set.fatRate)||1)};
+    return {totals,goals,meals,day};
+  }
+  function pct(v,g){return g?Math.max(0,Math.min(100,Math.round((Number(v)||0)/g*100))):0}
+  function renderV9Health(){
+    const {totals,goals,meals}=capNutritionSummary();
+    const defs=[['CALORIES','calories','kcal',0],['PROTÉINES','protein','g',1],['GLUCIDES','carbs','g',1],['LIPIDES','fat','g',1]];
+    const grid=$('healthMacroGrid');if(grid)grid.innerHTML=defs.map(([label,key,unit,dec])=>{const val=Number(totals[key])||0,goal=Number(goals[key])||0,p=pct(val,goal);return `<div class="macro-box"><span>${label}</span><strong>${dec?val.toFixed(1):Math.round(val)} ${unit}</strong><small>/ ${Math.round(goal)} ${unit} · ${p}%</small><div class="macro-bar"><i style="width:${p}%"></i></div></div>`}).join('');
+    setText('healthNutritionState',meals.length?`${meals.length} REPAS`:'EN COURS');
+    setText('healthNutritionFoot',`${Math.round(totals.calories)} / ${Math.round(goals.calories)} KCAL · P ${totals.protein.toFixed(1)} G · G ${totals.carbs.toFixed(1)} G · L ${totals.fat.toFixed(1)} G`);
+    const mealBox=$('healthMeals');if(mealBox){mealBox.innerHTML=meals.length?meals.map(m=>{const t=m.time||m.createdAt||'';let time='—';try{const d=new Date(t);if(Number.isFinite(d.getTime()))time=d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}catch{}return `<div class="meal-line"><time>${escapeHtml3615(time)}</time><div><strong>${escapeHtml3615(m.name||'Repas')}</strong><small>P ${Number(m.protein||0).toFixed(1)} · G ${Number(m.carbs||0).toFixed(1)} · L ${Number(m.fat||0).toFixed(1)} g</small></div><b>${Math.round(Number(m.calories)||0)} kcal</b></div>`}).join(''):'<div class="express-empty">Aucun repas enregistré aujourd’hui dans CAP.</div>'}
+    const snap=readCapSnapshot()||{}, sl=snap.sleep||capSleepForToday()||{}, a=snap.activity||{}, m=snap.measurements||{};
+    setText('healthSleepState',sl.complete?`${Math.round(Number(sl.score)||0)} %`:'À RENSEIGNER');
+    const sd=$('healthSleepDetail');if(sd)sd.innerHTML=`<div><span>DURÉE</span><b>${Number(sl.hours)||0} h</b></div><div><span>QUALITÉ</span><b>${Number(sl.quality)||0} %</b></div><div><span>RÉCUP. PHYSIQUE</span><b>${Number(sl.physical)||0} %</b></div><div><span>RÉCUP. MENTALE</span><b>${Number(sl.mental)||0} %</b></div>`;
+    setText('healthActivityState',a.completed?'TERMINÉE':(a.title?'PRÉVUE':'À SYNCHRONISER'));
+    const ad=$('healthActivityDetail');if(ad)ad.innerHTML=`<div><span>SÉANCE</span><b>${escapeHtml3615(a.title||'Ouvre CAP')}</b></div><div><span>PROGRESSION</span><b>${Math.round(Number(a.progress)||0)} %</b></div><div><span>DURÉE</span><b>${escapeHtml3615(a.duration||'—')}</b></div><div><span>FOCUS</span><b>${escapeHtml3615(a.focus||'—')}</b></div>`;
+    const days=Number(m.daysUntil);setText('healthMeasureState',m.latestDate?(days<0?'EN RETARD':days===0?'AUJOURD’HUI':`J-${days}`):'À INITIALISER');
+    const md=$('healthMeasureDetail');if(md)md.innerHTML=`<div><span>DERNIÈRE</span><b>${escapeHtml3615(m.latestDate?formatShortDate(m.latestDate):'—')}</b></div><div><span>PROCHAINE</span><b>${escapeHtml3615(m.nextDueDate?formatShortDate(m.nextDueDate):'—')}</b></div><div><span>RYTHME</span><b>${Number(m.intervalDays)||14} JOURS</b></div>`;
+  }
+  function plansOnDate(key){const snap=readCulinaSnapshot();return Array.isArray(snap?.planned)?snap.planned.filter(p=>localDateKey(new Date(Number(p.at)))===key).sort((a,b)=>a.at-b.at):[]}
+  function renderV9Today(){
+    const snap=readCapSnapshot()||{},a=snap.activity||{},m=snap.measurements||{},plans=plansOnDate(localDateKey()),scribe=readScribeSnapshot()||{},received=Array.isArray(scribe.received)?scribe.received:[],pending=Array.isArray(scribe.pending)?scribe.pending:[],threshold=scribeReminderDays(),overdue=pending.filter(x=>Number(x.ageDays)>=threshold);
+    const rows=[];
+    rows.push({k:'CAP',t:a.title||'Activité du jour à synchroniser',s:a.title?`${Math.round(Number(a.progress)||0)} % · ${a.label||''}`:'Ouvre CAP pour actualiser',b:a.completed?'TERMINÉE':'AUJOURD’HUI'});
+    plans.forEach(p=>rows.push({k:p.mealType==='lunch'?'CE MIDI':p.mealType==='dinner'?'CE SOIR':'REPAS',t:p.name||'Repas Culina',s:`${formatClock(p.at)} · ${Math.round(Number(p.calories)||0)} kcal`,b:Number(p.missingCount)?`${p.missingCount} MANQUANT${p.missingCount>1?'S':''}`:'PRÊT'}));
+    if(m.latestDate&&Number(m.daysUntil)<=1)rows.push({k:'MESURES',t:Number(m.daysUntil)<=0?'Mensurations à faire':'Mensurations demain',s:`Dernière : ${formatShortDate(m.latestDate)}`,b:Number(m.daysUntil)<=0?'ÉCHÉANCE':'J-1'});
+    if(received.length)rows.push({k:'SCRIBE',t:`Réponse reçue · ${received[0].contact||'Archives'}`,s:received[0].title||'Demande à traiter',b:'À TRAITER'});else if(overdue.length)rows.push({k:'SCRIBE',t:`${overdue.length} relance${overdue.length>1?'s':''} à envisager`,s:`Seuil NEXUS : ${threshold} jours`,b:'ARCHIVES'});
+    const box=$('programGrid');if(box)box.innerHTML=rows.map(r=>`<div class="program-item"><div><span>${escapeHtml3615(r.k)}</span><strong>${escapeHtml3615(r.t)}</strong><small>${escapeHtml3615(r.s)}</small></div><b>${escapeHtml3615(r.b)}</b></div>`).join('');
+    setText('programState',`${rows.length} REPÈRE${rows.length>1?'S':''}`);
+    setText('homeProgramState',rows.length?`${rows.length} REPÈRE${rows.length>1?'S':''}`:'RAS');setText('homeProgramMeta',rows[0]?`${rows[0].k} · ${rows[0].t}`:'Aucun rappel particulier.');
+    const d=new Date();d.setDate(d.getDate()+1);const tkey=localDateKey(d),tPlans=plansOnDate(tkey),daily=weatherData?.daily||{},tm=[];
+    if(daily.time?.[1]){const [ic,lab]=weatherLabel(daily.weather_code?.[1]);tm.push({k:'MÉTÉO',t:`${ic} ${lab}`,s:`${Math.round(daily.temperature_2m_min?.[1])}° / ${Math.round(daily.temperature_2m_max?.[1])}° · pluie ${Math.round(daily.precipitation_probability_max?.[1]||0)} %`,b:'DEMAIN'})}
+    if(tPlans.length)tPlans.forEach(p=>tm.push({k:'CULINA',t:p.name||'Repas programmé',s:`${formatClock(p.at)} · ${Math.round(Number(p.calories)||0)} kcal`,b:p.mealType==='lunch'?'MIDI':p.mealType==='dinner'?'SOIR':'REPAS'}));else tm.push({k:'CULINA',t:'Aucun repas programmé',s:'Tu peux préparer demain depuis Culina.',b:'LIBRE'});
+    tm.push({k:'CAP',t:'Programme de demain',s:'Le détail reste piloté par CAP.',b:'OUVRIR CAP'});
+    const tb=$('tomorrowGrid');if(tb)tb.innerHTML=tm.map(r=>`<div class="tomorrow-item"><div><span>${escapeHtml3615(r.k)}</span><strong>${escapeHtml3615(r.t)}</strong><small>${escapeHtml3615(r.s)}</small></div><b>${escapeHtml3615(r.b)}</b></div>`).join('');
+  }
+  function renderV9Daily(){
+    const plans=culinaPlansToday(),shopping=jsonOr('culina-shopping-v1',[]),leftovers=jsonOr('culina-leftovers-v1',[]),stock=jsonOr('culina-stock-v1',{});
+    setText('dailyCulinaState',plans.length?`${plans.length} REPAS PRÉVU${plans.length>1?'S':''}`:'RIEN DE PROGRAMMÉ');
+    const r=$('dailyCulinaRows');if(r)r.innerHTML=plans.length?plans.map(p=>`<div class="daily-row"><div><span>${p.mealType==='lunch'?'CE MIDI':p.mealType==='dinner'?'CE SOIR':'REPAS'}</span><strong>${escapeHtml3615(p.name||'Repas Culina')}</strong><small>${formatClock(p.at)} · ${Math.round(Number(p.calories)||0)} kcal · ${Number(p.missingCount)||0} ingrédient(s) manquant(s)</small></div><b>${Number(p.missingCount)?'À COMPLÉTER':'PRÊT'}</b></div>`).join(''):'<div class="express-empty">Aucun repas programmé aujourd’hui.</div>';
+    const k=$('dailyCulinaKpis');if(k)k.innerHTML=`<span>${Array.isArray(shopping)?shopping.length:0} COURSE(S)</span><span>${Array.isArray(leftovers)?leftovers.length:0} RESTE(S)</span><span>${stock&&typeof stock==='object'?Object.keys(stock).length:0} ZONE(S) DE STOCK</span>`;
+    const snap=readStyliaSnapshot(),box=$('dailyStyliaDetail');
+    if(!snap){setText('dailyStyliaState','AUCUNE TENUE');if(box)box.innerHTML='<div class="express-empty">Valide une tenue dans Stylia pour la retrouver ici.</div>';return}
+    setText('dailyStyliaState',snap.date===localDateKey()?'VALIDÉE AUJOURD’HUI':'DERNIÈRE TENUE');
+    const defs=[['top','HAUT'],['bottom','BAS'],['outer','COUCHE'],['shoes','CHAUSSURES'],['accessory','ACCESSOIRE']].filter(([key])=>snap[key]);
+    if(box)box.innerHTML=`<div class="daily-stylia-hero"><div><strong>${escapeHtml3615(snap.name||'Tenue Stylia')}</strong><p>${escapeHtml3615(snap.why||'Tenue validée.')}</p></div><b>${snap.rain?'☂ PARAPLUIE':'MÉTÉO OK'}</b></div><div class="daily-stylia-parts">${defs.map(([key,label])=>`<span>${label} · ${escapeHtml3615(snap[key].piece||'—')} · ${escapeHtml3615(snap[key].shade||'—')}</span>`).join('')}</div>`;
+  }
+  function renderInfoBreakdown(articles,meta={}){
+    const all=Array.isArray(articles)?articles:[];
+    const local=all.filter(a=>['local','clermont','auvergne'].includes(String(a.category||'').toLowerCase())||/clermont|puy-de-dôme|auvergne|loire/i.test(`${a.title||''} ${a.source||''}`)).slice(0,4);
+    const gen=all.filter(a=>String(a.category||'').toLowerCase()==='genealogie'||/généalog|genealog|archives?/i.test(a.title||'')).slice(0,4);
+    const rows=(arr,empty)=>arr.length?arr.map(a=>`<a href="${escapeAttr3615(a.url||'../lenaic-express/')}" target="_blank" rel="noopener"><strong>${escapeHtml3615(a.title||'Sans titre')}</strong><small>${escapeHtml3615(a.source||'Source')} · ${escapeHtml3615(expressPublishedLabel(a.publishedAt||a.published_at)||'')}</small></a>`).join(''):`<div class="express-empty">${empty}</div>`;
+    if($('localNewsList'))$('localNewsList').innerHTML=rows(local,'Aucun titre local dans cette édition.');
+    if($('genealogyNewsList'))$('genealogyNewsList').innerHTML=rows(gen,'Aucun titre généalogique dans cette édition.');
+    const dt=meta.editionGeneratedAt||meta.generatedAt,d=dt?new Date(dt):null;setText('infoLastUpdate',d&&Number.isFinite(d.getTime())?d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—');setText('infoUpdateMeta',all.length?`${all.length} titre${all.length>1?'s':''} disponibles dans l’édition locale.`:'Lénaïc Express n’a pas encore publié d’édition.');
+  }
+  function renderV9Info(){const snap=readExpressSnapshot();if(snap?.top)renderInfoBreakdown(snap.top,snap)}
+  function arborisEventDate(obj,path){return path.split('.').reduce((a,k)=>a?.[k],obj)||''}
+  function anniversaryEvents(){
+    const a=readLocalJson(ARBORIS_DATA_KEY);if(!a||!Array.isArray(a.people))return [];
+    const byId=new Map(a.people.map(p=>[p.id,p])),events=[];
+    const add=(date,type,label,meta='')=>{const m=String(date||'').match(/^(\d{4})-(\d{2})-(\d{2})/);if(m)events.push({date:String(date),year:Number(m[1]),month:Number(m[2]),day:Number(m[3]),type,label,meta})};
+    a.people.forEach(p=>{const name=personDisplayName(p);add(arborisEventDate(p,'birth.date'),'NAISSANCE',name,p.sosa?`Sosa ${p.sosa}`:'');add(arborisEventDate(p,'death.date'),'DÉCÈS',name,p.sosa?`Sosa ${p.sosa}`:'')});
+    (a.families||[]).forEach(f=>{const p1=byId.get(f.partner1Id),p2=byId.get(f.partner2Id),label=[personDisplayName(p1),personDisplayName(p2)].filter(x=>x&&x!=='Individu sans nom').join(' × ');add(arborisEventDate(f,'marriage.date'),'MARIAGE',label||'Couple','')});
+    return events;
+  }
+  function nextOccurrence(ev,base=new Date()) {const d=new Date(base.getFullYear(),ev.month-1,ev.day,12);if(d<new Date(base.getFullYear(),base.getMonth(),base.getDate(),12))d.setFullYear(d.getFullYear()+1);return d}
+  function renderAnniversaries(){
+    const all=anniversaryEvents(),box=$('anniversaryList');if(!box)return;
+    if(!all.length){setText('anniversaryState','ARBORIS À OUVRIR');box.innerHTML='<div class="express-empty">Aucun événement daté trouvé dans Arboris.</div>';return}
+    const today=new Date(),start=new Date(today.getFullYear(),today.getMonth(),today.getDate(),12),limit=new Date(start);limit.setDate(limit.getDate()+7);
+    const upcoming=all.map(e=>({...e,next:nextOccurrence(e,start)})).filter(e=>e.next<=limit).sort((a,b)=>a.next-b.next||a.year-b.year);
+    setText('anniversaryState',upcoming.length?`${upcoming.length} ÉVÉNEMENT${upcoming.length>1?'S':''}`:'AUCUN CETTE SEMAINE');
+    if(!upcoming.length){box.innerHTML='<div class="express-empty">Aucun anniversaire familial dans les 7 prochains jours.</div>';return}
+    const groups=new Map();for(const e of upcoming){const k=localDateKey(e.next);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(e)}
+    box.innerHTML=[...groups].map(([k,arr])=>{const d=new Date(k+'T12:00:00'),label=k===localDateKey()?'AUJOURD’HUI':(()=>{const t=new Date(start);t.setDate(t.getDate()+1);return k===localDateKey(t)?'DEMAIN':d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}).toUpperCase()})();return `<div class="anniversary-day"><strong>${label}</strong>${arr.map(e=>`<div class="anniversary-row"><div><span class="anniversary-type">${e.type}</span><strong>${escapeHtml3615(e.label)}</strong><small>${e.year}${e.meta?' · '+escapeHtml3615(e.meta):''}</small></div><b>${d.getFullYear()-e.year} AN${d.getFullYear()-e.year>1?'S':''}</b></div>`).join('')}</div>`}).join('');
+  }
+  function searchAny(obj,q){try{return JSON.stringify(obj).toLocaleLowerCase('fr').includes(q)}catch{return false}}
+  function renderGenealogySearch(query){
+    const q=String(query||'').trim().toLocaleLowerCase('fr'),box=$('genealogySearchResults');if(!box)return;if(q.length<2){box.innerHTML='<div class="express-empty">Saisis au moins deux caractères.</div>';return}
+    const out=[],arb=readLocalJson(ARBORIS_DATA_KEY),scr=readLocalJson(SCRIPTORIA_DATA_KEY),pis=readLocalJson(PISTORIA_DATA_KEY);
+    (arb?.people||[]).filter(x=>searchAny(x,q)).slice(0,8).forEach(x=>out.push({s:'ARBORIS',t:personDisplayName(x),m:[x.sosa?`Sosa ${x.sosa}`:'',x.birth?.date||'',x.birth?.commune||''].filter(Boolean).join(' · ')}));
+    (scr?.people||[]).filter(x=>searchAny(x,q)).slice(0,6).forEach(x=>out.push({s:'SCRIPTORIA',t:personDisplayName(x),m:[x.birthDate||x.baptismDate||'',x.birthPlace||''].filter(Boolean).join(' · ')}));
+    (scr?.records||[]).filter(x=>searchAny(x,q)).slice(0,6).forEach(x=>out.push({s:'SCRIPTORIA · ACTE',t:x.title||x.type||'Acte',m:[x.date,x.registerId].filter(Boolean).join(' · ')}));
+    (pis?.investigations||[]).filter(x=>searchAny(x,q)).slice(0,6).forEach(x=>out.push({s:'PISTORIA',t:[x.sosa?`Sosa ${x.sosa}`:'',x.person||x.title||'Piste'].filter(Boolean).join(' · '),m:x.status||''}));
+    box.innerHTML=out.length?out.slice(0,18).map(x=>`<div class="search-result"><div class="search-source">${escapeHtml3615(x.s)}</div><strong>${escapeHtml3615(x.t)}</strong><small>${escapeHtml3615(x.m||'')}</small></div>`).join(''):'<div class="express-empty">Aucun résultat dans les bases locales.</div>';
+  }
+  $('genealogySearchForm')?.addEventListener('submit',e=>{e.preventDefault();renderGenealogySearch($('genealogySearchInput')?.value)});
+  function renderV9Archives(){
+    const snap=readScribeSnapshot()||{},counts=snap.counts||{},pending=Array.isArray(snap.pending)?snap.pending:[],received=Array.isArray(snap.received)?snap.received:[],threshold=scribeReminderDays(),rows=[];
+    setText('archiveScribeState',received.length?`${received.length} RÉPONSE${received.length>1?'S':''}`:pending.length?`${pending.length} EN ATTENTE`:'À JOUR');
+    const sb=$('archiveScribeList');if(sb)sb.innerHTML=[...received.slice(0,3).map(r=>`<div class="scribe-request-row received"><div><strong>${escapeHtml3615(r.title||'Réponse')}</strong><small>${escapeHtml3615(r.contact||'Archives')}</small></div><b>RÉPONSE</b></div>`),...pending.slice(0,4).map(r=>`<div class="scribe-request-row${Number(r.ageDays)>=threshold?' overdue':''}"><div><strong>${escapeHtml3615(r.title||'Demande')}</strong><small>${escapeHtml3615(r.contact||'Archives')}</small></div><b>${Number(r.ageDays)>=threshold?'RELANCE':scribeAgeLabel(r.ageDays)}</b></div>`)].join('')||'<div class="express-empty">Aucune requête à signaler.</div>';
+    const ar=readLocalJson(ARIANE_DATA_KEY);(ar?.cases||[]).slice().sort((a,b)=>timeValue(b,['updatedAt','createdAt'])-timeValue(a,['updatedAt','createdAt'])).slice(0,4).forEach(c=>rows.push({k:'ARIANE',t:c.title||'Enquête',m:c.status||'En cours'}));received.slice(0,3).forEach(r=>rows.push({k:'SCRIBE',t:r.title||'Réponse reçue',m:r.contact||'Archives'}));pending.slice(0,3).forEach(r=>rows.push({k:'SCRIBE',t:r.title||'Demande en attente',m:`${r.contact||'Archives'} · ${scribeAgeLabel(r.ageDays)}`}));
+    const af=$('archiveActivityFeed');if(af)af.innerHTML=rows.length?rows.slice(0,7).map(x=>`<div class="activity-item"><div><span>${x.k}</span><strong>${escapeHtml3615(x.t)}</strong><small>${escapeHtml3615(x.m)}</small></div></div>`).join(''):'<div class="express-empty">Aucune activité récente détectée.</div>';
+  }
+  function renderV9System(){
+    const pending=window.LenaicBus?LenaicBus.pending():[],scribe=readScribeSnapshot()||{},overdue=(scribe.pending||[]).filter(x=>Number(x.ageDays)>=scribeReminderDays()),m=readCapSnapshot()?.measurements||{},notifs=[];
+    if(overdue.length)notifs.push(`${overdue.length} relance${overdue.length>1?'s':''} Scribe à envisager`);if((scribe.received||[]).length)notifs.push(`${scribe.received.length} réponse${scribe.received.length>1?'s':''} Scribe reçue${scribe.received.length>1?'s':''}`);if(m.latestDate&&Number(m.daysUntil)<=1)notifs.push(Number(m.daysUntil)<=0?'Mensurations CAP à faire':'Mensurations CAP demain');if(pending.length)notifs.push(`${pending.length} message${pending.length>1?'s':''} sur le bus`);
+    setText('systemNotifState',notifs.length?`${notifs.length} À VOIR`:'RAS');const nb=$('systemNotifications');if(nb)nb.innerHTML=notifs.length?notifs.map(x=>`<div class="activity-item"><div><span>ATTENTION</span><strong>${escapeHtml3615(x)}</strong></div></div>`).join(''):'<div class="express-empty">Aucune action urgente.</div>';
+    setText('systemBusState',window.LenaicBus?'ACTIF':'HORS LIGNE');const bd=$('systemBusDetail');if(bd)bd.innerHTML=`<div><span>MESSAGES EN ATTENTE</span><b>${pending.length}</b></div><div><span>CANAL</span><b>lenaic-bus-v1</b></div><div><span>MODE</span><b>LOCAL + BROADCAST</b></div>`;
+    const keys=['cap-data','memoire-famille-data','scriptoria-data','pistoria_private_v3','ariane-local-v2','scribe-local-v3'];const present=keys.filter(k=>localStorage.getItem(k)!=null).length;const bk=$('systemBackupDetail');if(bk)bk.innerHTML=`<div><span>JEUX LOCAUX MAJEURS</span><b>${present}/${keys.length} DÉTECTÉS</b></div><div><span>SNAPSHOT AUTO</span><b>${Number(nexusConfig?.automations?.autoSnapshotHours)||3} H</b></div><div><span>RÉTENTION</span><b>${Number(nexusConfig?.automations?.retentionPerDataset)||20} VERSIONS</b></div>`;
+  }
+  function renderV9All(){renderV9Today();renderV9Daily();renderV9Health();renderV9Info();renderAnniversaries();renderV9Archives();renderV9System()}
+
   const commandMap={
     '0':()=>showSection('home'),'accueil':()=>showSection('home'),'home':()=>showSection('home'),
-    '1':()=>showSection('quotidien'),'quotidien':()=>showSection('quotidien'),'daily':()=>showSection('quotidien'),
-    '2':()=>showSection('informations'),'info':()=>showSection('informations'),'infos':()=>showSection('informations'),'informations':()=>showSection('informations'),
-    '3':()=>showSection('genealogie'),'genealogie':()=>showSection('genealogie'),'généalogie':()=>showSection('genealogie'),
-    '4':()=>showSection('detente'),'detente':()=>showSection('detente'),'détente':()=>showSection('detente'),'otarie':()=>showSection('detente'),
-    'services':()=>showSection('quotidien'),'meteo':()=>showSection('quotidien'),'météo':()=>showSection('quotidien'),'meditation':()=>showSection('quotidien'),'méditation':()=>showSection('quotidien')
+    '1':()=>showSection('aujourdhui'),'aujourdhui':()=>showSection('aujourdhui'),'aujourd’hui':()=>showSection('aujourdhui'),'today':()=>showSection('aujourdhui'),'meteo':()=>showSection('aujourdhui'),'météo':()=>showSection('aujourdhui'),
+    '2':()=>showSection('quotidien'),'quotidien':()=>showSection('quotidien'),'daily':()=>showSection('quotidien'),
+    '3':()=>showSection('sante'),'sante':()=>showSection('sante'),'santé':()=>showSection('sante'),'meditation':()=>showSection('sante'),'méditation':()=>showSection('sante'),'nutrition':()=>showSection('sante'),
+    '4':()=>showSection('informations'),'info':()=>showSection('informations'),'infos':()=>showSection('informations'),'informations':()=>showSection('informations'),
+    '5':()=>showSection('genealogie'),'genealogie':()=>showSection('genealogie'),'généalogie':()=>showSection('genealogie'),'anniversaires':()=>showSection('genealogie'),
+    '6':()=>showSection('archives'),'archives':()=>showSection('archives'),'ariane':()=>showSection('archives'),'scribe':()=>showSection('archives'),
+    '7':()=>showSection('detente'),'detente':()=>showSection('detente'),'détente':()=>showSection('detente'),'otarie':()=>showSection('detente'),
+    '9':()=>showSection('systeme'),'systeme':()=>showSection('systeme'),'système':()=>showSection('systeme'),'aide':()=>showSection('systeme'),'services':()=>showSection('systeme')
   };
   $('commandForm').addEventListener('submit',e=>{
     e.preventDefault();const raw=$('commandInput').value.trim().toLowerCase();const dest=dynamicCommands[raw]??commandMap[raw];
-    if(typeof dest==='function')dest();else if(typeof dest==='string')location.href=dest;else{setText('greetingText',`Commande « ${raw||'vide'} » inconnue. Essaie CAP, CULINA, INFOS, GÉNÉALOGIE, OTARIE ou NEXUS.`)}
+    if(typeof dest==='function')dest();else if(typeof dest==='string')location.href=dest;else{setText('greetingText',`Commande « ${raw||'vide'} » inconnue. Essaie 0–7, 9, METEO, CAP, CULINA, SCRIBE, ARIANE, OTARIE ou NEXUS.`)}
     $('commandInput').value='';
   });
   document.addEventListener('keydown',e=>{
     if(/input|textarea|select/i.test(document.activeElement?.tagName||''))return;
-    if(e.key==='0')showSection('home');if(e.key==='1')showSection('quotidien');if(e.key==='2')showSection('informations');if(e.key==='3')showSection('genealogie');if(e.key==='4')showSection('detente');
+    const keySections={'0':'home','1':'aujourdhui','2':'quotidien','3':'sante','4':'informations','5':'genealogie','6':'archives','7':'detente','9':'systeme'};if(keySections[e.key])showSection(keySections[e.key]);
   });
 
   // Méditation — minuteur local, précis même si l’onglet passe en arrière-plan.
@@ -912,8 +1035,8 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();initMiniOtarie();
+  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
   loadNexusConfig();loadWeather();loadNameday();
-  setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();},60000);
+  setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderV9All();},60000);
   setInterval(renderCulinaLive,3000);
 })();
