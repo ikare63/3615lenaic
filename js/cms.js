@@ -9,9 +9,12 @@ const DRAFT_KEY='lenaic-nexus-draft-v2';
 const CONFIG_HISTORY_KEY='lenaic-nexus-config-history-v2';
 const GH_SETTINGS_KEY='lenaic-nexus-github-settings-v1';
 const GH_LAST_PUBLISH_KEY='lenaic-nexus-last-github-publish-v1';
+const EXPRESS_WATCH_LOCAL_KEY='lenaic-express-watch-draft-v1';
+const EXPRESS_WATCH_CMS_KEY='lenaic-nexus-express-watch-config-v1';
 let registry=null,defaultConfig=null,publishedConfig=null,draft=null,db=null,currentEditor=null;
 let debounceTimers=new Map(),draftTimer=0,mirrorManifest={items:[],generatedAt:null};
 let githubToken='',githubUser=null,currentGithubFile=null;
+let expressWatchConfig=null,expressWatchDirty=false;
 
 const clone=x=>JSON.parse(JSON.stringify(x));
 const fmtBytes=n=>{n=Number(n)||0;if(n<1024)return `${n} o`;if(n<1048576)return `${(n/1024).toFixed(1)} Ko`;return `${(n/1048576).toFixed(2)} Mo`};
@@ -228,8 +231,46 @@ function bindGithub(){
  for(const id of ['ghOwner','ghRepo','ghBranch'])$(id).addEventListener('change',()=>{saveGithubSettings();renderGithubState()});
 }
 
+
+function emptyExpressWatchConfig(){return {version:1,match_fields:['title','summary','source'],force_display:true,watches:[]}}
+function watchNorm(s){return String(s??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim()}
+async function fetchPublishedExpressWatches(){
+ try{const r=await fetch('/lenaic-express/veilles.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const x=await r.json();return {...emptyExpressWatchConfig(),...x,watches:Array.isArray(x.watches)?x.watches:[]}}catch{return emptyExpressWatchConfig()}
+}
+function mergeLocalExpressWatchDraft(config){
+ const next=clone(config||emptyExpressWatchConfig()),seen=new Set((next.watches||[]).map(w=>watchNorm(w.term)));
+ const local=readJson(EXPRESS_WATCH_LOCAL_KEY,[])||[];let added=0;
+ for(const raw of local){const term=String(raw||'').trim();if(!term||seen.has(watchNorm(term)))continue;next.watches.push({term,category:'general',enabled:true});seen.add(watchNorm(term));added++}
+ return {config:next,added};
+}
+async function loadExpressWatches(forceRemote=false){
+ const remote=await fetchPublishedExpressWatches();let base=remote;
+ if(!forceRemote){const saved=readJson(EXPRESS_WATCH_CMS_KEY,null);if(saved&&Array.isArray(saved.watches)){base={...emptyExpressWatchConfig(),...saved};expressWatchDirty=true}else expressWatchDirty=false}
+ const merged=mergeLocalExpressWatchDraft(base);expressWatchConfig=merged.config;if(merged.added){expressWatchDirty=true;writeJson(EXPRESS_WATCH_CMS_KEY,expressWatchConfig)}
+ renderExpressWatches();
+}
+function saveExpressWatchDraft(){writeJson(EXPRESS_WATCH_CMS_KEY,expressWatchConfig);expressWatchDirty=true;renderExpressWatches()}
+function renderExpressWatches(){
+ const box=$('expressWatchList');if(!box)return;const rows=expressWatchConfig?.watches||[];$('expressWatchCount').textContent=`${rows.filter(w=>w.enabled!==false).length} ACTIVE${rows.filter(w=>w.enabled!==false).length>1?'S':''}`;$('expressWatchState').textContent=expressWatchDirty?'BROUILLON':'PUBLIÉ';$('expressWatchState').className=expressWatchDirty?'warn':'';
+ box.innerHTML=rows.length?rows.map((w,i)=>`<div class="express-watch-row"><div><strong>${safe(w.term)}</strong><small>${safe(w.category||'general')} · ${w.enabled===false?'désactivée':'active'}</small></div><div class="row-actions"><button class="mini" type="button" data-watch-toggle="${i}">${w.enabled===false?'ACTIVER':'PAUSE'}</button><button class="mini danger" type="button" data-watch-remove="${i}">SUPPRIMER</button></div></div>`).join(''):'<div class="notice">Aucune veille publiée ou en brouillon.</div>';
+ box.querySelectorAll('[data-watch-toggle]').forEach(b=>b.onclick=()=>{const w=expressWatchConfig.watches[Number(b.dataset.watchToggle)];if(!w)return;w.enabled=w.enabled===false;saveExpressWatchDraft()});
+ box.querySelectorAll('[data-watch-remove]').forEach(b=>b.onclick=()=>{expressWatchConfig.watches.splice(Number(b.dataset.watchRemove),1);saveExpressWatchDraft()});
+}
+function addExpressWatch(){
+ const term=($('expressWatchTerm')?.value||'').trim();if(!term)return;expressWatchConfig=expressWatchConfig||emptyExpressWatchConfig();if((expressWatchConfig.watches||[]).some(w=>watchNorm(w.term)===watchNorm(term))){toast('Cette veille existe déjà');return}
+ expressWatchConfig.watches.push({term,category:$('expressWatchCategory')?.value||'general',enabled:true});$('expressWatchTerm').value='';saveExpressWatchDraft();toast(`Veille ajoutée : ${term}`)
+}
+async function publishExpressWatchesGithub(){
+ if(!githubToken){showTab('publication');toast('Connecte GitHub puis reviens dans Veilles Express');return}
+ const item=githubManagedFiles().find(x=>x.id==='express-watches');if(!item?.github)throw new Error('veilles.json n’est pas déclaré dans NEXUS');
+ const text=JSON.stringify(expressWatchConfig||emptyExpressWatchConfig(),null,2)+'\n';await ghPutFile(item.github,text,'NEXUS: mise à jour des veilles Lénaïc Express');expressWatchDirty=false;localStorage.removeItem(EXPRESS_WATCH_CMS_KEY);localStorage.removeItem(EXPRESS_WATCH_LOCAL_KEY);renderExpressWatches();toast('Veilles publiées · Lénaïc Express va se mettre à jour')
+}
+function bindExpressWatches(){
+ $('expressWatchAddBtn').onclick=addExpressWatch;$('expressWatchTerm').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addExpressWatch()}});$('expressWatchPublishBtn').onclick=()=>publishExpressWatchesGithub().catch(e=>toast(e.message));$('expressWatchReloadBtn').onclick=async()=>{if(expressWatchDirty&&!confirm('Abandonner le brouillon de veilles ?'))return;localStorage.removeItem(EXPRESS_WATCH_CMS_KEY);expressWatchDirty=false;await loadExpressWatches(true);toast('Veilles rechargées depuis Lénaïc Express')}
+}
+
 function renderMaintenance(){$('versionList').innerHTML=(draft.applications||[]).map(a=>`<label class="version-row"><span>${safe(a.name)}</span><input data-version-app="${safe(a.id)}" value="${safe(a.version||'')}" placeholder="—"></label>`).join('');document.querySelectorAll('[data-version-app]').forEach(i=>i.oninput=()=>{const a=draft.applications.find(a=>a.id===i.dataset.versionApp);a.version=i.value;scheduleDraftSave();renderCmsState()})}
-function renderAllCms(){renderCmsState();renderAppsCms();renderContent();renderNavigation();renderAutomation();renderMaintenance();renderGithubState();renderGithubFiles();renderDashboard();refreshStatus()}
+function renderAllCms(){renderCmsState();renderAppsCms();renderContent();renderNavigation();renderAutomation();renderMaintenance();renderGithubState();renderGithubFiles();renderDashboard();renderExpressWatches();refreshStatus()}
 
 function openEditor(key){const def=byKey(key),raw=readRaw(key);if(!def||raw==null)return;currentEditor={key,def};$('dialogKey').textContent=key;$('dialogTitle').textContent=`${def.appName} · ${def.label}`;$('jsonEditor').value=prettyRaw(raw);$('dialogNote').textContent='Validation stricte JSON. Un snapshot de sécurité est créé avant toute écriture.';$('dialogNote').style.color='';$('jsonDialog').showModal()}
 async function openHistory(key){const def=byKey(key),rows=await snapshotsForKey(key);$('historyTitle').textContent=`${def?.appName||''} · ${def?.label||key}`;$('historyList').innerHTML=rows.length?rows.map(r=>`<div class="history-item"><div><strong>${fmtDate(r.createdAt)}</strong><span>${safe(r.reason)} · ${fmtBytes(r.bytes)}</span></div><span>${safe(r.hash.slice(0,12))}</span><div class="row-actions"><button class="mini" type="button" data-restore="${safe(r.id)}">RESTAURER</button><button class="mini" type="button" data-downsnap="${safe(r.id)}">JSON</button></div></div>`).join(''):'<div class="notice">Aucun snapshot.</div>';$('historyDialog').showModal();document.querySelectorAll('[data-restore]').forEach(b=>b.onclick=async()=>{const r=rows.find(x=>x.id===b.dataset.restore);if(!r)return;if(!confirm(`Restaurer ${def.label} au ${fmtDate(r.createdAt)} ?`))return;await snapshotKey(key,'before-restore');localStorage.setItem(key,r.raw);await snapshotKey(key,'restore');$('historyDialog').close();await refreshRuntime();toast('Snapshot restauré')});document.querySelectorAll('[data-downsnap]').forEach(b=>b.onclick=()=>{const r=rows.find(x=>x.id===b.dataset.downsnap);download(`${key}-snapshot-${r.createdAt.slice(0,19).replaceAll(':','-')}.json`,prettyRaw(r.raw))})}
@@ -237,7 +278,7 @@ function exportAll(){const payload={app:'3615 NEXUS',version:2,exportedAt:new Da
 
 function bind(){
  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>showTab(b.dataset.jump));
- $('saveDraftBtn').onclick=()=>saveDraft(true);$('publishBtn').onclick=()=>publish();$('dashPublishBtn').onclick=()=>publish();bindGithub();
+ $('saveDraftBtn').onclick=()=>saveDraft(true);$('publishBtn').onclick=()=>publish();$('dashPublishBtn').onclick=()=>publish();bindGithub();bindExpressWatches();
  $('snapshotAllBtn').onclick=()=>sweep('manual');$('snapshotAllBtn2').onclick=()=>sweep('manual');$('exportAllBtn').onclick=exportAll;$('exportAllBtn2').onclick=exportAll;$('refreshRecentBtn').onclick=renderDashboard;
  ['siteTitle','siteSubtitle','officialMessage','greetMorning','greetNoon','greetAfternoon','greetEvening'].forEach(id=>$(id).addEventListener('input',updateContentFromInputs));
  ['autoHours','retentionCount','autoOnChange','changeDelay','publicMirrors','showBusStatus','scribeReminderDays'].forEach(id=>$(id).addEventListener('change',updateAutomationFromInputs));
@@ -254,7 +295,7 @@ function bind(){
  $('resetConfigBtn').onclick=()=>{if(!confirm('Réinitialiser le CMS à sa configuration par défaut ? Les données des applications ne seront pas supprimées.'))return;localStorage.removeItem(PUBLISHED_KEY);localStorage.removeItem(DRAFT_KEY);publishedConfig=clone(defaultConfig);draft=clone(defaultConfig);renderAllCms();toast('Configuration CMS réinitialisée')};
  window.addEventListener('storage',e=>{if(e.key)scheduleChangedKey(e.key);if(e.key==='lenaic-bus-v1'||e.key==='lenaic-bus-v2'){renderBus();renderDashboard()}});document.addEventListener('visibilitychange',()=>{if(!document.hidden)maybeSweep()});setInterval(()=>maybeSweep(),15*60*1000);
 }
-function showTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===`panel-${id}`));window.scrollTo({top:0,behavior:'smooth'})}
+function showTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===`panel-${id}`));try{history.replaceState(null,'','#'+id)}catch{}window.scrollTo({top:0,behavior:'smooth'})}
 
 window.NexusCMS={
  getDraft:()=>draft, getPublished:()=>publishedConfig, getDefault:()=>defaultConfig,
@@ -269,7 +310,7 @@ window.NexusCMS={
   if(Number(readJson(PUBLISHED_KEY,{}).version||0)<Number(defaultConfig.version||0)){writeJson(PUBLISHED_KEY,publishedConfig);writeJson(DRAFT_KEY,draft)}
   // Migration douce si une future config par défaut introduit des champs.
   draft.site={...clone(defaultConfig.site),...(draft.site||{})};draft.content={...clone(defaultConfig.content),...(draft.content||{}),greetings:{...clone(defaultConfig.content.greetings),...(draft.content?.greetings||{})}};draft.automations={...clone(defaultConfig.automations),...(draft.automations||{})};
-  bind();initGithubUi();renderAllCms();await refreshRuntime();await maybeSweep();
+  bind();initGithubUi();renderAllCms();await loadExpressWatches(false);await refreshRuntime();await maybeSweep();const requested=location.hash.replace(/^#/,'');if(requested&&document.getElementById('panel-'+requested))showTab(requested);
  }catch(e){console.error(e);toast('NEXUS n’a pas pu démarrer : '+e.message)}
 })();
 })();
