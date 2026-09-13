@@ -10,6 +10,8 @@
 
   const NEXUS_CONFIG_KEY='lenaic-nexus-published-v2';
   const NEXUS_CONFIG_URL='data/nexus-config.json';
+  const SCRIBE_DATA_KEY='scribe-local-v3';
+  const SCRIBE_SNAPSHOT_KEY='lenaic-scribe-snapshot-v1';
   let nexusConfig=null;
   let dynamicCommands={};
 
@@ -688,6 +690,46 @@
     const action=$('arianeNextAction')?.textContent||$('arianeCaseTitle')?.textContent||'—';setText('genealogyTabAriane',action);setText('genealogyTabArianeMeta',$('arianeNextRef')?.textContent||$('arianeCaseMeta')?.textContent||'—');
   }
 
+  function fallbackScribeSnapshot(){
+    const data=readJsonStorage(SCRIBE_DATA_KEY);if(!data||!Array.isArray(data.drafts))return null;
+    const contacts=new Map((data.contacts||[]).map(c=>[c.id,c]));
+    const counts={draft:0,sent:0,waiting:0,received:0,closed:0,awaiting:0};
+    const ageDays=d=>{const t=new Date(d.sentAt||d.updatedAt||d.createdAt||0).getTime();return Number.isFinite(t)&&t>0?Math.max(0,Math.floor((Date.now()-t)/86400000)):0};
+    const label=d=>contacts.get(d.contactId)?.name||'Service d’archives';
+    for(const d of data.drafts){if(counts[d.status]!==undefined)counts[d.status]++;if(d.status==='sent'||d.status==='waiting')counts.awaiting++}
+    const pending=data.drafts.filter(d=>d.status==='sent'||d.status==='waiting').sort((x,y)=>String(x.sentAt||x.updatedAt||'').localeCompare(String(y.sentAt||y.updatedAt||''))).map(d=>({id:d.id,title:d.title||'Demande aux archives',contact:label(d),status:d.status,sentAt:d.sentAt||null,updatedAt:d.updatedAt||null,ageDays:ageDays(d)}));
+    const received=data.drafts.filter(d=>d.status==='received').sort((x,y)=>String(y.receivedAt||y.updatedAt||'').localeCompare(String(x.receivedAt||x.updatedAt||''))).map(d=>({id:d.id,title:d.title||'Réponse d’archives',contact:label(d),receivedAt:d.receivedAt||d.updatedAt||null}));
+    return {version:1,source:'scribe',generatedAt:new Date().toISOString(),counts,pending,received};
+  }
+  function readScribeSnapshot(){return readJsonStorage(SCRIBE_SNAPSHOT_KEY)||fallbackScribeSnapshot()}
+  function scribeReminderDays(){return Math.max(7,Number(nexusConfig?.automations?.scribeReminderDays)||30)}
+  function scribeAgeLabel(days){const n=Math.max(0,Number(days)||0);return n===0?'AUJOURD’HUI':`${n} JOUR${n>1?'S':''}`}
+  function renderScribeLive(){
+    const snap=readScribeSnapshot(),home=$('homeBlock-scribe'),list=$('scribeAttentionList'),today=$('todayScribeAlert');
+    const counts=snap?.counts||{draft:0,sent:0,waiting:0,received:0,closed:0,awaiting:0};
+    const pending=Array.isArray(snap?.pending)?snap.pending:[],received=Array.isArray(snap?.received)?snap.received:[];
+    const threshold=scribeReminderDays(),overdue=pending.filter(x=>Number(x.ageDays)>=threshold);
+    const awaiting=Number(counts.awaiting)||pending.length,receivedCount=Number(counts.received)||received.length;
+    setText('scribeCountDraft',String(Number(counts.draft)||0));setText('scribeCountAwaiting',String(awaiting));setText('scribeCountFollowup',String(Number(counts.waiting)||0));setText('scribeCountReceived',String(receivedCount));
+    const meta=[];if(overdue.length)meta.push(`${overdue.length} relance${overdue.length>1?'s':''} à envisager`);if(awaiting)meta.push(`${awaiting} en attente`);if(receivedCount)meta.push(`${receivedCount} réponse${receivedCount>1?'s':''} reçue${receivedCount>1?'s':''}`);setText('genealogyTabScribeMeta',meta.join(' · ')||'Aucune requête suivie.');
+    if(today){
+      today.hidden=!received.length;
+      if(received.length){const r=received[0];setText('todayScribeAlertText',`Réponse reçue : ${r.contact||r.title||'archives'} · ${r.title||'demande à traiter'}`)}
+    }
+    const attention=awaiting>0||received.length>0;
+    if(home){
+      const cmsHidden=home.dataset.cmsHidden==='1';home.hidden=!attention||cmsHidden;
+      setText('scribeLiveState',received.length?`${received.length} RÉPONSE${received.length>1?'S':''}`:overdue.length?`${overdue.length} RELANCE${overdue.length>1?'S':''}`:`${awaiting} EN ATTENTE`);
+      setText('scribeLiveFoot',overdue.length?`RELANCE APRÈS ${threshold} JOURS · ${overdue.length} À VOIR`:'REQUÊTES AUX ARCHIVES');
+    }
+    if(list){
+      const rows=[];
+      received.slice(0,2).forEach(r=>rows.push(`<div class="scribe-request-row received"><div><strong>${escapeHtml3615(r.title||'Réponse d’archives')}</strong><small>${escapeHtml3615(r.contact||'Service d’archives')}</small></div><b>RÉPONSE REÇUE</b></div>`));
+      pending.slice(0,Math.max(0,3-rows.length)).forEach(p=>{const late=Number(p.ageDays)>=threshold;rows.push(`<div class="scribe-request-row${late?' overdue':''}"><div><strong>${escapeHtml3615(p.title||'Demande aux archives')}</strong><small>${escapeHtml3615(p.contact||'Service d’archives')}</small></div><b>${late?'RELANCE À ENVISAGER':scribeAgeLabel(p.ageDays)}</b></div>`)});
+      list.innerHTML=rows.join('')||'<div class="express-empty">Aucune requête ne demande ton attention.</div>';
+    }
+  }
+
   function capSleepForToday(){return readCapState()?.daily?.[localDateKey()]?.sleep||null}
   function hasCompleteSleep(s){return s&&Number(s.hours)>0&&Number.isFinite(Number(s.quality))&&Number.isFinite(Number(s.physical))&&Number.isFinite(Number(s.mental))}
   function latestSleepUpdate(){
@@ -766,9 +808,9 @@
     setText('capStatus',hasCompleteSleep(sleep)?'NUIT OK':'PRÊT');
     setText('capStatusDetail',hasCompleteSleep(sleep)?`${sleep.hours} h enregistrées`:'Santé & récupération');
   }
-  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive()});
+  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive()});
   window.addEventListener('storage',e=>{
-    if(e.key===NEXUS_CONFIG_KEY)loadNexusConfig();
+    if(e.key===NEXUS_CONFIG_KEY)loadNexusConfig().then(()=>renderScribeLive());
     if(e.key==='cap-data'){renderSleepPanel();renderBusStatus()}
     if(e.key===CAP_SNAPSHOT_KEY)renderCapLive();
     if(e.key===CULINA_SNAPSHOT_KEY){renderCulinaLive();renderBusStatus()}
@@ -776,6 +818,7 @@
     if(e.key===EXPRESS_SNAPSHOT_KEY){renderExpressLive();renderBusStatus()}
     if([ARBORIS_DATA_KEY,SCRIPTORIA_DATA_KEY,PISTORIA_DATA_KEY].includes(e.key)){renderGenealogyOffice();syncGenealogyTab()}
     if(e.key===ARIANE_DATA_KEY){renderArianeLive();syncGenealogyTab()}
+    if(e.key===SCRIBE_DATA_KEY||e.key===SCRIBE_SNAPSHOT_KEY)renderScribeLive();
     if(e.key===MEDITATION_KEY)renderMeditation();
   });
 
@@ -869,8 +912,8 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();initMiniOtarie();
+  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();initMiniOtarie();
   loadNexusConfig();loadWeather();loadNameday();
-  setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();},60000);
+  setInterval(()=>{renderContext();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();},60000);
   setInterval(renderCulinaLive,3000);
 })();
