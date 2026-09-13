@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#061015">
 <title>3615 NEXUS — CMS</title>
-<link rel="stylesheet" href="css/cms.css?v=6">
+<link rel="stylesheet" href="css/cms.css?v=7">
 </head>
 <body>
 <div class="scanlines"></div>
 <header class="cms-head">
   <div>
     <div class="eyebrow">3615 LÉNAÏC // ADMINISTRATION</div>
-    <h1>NEXUS <small>V5.0</small></h1>
+    <h1>NEXUS <small>V5.1</small></h1>
     <p>CMS, centre de contrôle, sauvegardes et automatisations.</p>
   </div>
   <div class="head-actions">
@@ -35,6 +35,7 @@
     <button class="tab active" data-tab="dashboard">TABLEAU DE BORD</button>
     <button class="tab" data-tab="notifications">NOTIFICATIONS</button>
     <button class="tab" data-tab="modules">MODULES & RAPPELS</button>
+    <button class="tab" data-tab="express-watches">VEILLES EXPRESS</button>
     <button class="tab" data-tab="apps">APPLICATIONS</button>
     <button class="tab" data-tab="content">CONTENU</button>
     <button class="tab" data-tab="navigation">NAVIGATION</button>
@@ -82,6 +83,30 @@
     <div class="toolbar"><button class="btn" id="addModuleBtn">+ NOUVEAU MODULE</button></div>
     <div class="notice"><strong>Brouillon → Publier :</strong> crée ou modifie tes modules ici, puis utilise PUBLIER. Si GitHub est connecté, la configuration est aussi mise à jour dans le dépôt pour tous tes appareils.</div>
     <div class="nx-modules" id="nexusModules"></div>
+  </section>
+
+  <section class="panel" id="panel-express-watches">
+    <div class="panel-head"><div><span>INFO.VEILLE</span><h2>VEILLES LÉNAÏC EXPRESS</h2></div><p>Mots et expressions recherchés automatiquement dans les nouvelles éditions.</p></div>
+    <div class="two-col">
+      <article class="admin-block">
+        <div class="block-title"><span>AJOUTER UNE VEILLE</span><strong id="expressWatchState">—</strong></div>
+        <div class="form-grid compact">
+          <label class="wide"><span>MOT OU EXPRESSION</span><input id="expressWatchTerm" placeholder="Ex. Saint-Just-la-Pendue, primaire, ARCOM…"></label>
+          <label><span>RUBRIQUE</span><select id="expressWatchCategory"><option value="general">Actualité</option><option value="politique">Politique</option><option value="sondages">Sondages</option><option value="local">Local</option><option value="medias">Médias / TV</option><option value="genealogie">Généalogie</option><option value="histoire">Histoire / patrimoine</option><option value="tech">Tech / IA</option><option value="sciences">Sciences / société</option><option value="culture">Culture</option><option value="international">International</option></select></label>
+        </div>
+        <div class="toolbar"><button class="btn" id="expressWatchAddBtn">+ AJOUTER</button><button class="btn ghost" id="expressWatchReloadBtn">RECHARGER</button></div>
+        <div class="notice"><strong>Fonctionnement :</strong> une veille publiée génère sa propre recherche Google News et toute correspondance est remontée avant le classement normal. Une modification publiée ici déclenche aussi la mise à jour de Lénaïc Express.</div>
+      </article>
+      <article class="admin-block">
+        <div class="block-title"><span>PUBLICATION</span><small>lenaic-express/veilles.json</small></div>
+        <p class="muted">Tu peux préparer les veilles sans GitHub. Pour lancer la recherche internet automatique, connecte GitHub dans Publication puis publie la liste.</p>
+        <div class="stack-actions"><button class="btn publish" id="expressWatchPublishBtn">PUBLIER LES VEILLES SUR GITHUB</button><a class="btn ghost" href="/lenaic-express/" target="_blank" rel="noopener">OUVRIR LÉNAÏC EXPRESS ↗</a></div>
+      </article>
+    </div>
+    <article class="admin-block">
+      <div class="block-title"><span>VEILLES ACTIVES</span><small id="expressWatchCount">0</small></div>
+      <div id="expressWatchList" class="express-watch-list"></div>
+    </article>
   </section>
 
   <section class="panel" id="panel-apps">
@@ -282,7 +307,7 @@
 
 <div class="toast" id="toast"></div>
 <script src="js/lenaic-bus.js?v=2"></script>
-<script src="js/cms.js?v=6"></script>
+<script src="js/cms.js?v=7"></script>
 <script src="js/nexus-ecosystem-v2.js?v=1"></script>
 </body>
 </html>
