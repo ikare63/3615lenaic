@@ -384,3 +384,17 @@ body[data-palette="green"]{--ink:#8cff8c;--ink-soft:#56b756;--cyan:#a8ffb0;--gre
   .genealogy-app-row{grid-template-columns:78px minmax(0,1fr) auto;gap:8px;padding:10px}
   .genealogy-app-code{font-size:.53rem}.genealogy-app-row strong{font-size:.66rem}.genealogy-app-row small{font-size:.52rem}
 }
+
+/* ===== 3615 V7.0 — pilotage NEXUS CMS V2 ===== */
+.home-cms-flow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.home-cms-flow>[data-home-block]{margin:0!important;min-width:0}
+.home-cms-flow>[data-home-block="greeting"],
+.home-cms-flow>[data-home-block="sleep"],
+.home-cms-flow>[data-home-block="cap"],
+.home-cms-flow>[data-home-block="culina"],
+.home-cms-flow>[data-home-block="stylia"],
+.home-cms-flow>[data-home-block="express"],
+.home-cms-flow>[data-home-block="genealogy"],
+.home-cms-flow>[data-home-block="ariane"]{grid-column:1/-1}
+[data-cms-hidden="1"]{display:none!important}
+@media(max-width:760px){.home-cms-flow{grid-template-columns:1fr}.home-cms-flow>[data-home-block]{grid-column:1!important}}
