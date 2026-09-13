@@ -7,8 +7,11 @@ const LAST_MANUAL_KEY='lenaic-nexus-last-manual-v1';
 const PUBLISHED_KEY='lenaic-nexus-published-v2';
 const DRAFT_KEY='lenaic-nexus-draft-v2';
 const CONFIG_HISTORY_KEY='lenaic-nexus-config-history-v2';
+const GH_SETTINGS_KEY='lenaic-nexus-github-settings-v1';
+const GH_LAST_PUBLISH_KEY='lenaic-nexus-last-github-publish-v1';
 let registry=null,defaultConfig=null,publishedConfig=null,draft=null,db=null,currentEditor=null;
 let debounceTimers=new Map(),draftTimer=0,mirrorManifest={items:[],generatedAt:null};
+let githubToken='',githubUser=null,currentGithubFile=null;
 
 const clone=x=>JSON.parse(JSON.stringify(x));
 const fmtBytes=n=>{n=Number(n)||0;if(n<1024)return `${n} o`;if(n<1048576)return `${(n/1024).toFixed(1)} Ko`;return `${(n/1048576).toFixed(2)} Mo`};
@@ -20,12 +23,18 @@ function download(name,text,type='application/json'){const b=new Blob([text],{ty
 function readJson(key,fallback=null){try{const v=JSON.parse(localStorage.getItem(key)||'null');return v??fallback}catch{return fallback}}
 function writeJson(key,value){localStorage.setItem(key,JSON.stringify(value))}
 function migrateConfig(base,old){
- if(!old)return clone(base);if(Number(old.version||0)>=Number(base.version||0))return old;
+ if(!old)return clone(base);
+ const bt=Date.parse(base?.publishedAt||'')||0,ot=Date.parse(old?.publishedAt||'')||0;
+ // Une configuration publiée sur GitHub plus récente devient la référence globale.
+ if(bt>ot)return clone(base);
+ if(Number(old.version||0)>=Number(base.version||0))return old;
  const next=clone(base);if(old.site?.title)next.site.title=old.site.title;
  next.content={...clone(base.content),...(old.content||{}),greetings:{...clone(base.content?.greetings||{}),...(old.content?.greetings||{})}};
  next.automations={...clone(base.automations||{}),...(old.automations||{})};
  const oldApps=new Map((old.applications||[]).map(a=>[a.id,a]));next.applications=(base.applications||[]).map(a=>{const x=oldApps.get(a.id);if(!x)return clone(a);const keep={};for(const k of ['name','description','url','command','visible','version'])if(x[k]!==undefined)keep[k]=x[k];return {...clone(a),...keep,category:a.category,order:a.order}});
- const oldBlocks=new Map((old.homeBlocks||[]).map(b=>[b.id,b]));next.homeBlocks=(base.homeBlocks||[]).map(b=>oldBlocks.has(b.id)?{...clone(b),visible:oldBlocks.get(b.id).visible!==false}:clone(b));next.publishedAt=old.publishedAt||null;next.migratedAt=new Date().toISOString();return next;
+ const oldBlocks=new Map((old.homeBlocks||[]).map(b=>[b.id,b]));next.homeBlocks=(base.homeBlocks||[]).map(b=>oldBlocks.has(b.id)?{...clone(b),visible:oldBlocks.get(b.id).visible!==false}:clone(b));
+ const oldTabs=new Map((old.portalTabs||[]).map(t=>[t.id,t]));next.portalTabs=(base.portalTabs||[]).map(t=>{const x=oldTabs.get(t.id);return x?{...clone(t),label:x.label||t.label,visible:x.visible!==false,order:Number.isFinite(Number(x.order))?Number(x.order):t.order}:clone(t)});renumber(next.portalTabs.sort((a,b)=>(a.order||0)-(b.order||0)));
+ next.publishedAt=old.publishedAt||null;next.migratedAt=new Date().toISOString();return next;
 }
 async function hash(raw){if(globalThis.crypto?.subtle){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(raw));return [...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,'0')).join('')}let h=2166136261;for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16)}
 function dataDefs(){return registry.apps.flatMap(app=>app.storage.map(s=>({...s,appId:app.id,appName:app.name,appUrl:app.url})))}
@@ -64,14 +73,20 @@ function scheduleChangedKey(key){if(!automation().autoSnapshotOnChange||!byKey(k
 function scheduleDraftSave(){clearTimeout(draftTimer);draftTimer=setTimeout(()=>{draft.draftSavedAt=new Date().toISOString();writeJson(DRAFT_KEY,draft);renderCmsState();},350)}
 function saveDraft(manual=false){draft.draftSavedAt=new Date().toISOString();writeJson(DRAFT_KEY,draft);renderCmsState();if(manual)toast('Brouillon enregistré')}
 function pushConfigHistory(config){const h=readJson(CONFIG_HISTORY_KEY,[]);h.unshift({createdAt:new Date().toISOString(),config:clone(config)});writeJson(CONFIG_HISTORY_KEY,h.slice(0,20))}
-function publish(){
+function publishLocal(){
  pushConfigHistory(publishedConfig);draft.publishedAt=new Date().toISOString();delete draft.draftSavedAt;publishedConfig=clone(draft);writeJson(PUBLISHED_KEY,publishedConfig);draft=clone(publishedConfig);writeJson(DRAFT_KEY,draft);
  try{new BroadcastChannel('lenaic-nexus-config-v2').postMessage({type:'published',at:publishedConfig.publishedAt})}catch{}
- renderAllCms();toast('Configuration publiée dans 3615');
+ renderAllCms();
+}
+async function publish(){
+ publishLocal();
+ if(!githubToken){toast('Publié localement · connecte GitHub pour le rendre officiel partout');showTab('publication');return}
+ try{await publishConfigGithub();toast('Publié dans 3615 et sur GitHub')}catch(e){console.error(e);toast('Publié localement · GitHub : '+e.message);showTab('publication')}
 }
 function renderCmsState(){
  const dirty=isDirty();$('cmsState').textContent=dirty?'BROUILLON MODIFIÉ':'PUBLIÉ';$('cmsState').className=dirty?'warn':'';$('lastPublish').textContent=fmtDate(publishedConfig?.publishedAt);
  $('dashPublishState').textContent=dirty?'MODIFICATIONS EN ATTENTE':'À JOUR';$('dashPublishText').textContent=dirty?'Le brouillon contient des changements qui ne sont pas encore appliqués à 3615.':'3615 utilise la dernière configuration publiée.';
+ const gs=$('githubStripStatus');if(gs)gs.textContent=githubToken?(githubUser?`CONNECTÉ · ${githubUser.login}`:'CONNECTÉ'):'DÉCONNECTÉ';
 }
 
 async function renderDashboard(){
@@ -104,14 +119,21 @@ function renderContent(){
 }
 
 function renderNavigation(){
+ const tabs=[...(draft.portalTabs||[])].sort((a,b)=>(a.order||0)-(b.order||0));
+ $('portalTabList').innerHTML=tabs.map((t,i)=>`<div class="sort-row"><span class="handle">[${safe(t.code??'·')}]</span><div class="sort-main"><strong>${safe(t.label)}</strong><small>${safe(t.id)} · onglet du portail</small></div><div class="sort-controls"><button class="mini" data-tab-up="${safe(t.id)}">↑</button><button class="mini" data-tab-down="${safe(t.id)}">↓</button></div><div class="sort-controls"><button class="mini" data-tab-rename="${safe(t.id)}">RENOMMER</button><button class="mini" data-tab-toggle="${safe(t.id)}">${t.visible===false?'MASQUÉ':'VISIBLE'}</button></div></div>`).join('');
+ document.querySelectorAll('[data-tab-up]').forEach(x=>x.onclick=()=>{const arr=draft.portalTabs.sort((a,b)=>(a.order||0)-(b.order||0)),i=arr.findIndex(t=>t.id===x.dataset.tabUp);moveIn(arr,i,-1);renderNavigation();renderCmsState()});
+ document.querySelectorAll('[data-tab-down]').forEach(x=>x.onclick=()=>{const arr=draft.portalTabs.sort((a,b)=>(a.order||0)-(b.order||0)),i=arr.findIndex(t=>t.id===x.dataset.tabDown);moveIn(arr,i,1);renderNavigation();renderCmsState()});
+ document.querySelectorAll('[data-tab-rename]').forEach(x=>x.onclick=()=>{const t=draft.portalTabs.find(t=>t.id===x.dataset.tabRename),n=prompt('Nouveau nom de l’onglet',t.label);if(n?.trim()){t.label=n.trim();scheduleDraftSave();renderNavigation();renderCmsState()}});
+ document.querySelectorAll('[data-tab-toggle]').forEach(x=>x.onclick=()=>{const t=draft.portalTabs.find(t=>t.id===x.dataset.tabToggle);t.visible=!bool(t.visible);scheduleDraftSave();renderNavigation();renderCmsState()});
+ $('portalTabsPreview').innerHTML=tabs.filter(t=>t.visible!==false).map(t=>`<span class="portal-tab-chip">[${safe(t.code??'·')}] ${safe(t.label)}</span>`).join('')||'<div class="notice">Aucun onglet visible.</div>';
+
  const cats=[...(draft.categories||[])].sort((a,b)=>(a.order||0)-(b.order||0));$('categoryList').innerHTML=cats.map((c,i)=>`<div class="sort-row"><span class="handle">${String(i+1).padStart(2,'0')}</span><div class="sort-main"><strong>${safe(c.label)}</strong><small>${safe(c.id)} · ${(draft.applications||[]).filter(a=>a.category===c.id).length} app(s)</small></div><div class="sort-controls"><button class="mini" data-cat-up="${safe(c.id)}">↑</button><button class="mini" data-cat-down="${safe(c.id)}">↓</button></div><div class="sort-controls"><button class="mini" data-cat-rename="${safe(c.id)}">RENOMMER</button><button class="mini" data-cat-toggle="${safe(c.id)}">${c.visible===false?'MASQUÉE':'VISIBLE'}</button></div></div>`).join('');
  document.querySelectorAll('[data-cat-up]').forEach(x=>x.onclick=()=>{const arr=draft.categories.sort((a,b)=>(a.order||0)-(b.order||0)),i=arr.findIndex(c=>c.id===x.dataset.catUp);moveIn(arr,i,-1);renderNavigation();renderCmsState()});
  document.querySelectorAll('[data-cat-down]').forEach(x=>x.onclick=()=>{const arr=draft.categories.sort((a,b)=>(a.order||0)-(b.order||0)),i=arr.findIndex(c=>c.id===x.dataset.catDown);moveIn(arr,i,1);renderNavigation();renderCmsState()});
- document.querySelectorAll('[data-cat-rename]').forEach(x=>x.onclick=()=>{const c=draft.categories.find(c=>c.id===x.dataset.catRename),n=prompt('Nouveau nom de catégorie',c.label);if(n?.trim()){c.label=n.trim();scheduleDraftSave();renderNavigation();renderAppsCms();renderCmsState()}});
+ document.querySelectorAll('[data-cat-rename]').forEach(x=>x.onclick=()=>{const c=draft.categories.find(c=>c.id===x.dataset.catRename),n=prompt('Nouveau nom de catégorie de services',c.label);if(n?.trim()){c.label=n.trim();scheduleDraftSave();renderNavigation();renderAppsCms();renderCmsState()}});
  document.querySelectorAll('[data-cat-toggle]').forEach(x=>x.onclick=()=>{const c=draft.categories.find(c=>c.id===x.dataset.catToggle);c.visible=!bool(c.visible);scheduleDraftSave();renderNavigation();renderCmsState()});
  const visibleCats=cats.filter(c=>c.visible!==false);$('navPreview').innerHTML=visibleCats.map(c=>{const apps=(draft.applications||[]).filter(a=>a.category===c.id&&a.visible!==false).sort((a,b)=>(a.order||0)-(b.order||0));if(!apps.length)return'';return `<div class="preview-cat"><strong>${safe(c.label)}</strong>${apps.map(a=>`<div class="preview-link"><b>${safe(a.name)}</b><small>${safe(a.description||'')} · ${safe(a.command||'')}</small></div>`).join('')}</div>`}).join('')||'<div class="notice">Aucun service visible.</div>';
 }
-
 function updateAutomationFromInputs(){draft.automations.autoSnapshotHours=Math.max(1,Number($('autoHours').value)||3);draft.automations.retentionPerDataset=Math.max(3,Number($('retentionCount').value)||20);draft.automations.autoSnapshotOnChange=$('autoOnChange').checked;draft.automations.changeDelaySeconds=Math.max(5,Number($('changeDelay').value)||30);draft.automations.publicMirrorsEnabled=$('publicMirrors').checked;draft.automations.scribeReminderDays=Math.max(7,Number($('scribeReminderDays').value)||30);draft.site.showBusStatus=$('showBusStatus').checked;scheduleDraftSave();renderCmsState()}
 function renderAutomation(){const a=draft.automations;$('autoHours').value=a.autoSnapshotHours;$('retentionCount').value=a.retentionPerDataset;$('autoOnChange').checked=bool(a.autoSnapshotOnChange);$('changeDelay').value=a.changeDelaySeconds;$('publicMirrors').checked=bool(a.publicMirrorsEnabled);$('scribeReminderDays').value=Math.max(7,Number(a.scribeReminderDays)||30);$('showBusStatus').checked=bool(draft.site.showBusStatus);renderMirrors()}
 
@@ -128,8 +150,85 @@ function renderBus(){const items=readBus().sort((a,b)=>new Date(b.createdAt)-new
 async function refreshStatus(){const all=await allSnapshots();$('vaultCount').textContent=`${all.length} SNAPSHOT${all.length>1?'S':''}`;renderCmsState()}
 async function refreshRuntime(){await Promise.all([renderDashboard(),renderDatasets(),renderMirrors(),refreshStatus()]);renderBus()}
 
+
+function githubSettings(){
+ const saved=readJson(GH_SETTINGS_KEY,{})||{},base=registry?.github||{};
+ return {owner:saved.owner||base.owner||'ikare63',repo:saved.repo||base.repo||'3615lenaic',branch:saved.branch||base.branch||'main',configPath:base.configPath||'data/nexus-config.json'};
+}
+function saveGithubSettings(){
+ const x={owner:($('ghOwner')?.value||'ikare63').trim(),repo:($('ghRepo')?.value||'3615lenaic').trim(),branch:($('ghBranch')?.value||'main').trim()};
+ writeJson(GH_SETTINGS_KEY,x);return {...x,configPath:registry?.github?.configPath||'data/nexus-config.json'};
+}
+function ghApiPath(path){return String(path||'').split('/').map(encodeURIComponent).join('/')}
+function utf8ToBase64(text){const bytes=new TextEncoder().encode(text);let bin='';for(let i=0;i<bytes.length;i+=0x8000)bin+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(bin)}
+function base64ToUtf8(text){const bin=atob(String(text||'').replace(/\s/g,'')),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return new TextDecoder().decode(bytes)}
+async function ghRequest(url,options={}){
+ if(!githubToken)throw new Error('GitHub n’est pas connecté');
+ const headers={Accept:'application/vnd.github+json',Authorization:`Bearer ${githubToken}`,'X-GitHub-Api-Version':'2022-11-28',...(options.headers||{})};
+ const r=await fetch(url,{...options,headers});let data=null,text='';try{text=await r.text();data=text?JSON.parse(text):null}catch{data=text}
+ if(!r.ok)throw new Error(data?.message||`Erreur GitHub ${r.status}`);return data;
+}
+async function ghGetFile(g){
+ const url=`https://api.github.com/repos/${encodeURIComponent(g.owner)}/${encodeURIComponent(g.repo)}/contents/${ghApiPath(g.path)}?ref=${encodeURIComponent(g.branch||'main')}`;
+ const data=await ghRequest(url);if(!data||Array.isArray(data))throw new Error('Fichier GitHub introuvable');
+ return {...data,text:base64ToUtf8(data.content||'')};
+}
+async function ghPutFile(g,text,message){
+ let sha=null;try{sha=(await ghGetFile(g)).sha}catch(e){if(!String(e.message).includes('Not Found')&&!String(e.message).includes('introuvable'))throw e}
+ const url=`https://api.github.com/repos/${encodeURIComponent(g.owner)}/${encodeURIComponent(g.repo)}/contents/${ghApiPath(g.path)}`;
+ const body={message,content:utf8ToBase64(text),branch:g.branch||'main'};if(sha)body.sha=sha;
+ return ghRequest(url,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+}
+function renderGithubState(){
+ const badge=$('githubConnectionBadge'),strip=$('githubStripStatus'),identity=$('ghIdentity'),last=$('ghLastPublish');
+ if(badge){badge.textContent=githubToken?(githubUser?`CONNECTÉ · ${githubUser.login}`:'CONNECTÉ'):'DÉCONNECTÉ';badge.className=`gh-badge ${githubToken?'on':'off'}`}
+ if(strip)strip.textContent=githubToken?(githubUser?`OK · ${githubUser.login}`:'CONNECTÉ'):'DÉCONNECTÉ';
+ if(identity)identity.textContent=githubToken&&githubUser?`Session active : ${githubUser.login}. Le jeton reste uniquement en mémoire dans cette page.`:'Aucune session GitHub active.';
+ const lp=readJson(GH_LAST_PUBLISH_KEY,null);if(last)last.textContent=lp?`Dernière publication : ${fmtDate(lp.at)} · ${lp.owner}/${lp.repo}@${lp.branch} · ${lp.path}`:'Aucune publication GitHub enregistrée dans ce navigateur.';
+ const cs=$('ghConfigState');if(cs)cs.textContent=githubToken?'PRÊT À PUBLIER':'LOCAL';
+}
+async function connectGithub(){
+ const token=($('ghToken')?.value||'').trim();if(!token){toast('Colle d’abord ton jeton GitHub');return}
+ githubToken=token;saveGithubSettings();renderGithubState();
+ try{githubUser=await ghRequest('https://api.github.com/user');const s=githubSettings();await ghRequest(`https://api.github.com/repos/${encodeURIComponent(s.owner)}/${encodeURIComponent(s.repo)}`);renderGithubState();toast(`GitHub connecté · ${githubUser.login}`)}
+ catch(e){githubToken='';githubUser=null;renderGithubState();toast('Connexion refusée : '+e.message)}
+}
+function disconnectGithub(){githubToken='';githubUser=null;if($('ghToken'))$('ghToken').value='';renderGithubState();toast('GitHub déconnecté')}
+async function publishConfigGithub(){
+ if(!githubToken)throw new Error('connecte GitHub dans l’onglet Publication');
+ const s=saveGithubSettings(),g={owner:s.owner,repo:s.repo,branch:s.branch,path:s.configPath};
+ const text=JSON.stringify(publishedConfig,null,2)+'\n';
+ const result=await ghPutFile(g,text,`NEXUS: publication configuration ${new Date().toLocaleString('fr-FR')}`);
+ writeJson(GH_LAST_PUBLISH_KEY,{at:new Date().toISOString(),owner:g.owner,repo:g.repo,branch:g.branch,path:g.path,commit:result?.commit?.sha||null});
+ renderGithubState();return result;
+}
+async function pullConfigGithub(){
+ if(!githubToken){toast('Connecte GitHub d’abord');return}
+ try{const s=saveGithubSettings(),g={owner:s.owner,repo:s.repo,branch:s.branch,path:s.configPath},f=await ghGetFile(g),remote=JSON.parse(f.text);if(!Array.isArray(remote.applications)||!Array.isArray(remote.homeBlocks))throw new Error('Configuration distante invalide');if(isDirty()&&!confirm('Remplacer le brouillon local par la version GitHub ?'))return;publishedConfig=migrateConfig(defaultConfig,remote);draft=clone(publishedConfig);writeJson(PUBLISHED_KEY,publishedConfig);writeJson(DRAFT_KEY,draft);renderAllCms();toast('Configuration rechargée depuis GitHub')}catch(e){toast('Lecture GitHub impossible : '+e.message)}
+}
+function githubManagedFiles(){return Array.isArray(registry?.cmsFiles)?registry.cmsFiles:[]}
+function renderGithubFiles(){
+ const box=$('githubFiles');if(!box)return;const items=githubManagedFiles();
+ box.innerHTML=items.length?items.map(item=>{const g=item.github||{},can=!!g.editable;return `<div class="gh-file-row"><div><strong>${safe(item.label||item.id)}</strong><small>${safe(g.path||'')}</small></div><div class="gh-file-repo">${safe(g.owner||'')}/${safe(g.repo||'')} · ${safe(g.branch||'main')}${can?' · ÉDITABLE':' · LECTURE'}</div><div class="gh-file-actions">${item.id==='nexus-config'?'<button class="mini" data-gh-config="1">PUBLIER CONFIG</button>':`<button class="mini" data-gh-file="${safe(item.id)}">${can?'ÉDITER':'VOIR'}</button>`}</div></div>`}).join(''):'<div class="notice">Aucun fichier public déclaré.</div>';
+ box.querySelectorAll('[data-gh-file]').forEach(b=>b.onclick=()=>openGithubJson(b.dataset.ghFile));box.querySelectorAll('[data-gh-config]').forEach(b=>b.onclick=async()=>{if(!githubToken){showTab('publication');toast('Connecte GitHub d’abord');return}try{if(isDirty())publishLocal();await publishConfigGithub();toast('Configuration officielle publiée')}catch(e){toast(e.message)}})
+}
+async function openGithubJson(id){
+ if(!githubToken){showTab('publication');toast('Connecte GitHub d’abord');return}const item=githubManagedFiles().find(x=>x.id===id);if(!item?.github)return;
+ try{const f=await ghGetFile(item.github);currentGithubFile={item,file:f};$('ghFilePath').textContent=`${item.github.owner}/${item.github.repo} · ${item.github.path}`;$('ghFileTitle').textContent=item.label||id;$('ghJsonEditor').value=prettyRaw(f.text);$('ghJsonEditor').readOnly=!item.github.editable;$('ghJsonNote').textContent=item.github.editable?'JSON validé puis commit directement dans le dépôt.':'Lecture seule : ce fichier est généré ou protégé par NEXUS.';$('ghSaveJsonBtn').hidden=!item.github.editable;$('githubJsonDialog').showModal()}catch(e){toast('Lecture impossible : '+e.message)}
+}
+async function saveGithubJson(){
+ if(!currentGithubFile?.item?.github?.editable)return;try{const obj=JSON.parse($('ghJsonEditor').value),text=JSON.stringify(obj,null,2)+'\n',item=currentGithubFile.item;await ghPutFile(item.github,text,`NEXUS: mise à jour ${item.label||item.id}`);$('githubJsonDialog').close();toast(`${item.label||item.id} publié sur GitHub`)}catch(e){$('ghJsonNote').textContent='Erreur : '+e.message;$('ghJsonNote').style.color='var(--bad)'}
+}
+function initGithubUi(){
+ const s=githubSettings();if($('ghOwner'))$('ghOwner').value=s.owner;if($('ghRepo'))$('ghRepo').value=s.repo;if($('ghBranch'))$('ghBranch').value=s.branch;renderGithubState();renderGithubFiles();
+}
+function bindGithub(){
+ $('ghConnectBtn').onclick=connectGithub;$('ghDisconnectBtn').onclick=disconnectGithub;$('ghPublishConfigBtn').onclick=async()=>{if(isDirty())publishLocal();if(!githubToken){toast('Connecte GitHub d’abord');return}try{await publishConfigGithub();toast('Configuration officielle publiée sur GitHub')}catch(e){toast(e.message)}};$('ghPullConfigBtn').onclick=pullConfigGithub;$('ghSaveJsonBtn').onclick=saveGithubJson;
+ for(const id of ['ghOwner','ghRepo','ghBranch'])$(id).addEventListener('change',()=>{saveGithubSettings();renderGithubState()});
+}
+
 function renderMaintenance(){$('versionList').innerHTML=(draft.applications||[]).map(a=>`<label class="version-row"><span>${safe(a.name)}</span><input data-version-app="${safe(a.id)}" value="${safe(a.version||'')}" placeholder="—"></label>`).join('');document.querySelectorAll('[data-version-app]').forEach(i=>i.oninput=()=>{const a=draft.applications.find(a=>a.id===i.dataset.versionApp);a.version=i.value;scheduleDraftSave();renderCmsState()})}
-function renderAllCms(){renderCmsState();renderAppsCms();renderContent();renderNavigation();renderAutomation();renderMaintenance();renderDashboard();refreshStatus()}
+function renderAllCms(){renderCmsState();renderAppsCms();renderContent();renderNavigation();renderAutomation();renderMaintenance();renderGithubState();renderGithubFiles();renderDashboard();refreshStatus()}
 
 function openEditor(key){const def=byKey(key),raw=readRaw(key);if(!def||raw==null)return;currentEditor={key,def};$('dialogKey').textContent=key;$('dialogTitle').textContent=`${def.appName} · ${def.label}`;$('jsonEditor').value=prettyRaw(raw);$('dialogNote').textContent='Validation stricte JSON. Un snapshot de sécurité est créé avant toute écriture.';$('dialogNote').style.color='';$('jsonDialog').showModal()}
 async function openHistory(key){const def=byKey(key),rows=await snapshotsForKey(key);$('historyTitle').textContent=`${def?.appName||''} · ${def?.label||key}`;$('historyList').innerHTML=rows.length?rows.map(r=>`<div class="history-item"><div><strong>${fmtDate(r.createdAt)}</strong><span>${safe(r.reason)} · ${fmtBytes(r.bytes)}</span></div><span>${safe(r.hash.slice(0,12))}</span><div class="row-actions"><button class="mini" type="button" data-restore="${safe(r.id)}">RESTAURER</button><button class="mini" type="button" data-downsnap="${safe(r.id)}">JSON</button></div></div>`).join(''):'<div class="notice">Aucun snapshot.</div>';$('historyDialog').showModal();document.querySelectorAll('[data-restore]').forEach(b=>b.onclick=async()=>{const r=rows.find(x=>x.id===b.dataset.restore);if(!r)return;if(!confirm(`Restaurer ${def.label} au ${fmtDate(r.createdAt)} ?`))return;await snapshotKey(key,'before-restore');localStorage.setItem(key,r.raw);await snapshotKey(key,'restore');$('historyDialog').close();await refreshRuntime();toast('Snapshot restauré')});document.querySelectorAll('[data-downsnap]').forEach(b=>b.onclick=()=>{const r=rows.find(x=>x.id===b.dataset.downsnap);download(`${key}-snapshot-${r.createdAt.slice(0,19).replaceAll(':','-')}.json`,prettyRaw(r.raw))})}
@@ -137,7 +236,7 @@ function exportAll(){const payload={app:'3615 NEXUS',version:2,exportedAt:new Da
 
 function bind(){
  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>showTab(b.dataset.jump));
- $('saveDraftBtn').onclick=()=>saveDraft(true);$('publishBtn').onclick=publish;$('dashPublishBtn').onclick=publish;
+ $('saveDraftBtn').onclick=()=>saveDraft(true);$('publishBtn').onclick=()=>publish();$('dashPublishBtn').onclick=()=>publish();bindGithub();
  $('snapshotAllBtn').onclick=()=>sweep('manual');$('snapshotAllBtn2').onclick=()=>sweep('manual');$('exportAllBtn').onclick=exportAll;$('exportAllBtn2').onclick=exportAll;$('refreshRecentBtn').onclick=renderDashboard;
  ['siteTitle','siteSubtitle','officialMessage','greetMorning','greetNoon','greetAfternoon','greetEvening'].forEach(id=>$(id).addEventListener('input',updateContentFromInputs));
  ['autoHours','retentionCount','autoOnChange','changeDelay','publicMirrors','showBusStatus','scribeReminderDays'].forEach(id=>$(id).addEventListener('change',updateAutomationFromInputs));
@@ -163,7 +262,7 @@ function showTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.to
   if(Number(readJson(PUBLISHED_KEY,{}).version||0)<Number(defaultConfig.version||0)){writeJson(PUBLISHED_KEY,publishedConfig);writeJson(DRAFT_KEY,draft)}
   // Migration douce si une future config par défaut introduit des champs.
   draft.site={...clone(defaultConfig.site),...(draft.site||{})};draft.content={...clone(defaultConfig.content),...(draft.content||{}),greetings:{...clone(defaultConfig.content.greetings),...(draft.content?.greetings||{})}};draft.automations={...clone(defaultConfig.automations),...(draft.automations||{})};
-  bind();renderAllCms();await refreshRuntime();await maybeSweep();
+  bind();initGithubUi();renderAllCms();await refreshRuntime();await maybeSweep();
  }catch(e){console.error(e);toast('NEXUS n’a pas pu démarrer : '+e.message)}
 })();
 })();

@@ -52,6 +52,18 @@
     }
   }
 
+  function renderPortalTabs(){
+    if(!nexusConfig)return;
+    const tabs=[...(nexusConfig.portalTabs||[])].sort((a,b)=>(a.order||0)-(b.order||0));
+    for(const [i,t] of tabs.entries()){
+      const btn=document.querySelector(`.service-key[data-section="${t.id}"]`);
+      if(!btn)continue;
+      btn.textContent=`[${t.code??'·'}] ${String(t.label||t.id).toUpperCase()}`;
+      btn.hidden=t.visible===false;
+      btn.style.order=String(i+1);
+    }
+  }
+
   function applyNexusConfig(cfg){
     if(!cfg)return;
     nexusConfig=cfg;
@@ -77,11 +89,15 @@
     }
     renderCmsDirectory();
     renderCmsSectionServices();
+    renderPortalTabs();
     renderSavings52();
   }
 
   function migrateNexusConfig(base,local){
     if(!base)return local;if(!local)return base;
+    const bt=Date.parse(base.publishedAt||'')||0,lt=Date.parse(local.publishedAt||'')||0;
+    // Une publication GitHub plus récente devient la référence sur tous les appareils.
+    if(bt>lt)return base;
     if(Number(local.version||0)>=Number(base.version||0))return local;
     const next=JSON.parse(JSON.stringify(base));
     if(local.site?.title)next.site.title=local.site.title;
@@ -91,6 +107,8 @@
     next.applications=(next.applications||[]).map(a=>{const old=oldApps.get(a.id);if(!old)return a;const keep={};for(const k of ['name','description','url','command','visible','version'])if(old[k]!==undefined)keep[k]=old[k];return {...a,...keep,category:a.category,order:a.order}});
     const oldBlocks=new Map((local.homeBlocks||[]).map(b=>[b.id,b]));
     next.homeBlocks=(next.homeBlocks||[]).map(b=>oldBlocks.has(b.id)?{...b,visible:oldBlocks.get(b.id).visible!==false}:b);
+    const oldTabs=new Map((local.portalTabs||[]).map(t=>[t.id,t]));
+    next.portalTabs=(next.portalTabs||[]).map(t=>{const old=oldTabs.get(t.id);return old?{...t,label:old.label||t.label,visible:old.visible!==false,order:Number.isFinite(Number(old.order))?Number(old.order):t.order}:t});
     next.publishedAt=local.publishedAt||null;next.migratedAt=new Date().toISOString();
     try{localStorage.setItem(NEXUS_CONFIG_KEY,JSON.stringify(next))}catch(e){}
     return next;
