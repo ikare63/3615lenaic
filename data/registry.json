@@ -308,6 +308,20 @@
         "path": "sources.json",
         "editable": true
       }
+    },
+    {
+      "id": "express-watches",
+      "app": "express",
+      "label": "Veilles Lénaïc Express",
+      "url": "/lenaic-express/veilles.json",
+      "mirror": "data/mirror/express-veilles.json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "lenaic-express",
+        "branch": "main",
+        "path": "veilles.json",
+        "editable": true
+      }
     }
   ],
   "github": {
@@ -374,6 +388,18 @@
         "repo": "lenaic-express",
         "branch": "main",
         "path": "sources.json",
+        "editable": true
+      }
+    },
+    {
+      "id": "express-watches",
+      "label": "Veilles Lénaïc Express",
+      "kind": "json",
+      "github": {
+        "owner": "ikare63",
+        "repo": "lenaic-express",
+        "branch": "main",
+        "path": "veilles.json",
         "editable": true
       }
     }
