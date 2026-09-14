@@ -527,3 +527,23 @@ body[data-nexus-cms="v2"] .brand-sub::after{content:" · V9.1";color:var(--amber
 .search-group{display:grid;gap:5px;margin:10px 0 14px}.search-group-head{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--line);font-size:11px}.search-result-link{position:relative;text-decoration:none;color:inherit;padding-right:28px}.search-result-link>b{position:absolute;right:8px;top:50%;transform:translateY(-50%)}
 .notification-row{display:grid;grid-template-columns:8px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}.notification-dot{width:7px;height:7px;border-radius:50%;background:var(--phosphor)}.notification-row.priority-high .notification-dot,.notification-row.priority-urgent .notification-dot{background:var(--amber,#ffd166);box-shadow:0 0 8px currentColor}.notification-copy{display:grid;gap:2px}.notification-copy span{font-size:9px;letter-spacing:.14em;color:var(--muted)}.notification-copy strong{font-size:13px}.notification-copy small{font-size:10px;color:var(--muted)}.notification-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.notification-actions a,.notification-actions button{border:1px solid var(--line);background:transparent;color:var(--phosphor);padding:6px 7px;text-decoration:none;font:800 9px var(--mono);cursor:pointer}
 @media(max-width:720px){.notification-bell{order:8}.module-body,.context-active-grid{grid-template-columns:1fr}.module-total{text-align:left}.context-links{justify-content:flex-start}.notification-row{grid-template-columns:7px 1fr}.notification-actions{grid-column:2;justify-content:flex-start}.home-genealogy-context{grid-template-columns:1fr}.service-line .line-status{display:none}}
+
+/* V9.5 · Lénaïc Express : Brief du jour complet dans 3615 */
+.express-brief{padding:14px 0 4px;border-bottom:1px solid var(--line)}
+.express-brief-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:10px}
+.express-brief-head span{color:var(--yellow);font-weight:900;letter-spacing:.08em;font-size:.78rem}
+.express-brief-head small{color:var(--ink-soft);font-size:.55rem;text-align:right;line-height:1.3}
+.express-brief-themes{display:grid;gap:12px}
+.express-brief-theme{padding:0 0 12px;border-bottom:1px dotted var(--line)}
+.express-brief-theme:last-child{border-bottom:0}
+.express-brief-theme strong{display:block;color:var(--cyan);font-size:.7rem;letter-spacing:.06em;margin-bottom:5px}
+.express-brief-theme p{margin:0;color:var(--ink);font-size:.7rem;line-height:1.55}
+.express-brief-theme small{display:block;margin-top:6px;color:var(--ink-soft);font-size:.52rem;letter-spacing:.03em}
+.express-after-brief{padding-top:12px}
+.express-after-title{color:var(--ink-soft);font-size:.57rem;font-weight:900;letter-spacing:.1em;padding-bottom:7px;border-bottom:1px dotted var(--line)}
+@media(max-width:620px){
+  .express-brief{padding-top:12px}
+  .express-brief-head{display:block}
+  .express-brief-head small{display:block;text-align:left;margin-top:3px}
+  .express-brief-theme p{font-size:.66rem;line-height:1.5}
+}
