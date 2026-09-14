@@ -7,7 +7,7 @@
 <meta content="#07151a" name="theme-color"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
 <link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=35" rel="stylesheet"/>
+<link href="css/style.css?v=36" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -309,6 +309,22 @@
 <a class="minitel-card leisure-link" href="../uchronies/"><span>UCHRONIES</span><strong>BIBLIOTHÈQUE HISTORIQUE</strong><p>L’An I, Minuit sur l’Europe, Roma Aeterna, Le Siècle rouge et les autres lignes temporelles.</p><b>JOUER →</b></a>
 <article class="minitel-card bizarre-card"><div class="retro-head"><span>3615.BIZARRE</span><strong>INFORMATIONS NON ESSENTIELLES</strong></div><div class="bizarre-line"><span>STATISTIQUE</span><p id="bizarreStat">Calcul inutile en cours…</p></div><div class="bizarre-line"><span>CONSEIL</span><p id="bizarreAdvice">Consultation du service compétent…</p></div><div class="bizarre-line"><span>PRÉDICTION</span><p id="bizarrePrediction">Les machines hésitent.</p></div><button class="minitel-action secondary" id="bizarreRefreshBtn" type="button">AUTRE ABSURDITÉ</button></article>
 </div>
+<article class="minitel-card mini-games-card" id="miniGamesCard">
+<div class="retro-head"><span>3615.JEUX</span><strong>MINI-JEUX</strong></div>
+<div class="mini-game-tabs" role="tablist" aria-label="Choix du mini-jeu">
+<button class="mini-game-tab active" data-mini-game="snake" type="button">SNAKE</button>
+<button class="mini-game-tab" data-mini-game="pong" type="button">PONG</button>
+<button class="mini-game-tab" data-mini-game="breakout" type="button">CASSE-BRIQUES</button>
+</div>
+<div class="mini-game-console">
+<div class="mini-game-hud"><div><span>JEU</span><strong id="miniGameName">SNAKE</strong></div><div><span>SCORE</span><strong id="miniGameScore">0</strong></div><div><span>RECORD</span><strong id="miniGameBest">0</strong></div></div>
+<div class="mini-game-screen-wrap"><canvas id="miniGameCanvas" width="600" height="360" aria-label="Écran du mini-jeu"></canvas><div class="mini-game-overlay" id="miniGameOverlay"><strong id="miniGameOverlayTitle">SNAKE</strong><span id="miniGameOverlayText">Appuie sur JOUER</span></div></div>
+<div class="mini-game-bottom"><p id="miniGameHelp">Flèches ou pavé tactile · mange les carrés sans toucher les murs.</p><button class="minitel-action" id="miniGameStartBtn" type="button">JOUER</button></div>
+<div class="mini-game-controls" id="miniGameControls" aria-label="Contrôles tactiles">
+<button data-control="up" type="button" aria-label="Haut">▲</button><button data-control="left" type="button" aria-label="Gauche">◀</button><button data-control="down" type="button" aria-label="Bas">▼</button><button data-control="right" type="button" aria-label="Droite">▶</button>
+</div>
+</div>
+</article>
 <div class="section-subtitle"><span>SERVICES DE DÉTENTE</span><strong>ACCÈS DIRECT</strong></div>
 <div class="portal-app-grid" id="leisureServicesGrid"><a class="portal-app-card" href="../uchronies/"><b>UCHRONIES</b><span>Jeux historiques alternatifs</span><i>UCHRONIES →</i></a></div>
 </section><section class="terminal-section" id="systeme">
@@ -328,11 +344,12 @@
 <input autocomplete="off" id="commandInput" placeholder="0–7, 9, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.5</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.6</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=2"></script>
 <script src="js/app.js?v=34"></script>
+<script src="js/minigames.js?v=1"></script>
 <script src="js/ecosystem-v2.js?v=1"></script>
 </body>
 </html>
