@@ -494,7 +494,7 @@
   }
 
   function expressCategoryLabel(key){
-    return ({genealogie:'GÉNÉALOGIE',histoire:'HISTOIRE',local:'LOCAL',tech:'WEB / TECH',culture:'CULTURE',sciences:'SCIENCES',general:'ACTUALITÉ'})[key]||String(key||'ACTUALITÉ').toUpperCase();
+    return ({politique:'POLITIQUE',sondages:'SONDAGES',local:'LOCAL',medias:'MÉDIAS / TV',genealogie:'GÉNÉALOGIE',histoire:'HISTOIRE / PATRIMOINE',tech:'TECH / IA',sciences:'SCIENCES / SOCIÉTÉ',culture:'CULTURE',international:'INTERNATIONAL',general:'ACTUALITÉ'})[key]||String(key||'ACTUALITÉ').toUpperCase();
   }
   function expressPublishedLabel(value){
     const d=value?new Date(value):null;
@@ -507,14 +507,36 @@
       <div class="express-story-main"><strong>${escapeHtml3615(a.title||'Sans titre')}</strong><small>${escapeHtml3615(a.categoryLabel||expressCategoryLabel(a.category))} · ${escapeHtml3615(a.source||'Source')}${expressPublishedLabel(a.publishedAt||a.published_at)?' · '+escapeHtml3615(expressPublishedLabel(a.publishedAt||a.published_at)):''}</small></div>
       <a class="express-story-link" href="${escapeAttr3615(a.url||'../lenaic-express/') }" target="_blank" rel="noopener noreferrer">LIRE ↗</a>
     </article>`).join('')}
+  function expressBriefHtml(brief,{compact=false}={}){
+    const themes=Array.isArray(brief?.themes)?brief.themes.filter(t=>t&&t.text):[];
+    if(!themes.length)return '';
+    const generated=brief.generated_at?new Date(brief.generated_at):null;
+    const stamp=generated&&Number.isFinite(generated.getTime())?generated.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+    const articleCount=Number(brief.article_count)||themes.reduce((n,t)=>n+(Number(t.article_count)||0),0);
+    return `<section class="express-brief ${compact?'compact':''}">
+      <div class="express-brief-head"><span>BRIEF DU JOUR</span><small>${articleCount} ARTICLE${articleCount>1?'S':''} · ${escapeHtml3615(stamp)}</small></div>
+      <div class="express-brief-themes">${themes.map(t=>`<article class="express-brief-theme"><strong>${escapeHtml3615(t.label||expressCategoryLabel(t.category))}</strong><p>${escapeHtml3615(t.text)}</p><small>${Number(t.article_count)||0} article${Number(t.article_count)>1?'s':''}${t.coverage_complete===false?' · couverture partielle':''}</small></article>`).join('')}</div>
+    </section>`;
+  }
   function renderExpressArticles(articles,meta={}){
-    const all=Array.isArray(articles)?articles:[],homeRows=all.slice(0,3),infoRows=all.slice(0,8);
+    const all=Array.isArray(articles)?articles:[],homeRows=all.slice(0,3),infoRows=all.slice(0,8),brief=meta.brief||null;
     const dt=meta.editionGeneratedAt||meta.generatedAt,d=dt?new Date(dt):null,stamp=d&&Number.isFinite(d.getTime())?d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
-    const home=$('expressHeadlines');if(home){home.innerHTML=homeRows.length?expressRowsHtml(homeRows):'<div class="express-empty">Aucun titre disponible pour le moment.</div>'}
-    const info=$('expressInfoHeadlines');if(info){info.innerHTML=infoRows.length?expressRowsHtml(infoRows):'<div class="express-empty">Aucun titre disponible pour le moment.</div>'}
-    document.querySelector('.express-live-card')?.classList.toggle('ready',homeRows.length>0);
-    setText('expressLiveState',homeRows.length?`${homeRows.length} TITRES`:'AUCUN TITRE');setText('expressLiveFoot',homeRows.length?`ÉDITION ${stamp} · APERÇU`:'OUVRE LÉNAÏC EXPRESS POUR ACTUALISER');
-    setText('expressInfoState',infoRows.length?`${infoRows.length} TITRE${infoRows.length>1?'S':''}`:'AUCUN TITRE');setText('expressInfoFoot',`ÉDITION ${stamp} · PERSONNALISÉE`);
+    const home=$('expressHeadlines');if(home){
+      const briefHtml=expressBriefHtml(brief,{compact:true});
+      const stories=homeRows.length?`<div class="express-after-brief"><div class="express-after-title">3 ARTICLES À LIRE</div>${expressRowsHtml(homeRows)}</div>`:'<div class="express-empty">Aucun titre disponible pour le moment.</div>';
+      home.innerHTML=briefHtml?briefHtml+stories:stories;
+    }
+    const info=$('expressInfoHeadlines');if(info){
+      const briefHtml=expressBriefHtml(brief);
+      const stories=infoRows.length?`<div class="express-after-brief"><div class="express-after-title">ARTICLES DU JOUR</div>${expressRowsHtml(infoRows)}</div>`:'<div class="express-empty">Aucun titre disponible pour le moment.</div>';
+      info.innerHTML=briefHtml?briefHtml+stories:stories;
+    }
+    const hasBrief=Boolean(brief&&Array.isArray(brief.themes)&&brief.themes.some(t=>t&&t.text));
+    document.querySelector('.express-live-card')?.classList.toggle('ready',hasBrief||homeRows.length>0);
+    setText('expressLiveState',hasBrief?'BRIEF DU JOUR':(homeRows.length?`${homeRows.length} TITRES`:'AUCUN TITRE'));
+    setText('expressLiveFoot',hasBrief?`ÉDITION ${stamp} · BRIEF COMPLET + 3 ARTICLES`:(homeRows.length?`ÉDITION ${stamp} · APERÇU`:'OUVRE LÉNAÏC EXPRESS POUR ACTUALISER'));
+    setText('expressInfoState',hasBrief?'BRIEF COMPLET':(infoRows.length?`${infoRows.length} TITRE${infoRows.length>1?'S':''}`:'AUCUN TITRE'));
+    setText('expressInfoFoot',`ÉDITION ${stamp} · PERSONNALISÉE`);
     renderInfoBreakdown(all,meta);
   }
 
@@ -546,7 +568,7 @@
         .sort((a,b)=>expressFallbackScore(b)-expressFallbackScore(a))
         .slice(0,8)
         .map(a=>({id:a.id,title:a.title,category:a.category,categoryLabel:expressCategoryLabel(a.category),source:a.source,url:a.url,publishedAt:a.published_at,score:expressFallbackScore(a)}));
-      renderExpressArticles(arr,{editionGeneratedAt:data.generated_at,generatedAt:new Date().toISOString()});
+      renderExpressArticles(arr,{editionGeneratedAt:data.generated_at,generatedAt:new Date().toISOString(),brief:data.brief||null,briefStatus:data.brief_status||''});
     }catch(e){
       const msg='<div class="express-empty">Impossible de récupérer l’édition. Ouvre Lénaïc Express puis reviens ici.</div>';
       if(box)box.innerHTML=msg;if($('expressInfoHeadlines'))$('expressInfoHeadlines').innerHTML=msg;
@@ -561,6 +583,8 @@
     const snap=readExpressSnapshot();
     if(snap&&Array.isArray(snap.top)&&snap.top.length){
       renderExpressArticles(snap.top,snap);
+      // Le snapshot local donne un affichage immédiat ; le JSON public apporte le Brief du jour complet.
+      loadExpressFallback();
       return;
     }
     loadExpressFallback();
