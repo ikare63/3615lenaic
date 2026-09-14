@@ -303,13 +303,14 @@
 <button class="mini-game-tab active" data-mini-game="snake" type="button">SNAKE</button>
 <button class="mini-game-tab" data-mini-game="pong" type="button">PONG</button>
 <button class="mini-game-tab" data-mini-game="breakout" type="button">CASSE-BRIQUES</button>
+<button class="mini-game-tab" data-mini-game="run" type="button">MINITEL RUN</button>
 </div>
 <div class="mini-game-console">
-<div class="mini-game-hud"><div><span>JEU</span><strong id="miniGameName">SNAKE</strong></div><div><span>SCORE</span><strong id="miniGameScore">0</strong></div><div><span>RECORD</span><strong id="miniGameBest">0</strong></div></div>
-<div class="mini-game-screen-wrap"><canvas id="miniGameCanvas" width="600" height="360" aria-label="Écran du mini-jeu"></canvas><div class="mini-game-overlay" id="miniGameOverlay"><strong id="miniGameOverlayTitle">SNAKE</strong><span id="miniGameOverlayText">Appuie sur JOUER</span></div></div>
+<div class="mini-game-hud"><div><span>JEU</span><strong id="miniGameName">SNAKE</strong></div><div><span>SCORE</span><strong id="miniGameScore">0</strong></div><div><span id="miniGameMetaLabel">RECORD</span><strong id="miniGameBest">0</strong></div></div>
+<div class="mini-game-screen-wrap"><canvas id="miniGameCanvas" width="600" height="360" aria-label="Écran du mini-jeu"></canvas><div class="run-level-select" id="runLevelSelect" hidden></div><div class="mini-game-overlay" id="miniGameOverlay"><strong id="miniGameOverlayTitle">SNAKE</strong><span id="miniGameOverlayText">Appuie sur JOUER</span></div></div>
 <div class="mini-game-bottom"><p id="miniGameHelp">Flèches ou pavé tactile · mange les carrés sans toucher les murs.</p><button class="minitel-action" id="miniGameStartBtn" type="button">JOUER</button></div>
 <div class="mini-game-controls" id="miniGameControls" aria-label="Contrôles tactiles">
-<button data-control="up" type="button" aria-label="Haut">▲</button><button data-control="left" type="button" aria-label="Gauche">◀</button><button data-control="down" type="button" aria-label="Bas">▼</button><button data-control="right" type="button" aria-label="Droite">▶</button>
+<button data-control="up" type="button" aria-label="Haut">▲</button><button data-control="left" type="button" aria-label="Gauche">◀</button><button data-control="down" type="button" aria-label="Bas">▼</button><button data-control="right" type="button" aria-label="Droite">▶</button><button class="jump-control" data-control="jump" type="button" aria-label="Saut">SAUT</button>
 </div>
 </div>
 </article>
@@ -344,12 +345,12 @@
 <input autocomplete="off" id="commandInput" placeholder="0–7, 9, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.7</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.8</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=2"></script>
 <script src="js/app.js?v=34"></script>
-<script src="js/minigames.js?v=1"></script>
+<script src="js/minigames.js?v=2"></script>
 <script src="js/ecosystem-v2.js?v=1"></script>
 </body>
 </html>
