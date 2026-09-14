@@ -1,10 +1,10 @@
 {
-  "version": 10,
+  "version": 11,
   "publishedAt": null,
   "site": {
     "title": "3615 LÉNAÏC",
     "subtitle": "TABLEAU DE BORD PERSONNEL // TERMINAL LOCAL",
-    "footerLeft": "3615 LÉNAÏC // VERSION 9.8",
+    "footerLeft": "3615 LÉNAÏC // VERSION 9.9",
     "footerRight": "DONNÉES LOCALES · BUS PARTAGÉ",
     "showBusStatus": true
   },
