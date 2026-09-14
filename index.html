@@ -5,9 +5,12 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <meta content="#07151a" name="theme-color"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
-<link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=36" rel="stylesheet"/>
+<link href="assets/favicon.svg?v=20260914-1351-v99" rel="icon" type="image/svg+xml"/>
+<link href="css/style.css?v=20260914-1351-v99" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -345,12 +348,33 @@
 <input autocomplete="off" id="commandInput" placeholder="0–7, 9, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.8</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.9</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
-<script src="js/lenaic-bus.js?v=2"></script>
-<script src="js/app.js?v=34"></script>
-<script src="js/minigames.js?v=2"></script>
-<script src="js/ecosystem-v2.js?v=1"></script>
+<script src="js/lenaic-bus.js?v=20260914-1351-v99"></script>
+<script src="js/app.js?v=20260914-1351-v99"></script>
+<script src="js/minigames.js?v=20260914-1351-v99"></script>
+<script src="js/ecosystem-v2.js?v=20260914-1351-v99"></script>
+
+<script>
+window.__3615_BUILD__='20260914-1351-v99';
+(async()=>{
+  try{
+    const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});
+    if(!r.ok)return;
+    const remote=await r.json();
+    const target=String(remote.build||'');
+    const key='3615-update-target';
+    if(target && target!==window.__3615_BUILD__ && sessionStorage.getItem(key)!==target){
+      sessionStorage.setItem(key,target);
+      const u=new URL(location.href);
+      u.searchParams.set('build',target);
+      location.replace(u.href);
+    }else if(target===window.__3615_BUILD__){
+      sessionStorage.removeItem(key);
+    }
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
