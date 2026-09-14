@@ -297,19 +297,7 @@
 <article class="minitel-card"><div class="retro-head"><span>ACTIVITE.RECENTE</span><strong>ARCHIVES</strong></div><div class="activity-feed" id="archiveActivityFeed"><div class="express-empty">Aucune activité récente détectée.</div></div></article>
 </section><section class="terminal-section" id="detente">
 <div class="section-title"><span>3615.D07</span><h2>DÉTENTE</h2></div>
-<p class="section-lead">Un peu d’uchronie, une otarie et plusieurs fonctions dont l’utilité n’a pas été démontrée.</p>
-<article class="minitel-card otarie-card" id="otarieFullCard">
-<div class="retro-head"><span>OTARIE.EXE</span><strong>BASSIN DE L’OTARIE</strong></div>
-<div class="otarie-full-layout">
-<div class="aquarium-frame"><canvas aria-label="Otarie animée dans son bassin" height="360" id="aquariumCanvas" width="900"></canvas><div class="screen-label">CAMÉRA BASSIN // DIRECT</div></div>
-<div class="otarie-panel"><div class="otarie-stat"><span>FAIM</span><strong id="otarieHunger">— %</strong></div><div class="meter"><i id="otarieMeter"></i></div><div class="otarie-stat"><span>DERNIER REPAS</span><strong id="otarieLastFed">JAMAIS</strong></div><button class="minitel-action" id="feedOtarieBtn" type="button">NOURRIR L’OTARIE</button><p class="terminal-message" id="otarieMessage">L’otarie nage tranquillement.</p></div>
-</div>
-</article>
-<div class="leisure-grid">
-<a class="minitel-card leisure-link" href="../uchronies/"><span>UCHRONIES</span><strong>BIBLIOTHÈQUE HISTORIQUE</strong><p>L’An I, Minuit sur l’Europe, Roma Aeterna, Le Siècle rouge et les autres lignes temporelles.</p><b>JOUER →</b></a>
-<article class="minitel-card bizarre-card"><div class="retro-head"><span>3615.BIZARRE</span><strong>INFORMATIONS NON ESSENTIELLES</strong></div><div class="bizarre-line"><span>STATISTIQUE</span><p id="bizarreStat">Calcul inutile en cours…</p></div><div class="bizarre-line"><span>CONSEIL</span><p id="bizarreAdvice">Consultation du service compétent…</p></div><div class="bizarre-line"><span>PRÉDICTION</span><p id="bizarrePrediction">Les machines hésitent.</p></div><button class="minitel-action secondary" id="bizarreRefreshBtn" type="button">AUTRE ABSURDITÉ</button></article>
-</div>
-<article class="minitel-card mini-games-card" id="miniGamesCard">
+<p class="section-lead">Mini-jeux, uchronies, une otarie et plusieurs fonctions dont l’utilité n’a pas été démontrée.</p><article class="minitel-card mini-games-card" id="miniGamesCard">
 <div class="retro-head"><span>3615.JEUX</span><strong>MINI-JEUX</strong></div>
 <div class="mini-game-tabs" role="tablist" aria-label="Choix du mini-jeu">
 <button class="mini-game-tab active" data-mini-game="snake" type="button">SNAKE</button>
@@ -325,6 +313,18 @@
 </div>
 </div>
 </article>
+
+<article class="minitel-card otarie-card" id="otarieFullCard">
+<div class="retro-head"><span>OTARIE.EXE</span><strong>BASSIN DE L’OTARIE</strong></div>
+<div class="otarie-full-layout">
+<div class="aquarium-frame"><canvas aria-label="Otarie animée dans son bassin" height="360" id="aquariumCanvas" width="900"></canvas><div class="screen-label">CAMÉRA BASSIN // DIRECT</div></div>
+<div class="otarie-panel"><div class="otarie-stat"><span>FAIM</span><strong id="otarieHunger">— %</strong></div><div class="meter"><i id="otarieMeter"></i></div><div class="otarie-stat"><span>DERNIER REPAS</span><strong id="otarieLastFed">JAMAIS</strong></div><button class="minitel-action" id="feedOtarieBtn" type="button">NOURRIR L’OTARIE</button><p class="terminal-message" id="otarieMessage">L’otarie nage tranquillement.</p></div>
+</div>
+</article>
+<div class="leisure-grid">
+<a class="minitel-card leisure-link" href="../uchronies/"><span>UCHRONIES</span><strong>BIBLIOTHÈQUE HISTORIQUE</strong><p>L’An I, Minuit sur l’Europe, Roma Aeterna, Le Siècle rouge et les autres lignes temporelles.</p><b>JOUER →</b></a>
+<article class="minitel-card bizarre-card"><div class="retro-head"><span>3615.BIZARRE</span><strong>INFORMATIONS NON ESSENTIELLES</strong></div><div class="bizarre-line"><span>STATISTIQUE</span><p id="bizarreStat">Calcul inutile en cours…</p></div><div class="bizarre-line"><span>CONSEIL</span><p id="bizarreAdvice">Consultation du service compétent…</p></div><div class="bizarre-line"><span>PRÉDICTION</span><p id="bizarrePrediction">Les machines hésitent.</p></div><button class="minitel-action secondary" id="bizarreRefreshBtn" type="button">AUTRE ABSURDITÉ</button></article>
+</div>
 <div class="section-subtitle"><span>SERVICES DE DÉTENTE</span><strong>ACCÈS DIRECT</strong></div>
 <div class="portal-app-grid" id="leisureServicesGrid"><a class="portal-app-card" href="../uchronies/"><b>UCHRONIES</b><span>Jeux historiques alternatifs</span><i>UCHRONIES →</i></a></div>
 </section><section class="terminal-section" id="systeme">
@@ -344,7 +344,7 @@
 <input autocomplete="off" id="commandInput" placeholder="0–7, 9, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.6</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.7</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=2"></script>
