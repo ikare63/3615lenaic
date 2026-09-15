@@ -514,7 +514,7 @@
     const stamp=generated&&Number.isFinite(generated.getTime())?generated.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
     const articleCount=Number(brief.article_count)||themes.reduce((n,t)=>n+(Number(t.article_count)||0),0);
     return `<section class="express-brief ${compact?'compact':''}">
-      <div class="express-brief-head"><span>BRIEF DU JOUR</span><small>${articleCount} ARTICLE${articleCount>1?'S':''} · ${escapeHtml3615(stamp)}</small></div>
+      <div class="express-brief-head"><span>BRIEF DU JOUR · SYNTHÈSE IA</span><small>${articleCount} ARTICLE${articleCount>1?'S':''} · ${escapeHtml3615(stamp)}</small></div>
       <div class="express-brief-themes">${themes.map(t=>`<article class="express-brief-theme"><strong>${escapeHtml3615(t.label||expressCategoryLabel(t.category))}</strong><p>${escapeHtml3615(t.text)}</p><small>${Number(t.article_count)||0} article${Number(t.article_count)>1?'s':''}${t.coverage_complete===false?' · couverture partielle':''}</small></article>`).join('')}</div>
     </section>`;
   }
@@ -560,15 +560,24 @@
     const box=$('expressHeadlines');
     setText('expressLiveState','SYNCHRO…');
     try{
-      // Chemin absolu : évite toute ambiguïté entre /3615lenaic/ et /lenaic-express/.
-      const data=await fetchJsonWithTimeout('/lenaic-express/data/actualites.json?ts='+Date.now(),7000);
+      // On préfère l’édition publique de Lénaïc Express, mais on conserve le miroir
+      // local de 3615 comme filet de sécurité. Surtout, si l’édition publique n’a
+      // momentanément pas de brief, le dernier brief complet du miroir reste visible.
+      let remote=null,mirror=null;
+      try{remote=await fetchJsonWithTimeout('/lenaic-express/data/actualites.json?ts='+Date.now(),7000)}catch(e){}
+      try{mirror=await fetchJsonWithTimeout('data/mirror/express-actualites.json?ts='+Date.now(),5000)}catch(e){}
+      const data=remote||mirror;
+      if(!data)throw new Error('Aucune édition disponible');
+      const hasBrief=x=>Boolean(x&&x.brief&&Array.isArray(x.brief.themes)&&x.brief.themes.some(t=>t&&t.text));
+      const brief=hasBrief(remote)?remote.brief:(hasBrief(mirror)?mirror.brief:null);
+      const briefStatus=hasBrief(remote)?(remote.brief_status||''):(hasBrief(mirror)?'mirror_fallback':(data.brief_status||''));
       const {hidden,sources}=expressHiddenSets();
       const arr=(Array.isArray(data.articles)?data.articles:[])
         .filter(a=>!hidden.has(a.id)&&!sources.has(a.source))
         .sort((a,b)=>expressFallbackScore(b)-expressFallbackScore(a))
         .slice(0,8)
         .map(a=>({id:a.id,title:a.title,category:a.category,categoryLabel:expressCategoryLabel(a.category),source:a.source,url:a.url,publishedAt:a.published_at,score:expressFallbackScore(a)}));
-      renderExpressArticles(arr,{editionGeneratedAt:data.generated_at,generatedAt:new Date().toISOString(),brief:data.brief||null,briefStatus:data.brief_status||''});
+      renderExpressArticles(arr,{editionGeneratedAt:data.generated_at,generatedAt:new Date().toISOString(),brief,briefStatus});
     }catch(e){
       const msg='<div class="express-empty">Impossible de récupérer l’édition. Ouvre Lénaïc Express puis reviens ici.</div>';
       if(box)box.innerHTML=msg;if($('expressInfoHeadlines'))$('expressInfoHeadlines').innerHTML=msg;
