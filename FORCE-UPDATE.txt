@@ -1,8 +1,8 @@
-3615 LÉNAÏC — BUILD 9.9
+3615 LÉNAÏC — BUILD 9.10
 
 1. Remplacer les fichiers du dépôt par ceux de ce paquet.
 2. Attendre que GitHub Pages finisse le déploiement.
 3. Ouvrir /force-update.html une seule fois.
 4. Le portail redirige vers la page d’accueil avec un paramètre de build qui contourne le cache.
 
-MINITEL RUN : 8 niveaux progressifs, accessible dans DÉTENTE > 3615.JEUX.
+BRIEF IA : affichage restauré dans INFORMATIONS et reprise automatique du miroir local si nécessaire.\n\nMINITEL RUN : 8 niveaux progressifs, accessible dans DÉTENTE > 3615.JEUX.
