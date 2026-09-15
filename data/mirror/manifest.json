@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-15T16:55:43.733883+00:00",
+  "generatedAt": "2026-09-15T21:17:43.119766+00:00",
   "items": [
     {
       "id": "culina-recipes",
@@ -7,9 +7,9 @@
       "source": "https://ikare63.github.io/culina/recettes.json",
       "mirror": "data/mirror/culina-recettes.json",
       "ok": true,
-      "bytes": 451067,
-      "sha256": "3b1452ac65d802c84527427713ddf910e61d1f63aa7ded6c8f4238f8faf6e231",
-      "fetchedAt": "2026-09-15T16:55:44.314004+00:00"
+      "bytes": 1002627,
+      "sha256": "2897129b1feff7ca679a8ef4ed11b723f3b94e50f65cd14008069d5681188378",
+      "fetchedAt": "2026-09-15T21:17:43.497233+00:00"
     },
     {
       "id": "express-news",
@@ -17,9 +17,9 @@
       "source": "https://ikare63.github.io/lenaic-express/data/actualites.json",
       "mirror": "data/mirror/express-actualites.json",
       "ok": true,
-      "bytes": 256295,
-      "sha256": "67b5f31158cd1483b32df3fda3f0a720fa4a4bd6be54ed281db23d1a8d5ba0d1",
-      "fetchedAt": "2026-09-15T16:55:44.456974+00:00"
+      "bytes": 258542,
+      "sha256": "ad6e156c5a438edfffd45f0081149b54c0922e4044f0133d483692993c080daa",
+      "fetchedAt": "2026-09-15T21:17:43.669686+00:00"
     },
     {
       "id": "express-preferences",
@@ -29,7 +29,7 @@
       "ok": true,
       "bytes": 3533,
       "sha256": "39aff1372194062a14761529319c6cb12704d6c63add5de5f1dd64cbc86ae6ce",
-      "fetchedAt": "2026-09-15T16:55:44.561033+00:00"
+      "fetchedAt": "2026-09-15T21:17:43.753099+00:00"
     },
     {
       "id": "express-sources",
@@ -39,7 +39,7 @@
       "ok": true,
       "bytes": 5414,
       "sha256": "f84813a59b6cb8980652f5040b7ae9685a93837679824361a38868d3298b0560",
-      "fetchedAt": "2026-09-15T16:55:44.819474+00:00"
+      "fetchedAt": "2026-09-15T21:17:43.827978+00:00"
     },
     {
       "id": "express-watches",
@@ -49,7 +49,7 @@
       "ok": true,
       "bytes": 127,
       "sha256": "1887139f2d686619519a3672ddccc1ab137354d7b33edfe1d0a26d272d470c92",
-      "fetchedAt": "2026-09-15T16:55:44.898951+00:00"
+      "fetchedAt": "2026-09-15T21:17:43.908496+00:00"
     }
   ]
 }
