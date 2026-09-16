@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T11:27:53.338232+00:00",
+  "generatedAt": "2026-09-16T16:50:57.399483+00:00",
   "items": [
     {
       "id": "culina-recipes",
@@ -8,8 +8,8 @@
       "mirror": "data/mirror/culina-recettes.json",
       "ok": true,
       "bytes": 1002627,
-      "sha256": "2897129b1feff7ca679a8ef4ed11b723f3b94e50f65cd14008069d5681188378",
-      "fetchedAt": "2026-09-16T11:27:54.580833+00:00"
+      "sha256": "c8e90d982fa1df43ed5599b708c98f0aa16e1faf1b452cab59bd0b862e52510f",
+      "fetchedAt": "2026-09-16T16:50:57.649617+00:00"
     },
     {
       "id": "express-news",
@@ -17,9 +17,9 @@
       "source": "https://ikare63.github.io/lenaic-express/data/actualites.json",
       "mirror": "data/mirror/express-actualites.json",
       "ok": true,
-      "bytes": 251593,
-      "sha256": "8505697e50e683619841f6fc90b05e466d1e496f60567decbfbefbb647207bc1",
-      "fetchedAt": "2026-09-16T11:27:54.723223+00:00"
+      "bytes": 253605,
+      "sha256": "31a892a31afffa161022ce7bd8769c8c7a62dc90fa52f63105dd17e70a260f2d",
+      "fetchedAt": "2026-09-16T16:50:57.737126+00:00"
     },
     {
       "id": "express-preferences",
@@ -29,7 +29,7 @@
       "ok": true,
       "bytes": 3533,
       "sha256": "39aff1372194062a14761529319c6cb12704d6c63add5de5f1dd64cbc86ae6ce",
-      "fetchedAt": "2026-09-16T11:27:54.821378+00:00"
+      "fetchedAt": "2026-09-16T16:50:57.798877+00:00"
     },
     {
       "id": "express-sources",
@@ -39,7 +39,7 @@
       "ok": true,
       "bytes": 5414,
       "sha256": "f84813a59b6cb8980652f5040b7ae9685a93837679824361a38868d3298b0560",
-      "fetchedAt": "2026-09-16T11:27:54.914461+00:00"
+      "fetchedAt": "2026-09-16T16:50:57.846803+00:00"
     },
     {
       "id": "express-watches",
@@ -49,7 +49,7 @@
       "ok": true,
       "bytes": 127,
       "sha256": "1887139f2d686619519a3672ddccc1ab137354d7b33edfe1d0a26d272d470c92",
-      "fetchedAt": "2026-09-16T11:27:55.164315+00:00"
+      "fetchedAt": "2026-09-16T16:50:57.894151+00:00"
     }
   ]
 }
