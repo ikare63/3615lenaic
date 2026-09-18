@@ -1,10 +1,10 @@
 {
-  "version": 11,
-  "publishedAt": null,
+  "version": 12,
+  "publishedAt": "2026-09-18T21:30:00Z",
   "site": {
     "title": "3615 LÉNAÏC",
     "subtitle": "TABLEAU DE BORD PERSONNEL // TERMINAL LOCAL",
-    "footerLeft": "3615 LÉNAÏC // VERSION 9.10",
+    "footerLeft": "3615 LÉNAÏC // VERSION 9.11",
     "footerRight": "DONNÉES LOCALES · BUS PARTAGÉ",
     "showBusStatus": true
   },
@@ -69,7 +69,7 @@
     {
       "id": "stylia",
       "label": "Stylia — tenue",
-      "visible": true,
+      "visible": false,
       "order": 90
     },
     {
@@ -107,6 +107,12 @@
       "label": "Modules & rappels NEXUS",
       "visible": true,
       "order": 37
+    },
+    {
+      "id": "reminders",
+      "label": "Rappels contextuels",
+      "visible": true,
+      "order": 36
     }
   ],
   "portalTabs": [
@@ -243,7 +249,7 @@
       "command": "STYLIA",
       "category": "daily",
       "order": 30,
-      "visible": true,
+      "visible": false,
       "version": ""
     },
     {
