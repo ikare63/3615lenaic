@@ -1,6 +1,6 @@
 {
-  "version": "9.10",
-  "build": "20260915-brief-ai-v910",
+  "version": "9.11",
+  "build": "20260918-context-reminders-v911",
   "minitelRun": true,
   "levels": 8
 }

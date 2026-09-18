@@ -10,7 +10,7 @@
 <meta http-equiv="Expires" content="0"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
 <link href="assets/favicon.svg?v=20260914-1351-v99" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=20260914-1351-v99" rel="stylesheet"/>
+<link href="css/style.css?v=20260918-context-v911" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -104,6 +104,16 @@
 <div class="savings52-progress-meta"><span id="savings52ProgressText">0 € réellement validés</span><strong id="savings52Percent">0,0 %</strong></div>
 <label class="savings52-check" for="savings52Done"><input id="savings52Done" type="checkbox"/><span>ÉPARGNÉ</span></label>
 <p class="savings52-hint" id="savings52Hint">Le défi commence le lundi 14 septembre 2026.</p>
+</section><section class="context-reminders-zone" data-home-block="reminders" id="contextRemindersZone" hidden>
+<div class="context-reminders-title"><span>RAPPELS.DU.MOMENT</span><strong>JUSTE CE QUI EST UTILE MAINTENANT</strong></div>
+<article class="context-reminder fruit-reminder" id="fruitReminder3615" hidden>
+<div class="context-reminder-icon">🍎</div><div class="context-reminder-copy"><strong>UN FRUIT POUR FINIR LE REPAS ?</strong><small id="fruitReminder3615Text">Petit rappel pour penser aux fruits.</small></div>
+<div class="context-reminder-actions"><button class="minitel-action" id="fruitReminder3615Done" type="button">J’Y PENSE ✓</button><button class="text-key" id="fruitReminder3615Later" type="button">DANS 30 MIN</button></div>
+</article>
+<article class="context-reminder cleaning-reminder" id="cleaningReminder3615" hidden>
+<div class="context-reminder-icon">🧹</div><div class="context-reminder-copy"><strong>MÉNAGE CET APRÈS-MIDI</strong><small>Mardi · entre 13 h et 18 h.</small></div>
+<label class="context-reminder-check"><input id="cleaningReminder3615Done" type="checkbox"/><span>C’EST FAIT</span></label>
+</article>
 </section><div class="nexus-modules-zone" data-home-block="modules" id="homeBlock-modules" hidden></div><article class="minitel-card otarie-home-card" data-home-block="otarie" id="homeBlock-otarie">
 <div class="retro-head"><span>OTARIE.LIVE</span><strong id="otarieHomeMood">BAIGNADE EN COURS</strong></div>
 <div class="otarie-home-layout">
@@ -165,13 +175,6 @@
 </article>
 </div>
 <div class="cap-live-foot"><span id="culinaLiveFoot">REPAS PRÉVUS · NON COMPTABILISÉS DANS CAP</span><a href="../culina/">OUVRIR CULINA →</a></div>
-</section><section aria-label="Tenue proposée par Stylia" class="minitel-card stylia-live-card" data-home-block="stylia" id="homeBlock-stylia">
-<div class="retro-head"><span>STYLIA.TENUE</span><strong id="styliaLiveState">EN ATTENTE</strong></div>
-<div class="stylia-outfit-grid" id="styliaOutfitGrid">
-<div class="stylia-outfit-title"><span class="stylia-signal">◇</span><div><strong id="styliaOutfitName">AUCUNE TENUE DU JOUR</strong><small id="styliaOutfitWhy">Valide une tenue dans Stylia pour l’afficher ici.</small></div></div>
-<div class="stylia-parts" id="styliaParts"></div>
-</div>
-<div class="cap-live-foot"><span id="styliaLiveFoot">DERNIÈRE TENUE VALIDÉE</span><a href="../stylia/">OUVRIR STYLIA →</a></div>
 </section><section aria-label="Actualités de Lénaïc Express" class="minitel-card express-live-card" data-home-block="express" id="homeBlock-express">
 <div class="retro-head"><span>EXPRESS.ACTU</span><strong id="expressLiveState">CHARGEMENT…</strong></div>
 <div class="express-headlines" id="expressHeadlines">
@@ -239,20 +242,15 @@
 </article>
 </section><section class="terminal-section" id="quotidien">
 <div class="section-title"><span>3615.Q02</span><h2>QUOTIDIEN</h2></div>
-<p class="section-lead">Cuisine et tenue : ce qui t’accompagne concrètement au fil de la journée.</p>
+<p class="section-lead">Cuisine et habitudes utiles : ce qui t’accompagne concrètement au fil de la journée.</p>
 <article class="minitel-card daily-detail-card">
 <div class="retro-head"><span>CULINA.JOUR</span><strong id="dailyCulinaState">SYNCHRONISATION…</strong></div>
 <div class="daily-rows" id="dailyCulinaRows"><div class="express-empty">Lecture de Culina…</div></div>
 <div class="daily-kpis" id="dailyCulinaKpis"></div>
 <div class="cap-live-foot"><span>REPAS · RESTES · COURSES</span><a href="../culina/">OUVRIR CULINA →</a></div>
 </article>
-<article class="minitel-card daily-detail-card">
-<div class="retro-head"><span>STYLIA.JOUR</span><strong id="dailyStyliaState">TENUE</strong></div>
-<div class="daily-stylia" id="dailyStyliaDetail"><div class="express-empty">Aucune tenue validée.</div></div>
-<div class="cap-live-foot"><span>TENUE VALIDÉE · MÉTÉO</span><a href="../stylia/">OUVRIR STYLIA →</a></div>
-</article>
 <div class="section-subtitle"><span>RACCOURCIS</span><strong>APPLICATIONS DU QUOTIDIEN</strong></div>
-<div class="portal-app-grid"><a class="portal-app-card" href="../culina/"><b>CULINA</b><span>Recettes · stocks · repas · courses</span><i>CULINA →</i></a><a class="portal-app-card" href="../stylia/"><b>STYLIA</b><span>Tenue du jour</span><i>STYLIA →</i></a><a class="portal-app-card" href="../cap/"><b>CAP</b><span>Sport · nutrition · sommeil</span><i>CAP →</i></a></div>
+<div class="portal-app-grid"><a class="portal-app-card" href="../culina/"><b>CULINA</b><span>Recettes · stocks · repas · courses</span><i>CULINA →</i></a><a class="portal-app-card" href="../cap/"><b>CAP</b><span>Sport · nutrition · sommeil</span><i>CAP →</i></a></div>
 </section><section class="terminal-section" id="sante">
 <div class="section-title"><span>3615.S03</span><h2>SANTÉ</h2></div>
 <p class="section-lead">Tes apports au fil de la journée, la méditation, puis le suivi CAP.</p>
@@ -340,7 +338,7 @@
 <article class="minitel-card"><div class="retro-head"><span>BUS</span><strong id="systemBusState">—</strong></div><div class="health-lines" id="systemBusDetail"></div></article>
 <article class="minitel-card"><div class="retro-head"><span>SAUVEGARDES</span><strong>COFFRE NEXUS</strong></div><div class="health-lines" id="systemBackupDetail"></div><a class="inline-link" href="cms.html#data">GÉRER DANS NEXUS →</a></article>
 </div>
-<article class="minitel-card command-help-card"><div class="retro-head"><span>COMMANDES</span><strong>AIDE TERMINAL</strong></div><div class="command-chips"><span>0 ACCUEIL</span><span>1 AUJOURD’HUI</span><span>2 QUOTIDIEN</span><span>3 SANTÉ</span><span>4 INFOS</span><span>5 GÉNÉALOGIE</span><span>6 ARCHIVES</span><span>7 DÉTENTE</span><span>9 SYSTÈME</span><span>METEO</span><span>MEDITATION</span><span>EPARGNE</span><span>CAP</span><span>CULINA</span><span>STYLIA</span><span>SCRIBE</span><span>ARIANE</span><span>NEXUS</span><span>OTARIE</span></div></article>
+<article class="minitel-card command-help-card"><div class="retro-head"><span>COMMANDES</span><strong>AIDE TERMINAL</strong></div><div class="command-chips"><span>0 ACCUEIL</span><span>1 AUJOURD’HUI</span><span>2 QUOTIDIEN</span><span>3 SANTÉ</span><span>4 INFOS</span><span>5 GÉNÉALOGIE</span><span>6 ARCHIVES</span><span>7 DÉTENTE</span><span>9 SYSTÈME</span><span>METEO</span><span>MEDITATION</span><span>EPARGNE</span><span>CAP</span><span>CULINA</span><span>SCRIBE</span><span>ARIANE</span><span>NEXUS</span><span>OTARIE</span></div></article>
 </section></main>
 <footer class="terminal-footer">
 <form class="command-line" id="commandForm">
@@ -351,10 +349,10 @@
 <div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.10</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
-<script src="js/lenaic-bus.js?v=20260914-1351-v99"></script>
-<script src="js/app.js?v=20260914-1351-v99"></script>
-<script src="js/minigames.js?v=20260914-1351-v99"></script>
-<script src="js/ecosystem-v2.js?v=20260914-1351-v99"></script>
+<script src="js/lenaic-bus.js?v=20260918-context-v911"></script>
+<script src="js/app.js?v=20260918-context-v911"></script>
+<script src="js/minigames.js?v=20260918-context-v911"></script>
+<script src="js/ecosystem-v2.js?v=20260918-context-v911"></script>
 
 <script>
 window.__3615_BUILD__='20260914-1351-v99';
