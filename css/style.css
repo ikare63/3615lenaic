@@ -595,3 +595,17 @@ body[data-nexus-cms="v2"] .brand-sub::after{content:" · V9.10";color:var(--ambe
 @media(max-width:380px){.run-level-grid{grid-template-columns:1fr}.run-level-select{overflow-y:auto}.run-level-btn{min-height:54px}}
 
 /* FORCE BUILD 20260914-1351-v99 */
+
+/* v9.11 — zone unique des rappels ponctuels au-dessus de l’otarie */
+.home-cms-flow>[data-home-block="reminders"]{grid-column:1/-1}
+.context-reminders-zone{border:1px dashed var(--amber);background:rgba(255,209,102,.025);padding:10px;display:grid;gap:8px}
+.context-reminders-zone[hidden]{display:none!important}
+.context-reminders-title{display:flex;gap:10px;justify-content:space-between;align-items:center;color:var(--amber);font-size:.56rem;letter-spacing:.08em}
+.context-reminder{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:11px;align-items:center;border:1px solid var(--line);background:#031015;padding:10px 11px}
+.context-reminder[hidden]{display:none!important}
+.context-reminder-icon{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line-strong);font-size:1.35rem}
+.context-reminder-copy strong{display:block;color:var(--ink);font-size:.76rem}.context-reminder-copy small{display:block;margin-top:4px;color:var(--ink-soft);font-size:.58rem;line-height:1.4}
+.context-reminder-actions{display:flex;gap:8px;align-items:center}.context-reminder-actions .text-key{margin:0}
+.context-reminder-check{display:flex;align-items:center;gap:8px;border:1px solid var(--green);padding:9px 10px;color:var(--green);font-size:.64rem;font-weight:900;cursor:pointer}.context-reminder-check input{width:18px;height:18px;accent-color:var(--green)}
+#quotidien .portal-app-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:680px){.context-reminder{grid-template-columns:38px 1fr}.context-reminder-actions,.context-reminder-check{grid-column:1/-1}.context-reminder-actions{justify-content:flex-start}.context-reminders-title{align-items:flex-start;flex-direction:column}.portal-app-grid,#quotidien .portal-app-grid{grid-template-columns:1fr}}
