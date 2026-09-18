@@ -3,7 +3,7 @@
 
   const $=id=>document.getElementById(id);
   const PATHS={
-    cap:'../cap/',culina:'../culina/',stylia:'../stylia/',express:'../lenaic-express/',uchronies:'../uchronies/',
+    cap:'../cap/',culina:'../culina/',express:'../lenaic-express/',uchronies:'../uchronies/',
     arboris:'../bureau-genealogique/index.html',scriptoria:'../bureau-genealogique/index2.html',pistoria:'../bureau-genealogique/index3.html',
     ariane:'../aide_archive/Ariane.html',scribe:'../aide_archive/Scribe-v3.html',nexus:'cms.html'
   };
@@ -23,7 +23,7 @@
     const box=$('servicesDirectory')||document.querySelector('.directory-grid');
     if(!box||!nexusConfig)return;
     const cats=[...(nexusConfig.categories||[])].filter(c=>c.visible!==false).sort((a,b)=>(a.order||0)-(b.order||0));
-    const apps=nexusConfig.applications||[];
+    const apps=(nexusConfig.applications||[]).filter(a=>String(a.id||'').toLowerCase()!=='stylia');
     let number=0;
     box.innerHTML=cats.map(cat=>{
       const items=apps.filter(a=>a.visible!==false&&a.category===cat.id).sort((a,b)=>(a.order||0)-(b.order||0));
@@ -38,7 +38,7 @@
     if(!nexusConfig)return;
     const map={daily:'dailyServicesGrid',information:'infoServicesGrid',genealogy:'genealogyServicesGrid',leisure:'leisureServicesGrid'};
     const cats=nexusConfig.categories||[];
-    const apps=nexusConfig.applications||[];
+    const apps=(nexusConfig.applications||[]).filter(a=>String(a.id||'').toLowerCase()!=='stylia');
     for(const [categoryId,containerId] of Object.entries(map)){
       const box=$(containerId);if(!box)continue;
       const items=apps.filter(a=>a.visible!==false&&a.category===categoryId).sort((a,b)=>(a.order||0)-(b.order||0));
@@ -81,6 +81,7 @@
     }
     dynamicCommands={};
     for(const a of (cfg.applications||[])){
+      if(String(a.id||'').toLowerCase()==='stylia')continue;
       if(a.visible===false||!a.url)continue;
       const cmd=String(a.command||a.name||a.id).trim().toLowerCase();
       if(cmd)dynamicCommands[cmd]=a.url;
@@ -255,7 +256,7 @@
       'Bonjour Lénaïc. Le terminal a terminé ses vérifications','Bienvenue à bord. Les archives personnelles sont ouvertes','Connexion établie. Aucun incident majeur n’a été signalé','Nouveau jour détecté. Les circuits semblent étonnamment coopératifs','Le tableau de bord est réveillé. Lui aussi aurait préféré cinq minutes de plus','Session quotidienne initialisée. L’otarie confirme sa présence','Le terminal 3615 LÉNAÏC est opérationnel','Les données du jour sont prêtes. Le café reste sous ta responsabilité','Le Minitel a démarré sans demander de mise à jour. Profitons-en','NEXUS a compté les applications : aucune ne s’est échappée pendant la nuit','Le service informatique imaginaire confirme que tout clignote normalement','Les tubes cathodiques virtuels sont chauds et légèrement prétentieux','Le standard est ouvert. Aucun opérateur humain n’a été dérangé','Le terminal s’est auto-déclaré prêt à affronter les formulaires','Les octets sont rangés. Enfin, la plupart','Le comité central du 3615 vient d’approuver cette journée à une courte majorité','Le système a consulté l’otarie avant de démarrer. Elle n’a opposé aucun veto','Le serveur local n’existe pas vraiment, mais il est quand même de bonne humeur','Le portail a vérifié l’heure deux fois. Elle continue de passer','Les voyants sont au vert, au cyan et parfois à l’ambre pour des raisons esthétiques'
     ];
     const middles=[
-      'Tu peux avancer tranquillement, une chose après l’autre.','Les petites actions restent officiellement reconnues comme des actions.','Aucun comité ne t’oblige à tout faire parfaitement.','Le programme peut évoluer sans provoquer d’effondrement administratif.','Le niveau général de mystère demeure acceptable.','Garde un peu de place pour l’imprévu et une autre pour le goûter.','Les priorités ont été examinées par un sous-comité qui nie toute responsabilité.','La machine estime que la journée est statistiquement compatible avec une journée.','Toute tâche terminée avant d’être commencée sera signalée à la direction.','Un clic bien placé vaut parfois trois tableaux Excel.','Les archives ne se consulteront malheureusement pas toutes seules. Nous avons vérifié.','CAP recommande de bouger ; Culina souhaite savoir ce qu’on mange ; Stylia juge silencieusement la tenue.','Les Gémeaux disposent aujourd’hui d’un quota exceptionnel de changements d’avis.','Le bouton retour reste autorisé par décret.','Une pause de cinq minutes ne sera pas inscrite au casier administratif.','Si une liste devient trop longue, le terminal conseille techniquement de fermer les yeux quelques secondes.','L’algorithme du jour a été certifié « probablement raisonnable ».','Les dossiers sans urgence immédiate ont reçu l’autorisation de patienter.','Le progrès reste possible sans ouvrir dix-sept onglets.','La productivité maximale n’est pas une obligation contractuelle du 3615.'
+      'Tu peux avancer tranquillement, une chose après l’autre.','Les petites actions restent officiellement reconnues comme des actions.','Aucun comité ne t’oblige à tout faire parfaitement.','Le programme peut évoluer sans provoquer d’effondrement administratif.','Le niveau général de mystère demeure acceptable.','Garde un peu de place pour l’imprévu et une autre pour le goûter.','Les priorités ont été examinées par un sous-comité qui nie toute responsabilité.','La machine estime que la journée est statistiquement compatible avec une journée.','Toute tâche terminée avant d’être commencée sera signalée à la direction.','Un clic bien placé vaut parfois trois tableaux Excel.','Les archives ne se consulteront malheureusement pas toutes seules. Nous avons vérifié.','CAP recommande de bouger ; Culina souhaite savoir ce qu’on mange ; l’otarie supervise le reste.','Les Gémeaux disposent aujourd’hui d’un quota exceptionnel de changements d’avis.','Le bouton retour reste autorisé par décret.','Une pause de cinq minutes ne sera pas inscrite au casier administratif.','Si une liste devient trop longue, le terminal conseille techniquement de fermer les yeux quelques secondes.','L’algorithme du jour a été certifié « probablement raisonnable ».','Les dossiers sans urgence immédiate ont reçu l’autorisation de patienter.','Le progrès reste possible sans ouvrir dix-sept onglets.','La productivité maximale n’est pas une obligation contractuelle du 3615.'
     ];
     const endings=[
       'Bonne exploration.','Le poste de commande est à toi.','Les boutons attendent des instructions.','La situation est sous contrôle, au sens large.','Aucune urgence cosmique n’a été détectée.','Le terminal te souhaite une journée raisonnablement glorieuse.','Merci de ne pas nourrir les formulaires après minuit.','Bonne chance avec les humains et leurs interfaces.','Le service qualité a tamponné « ça devrait aller ».','L’otarie reste joignable en cas de crise diplomatique.','Pense à sauvegarder les découvertes avant de proclamer victoire.','Le 3615 décline toute responsabilité en cas de bonne idée soudaine.','Fin du communiqué. Reprise des activités normales.','La direction remercie le café pour sa coopération.','Le terminal reste ouvert jusqu’à nouvel ordre, c’est-à-dire tout le temps.'
@@ -912,6 +913,32 @@
     saveSavings52(state);renderSavings52();renderV9Today();renderV9System();
   });
 
+  // Rappels contextuels : tous les petits rappels ponctuels vivent juste au-dessus de l’otarie.
+  const CONTEXT_REMINDERS_KEY='3615-context-reminders-v1';
+  function contextReminderStore(){const raw=readJsonStorage(CONTEXT_REMINDERS_KEY);return raw&&typeof raw==='object'?raw:{fruit:{},cleaning:{}}}
+  function saveContextReminderStore(s){localStorage.setItem(CONTEXT_REMINDERS_KEY,JSON.stringify(s))}
+  function fruitReminderSlot(date=new Date()){
+    const h=date.getHours();
+    if(h>=11&&h<14)return 'lunch';
+    if(h>=19&&h<22)return 'dinner';
+    return null;
+  }
+  function renderContextualReminders(){
+    const now=new Date(),key=localDateKey(now),store=contextReminderStore(),slot=fruitReminderSlot(now);
+    store.fruit=store.fruit&&typeof store.fruit==='object'?store.fruit:{};store.cleaning=store.cleaning&&typeof store.cleaning==='object'?store.cleaning:{};
+    const fruit=$('fruitReminder3615'),clean=$('cleaningReminder3615'),zone=$('contextRemindersZone');
+    const fruitKey=slot?`${key}:${slot}`:'',fruitEntry=fruitKey?store.fruit[fruitKey]:null;
+    const fruitDone=typeof fruitEntry==='string'||Boolean(fruitEntry?.done),fruitSnoozed=Number(fruitEntry?.snoozeUntil||0)>Date.now();
+    const fruitVisible=Boolean(slot&&!fruitDone&&!fruitSnoozed);
+    if(fruit){fruit.hidden=!fruitVisible;if(fruitVisible)setText('fruitReminder3615Text',slot==='lunch'?'Déjeuner : pense à ajouter un fruit si tu n’en as pas encore pris.':'Dîner : un fruit pour terminer le repas ?')}
+    const cleaningVisible=now.getDay()===2&&now.getHours()>=13&&now.getHours()<18&&!store.cleaning[key];
+    if(clean){clean.hidden=!cleaningVisible;const cb=$('cleaningReminder3615Done');if(cb)cb.checked=Boolean(store.cleaning[key])}
+    if(zone)zone.hidden=!(fruitVisible||cleaningVisible);
+  }
+  $('fruitReminder3615Done')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore();s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={done:new Date().toISOString()};saveContextReminderStore(s);renderContextualReminders()});
+  $('fruitReminder3615Later')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore();s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={snoozeUntil:Date.now()+30*60*1000};saveContextReminderStore(s);renderContextualReminders()});
+  $('cleaningReminder3615Done')?.addEventListener('change',e=>{const s=contextReminderStore();s.cleaning=s.cleaning||{};if(e.target.checked)s.cleaning[localDateKey()]=new Date().toISOString();else delete s.cleaning[localDateKey()];saveContextReminderStore(s);renderContextualReminders()});
+
   function renderBusStatus(){
     if(!window.LenaicBus){setText('busStatus','HORS LIGNE');setText('busStatusDetail','Bus non chargé');return}
     const pending=LenaicBus.pending();
@@ -924,19 +951,19 @@
     setText('capStatus',hasCompleteSleep(sleep)?'NUIT OK':'PRÊT');
     setText('capStatusDetail',hasCompleteSleep(sleep)?`${sleep.hours} h enregistrées`:'Santé & récupération');
   }
-  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();renderV9All()});
+  if(window.LenaicBus)LenaicBus.subscribe(()=>{renderSleepPanel();renderBusStatus();renderCapLive();renderCulinaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();renderV9All()});
   window.addEventListener('storage',e=>{
     if(e.key===NEXUS_CONFIG_KEY)loadNexusConfig().then(()=>renderScribeLive());
     if(e.key==='cap-data'){renderSleepPanel();renderBusStatus();renderV9Health();renderV9Today();renderV9System()}
     if(e.key===CAP_SNAPSHOT_KEY){renderCapLive();renderV9Health();renderV9Today();renderV9System()}
     if(e.key===CULINA_SNAPSHOT_KEY){renderCulinaLive();renderBusStatus();renderV9Daily();renderV9Today()}
-    if(e.key===STYLIA_SNAPSHOT_KEY){renderStyliaLive();renderBusStatus();renderV9Daily()}
     if(e.key===EXPRESS_SNAPSHOT_KEY){renderExpressLive();renderBusStatus();renderV9Info()}
     if([ARBORIS_DATA_KEY,SCRIPTORIA_DATA_KEY,PISTORIA_DATA_KEY].includes(e.key)){renderGenealogyOffice();syncGenealogyTab();renderAnniversaries()}
     if(e.key===ARIANE_DATA_KEY){renderArianeLive();syncGenealogyTab();renderV9Archives()}
     if(e.key===SCRIBE_DATA_KEY||e.key===SCRIBE_SNAPSHOT_KEY){renderScribeLive();renderV9Archives();renderV9Today();renderV9System()}
     if(e.key===MEDITATION_KEY)renderMeditation();
     if(e.key===SAVINGS52_KEY){renderSavings52();renderV9Today();renderV9System()}
+    if(e.key===CONTEXT_REMINDERS_KEY)renderContextualReminders();
   });
 
 
@@ -991,11 +1018,6 @@
     setText('dailyCulinaState',plans.length?`${plans.length} REPAS PRÉVU${plans.length>1?'S':''}`:'RIEN DE PROGRAMMÉ');
     const r=$('dailyCulinaRows');if(r)r.innerHTML=plans.length?plans.map(p=>`<div class="daily-row"><div><span>${p.mealType==='lunch'?'CE MIDI':p.mealType==='dinner'?'CE SOIR':'REPAS'}</span><strong>${escapeHtml3615(p.name||'Repas Culina')}</strong><small>${formatClock(p.at)} · ${Math.round(Number(p.calories)||0)} kcal · ${Number(p.missingCount)||0} ingrédient(s) manquant(s)</small></div><b>${Number(p.missingCount)?'À COMPLÉTER':'PRÊT'}</b></div>`).join(''):'<div class="express-empty">Aucun repas programmé aujourd’hui.</div>';
     const k=$('dailyCulinaKpis');if(k)k.innerHTML=`<span>${Array.isArray(shopping)?shopping.length:0} COURSE(S)</span><span>${Array.isArray(leftovers)?leftovers.length:0} RESTE(S)</span><span>${stock&&typeof stock==='object'?Object.keys(stock).length:0} ZONE(S) DE STOCK</span>`;
-    const snap=readStyliaSnapshot(),box=$('dailyStyliaDetail');
-    if(!snap){setText('dailyStyliaState','AUCUNE TENUE');if(box)box.innerHTML='<div class="express-empty">Valide une tenue dans Stylia pour la retrouver ici.</div>';return}
-    setText('dailyStyliaState',snap.date===localDateKey()?'VALIDÉE AUJOURD’HUI':'DERNIÈRE TENUE');
-    const defs=[['top','HAUT'],['bottom','BAS'],['outer','COUCHE'],['shoes','CHAUSSURES'],['accessory','ACCESSOIRE']].filter(([key])=>snap[key]);
-    if(box)box.innerHTML=`<div class="daily-stylia-hero"><div><strong>${escapeHtml3615(snap.name||'Tenue Stylia')}</strong><p>${escapeHtml3615(snap.why||'Tenue validée.')}</p></div><b>${snap.rain?'☂ PARAPLUIE':'MÉTÉO OK'}</b></div><div class="daily-stylia-parts">${defs.map(([key,label])=>`<span>${label} · ${escapeHtml3615(snap[key].piece||'—')} · ${escapeHtml3615(snap[key].shade||'—')}</span>`).join('')}</div>`;
   }
   function renderInfoBreakdown(articles,meta={}){
     const all=Array.isArray(articles)?articles:[];
@@ -1148,8 +1170,8 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
+  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderContextualReminders();renderCapLive();renderCulinaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
   loadNexusConfig();loadWeather();loadNameday();
-  setInterval(()=>{renderContext();renderSavings52();renderCapLive();renderCulinaLive();renderStyliaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderV9All();},60000);
+  setInterval(()=>{renderContext();renderSavings52();renderContextualReminders();renderCapLive();renderCulinaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderV9All();},60000);
   setInterval(renderCulinaLive,3000);
 })();
