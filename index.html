@@ -10,7 +10,7 @@
 <meta http-equiv="Expires" content="0"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
 <link href="assets/favicon.svg?v=20260914-1351-v99" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=20260918-context-v911" rel="stylesheet"/>
+<link href="css/style.css?v=20260920-rdv-v912" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -39,12 +39,13 @@
 <nav aria-label="Navigation 3615" class="service-line">
 <button class="service-key active" data-section="home">[0] ACCUEIL</button>
 <button class="service-key" data-section="aujourdhui">[1] AUJOURD’HUI</button>
-<button class="service-key" data-section="quotidien">[2] QUOTIDIEN</button>
-<button class="service-key" data-section="sante">[3] SANTÉ</button>
-<button class="service-key" data-section="informations">[4] INFORMATIONS</button>
-<button class="service-key" data-section="genealogie">[5] GÉNÉALOGIE</button>
-<button class="service-key" data-section="archives">[6] ARCHIVES</button>
-<button class="service-key" data-section="detente">[7] DÉTENTE</button>
+<button class="service-key" data-section="rdv">[2] RDV</button>
+<button class="service-key" data-section="quotidien">[3] QUOTIDIEN</button>
+<button class="service-key" data-section="sante">[4] SANTÉ</button>
+<button class="service-key" data-section="informations">[5] INFORMATIONS</button>
+<button class="service-key" data-section="genealogie">[6] GÉNÉALOGIE</button>
+<button class="service-key" data-section="archives">[7] ARCHIVES</button>
+<button class="service-key" data-section="detente">[8] DÉTENTE</button>
 <button class="service-key" data-section="systeme">[9] SYSTÈME</button>
 <button class="notification-bell" id="notificationBell" type="button" title="Notifications">✉ <b>0</b></button><span class="line-status"><i></i> BUS V2 ACTIF</span>
 </nav>
@@ -240,8 +241,32 @@
 <div class="retro-head"><span>DEMAIN</span><strong id="tomorrowState">APERÇU</strong></div>
 <div class="tomorrow-grid" id="tomorrowGrid"><div class="express-empty">Préparation de demain…</div></div>
 </article>
+</section><section class="terminal-section" id="rdv">
+<div class="section-title"><span>3615.R02</span><h2>RDV</h2></div>
+<p class="section-lead">Ton agenda personnel : rendez-vous, rappels et alertes, avec notification à l’heure choisie.</p>
+<article class="minitel-card rdv-notification-card">
+<div class="retro-head"><span>ALERTE.TEL</span><strong id="rdvNotificationState">VÉRIFICATION…</strong></div>
+<div class="rdv-notification-row"><div><strong>NOTIFICATIONS 3615</strong><p id="rdvNotificationMeta">Autorise les notifications pour recevoir une alerte système quand 3615 est actif.</p></div><button class="minitel-action" id="rdvEnableNotifications" type="button">ACTIVER</button></div>
+<div class="rdv-phone-note">📱 Pour une alerte garantie même si 3615 est complètement fermé, utilise <b>📅 TÉLÉPHONE</b> sur le rendez-vous : l’événement est ajouté au calendrier du téléphone avec son alarme.</div>
+</article>
+<article class="minitel-card rdv-editor-card">
+<div class="retro-head"><span>AGENDA.EDIT</span><strong id="rdvFormState">NOUVEAU RENDEZ-VOUS</strong></div>
+<form class="rdv-form" id="rdvForm">
+<input id="rdvEditId" type="hidden"/>
+<label class="rdv-field rdv-title-field"><span>INTITULÉ</span><input id="rdvTitle" maxlength="100" placeholder="Ex. Débat, dentiste, appel…" required type="text"/></label>
+<label class="rdv-field"><span>DATE</span><input id="rdvDate" required type="date"/></label>
+<label class="rdv-field"><span>HEURE</span><input id="rdvTime" required type="time"/></label>
+<label class="rdv-field"><span>TYPE</span><select id="rdvType"><option value="rdv">RENDEZ-VOUS</option><option value="rappel">RAPPEL</option><option value="alerte">ALERTE</option></select></label>
+<label class="rdv-field"><span>NOTIFICATION</span><select id="rdvNotify"><option value="0">À L’HEURE H</option><option value="5">5 MIN AVANT</option><option value="10">10 MIN AVANT</option><option value="30">30 MIN AVANT</option><option value="60">1 H AVANT</option><option value="1440">1 JOUR AVANT</option></select></label>
+<label class="rdv-field rdv-note-field"><span>NOTE</span><textarea id="rdvNote" maxlength="300" placeholder="Lieu, chaîne, informations utiles…" rows="3"></textarea></label>
+<div class="rdv-form-actions"><button class="minitel-action" id="rdvSaveBtn" type="submit">AJOUTER AU RDV</button><button class="minitel-action secondary" hidden id="rdvCancelEdit" type="button">ANNULER</button></div>
+</form>
+</article>
+<div class="rdv-list-head"><div><span>PROCHAINS</span><strong id="rdvUpcomingState">—</strong></div><button class="text-key" id="rdvExportAll" type="button">📅 EXPORTER À VENIR</button></div>
+<div class="rdv-list" id="rdvUpcomingList"><div class="express-empty">Aucun rendez-vous enregistré.</div></div>
+<details class="minitel-card rdv-history"><summary>HISTORIQUE <span id="rdvPastCount">0</span></summary><div class="rdv-list" id="rdvPastList"></div></details>
 </section><section class="terminal-section" id="quotidien">
-<div class="section-title"><span>3615.Q02</span><h2>QUOTIDIEN</h2></div>
+<div class="section-title"><span>3615.Q03</span><h2>QUOTIDIEN</h2></div>
 <p class="section-lead">Cuisine et habitudes utiles : ce qui t’accompagne concrètement au fil de la journée.</p>
 <article class="minitel-card daily-detail-card">
 <div class="retro-head"><span>CULINA.JOUR</span><strong id="dailyCulinaState">SYNCHRONISATION…</strong></div>
@@ -252,7 +277,7 @@
 <div class="section-subtitle"><span>RACCOURCIS</span><strong>APPLICATIONS DU QUOTIDIEN</strong></div>
 <div class="portal-app-grid"><a class="portal-app-card" href="../culina/"><b>CULINA</b><span>Recettes · stocks · repas · courses</span><i>CULINA →</i></a><a class="portal-app-card" href="../cap/"><b>CAP</b><span>Sport · nutrition · sommeil</span><i>CAP →</i></a></div>
 </section><section class="terminal-section" id="sante">
-<div class="section-title"><span>3615.S03</span><h2>SANTÉ</h2></div>
+<div class="section-title"><span>3615.S04</span><h2>SANTÉ</h2></div>
 <p class="section-lead">Tes apports au fil de la journée, la méditation, puis le suivi CAP.</p>
 <article class="minitel-card nutrition-day-card">
 <div class="retro-head"><span>NUTRITION.AUJOURD’HUI</span><strong id="healthNutritionState">CAP</strong></div>
@@ -274,13 +299,13 @@
 <article class="minitel-card"><div class="retro-head"><span>CAP.MESURES</span><strong id="healthMeasureState">—</strong></div><div class="health-lines" id="healthMeasureDetail"></div></article>
 </div>
 </section><section class="terminal-section" id="informations">
-<div class="section-title"><span>3615.I04</span><h2>INFORMATIONS</h2></div>
+<div class="section-title"><span>3615.I05</span><h2>INFORMATIONS</h2></div>
 <p class="section-lead">Lénaïc Express déplié en une, actualités locales et sujets généalogiques.</p>
 <article class="minitel-card express-info-card"><div class="retro-head"><span>EXPRESS.EDITION</span><strong id="expressInfoState">CHARGEMENT…</strong></div><div class="express-headlines express-headlines-large" id="expressInfoHeadlines"><div class="express-empty">Récupération de l’édition personnalisée…</div></div><div class="cap-live-foot"><span id="expressInfoFoot">ÉDITION PERSONNALISÉE</span><a href="../lenaic-express/">OUVRIR LÉNAÏC EXPRESS →</a></div></article>
 <div class="info-split"><article class="minitel-card"><div class="retro-head"><span>LOCAL</span><strong>CLERMONT-FERRAND / RÉGION</strong></div><div class="compact-news" id="localNewsList"></div></article><article class="minitel-card"><div class="retro-head"><span>GENEALOGIE.ACTU</span><strong>SÉLECTION</strong></div><div class="compact-news" id="genealogyNewsList"></div></article></div>
 <article class="minitel-card sync-card"><div class="retro-head"><span>DERNIERE.MAJ</span><strong id="infoLastUpdate">—</strong></div><p id="infoUpdateMeta">Lénaïc Express n’a pas encore publié d’édition.</p></article>
 </section><section class="terminal-section" id="genealogie">
-<div class="section-title"><span>3615.G05</span><h2>GÉNÉALOGIE</h2></div>
+<div class="section-title"><span>3615.G06</span><h2>GÉNÉALOGIE</h2></div>
 <p class="section-lead">Anniversaires familiaux, contexte de travail partagé, état du Bureau généalogique et recherche transversale.</p>
 <article class="minitel-card genealogy-context-card" id="genealogyContextCard"><div class="retro-head"><span>CONTEXTE.ACTIF</span><strong>CHARGEMENT…</strong></div><p>Lecture du contexte généalogique partagé…</p></article>
 <article class="minitel-card anniversaries-card"><div class="retro-head"><span>ANNIVERSAIRES</span><strong id="anniversaryState">7 PROCHAINS JOURS</strong></div><div class="anniversary-groups" id="anniversaryList"><div class="express-empty">Lecture d’Arboris…</div></div></article>
@@ -291,13 +316,13 @@
 </div>
 <article class="minitel-card universal-search-card"><div class="retro-head"><span>RECHERCHE.UNIVERSELLE</span><strong>5 BASES LOCALES</strong></div><form class="universal-search" id="genealogySearchForm"><input autocomplete="off" id="genealogySearchInput" placeholder="Nom, prénom, lieu, cote…" type="search"/><button type="submit">CHERCHER</button></form><div class="search-results" id="genealogySearchResults"><div class="express-empty">Saisis une recherche pour interroger Arboris, Scriptoria, Pistoria, Ariane et Scribe.</div></div></article>
 </section><section class="terminal-section" id="archives">
-<div class="section-title"><span>3615.A06</span><h2>ARCHIVES</h2></div>
+<div class="section-title"><span>3615.A07</span><h2>ARCHIVES</h2></div>
 <p class="section-lead">Enquêtes Ariane, requêtes Scribe et activité documentaire récente.</p>
 <article aria-label="Enquête active dans Le Fil d’Ariane" class="minitel-card ariane-live-card" id="archivesArianeCard"><div class="retro-head"><span>ARIANE.ENQUETE</span><strong id="arianeLiveState">LECTURE LOCALE…</strong></div><div class="ariane-case-box"><span class="ariane-case-kicker">ENQUÊTE ACTIVE</span><strong id="arianeCaseTitle">AUCUNE ENQUÊTE ACTIVE</strong><small id="arianeCaseMeta">Ouvre Ariane pour sélectionner un dossier.</small></div><div class="ariane-next" hidden="" id="arianeNextBox"><span>PROCHAINE ACTION</span><strong id="arianeNextAction">—</strong><small id="arianeNextRef">—</small></div><div class="cap-live-foot"><span id="arianeLiveFoot">DOSSIERS D’ENQUÊTES</span><a href="../aide_archive/Ariane.html">OUVRIR ARIANE →</a></div></article>
 <article class="minitel-card"><div class="retro-head"><span>SCRIBE.REQUETES</span><strong id="archiveScribeState">SUIVI</strong></div><div class="scribe-tab-counts"><b><em id="scribeCountDraft">0</em>BROUILLONS</b><b><em id="scribeCountAwaiting">0</em>EN ATTENTE</b><b><em id="scribeCountFollowup">0</em>RELANCÉES</b><b><em id="scribeCountReceived">0</em>RÉPONSES</b></div><p id="genealogyTabScribeMeta">Aucune requête suivie.</p><div class="scribe-attention" id="archiveScribeList"></div><div class="cap-live-foot"><span>ASSISTANT DE REQUÊTES AUX ARCHIVES</span><a href="../aide_archive/Scribe-v3.html">OUVRIR SCRIBE →</a></div></article>
 <article class="minitel-card"><div class="retro-head"><span>ACTIVITE.RECENTE</span><strong>ARCHIVES</strong></div><div class="activity-feed" id="archiveActivityFeed"><div class="express-empty">Aucune activité récente détectée.</div></div></article>
 </section><section class="terminal-section" id="detente">
-<div class="section-title"><span>3615.D07</span><h2>DÉTENTE</h2></div>
+<div class="section-title"><span>3615.D08</span><h2>DÉTENTE</h2></div>
 <p class="section-lead">Mini-jeux, uchronies, une otarie et plusieurs fonctions dont l’utilité n’a pas été démontrée.</p><article class="minitel-card mini-games-card" id="miniGamesCard">
 <div class="retro-head"><span>3615.JEUX</span><strong>MINI-JEUX</strong></div>
 <div class="mini-game-tabs" role="tablist" aria-label="Choix du mini-jeu">
@@ -338,24 +363,24 @@
 <article class="minitel-card"><div class="retro-head"><span>BUS</span><strong id="systemBusState">—</strong></div><div class="health-lines" id="systemBusDetail"></div></article>
 <article class="minitel-card"><div class="retro-head"><span>SAUVEGARDES</span><strong>COFFRE NEXUS</strong></div><div class="health-lines" id="systemBackupDetail"></div><a class="inline-link" href="cms.html#data">GÉRER DANS NEXUS →</a></article>
 </div>
-<article class="minitel-card command-help-card"><div class="retro-head"><span>COMMANDES</span><strong>AIDE TERMINAL</strong></div><div class="command-chips"><span>0 ACCUEIL</span><span>1 AUJOURD’HUI</span><span>2 QUOTIDIEN</span><span>3 SANTÉ</span><span>4 INFOS</span><span>5 GÉNÉALOGIE</span><span>6 ARCHIVES</span><span>7 DÉTENTE</span><span>9 SYSTÈME</span><span>METEO</span><span>MEDITATION</span><span>EPARGNE</span><span>CAP</span><span>CULINA</span><span>SCRIBE</span><span>ARIANE</span><span>NEXUS</span><span>OTARIE</span></div></article>
+<article class="minitel-card command-help-card"><div class="retro-head"><span>COMMANDES</span><strong>AIDE TERMINAL</strong></div><div class="command-chips"><span>0 ACCUEIL</span><span>1 AUJOURD’HUI</span><span>2 RDV</span><span>3 QUOTIDIEN</span><span>4 SANTÉ</span><span>5 INFOS</span><span>6 GÉNÉALOGIE</span><span>7 ARCHIVES</span><span>8 DÉTENTE</span><span>9 SYSTÈME</span><span>METEO</span><span>MEDITATION</span><span>EPARGNE</span><span>CAP</span><span>CULINA</span><span>SCRIBE</span><span>ARIANE</span><span>NEXUS</span><span>OTARIE</span></div></article>
 </section></main>
 <footer class="terminal-footer">
 <form class="command-line" id="commandForm">
 <label for="commandInput">COMMANDE &gt;</label>
-<input autocomplete="off" id="commandInput" placeholder="0–7, 9, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
+<input autocomplete="off" id="commandInput" placeholder="0–9, RDV, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.10</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.12</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
-<script src="js/lenaic-bus.js?v=20260918-context-v911"></script>
-<script src="js/app.js?v=20260918-context-v911"></script>
-<script src="js/minigames.js?v=20260918-context-v911"></script>
-<script src="js/ecosystem-v2.js?v=20260918-context-v911"></script>
+<script src="js/lenaic-bus.js?v=20260920-rdv-v912"></script>
+<script src="js/app.js?v=20260920-rdv-v912"></script>
+<script src="js/minigames.js?v=20260920-rdv-v912"></script>
+<script src="js/ecosystem-v2.js?v=20260920-rdv-v912"></script>
 
 <script>
-window.__3615_BUILD__='20260914-1351-v99';
+window.__3615_BUILD__='20260920-rdv-v912';
 (async()=>{
   try{
     const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});

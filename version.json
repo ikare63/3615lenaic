@@ -1,6 +1,6 @@
 {
-  "version": "9.11",
-  "build": "20260918-context-reminders-v911",
+  "version": "9.12",
+  "build": "20260920-rdv-v912",
   "minitelRun": true,
   "levels": 8
 }
