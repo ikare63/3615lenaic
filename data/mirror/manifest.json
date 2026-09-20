@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T20:46:29.302967+00:00",
+  "generatedAt": "2026-09-20T23:13:54.677801+00:00",
   "items": [
     {
       "id": "culina-recipes",
@@ -9,7 +9,7 @@
       "ok": true,
       "bytes": 1374926,
       "sha256": "aad9a6f35d90a48d0ae8e8a43d0432f2f08cd3bb05f1159ec8afeefe4180593e",
-      "fetchedAt": "2026-09-20T20:46:29.746989+00:00"
+      "fetchedAt": "2026-09-20T23:13:55.264029+00:00"
     },
     {
       "id": "express-news",
@@ -19,7 +19,7 @@
       "ok": true,
       "bytes": 250223,
       "sha256": "e17e261f78da093f859a054736f4780aa37d40f09fb9e9d35823efbec4f854f3",
-      "fetchedAt": "2026-09-20T20:46:29.986358+00:00"
+      "fetchedAt": "2026-09-20T23:13:55.546278+00:00"
     },
     {
       "id": "express-preferences",
@@ -29,7 +29,7 @@
       "ok": true,
       "bytes": 3533,
       "sha256": "39aff1372194062a14761529319c6cb12704d6c63add5de5f1dd64cbc86ae6ce",
-      "fetchedAt": "2026-09-20T20:46:30.065206+00:00"
+      "fetchedAt": "2026-09-20T23:13:55.679851+00:00"
     },
     {
       "id": "express-sources",
@@ -39,7 +39,7 @@
       "ok": true,
       "bytes": 5414,
       "sha256": "f84813a59b6cb8980652f5040b7ae9685a93837679824361a38868d3298b0560",
-      "fetchedAt": "2026-09-20T20:46:30.162632+00:00"
+      "fetchedAt": "2026-09-20T23:13:55.791548+00:00"
     },
     {
       "id": "express-watches",
@@ -49,7 +49,7 @@
       "ok": true,
       "bytes": 127,
       "sha256": "1887139f2d686619519a3672ddccc1ab137354d7b33edfe1d0a26d272d470c92",
-      "fetchedAt": "2026-09-20T20:46:30.245053+00:00"
+      "fetchedAt": "2026-09-20T23:13:55.912424+00:00"
     }
   ]
 }
