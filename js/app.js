@@ -293,6 +293,7 @@
     document.querySelectorAll('.service-key').forEach(b=>b.classList.toggle('active',b.dataset.section===id));
     if(id==='detente')initAquarium();
     if(id==='aujourdhui'){loadWeather();renderEphemeris();renderV9Today()}
+    if(id==='rdv')renderRdv();
     if(id==='quotidien')renderV9Daily();
     if(id==='sante'){renderMeditation();renderV9Health()}
     if(id==='informations')renderV9Info();
@@ -939,6 +940,92 @@
   $('fruitReminder3615Later')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore();s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={snoozeUntil:Date.now()+30*60*1000};saveContextReminderStore(s);renderContextualReminders()});
   $('cleaningReminder3615Done')?.addEventListener('change',e=>{const s=contextReminderStore();s.cleaning=s.cleaning||{};if(e.target.checked)s.cleaning[localDateKey()]=new Date().toISOString();else delete s.cleaning[localDateKey()];saveContextReminderStore(s);renderContextualReminders()});
 
+  // RDV — agenda local + notifications système + export calendrier téléphone.
+  const RDV_KEY='3615-rdv-v1';
+  let rdvSwRegistrationPromise=null;
+  function rdvStore(){const raw=readJsonStorage(RDV_KEY);return Array.isArray(raw)?raw:[]}
+  function saveRdvStore(rows){localStorage.setItem(RDV_KEY,JSON.stringify(rows));renderRdv();renderV9Today();checkRdvNotifications()}
+  function rdvDateTime(ev){const d=new Date(`${ev.date||''}T${ev.time||'00:00'}:00`);return Number.isFinite(d.getTime())?d:null}
+  function rdvTypeLabel(type){return type==='alerte'?'ALERTE':type==='rappel'?'RAPPEL':'RENDEZ-VOUS'}
+  function rdvNotifyLabel(mins){const n=Number(mins)||0;if(n===0)return 'À L’HEURE H';if(n===1440)return '1 JOUR AVANT';if(n===60)return '1 H AVANT';return `${n} MIN AVANT`}
+  function rdvEventsForDate(key){return rdvStore().filter(ev=>!ev.done&&ev.date===key).sort((a,b)=>(a.time||'').localeCompare(b.time||''))}
+  function rdvNextEvent(){const now=Date.now();return rdvStore().filter(ev=>!ev.done&&rdvDateTime(ev)?.getTime()>=now).sort((a,b)=>rdvDateTime(a)-rdvDateTime(b))[0]||null}
+  function showRdvToast(message){document.querySelector('.rdv-toast')?.remove();const n=document.createElement('div');n.className='rdv-toast';n.textContent=message;document.body.appendChild(n);setTimeout(()=>n.remove(),4200)}
+  function rdvDefaultForm(){
+    const now=new Date(),next=new Date(now.getTime()+30*60000);next.setMinutes(Math.ceil(next.getMinutes()/30)*30,0,0);
+    if($('rdvDate')&&!$('rdvDate').value)$('rdvDate').value=localDateKey(next);
+    if($('rdvTime')&&!$('rdvTime').value)$('rdvTime').value=`${String(next.getHours()).padStart(2,'0')}:${String(next.getMinutes()).padStart(2,'0')}`;
+  }
+  function resetRdvForm(){if(!$('rdvForm'))return;$('rdvForm').reset();$('rdvEditId').value='';$('rdvNotify').value='0';$('rdvType').value='rdv';$('rdvCancelEdit').hidden=true;setText('rdvFormState','NOUVEAU RENDEZ-VOUS');setText('rdvSaveBtn','AJOUTER AU RDV');rdvDefaultForm()}
+  function editRdv(id){const ev=rdvStore().find(x=>x.id===id);if(!ev)return;$('rdvEditId').value=ev.id;$('rdvTitle').value=ev.title||'';$('rdvDate').value=ev.date||'';$('rdvTime').value=ev.time||'';$('rdvType').value=ev.type||'rdv';$('rdvNotify').value=String(Number(ev.notifyMinutes)||0);$('rdvNote').value=ev.note||'';$('rdvCancelEdit').hidden=false;setText('rdvFormState','MODIFICATION');setText('rdvSaveBtn','ENREGISTRER');$('rdvTitle').focus();$('rdvEditorCard')?.scrollIntoView?.({behavior:'smooth',block:'start'})}
+  function ensureRdvServiceWorker(){
+    if(!('serviceWorker' in navigator)||!window.isSecureContext)return Promise.resolve(null);
+    if(!rdvSwRegistrationPromise)rdvSwRegistrationPromise=navigator.serviceWorker.register('./service-worker.js').catch(()=>null);
+    return rdvSwRegistrationPromise;
+  }
+  function renderRdvNotificationState(){
+    const btn=$('rdvEnableNotifications');if(!btn)return;
+    if(!('Notification' in window)||!('serviceWorker' in navigator)||!window.isSecureContext){setText('rdvNotificationState','NON DISPONIBLE');setText('rdvNotificationMeta','Ce navigateur ne permet pas les notifications système de 3615. Utilise 📅 Téléphone pour les alarmes fiables.');btn.disabled=true;btn.textContent='INDISPONIBLE';return}
+    const p=Notification.permission;
+    setText('rdvNotificationState',p==='granted'?'AUTORISÉES':p==='denied'?'BLOQUÉES':'À ACTIVER');
+    setText('rdvNotificationMeta',p==='granted'?'3615 peut afficher une notification système tant que le navigateur maintient le site actif.':p==='denied'?'Notifications bloquées dans les réglages du navigateur. Le calendrier téléphone reste disponible.':'Autorise une fois les notifications système pour les rappels RDV.');
+    btn.disabled=p==='denied';btn.textContent=p==='granted'?'ACTIVÉ ✓':p==='denied'?'BLOQUÉ':'ACTIVER';
+  }
+  async function requestRdvNotifications(){
+    if(!('Notification' in window))return;
+    await ensureRdvServiceWorker();
+    try{const p=await Notification.requestPermission();renderRdvNotificationState();if(p==='granted'){showRdvToast('Notifications 3615 activées.');checkRdvNotifications()}}catch(e){showRdvToast('Impossible d’activer les notifications sur ce navigateur.')}
+  }
+  async function sendRdvNotification(ev){
+    const reg=await ensureRdvServiceWorker();if(!reg||Notification.permission!=='granted')return false;
+    const when=rdvDateTime(ev),body=[rdvTypeLabel(ev.type),when?when.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'',ev.note||''].filter(Boolean).join(' · ');
+    try{await reg.showNotification(`3615 RDV · ${ev.title}`,{body,tag:`3615-rdv-${ev.id}`,renotify:false,requireInteraction:true,vibrate:[180,100,180],data:{url:'./#rdv'}});return true}catch(e){return false}
+  }
+  async function checkRdvNotifications(){
+    if(!('Notification' in window)||Notification.permission!=='granted')return;
+    const rows=rdvStore(),now=Date.now();let changed=false;
+    for(const ev of rows){
+      if(ev.done||ev.notifiedAt)continue;const dt=rdvDateTime(ev);if(!dt)continue;
+      const alertAt=dt.getTime()-(Number(ev.notifyMinutes)||0)*60000,late=now-alertAt;
+      if(late>=0&&late<=60*60000){if(await sendRdvNotification(ev)){ev.notifiedAt=new Date().toISOString();changed=true}}
+    }
+    if(changed){localStorage.setItem(RDV_KEY,JSON.stringify(rows));renderRdv()}
+  }
+  function rdvItemHtml(ev){
+    const dt=rdvDateTime(ev),today=ev.date===localDateKey(),past=dt&&dt.getTime()<Date.now(),d=dt||new Date();
+    const day=d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short'}).replace('.','').toUpperCase();
+    const wd=d.toLocaleDateString('fr-FR',{weekday:'short'}).replace('.','').toUpperCase();
+    const cls=['rdv-item',today?'is-today':'',ev.done?'is-done':''].filter(Boolean).join(' '),note=ev.note?` · ${escapeHtml3615(ev.note)}`:'';
+    return `<article class="${cls}" data-rdv-id="${escapeAttr3615(ev.id)}"><div class="rdv-datebox"><span>${wd}</span><strong>${day}</strong></div><div class="rdv-copy"><span>${rdvTypeLabel(ev.type)} · ${rdvNotifyLabel(ev.notifyMinutes)}</span><strong>${escapeHtml3615(ev.title||'Sans titre')}</strong><small>${escapeHtml3615(ev.time||'—')}${note}${past&&!ev.done?' · PASSÉ':''}</small></div><div class="rdv-actions"><button class="rdv-calendar" data-rdv-action="calendar" type="button">📅 TÉLÉPHONE</button><button class="rdv-done" data-rdv-action="done" type="button">${ev.done?'RÉOUVRIR':'FAIT ✓'}</button><button data-rdv-action="edit" type="button">MODIFIER</button><button class="rdv-delete" data-rdv-action="delete" type="button">SUPPR.</button></div></article>`;
+  }
+  function renderRdv(){
+    if(!$('rdv'))return;rdvDefaultForm();renderRdvNotificationState();
+    const rows=rdvStore().slice().sort((a,b)=>(rdvDateTime(a)?.getTime()||0)-(rdvDateTime(b)?.getTime()||0)),now=Date.now();
+    const upcoming=rows.filter(ev=>!ev.done&&(rdvDateTime(ev)?.getTime()||0)>=now-5*60000),past=rows.filter(ev=>ev.done||(rdvDateTime(ev)?.getTime()||0)<now-5*60000).sort((a,b)=>(rdvDateTime(b)?.getTime()||0)-(rdvDateTime(a)?.getTime()||0));
+    setText('rdvUpcomingState',upcoming.length?`${upcoming.length} À VENIR`:'AGENDA LIBRE');setText('rdvPastCount',String(past.length));
+    const up=$('rdvUpcomingList'),pa=$('rdvPastList');if(up)up.innerHTML=upcoming.length?upcoming.map(rdvItemHtml).join(''):'<div class="express-empty">Aucun rendez-vous à venir. Utilise le formulaire pour en ajouter un.</div>';if(pa)pa.innerHTML=past.length?past.map(rdvItemHtml).join(''):'<div class="express-empty">Aucun ancien rendez-vous.</div>';
+  }
+  function icsEscape(v){return String(v||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;')}
+  function icsStamp(date){return `${date.getFullYear()}${String(date.getMonth()+1).padStart(2,'0')}${String(date.getDate()).padStart(2,'0')}T${String(date.getHours()).padStart(2,'0')}${String(date.getMinutes()).padStart(2,'0')}00`}
+  function makeRdvIcs(events){
+    const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//3615 LENAIC//RDV//FR','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+    for(const ev of events){const start=rdvDateTime(ev);if(!start)continue;const end=new Date(start.getTime()+60*60000),trigger=Number(ev.notifyMinutes)||0;lines.push('BEGIN:VEVENT',`UID:${icsEscape(ev.id)}@3615-lenaic`,`DTSTAMP:${icsStamp(new Date())}`,`DTSTART:${icsStamp(start)}`,`DTEND:${icsStamp(end)}`,`SUMMARY:${icsEscape(ev.title)}`,`DESCRIPTION:${icsEscape(ev.note||rdvTypeLabel(ev.type))}`,'BEGIN:VALARM',`TRIGGER:${trigger>0?`-PT${trigger}M`:'PT0M'}`,'ACTION:DISPLAY',`DESCRIPTION:${icsEscape(ev.title)}`,'END:VALARM','END:VEVENT')}
+    lines.push('END:VCALENDAR');return lines.join('\r\n')
+  }
+  function safeFileName(v){return String(v||'rdv').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase()||'rdv'}
+  function downloadRdvIcs(events,name='3615-rdv'){if(!events.length){showRdvToast('Aucun rendez-vous à exporter.');return}const blob=new Blob([makeRdvIcs(events)],{type:'text/calendar;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${safeFileName(name)}.ics`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);showRdvToast('Fichier calendrier créé : ouvre-le sur le téléphone pour enregistrer l’alarme.')}
+  $('rdvEnableNotifications')?.addEventListener('click',requestRdvNotifications);
+  $('rdvCancelEdit')?.addEventListener('click',resetRdvForm);
+  $('rdvForm')?.addEventListener('submit',e=>{
+    e.preventDefault();const title=$('rdvTitle').value.trim(),date=$('rdvDate').value,time=$('rdvTime').value;if(!title||!date||!time)return;
+    const rows=rdvStore(),id=$('rdvEditId').value||(`rdv-${Date.now()}-${Math.random().toString(36).slice(2,7)}`),i=rows.findIndex(x=>x.id===id),old=i>=0?rows[i]:{};
+    const ev={...old,id,title,date,time,type:$('rdvType').value,note:$('rdvNote').value.trim(),notifyMinutes:Number($('rdvNotify').value)||0,done:false,notifiedAt:null,updatedAt:new Date().toISOString(),createdAt:old.createdAt||new Date().toISOString()};if(i>=0)rows[i]=ev;else rows.push(ev);saveRdvStore(rows);resetRdvForm();showRdvToast(i>=0?'Rendez-vous mis à jour.':'Rendez-vous ajouté.');
+  });
+  $('rdv')?.addEventListener('click',e=>{const b=e.target.closest('[data-rdv-action]');if(!b)return;const row=b.closest('[data-rdv-id]'),id=row?.dataset.rdvId,rows=rdvStore(),i=rows.findIndex(x=>x.id===id);if(i<0)return;const ev=rows[i],action=b.dataset.rdvAction;if(action==='edit')editRdv(id);if(action==='delete'&&confirm(`Supprimer « ${ev.title} » ?`)){rows.splice(i,1);saveRdvStore(rows)}if(action==='done'){rows[i]={...ev,done:!ev.done,updatedAt:new Date().toISOString()};saveRdvStore(rows)}if(action==='calendar')downloadRdvIcs([ev],`${ev.date}-${ev.title}`)});
+  $('rdvExportAll')?.addEventListener('click',()=>{const now=Date.now(),events=rdvStore().filter(ev=>!ev.done&&(rdvDateTime(ev)?.getTime()||0)>=now).sort((a,b)=>rdvDateTime(a)-rdvDateTime(b));downloadRdvIcs(events,'3615-rdv-a-venir')});
+  window.addEventListener('storage',e=>{if(e.key===RDV_KEY){renderRdv();renderV9Today()}});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkRdvNotifications()});window.addEventListener('focus',checkRdvNotifications);
+
   function renderBusStatus(){
     if(!window.LenaicBus){setText('busStatus','HORS LIGNE');setText('busStatusDetail','Bus non chargé');return}
     const pending=LenaicBus.pending();
@@ -999,6 +1086,7 @@
   function renderV9Today(){
     const snap=readCapSnapshot()||{},a=snap.activity||{},m=snap.measurements||{},plans=plansOnDate(localDateKey()),scribe=readScribeSnapshot()||{},received=Array.isArray(scribe.received)?scribe.received:[],pending=Array.isArray(scribe.pending)?scribe.pending:[],threshold=scribeReminderDays(),overdue=pending.filter(x=>Number(x.ageDays)>=threshold);
     const rows=[],saving=savings52Info();
+    rdvEventsForDate(localDateKey()).forEach(ev=>rows.push({k:rdvTypeLabel(ev.type),t:ev.title||'Rendez-vous',s:`${ev.time||'—'}${ev.note?' · '+ev.note:''}`,b:'RDV'}));
     if(saving.active&&(saving.isMonday||!saving.done))rows.push({k:'ÉPARGNE',t:`${saving.amount} € à mettre de côté`,s:`Cumul validé : ${saving.saved.toLocaleString('fr-FR')} / ${SAVINGS52_TARGET.toLocaleString('fr-FR')} €`,b:saving.done?'ÉPARGNÉ':'À FAIRE'});
     rows.push({k:'CAP',t:a.title||'Activité du jour à synchroniser',s:a.title?`${Math.round(Number(a.progress)||0)} % · ${a.label||''}`:'Ouvre CAP pour actualiser',b:a.completed?'TERMINÉE':'AUJOURD’HUI'});
     plans.forEach(p=>rows.push({k:p.mealType==='lunch'?'CE MIDI':p.mealType==='dinner'?'CE SOIR':'REPAS',t:p.name||'Repas Culina',s:`${formatClock(p.at)} · ${Math.round(Number(p.calories)||0)} kcal`,b:Number(p.missingCount)?`${p.missingCount} MANQUANT${p.missingCount>1?'S':''}`:'PRÊT'}));
@@ -1009,6 +1097,7 @@
     setText('homeProgramState',rows.length?`${rows.length} REPÈRE${rows.length>1?'S':''}`:'RAS');setText('homeProgramMeta',rows[0]?`${rows[0].k} · ${rows[0].t}`:'Aucun rappel particulier.');
     const d=new Date();d.setDate(d.getDate()+1);const tkey=localDateKey(d),tPlans=plansOnDate(tkey),daily=weatherData?.daily||{},tm=[];
     if(daily.time?.[1]){const [ic,lab]=weatherLabel(daily.weather_code?.[1]);tm.push({k:'MÉTÉO',t:`${ic} ${lab}`,s:`${Math.round(daily.temperature_2m_min?.[1])}° / ${Math.round(daily.temperature_2m_max?.[1])}° · pluie ${Math.round(daily.precipitation_probability_max?.[1]||0)} %`,b:'DEMAIN'})}
+    rdvEventsForDate(tkey).forEach(ev=>tm.push({k:rdvTypeLabel(ev.type),t:ev.title||'Rendez-vous',s:`${ev.time||'—'}${ev.note?' · '+ev.note:''}`,b:'RDV'}));
     if(tPlans.length)tPlans.forEach(p=>tm.push({k:'CULINA',t:p.name||'Repas programmé',s:`${formatClock(p.at)} · ${Math.round(Number(p.calories)||0)} kcal`,b:p.mealType==='lunch'?'MIDI':p.mealType==='dinner'?'SOIR':'REPAS'}));else tm.push({k:'CULINA',t:'Aucun repas programmé',s:'Tu peux préparer demain depuis Culina.',b:'LIBRE'});
     tm.push({k:'CAP',t:'Programme de demain',s:'Le détail reste piloté par CAP.',b:'OUVRIR CAP'});
     const tb=$('tomorrowGrid');if(tb)tb.innerHTML=tm.map(r=>`<div class="tomorrow-item"><div><span>${escapeHtml3615(r.k)}</span><strong>${escapeHtml3615(r.t)}</strong><small>${escapeHtml3615(r.s)}</small></div><b>${escapeHtml3615(r.b)}</b></div>`).join('');
@@ -1080,12 +1169,13 @@
   const commandMap={
     '0':()=>showSection('home'),'accueil':()=>showSection('home'),'home':()=>showSection('home'),
     '1':()=>showSection('aujourdhui'),'aujourdhui':()=>showSection('aujourdhui'),'aujourd’hui':()=>showSection('aujourdhui'),'today':()=>showSection('aujourdhui'),'meteo':()=>showSection('aujourdhui'),'météo':()=>showSection('aujourdhui'),'epargne':()=>{showSection('home');setTimeout(()=>$('savings52Card')?.scrollIntoView({behavior:'smooth',block:'center'}),50)},'épargne':()=>{showSection('home');setTimeout(()=>$('savings52Card')?.scrollIntoView({behavior:'smooth',block:'center'}),50)},
-    '2':()=>showSection('quotidien'),'quotidien':()=>showSection('quotidien'),'daily':()=>showSection('quotidien'),
-    '3':()=>showSection('sante'),'sante':()=>showSection('sante'),'santé':()=>showSection('sante'),'meditation':()=>showSection('sante'),'méditation':()=>showSection('sante'),'nutrition':()=>showSection('sante'),
-    '4':()=>showSection('informations'),'info':()=>showSection('informations'),'infos':()=>showSection('informations'),'informations':()=>showSection('informations'),
-    '5':()=>showSection('genealogie'),'genealogie':()=>showSection('genealogie'),'généalogie':()=>showSection('genealogie'),'anniversaires':()=>showSection('genealogie'),
-    '6':()=>showSection('archives'),'archives':()=>showSection('archives'),'ariane':()=>showSection('archives'),'scribe':()=>showSection('archives'),
-    '7':()=>showSection('detente'),'detente':()=>showSection('detente'),'détente':()=>showSection('detente'),'otarie':()=>showSection('detente'),
+    '2':()=>showSection('rdv'),'rdv':()=>showSection('rdv'),'agenda':()=>showSection('rdv'),'rappel':()=>showSection('rdv'),'rappels':()=>showSection('rdv'),
+    '3':()=>showSection('quotidien'),'quotidien':()=>showSection('quotidien'),'daily':()=>showSection('quotidien'),
+    '4':()=>showSection('sante'),'sante':()=>showSection('sante'),'santé':()=>showSection('sante'),'meditation':()=>showSection('sante'),'méditation':()=>showSection('sante'),'nutrition':()=>showSection('sante'),
+    '5':()=>showSection('informations'),'info':()=>showSection('informations'),'infos':()=>showSection('informations'),'informations':()=>showSection('informations'),
+    '6':()=>showSection('genealogie'),'genealogie':()=>showSection('genealogie'),'généalogie':()=>showSection('genealogie'),'anniversaires':()=>showSection('genealogie'),
+    '7':()=>showSection('archives'),'archives':()=>showSection('archives'),'ariane':()=>showSection('archives'),'scribe':()=>showSection('archives'),
+    '8':()=>showSection('detente'),'detente':()=>showSection('detente'),'détente':()=>showSection('detente'),'otarie':()=>showSection('detente'),
     '9':()=>showSection('systeme'),'systeme':()=>showSection('systeme'),'système':()=>showSection('systeme'),'aide':()=>showSection('systeme'),'services':()=>showSection('systeme')
   };
   $('commandForm').addEventListener('submit',e=>{
@@ -1095,7 +1185,7 @@
   });
   document.addEventListener('keydown',e=>{
     if(/input|textarea|select/i.test(document.activeElement?.tagName||''))return;
-    const keySections={'0':'home','1':'aujourdhui','2':'quotidien','3':'sante','4':'informations','5':'genealogie','6':'archives','7':'detente','9':'systeme'};if(keySections[e.key])showSection(keySections[e.key]);
+    const keySections={'0':'home','1':'aujourdhui','2':'rdv','3':'quotidien','4':'sante','5':'informations','6':'genealogie','7':'archives','8':'detente','9':'systeme'};if(keySections[e.key])showSection(keySections[e.key]);
   });
 
   // Méditation — minuteur local, précis même si l’onglet passe en arrière-plan.
@@ -1170,8 +1260,11 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderContextualReminders();renderCapLive();renderCulinaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
+  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderContextualReminders();renderRdv();ensureRdvServiceWorker();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
   loadNexusConfig();loadWeather();loadNameday();
-  setInterval(()=>{renderContext();renderSavings52();renderContextualReminders();renderCapLive();renderCulinaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderV9All();},60000);
+  setInterval(()=>{renderContext();renderSavings52();renderContextualReminders();renderRdv();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderV9All();},60000);
   setInterval(renderCulinaLive,3000);
+  setInterval(checkRdvNotifications,15000);
+  if(location.hash==='#rdv')showSection('rdv');
+  window.addEventListener('hashchange',()=>{if(location.hash==='#rdv')showSection('rdv')});
 })();
