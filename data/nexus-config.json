@@ -1,10 +1,10 @@
 {
-  "version": 12,
-  "publishedAt": "2026-09-18T21:30:00Z",
+  "version": 13,
+  "publishedAt": "2026-09-20T15:20:00Z",
   "site": {
     "title": "3615 LÉNAÏC",
     "subtitle": "TABLEAU DE BORD PERSONNEL // TERMINAL LOCAL",
-    "footerLeft": "3615 LÉNAÏC // VERSION 9.11",
+    "footerLeft": "3615 LÉNAÏC // VERSION 9.12",
     "footerRight": "DONNÉES LOCALES · BUS PARTAGÉ",
     "showBusStatus": true
   },
@@ -131,52 +131,59 @@
       "visible": true
     },
     {
-      "id": "quotidien",
+      "id": "rdv",
       "code": "2",
-      "label": "QUOTIDIEN",
+      "label": "RDV",
       "order": 30,
       "visible": true
     },
     {
-      "id": "sante",
+      "id": "quotidien",
       "code": "3",
-      "label": "SANTÉ",
+      "label": "QUOTIDIEN",
       "order": 40,
       "visible": true
     },
     {
-      "id": "informations",
+      "id": "sante",
       "code": "4",
-      "label": "INFORMATIONS",
+      "label": "SANTÉ",
       "order": 50,
       "visible": true
     },
     {
-      "id": "genealogie",
+      "id": "informations",
       "code": "5",
-      "label": "GÉNÉALOGIE",
+      "label": "INFORMATIONS",
       "order": 60,
       "visible": true
     },
     {
-      "id": "archives",
+      "id": "genealogie",
       "code": "6",
-      "label": "ARCHIVES",
+      "label": "GÉNÉALOGIE",
       "order": 70,
       "visible": true
     },
     {
-      "id": "detente",
+      "id": "archives",
       "code": "7",
-      "label": "DÉTENTE",
+      "label": "ARCHIVES",
       "order": 80,
+      "visible": true
+    },
+    {
+      "id": "detente",
+      "code": "8",
+      "label": "DÉTENTE",
+      "order": 90,
       "visible": true
     },
     {
       "id": "systeme",
       "code": "9",
       "label": "SYSTÈME",
-      "order": 90,
+      "order": 100,
       "visible": true
     }
   ],
