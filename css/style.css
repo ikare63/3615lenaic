@@ -594,7 +594,7 @@ body[data-nexus-cms="v2"] .brand-sub::after{content:" · V9.10";color:var(--ambe
 @media(max-width:620px){.mini-game-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.run-level-select{padding:9px}.run-level-grid{gap:5px}.run-level-btn{min-height:61px;padding:7px}.run-level-btn strong{font-size:.52rem}}
 @media(max-width:380px){.run-level-grid{grid-template-columns:1fr}.run-level-select{overflow-y:auto}.run-level-btn{min-height:54px}}
 
-/* FORCE BUILD 20260914-1351-v99 */
+/* FORCE BUILD 20260920-rdv-v912 */
 
 /* v9.11 — zone unique des rappels ponctuels au-dessus de l’otarie */
 .home-cms-flow>[data-home-block="reminders"]{grid-column:1/-1}
@@ -609,3 +609,18 @@ body[data-nexus-cms="v2"] .brand-sub::after{content:" · V9.10";color:var(--ambe
 .context-reminder-check{display:flex;align-items:center;gap:8px;border:1px solid var(--green);padding:9px 10px;color:var(--green);font-size:.64rem;font-weight:900;cursor:pointer}.context-reminder-check input{width:18px;height:18px;accent-color:var(--green)}
 #quotidien .portal-app-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media(max-width:680px){.context-reminder{grid-template-columns:38px 1fr}.context-reminder-actions,.context-reminder-check{grid-column:1/-1}.context-reminder-actions{justify-content:flex-start}.context-reminders-title{align-items:flex-start;flex-direction:column}.portal-app-grid,#quotidien .portal-app-grid{grid-template-columns:1fr}}
+
+
+/* === V9.12 · RDV / agenda personnel === */
+.rdv-notification-card{border-color:color-mix(in srgb,var(--cyan) 62%,var(--line))}
+.rdv-notification-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center}
+.rdv-notification-row strong{display:block;color:var(--cyan);font-size:.76rem}.rdv-notification-row p{margin:5px 0 0;color:var(--ink-soft);font-size:.61rem;line-height:1.45}
+.rdv-phone-note{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);color:var(--ink-soft);font-size:.6rem;line-height:1.5}.rdv-phone-note b{color:var(--amber)}
+.rdv-form{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:10px}.rdv-field{display:grid;gap:5px;min-width:0}.rdv-field>span{color:var(--amber);font-size:.55rem;font-weight:900;letter-spacing:.08em}
+.rdv-field input,.rdv-field select,.rdv-field textarea{width:100%;min-width:0;border:1px solid var(--line-strong);border-radius:0;background:#001014;color:var(--ink);padding:10px;font:inherit}.rdv-field textarea{resize:vertical;line-height:1.4}.rdv-title-field{grid-column:1/-1}.rdv-note-field{grid-column:1/-1}.rdv-form-actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.rdv-list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 8px;padding:0 2px}.rdv-list-head span{display:block;color:var(--amber);font-size:.54rem;font-weight:900}.rdv-list-head strong{display:block;margin-top:3px;color:var(--ink);font-size:.72rem}
+.rdv-list{display:grid;gap:9px}.rdv-item{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid var(--line);background:#031015;padding:11px}.rdv-item.is-today{border-color:var(--amber)}.rdv-item.is-done{opacity:.62}.rdv-datebox{display:grid;place-items:center;align-content:center;min-height:62px;border:1px solid var(--line-strong);text-align:center}.rdv-datebox span{color:var(--amber);font-size:.54rem;font-weight:900}.rdv-datebox strong{margin-top:3px;color:var(--cyan);font-size:1rem}.rdv-copy{min-width:0}.rdv-copy>span{display:block;color:var(--ink-soft);font-size:.52rem;letter-spacing:.08em}.rdv-copy>strong{display:block;margin:4px 0;color:var(--ink);font-size:.76rem;line-height:1.3}.rdv-copy>small{display:block;color:var(--ink-soft);font-size:.56rem;line-height:1.4;white-space:normal}.rdv-actions{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;max-width:260px}.rdv-actions button{border:1px solid var(--line);background:transparent;color:var(--ink);padding:7px 8px;font:800 .54rem var(--mono);cursor:pointer}.rdv-actions button:hover{border-color:var(--cyan);color:var(--cyan)}.rdv-actions .rdv-delete{color:var(--red)}.rdv-actions .rdv-calendar{color:var(--amber)}.rdv-actions .rdv-done{color:var(--green)}
+.rdv-history{margin-top:14px}.rdv-history summary{cursor:pointer;color:var(--ink-soft);font-weight:900;font-size:.65rem;letter-spacing:.08em}.rdv-history summary span{color:var(--amber)}.rdv-history .rdv-list{margin-top:12px}
+.rdv-toast{position:fixed;left:50%;bottom:22px;z-index:10000;transform:translateX(-50%);max-width:min(560px,calc(100vw - 24px));border:1px solid var(--amber);background:#031015;color:var(--ink);padding:10px 13px;box-shadow:0 0 24px rgba(0,0,0,.55);font-size:.62rem;line-height:1.4}
+@media(max-width:720px){.notification-bell{order:99}.rdv-form{grid-template-columns:1fr 1fr}.rdv-title-field,.rdv-note-field,.rdv-form-actions{grid-column:1/-1}.rdv-item{grid-template-columns:60px 1fr}.rdv-actions{grid-column:1/-1;justify-content:flex-start;max-width:none}.rdv-notification-row{grid-template-columns:1fr}.rdv-notification-row .minitel-action{width:100%}.rdv-list-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:430px){.rdv-form{grid-template-columns:1fr}.rdv-title-field,.rdv-note-field,.rdv-form-actions{grid-column:auto}.rdv-item{grid-template-columns:54px 1fr;gap:9px;padding:9px}.rdv-actions{grid-column:1/-1}.rdv-datebox{min-height:56px}}
