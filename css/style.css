@@ -594,7 +594,7 @@ body[data-nexus-cms="v2"] .brand-sub::after{content:" · V9.10";color:var(--ambe
 @media(max-width:620px){.mini-game-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.run-level-select{padding:9px}.run-level-grid{gap:5px}.run-level-btn{min-height:61px;padding:7px}.run-level-btn strong{font-size:.52rem}}
 @media(max-width:380px){.run-level-grid{grid-template-columns:1fr}.run-level-select{overflow-y:auto}.run-level-btn{min-height:54px}}
 
-/* FORCE BUILD 20260920-rdv-v912 */
+/* FORCE BUILD 20260921-rdv-v913 */
 
 /* v9.11 — zone unique des rappels ponctuels au-dessus de l’otarie */
 .home-cms-flow>[data-home-block="reminders"]{grid-column:1/-1}
@@ -624,3 +624,13 @@ body[data-nexus-cms="v2"] .brand-sub::after{content:" · V9.10";color:var(--ambe
 .rdv-toast{position:fixed;left:50%;bottom:22px;z-index:10000;transform:translateX(-50%);max-width:min(560px,calc(100vw - 24px));border:1px solid var(--amber);background:#031015;color:var(--ink);padding:10px 13px;box-shadow:0 0 24px rgba(0,0,0,.55);font-size:.62rem;line-height:1.4}
 @media(max-width:720px){.notification-bell{order:99}.rdv-form{grid-template-columns:1fr 1fr}.rdv-title-field,.rdv-note-field,.rdv-form-actions{grid-column:1/-1}.rdv-item{grid-template-columns:60px 1fr}.rdv-actions{grid-column:1/-1;justify-content:flex-start;max-width:none}.rdv-notification-row{grid-template-columns:1fr}.rdv-notification-row .minitel-action{width:100%}.rdv-list-head{align-items:flex-start;flex-direction:column}}
 @media(max-width:430px){.rdv-form{grid-template-columns:1fr}.rdv-title-field,.rdv-note-field,.rdv-form-actions{grid-column:auto}.rdv-item{grid-template-columns:54px 1fr;gap:9px;padding:9px}.rdv-actions{grid-column:1/-1}.rdv-datebox{min-height:56px}}
+
+
+/* === V9.13 · RDV du jour au-dessus de l’otarie === */
+.today-rdv-reminders{display:grid;gap:8px}
+.today-rdv-reminders[hidden]{display:none!important}
+.today-rdv-reminder{border-color:color-mix(in srgb,var(--cyan) 58%,var(--line));background:linear-gradient(90deg,rgba(80,210,255,.045),#031015 34%)}
+.today-rdv-reminder .context-reminder-icon{border-color:var(--cyan)}
+.today-rdv-reminder .context-reminder-copy strong{color:var(--cyan)}
+.today-rdv-reminder .context-reminder-copy small{color:var(--ink-soft)}
+.today-rdv-reminder .text-key{white-space:nowrap}
