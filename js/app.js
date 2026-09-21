@@ -927,24 +927,33 @@
   function renderContextualReminders(){
     const now=new Date(),key=localDateKey(now),store=contextReminderStore(),slot=fruitReminderSlot(now);
     store.fruit=store.fruit&&typeof store.fruit==='object'?store.fruit:{};store.cleaning=store.cleaning&&typeof store.cleaning==='object'?store.cleaning:{};
-    const fruit=$('fruitReminder3615'),clean=$('cleaningReminder3615'),zone=$('contextRemindersZone');
+    const fruit=$('fruitReminder3615'),clean=$('cleaningReminder3615'),zone=$('contextRemindersZone'),rdvBox=$('todayRdvReminders');
+    const todayRdv=rdvEventsForDate(key);
+    if(rdvBox){
+      rdvBox.hidden=!todayRdv.length;
+      rdvBox.innerHTML=todayRdv.map(ev=>{
+        const icon=ev.type==='alerte'?'🚨':ev.type==='rappel'?'🔔':'📅',note=ev.note?` · ${escapeHtml3615(ev.note)}`:'';
+        return `<article class="context-reminder today-rdv-reminder"><div class="context-reminder-icon">${icon}</div><div class="context-reminder-copy"><strong>${escapeHtml3615(ev.time||'—')} · ${escapeHtml3615(ev.title||'Rendez-vous')}</strong><small>${rdvTypeLabel(ev.type)}${note}</small></div><div class="context-reminder-actions"><button class="text-key" data-rdv-open type="button">VOIR RDV →</button></div></article>`;
+      }).join('');
+    }
     const fruitKey=slot?`${key}:${slot}`:'',fruitEntry=fruitKey?store.fruit[fruitKey]:null;
     const fruitDone=typeof fruitEntry==='string'||Boolean(fruitEntry?.done),fruitSnoozed=Number(fruitEntry?.snoozeUntil||0)>Date.now();
     const fruitVisible=Boolean(slot&&!fruitDone&&!fruitSnoozed);
     if(fruit){fruit.hidden=!fruitVisible;if(fruitVisible)setText('fruitReminder3615Text',slot==='lunch'?'Déjeuner : pense à ajouter un fruit si tu n’en as pas encore pris.':'Dîner : un fruit pour terminer le repas ?')}
     const cleaningVisible=now.getDay()===2&&now.getHours()>=13&&now.getHours()<18&&!store.cleaning[key];
     if(clean){clean.hidden=!cleaningVisible;const cb=$('cleaningReminder3615Done');if(cb)cb.checked=Boolean(store.cleaning[key])}
-    if(zone)zone.hidden=!(fruitVisible||cleaningVisible);
+    if(zone)zone.hidden=!(todayRdv.length||fruitVisible||cleaningVisible);
   }
   $('fruitReminder3615Done')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore();s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={done:new Date().toISOString()};saveContextReminderStore(s);renderContextualReminders()});
   $('fruitReminder3615Later')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore();s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={snoozeUntil:Date.now()+30*60*1000};saveContextReminderStore(s);renderContextualReminders()});
   $('cleaningReminder3615Done')?.addEventListener('change',e=>{const s=contextReminderStore();s.cleaning=s.cleaning||{};if(e.target.checked)s.cleaning[localDateKey()]=new Date().toISOString();else delete s.cleaning[localDateKey()];saveContextReminderStore(s);renderContextualReminders()});
+  $('todayRdvReminders')?.addEventListener('click',e=>{if(e.target.closest('[data-rdv-open]'))showSection('rdv')});
 
   // RDV — agenda local + notifications système + export calendrier téléphone.
   const RDV_KEY='3615-rdv-v1';
   let rdvSwRegistrationPromise=null;
   function rdvStore(){const raw=readJsonStorage(RDV_KEY);return Array.isArray(raw)?raw:[]}
-  function saveRdvStore(rows){localStorage.setItem(RDV_KEY,JSON.stringify(rows));renderRdv();renderV9Today();checkRdvNotifications()}
+  function saveRdvStore(rows){localStorage.setItem(RDV_KEY,JSON.stringify(rows));renderRdv();renderContextualReminders();renderV9Today();checkRdvNotifications()}
   function rdvDateTime(ev){const d=new Date(`${ev.date||''}T${ev.time||'00:00'}:00`);return Number.isFinite(d.getTime())?d:null}
   function rdvTypeLabel(type){return type==='alerte'?'ALERTE':type==='rappel'?'RAPPEL':'RENDEZ-VOUS'}
   function rdvNotifyLabel(mins){const n=Number(mins)||0;if(n===0)return 'À L’HEURE H';if(n===1440)return '1 JOUR AVANT';if(n===60)return '1 H AVANT';return `${n} MIN AVANT`}
@@ -1023,7 +1032,7 @@
   });
   $('rdv')?.addEventListener('click',e=>{const b=e.target.closest('[data-rdv-action]');if(!b)return;const row=b.closest('[data-rdv-id]'),id=row?.dataset.rdvId,rows=rdvStore(),i=rows.findIndex(x=>x.id===id);if(i<0)return;const ev=rows[i],action=b.dataset.rdvAction;if(action==='edit')editRdv(id);if(action==='delete'&&confirm(`Supprimer « ${ev.title} » ?`)){rows.splice(i,1);saveRdvStore(rows)}if(action==='done'){rows[i]={...ev,done:!ev.done,updatedAt:new Date().toISOString()};saveRdvStore(rows)}if(action==='calendar')downloadRdvIcs([ev],`${ev.date}-${ev.title}`)});
   $('rdvExportAll')?.addEventListener('click',()=>{const now=Date.now(),events=rdvStore().filter(ev=>!ev.done&&(rdvDateTime(ev)?.getTime()||0)>=now).sort((a,b)=>rdvDateTime(a)-rdvDateTime(b));downloadRdvIcs(events,'3615-rdv-a-venir')});
-  window.addEventListener('storage',e=>{if(e.key===RDV_KEY){renderRdv();renderV9Today()}});
+  window.addEventListener('storage',e=>{if(e.key===RDV_KEY){renderRdv();renderContextualReminders();renderV9Today()}});
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkRdvNotifications()});window.addEventListener('focus',checkRdvNotifications);
 
   function renderBusStatus(){
