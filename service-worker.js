@@ -1,4 +1,4 @@
-const CACHE_VERSION='3615-rdv-v913';
+const CACHE_VERSION='3615-menage-v914';
 self.addEventListener('install',()=>self.skipWaiting());
 self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
 self.addEventListener('notificationclick',event=>{

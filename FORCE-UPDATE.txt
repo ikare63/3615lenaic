@@ -1,8 +1,8 @@
-3615 LÉNAÏC — BUILD 9.10
+3615 LÉNAÏC — BUILD 9.14
 
 1. Remplacer les fichiers du dépôt par ceux de ce paquet.
 2. Attendre que GitHub Pages finisse le déploiement.
-3. Ouvrir /force-update.html une seule fois.
-4. Le portail redirige vers la page d’accueil avec un paramètre de build qui contourne le cache.
+3. Ouvrir /force-update.html une seule fois si l’ancienne version reste affichée.
+4. Le portail recharge le build 20260922-menage-v914 en contournant le cache.
 
-BRIEF IA : affichage restauré dans INFORMATIONS et reprise automatique du miroir local si nécessaire.\n\nMINITEL RUN : 8 niveaux progressifs, accessible dans DÉTENTE > 3615.JEUX.
+CORRECTION 9.14 : le rappel 🧹 Ménage est visible toute la journée du mardi dans Aujourd’hui ; 13 h–18 h reste le créneau prévu.
