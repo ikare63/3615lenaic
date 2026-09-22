@@ -940,7 +940,7 @@
     const fruitDone=typeof fruitEntry==='string'||Boolean(fruitEntry?.done),fruitSnoozed=Number(fruitEntry?.snoozeUntil||0)>Date.now();
     const fruitVisible=Boolean(slot&&!fruitDone&&!fruitSnoozed);
     if(fruit){fruit.hidden=!fruitVisible;if(fruitVisible)setText('fruitReminder3615Text',slot==='lunch'?'Déjeuner : pense à ajouter un fruit si tu n’en as pas encore pris.':'Dîner : un fruit pour terminer le repas ?')}
-    const cleaningVisible=now.getDay()===2&&now.getHours()>=13&&now.getHours()<18&&!store.cleaning[key];
+    const cleaningVisible=now.getDay()===2&&!store.cleaning[key];
     if(clean){clean.hidden=!cleaningVisible;const cb=$('cleaningReminder3615Done');if(cb)cb.checked=Boolean(store.cleaning[key])}
     if(zone)zone.hidden=!(todayRdv.length||fruitVisible||cleaningVisible);
   }
