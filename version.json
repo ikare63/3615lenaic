@@ -1,6 +1,6 @@
 {
-  "version": "9.14",
-  "build": "20260922-menage-v914",
+  "version": "9.15",
+  "build": "20260922-quotidien-v915",
   "minitelRun": true,
   "levels": 8
 }
