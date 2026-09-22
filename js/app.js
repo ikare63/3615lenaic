@@ -879,13 +879,14 @@
     const done=active&&Boolean(completed[String(week)]);
     const missed=[];if(active)for(let i=1;i<week;i++)if(!completed[String(i)])missed.push(i);
     const missedAmount=missed.reduce((a,b)=>a+b,0);
-    return {state,active,week,amount:active?week:0,done,saved,percent:SAVINGS52_TARGET?saved/SAVINGS52_TARGET*100:0,isMonday:date.getDay()===1,missed,missedAmount};
+    const snoozeUntil=Number(state.snoozeUntil||0),isSnoozed=!done&&snoozeUntil>Date.now();
+    return {state,active,week,amount:active?week:0,done,saved,percent:SAVINGS52_TARGET?saved/SAVINGS52_TARGET*100:0,isMonday:date.getDay()===1,missed,missedAmount,snoozeUntil,isSnoozed};
   }
   function renderSavings52(){
     const card=$('savings52Card');if(!card)return;
     const info=savings52Info(),cmsHidden=card.dataset.cmsHidden==='1';
     // Le lundi, le module reste visible même une fois coché. Sinon il reste affiché tant que la semaine n'est pas validée.
-    const shouldShow=info.active&&(info.isMonday||!info.done);
+    const shouldShow=info.active&&(info.isMonday||!info.done)&&!info.isSnoozed;
     card.hidden=cmsHidden||!shouldShow;
     if(!info.active)return;
     card.classList.toggle('is-done',info.done);
@@ -910,13 +911,18 @@
   $('savings52Done')?.addEventListener('change',e=>{
     const info=savings52Info();if(!info.active)return;
     const state=info.state;state.completed=state.completed||{};
-    if(e.target.checked)state.completed[String(info.week)]=new Date().toISOString();else delete state.completed[String(info.week)];
+    if(e.target.checked){state.completed[String(info.week)]=new Date().toISOString();delete state.snoozeUntil}else delete state.completed[String(info.week)];
     saveSavings52(state);renderSavings52();renderV9Today();renderV9System();
+  });
+  $('savings52Later')?.addEventListener('click',()=>{
+    const info=savings52Info();if(!info.active||info.done)return;
+    const state=info.state,tomorrow=new Date();tomorrow.setHours(0,0,0,0);tomorrow.setDate(tomorrow.getDate()+1);
+    state.snoozeUntil=tomorrow.getTime();saveSavings52(state);renderSavings52();renderV9Today();renderV9System();
   });
 
   // Rappels contextuels : tous les petits rappels ponctuels vivent juste au-dessus de l’otarie.
   const CONTEXT_REMINDERS_KEY='3615-context-reminders-v1';
-  function contextReminderStore(){const raw=readJsonStorage(CONTEXT_REMINDERS_KEY);return raw&&typeof raw==='object'?raw:{fruit:{},cleaning:{}}}
+  function contextReminderStore(){const raw=readJsonStorage(CONTEXT_REMINDERS_KEY);return raw&&typeof raw==='object'?raw:{fruit:{},cleaning:{},cleaningSnooze:{}}}
   function saveContextReminderStore(s){localStorage.setItem(CONTEXT_REMINDERS_KEY,JSON.stringify(s))}
   function fruitReminderSlot(date=new Date()){
     const h=date.getHours();
@@ -926,7 +932,7 @@
   }
   function renderContextualReminders(){
     const now=new Date(),key=localDateKey(now),store=contextReminderStore(),slot=fruitReminderSlot(now);
-    store.fruit=store.fruit&&typeof store.fruit==='object'?store.fruit:{};store.cleaning=store.cleaning&&typeof store.cleaning==='object'?store.cleaning:{};
+    store.fruit=store.fruit&&typeof store.fruit==='object'?store.fruit:{};store.cleaning=store.cleaning&&typeof store.cleaning==='object'?store.cleaning:{};store.cleaningSnooze=store.cleaningSnooze&&typeof store.cleaningSnooze==='object'?store.cleaningSnooze:{};
     const fruit=$('fruitReminder3615'),clean=$('cleaningReminder3615'),zone=$('contextRemindersZone'),rdvBox=$('todayRdvReminders');
     const todayRdv=rdvEventsForDate(key);
     if(rdvBox){
@@ -940,14 +946,57 @@
     const fruitDone=typeof fruitEntry==='string'||Boolean(fruitEntry?.done),fruitSnoozed=Number(fruitEntry?.snoozeUntil||0)>Date.now();
     const fruitVisible=Boolean(slot&&!fruitDone&&!fruitSnoozed);
     if(fruit){fruit.hidden=!fruitVisible;if(fruitVisible)setText('fruitReminder3615Text',slot==='lunch'?'Déjeuner : pense à ajouter un fruit si tu n’en as pas encore pris.':'Dîner : un fruit pour terminer le repas ?')}
-    const cleaningVisible=now.getDay()===2&&!store.cleaning[key];
-    if(clean){clean.hidden=!cleaningVisible;const cb=$('cleaningReminder3615Done');if(cb)cb.checked=Boolean(store.cleaning[key])}
+    let cleaningOrigin='';
+    if(now.getDay()===2&&!store.cleaning[key]&&!store.cleaningSnooze[key])cleaningOrigin=key;
+    if(!cleaningOrigin){for(const [origin,due] of Object.entries(store.cleaningSnooze)){if(due===key&&!store.cleaning[origin]){cleaningOrigin=origin;break}}}
+    const cleaningVisible=Boolean(cleaningOrigin);
+    if(clean){
+      clean.hidden=!cleaningVisible;clean.dataset.originKey=cleaningOrigin||'';
+      const cb=$('cleaningReminder3615Done');if(cb)cb.checked=Boolean(cleaningOrigin&&store.cleaning[cleaningOrigin]);
+      if(cleaningVisible){const deferred=cleaningOrigin!==key;setText('cleaningReminder3615Title',deferred?'MÉNAGE PROCRASTINÉ':'MÉNAGE AUJOURD’HUI');setText('cleaningReminder3615Text',deferred?`Prévu le ${new Date(cleaningOrigin+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})} · reporté à aujourd’hui.`:'Mardi · créneau conseillé : 13 h–18 h.');}
+    }
     if(zone)zone.hidden=!(todayRdv.length||fruitVisible||cleaningVisible);
   }
   $('fruitReminder3615Done')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore();s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={done:new Date().toISOString()};saveContextReminderStore(s);renderContextualReminders()});
   $('fruitReminder3615Later')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore();s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={snoozeUntil:Date.now()+30*60*1000};saveContextReminderStore(s);renderContextualReminders()});
-  $('cleaningReminder3615Done')?.addEventListener('change',e=>{const s=contextReminderStore();s.cleaning=s.cleaning||{};if(e.target.checked)s.cleaning[localDateKey()]=new Date().toISOString();else delete s.cleaning[localDateKey()];saveContextReminderStore(s);renderContextualReminders()});
+  $('cleaningReminder3615Done')?.addEventListener('change',e=>{const s=contextReminderStore(),origin=$('cleaningReminder3615')?.dataset.originKey||localDateKey();s.cleaning=s.cleaning||{};s.cleaningSnooze=s.cleaningSnooze||{};if(e.target.checked){s.cleaning[origin]=new Date().toISOString();delete s.cleaningSnooze[origin]}else delete s.cleaning[origin];saveContextReminderStore(s);renderContextualReminders()});
+  $('cleaningReminder3615Later')?.addEventListener('click',()=>{const s=contextReminderStore(),origin=$('cleaningReminder3615')?.dataset.originKey||localDateKey(),tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);s.cleaningSnooze=s.cleaningSnooze||{};s.cleaningSnooze[origin]=localDateKey(tomorrow);saveContextReminderStore(s);renderContextualReminders()});
   $('todayRdvReminders')?.addEventListener('click',e=>{if(e.target.closest('[data-rdv-open]'))showSection('rdv')});
+
+  // Compteur transport — journal local + récap de fin de mois.
+  const TRANSPORT_LEDGER_KEY='3615-transport-ledger-v1';
+  const TRANSPORT_SAVED_AMOUNT=1.60,TRANSPORT_FINE_AMOUNT=-65;
+  function transportLedger(){const raw=readJsonStorage(TRANSPORT_LEDGER_KEY);return Array.isArray(raw)?raw.filter(x=>x&&Number.isFinite(Number(x.amount))&&x.at):[]}
+  function saveTransportLedger(rows){localStorage.setItem(TRANSPORT_LEDGER_KEY,JSON.stringify(rows));renderTransportCounter();renderTransportMonthRecap()}
+  function transportMoney(value){return `${Number(value||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} €`}
+  function transportStatsFor(year,month=null){
+    const rows=transportLedger().filter(x=>{const d=new Date(x.at);return Number.isFinite(d.getTime())&&d.getFullYear()===year&&(month===null||d.getMonth()===month)});
+    return {rows,total:rows.reduce((n,x)=>n+Number(x.amount||0),0),saved:rows.filter(x=>Number(x.amount)>0).length,fines:rows.filter(x=>Number(x.amount)<0).length};
+  }
+  function renderTransportCounter(){
+    const now=new Date(),month=transportStatsFor(now.getFullYear(),now.getMonth()),year=transportStatsFor(now.getFullYear());
+    setText('transportCounterState',now.toLocaleDateString('fr-FR',{month:'long',year:'numeric'}).toUpperCase());
+    setText('transportMonthBalance',transportMoney(month.total));
+    setText('transportCounterMeta',`${month.saved} trajet${month.saved>1?'s':''} enregistré${month.saved>1?'s':''} · ${month.fines} amende${month.fines>1?'s':''}`);
+    setText('transportYearBalance',`Depuis janvier : ${transportMoney(year.total)}`);
+    const all=transportLedger(),last=all[all.length-1];
+    setText('transportLastAction',last?`${Number(last.amount)>0?'Trajet +1,60 €':'Amende −65 €'} · ${new Date(last.at).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}`:'Aucune opération enregistrée.');
+    const undo=$('transportUndoBtn');if(undo)undo.disabled=!all.length;
+  }
+  function transportRecapTarget(now=new Date()){
+    const d=now.getDate();if(d>=28)return {year:now.getFullYear(),month:now.getMonth()};if(d<=2){const p=new Date(now.getFullYear(),now.getMonth()-1,1,12);return {year:p.getFullYear(),month:p.getMonth()}}return null;
+  }
+  function renderTransportMonthRecap(){
+    const target=transportRecapTarget(),boxes=[$('transportMonthRecapHome'),$('transportMonthRecapToday')].filter(Boolean);
+    if(!target){boxes.forEach(b=>b.hidden=true);return}
+    const month=transportStatsFor(target.year,target.month),yearRows=transportLedger().filter(x=>{const d=new Date(x.at);return Number.isFinite(d.getTime())&&d.getFullYear()===target.year&&(d.getMonth()<target.month||d.getMonth()===target.month)}),yearTotal=yearRows.reduce((n,x)=>n+Number(x.amount||0),0),label=new Date(target.year,target.month,1).toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+    const headline=month.total>=0?`Bravo, tu as économisé ${transportMoney(month.total)} ce mois-ci !`:`Ce mois-ci, le bilan transport est de ${transportMoney(month.total)}.`;
+    const html=`<div class="retro-head"><span>BILAN.TRAM</span><strong>${escapeHtml3615(label.toUpperCase())}</strong></div><div class="transport-recap-copy"><span>🚋</span><div><strong>${escapeHtml3615(headline)}</strong><p>Et <b>${escapeHtml3615(transportMoney(yearTotal))}</b> depuis le début de l’année.</p><small>${month.saved} trajet${month.saved>1?'s':''} comptabilisé${month.saved>1?'s':''} · ${month.fines} amende${month.fines>1?'s':''}</small></div></div>`;
+    boxes.forEach(b=>{b.innerHTML=html;b.hidden=false});
+  }
+  $('transportSaveBtn')?.addEventListener('click',()=>{const rows=transportLedger();rows.push({type:'unpaid',amount:TRANSPORT_SAVED_AMOUNT,at:new Date().toISOString()});saveTransportLedger(rows)});
+  $('transportFineBtn')?.addEventListener('click',()=>{const rows=transportLedger();rows.push({type:'fine',amount:TRANSPORT_FINE_AMOUNT,at:new Date().toISOString()});saveTransportLedger(rows)});
+  $('transportUndoBtn')?.addEventListener('click',()=>{const rows=transportLedger();if(!rows.length)return;rows.pop();saveTransportLedger(rows)});
 
   // RDV — agenda local + notifications système + export calendrier téléphone.
   const RDV_KEY='3615-rdv-v1';
@@ -1060,6 +1109,7 @@
     if(e.key===MEDITATION_KEY)renderMeditation();
     if(e.key===SAVINGS52_KEY){renderSavings52();renderV9Today();renderV9System()}
     if(e.key===CONTEXT_REMINDERS_KEY)renderContextualReminders();
+    if(e.key===TRANSPORT_LEDGER_KEY){renderTransportCounter();renderTransportMonthRecap()}
   });
 
 
@@ -1096,7 +1146,7 @@
     const snap=readCapSnapshot()||{},a=snap.activity||{},m=snap.measurements||{},plans=plansOnDate(localDateKey()),scribe=readScribeSnapshot()||{},received=Array.isArray(scribe.received)?scribe.received:[],pending=Array.isArray(scribe.pending)?scribe.pending:[],threshold=scribeReminderDays(),overdue=pending.filter(x=>Number(x.ageDays)>=threshold);
     const rows=[],saving=savings52Info();
     rdvEventsForDate(localDateKey()).forEach(ev=>rows.push({k:rdvTypeLabel(ev.type),t:ev.title||'Rendez-vous',s:`${ev.time||'—'}${ev.note?' · '+ev.note:''}`,b:'RDV'}));
-    if(saving.active&&(saving.isMonday||!saving.done))rows.push({k:'ÉPARGNE',t:`${saving.amount} € à mettre de côté`,s:`Cumul validé : ${saving.saved.toLocaleString('fr-FR')} / ${SAVINGS52_TARGET.toLocaleString('fr-FR')} €`,b:saving.done?'ÉPARGNÉ':'À FAIRE'});
+    if(saving.active&&(saving.isMonday||!saving.done)&&!saving.isSnoozed)rows.push({k:'ÉPARGNE',t:`${saving.amount} € à mettre de côté`,s:`Cumul validé : ${saving.saved.toLocaleString('fr-FR')} / ${SAVINGS52_TARGET.toLocaleString('fr-FR')} €`,b:saving.done?'ÉPARGNÉ':'À FAIRE'});
     rows.push({k:'CAP',t:a.title||'Activité du jour à synchroniser',s:a.title?`${Math.round(Number(a.progress)||0)} % · ${a.label||''}`:'Ouvre CAP pour actualiser',b:a.completed?'TERMINÉE':'AUJOURD’HUI'});
     plans.forEach(p=>rows.push({k:p.mealType==='lunch'?'CE MIDI':p.mealType==='dinner'?'CE SOIR':'REPAS',t:p.name||'Repas Culina',s:`${formatClock(p.at)} · ${Math.round(Number(p.calories)||0)} kcal`,b:Number(p.missingCount)?`${p.missingCount} MANQUANT${p.missingCount>1?'S':''}`:'PRÊT'}));
     if(m.latestDate&&Number(m.daysUntil)<=1)rows.push({k:'MESURES',t:Number(m.daysUntil)<=0?'Mensurations à faire':'Mensurations demain',s:`Dernière : ${formatShortDate(m.latestDate)}`,b:Number(m.daysUntil)<=0?'ÉCHÉANCE':'J-1'});
@@ -1269,9 +1319,9 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderContextualReminders();renderRdv();ensureRdvServiceWorker();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
+  renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderContextualReminders();renderTransportCounter();renderTransportMonthRecap();renderRdv();ensureRdvServiceWorker();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
   loadNexusConfig();loadWeather();loadNameday();
-  setInterval(()=>{renderContext();renderSavings52();renderContextualReminders();renderRdv();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderV9All();},60000);
+  setInterval(()=>{renderContext();renderSavings52();renderContextualReminders();renderTransportCounter();renderTransportMonthRecap();renderRdv();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderV9All();},60000);
   setInterval(renderCulinaLive,3000);
   setInterval(checkRdvNotifications,15000);
   if(location.hash==='#rdv')showSection('rdv');
