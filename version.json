@@ -1,6 +1,5 @@
 {
-  "version": "9.15",
-  "build": "20260922-quotidien-v915",
-  "minitelRun": true,
-  "levels": 8
+  "version": "9.18",
+  "build": "20260922-courses-compost-v918",
+  "date": "2026-09-22"
 }

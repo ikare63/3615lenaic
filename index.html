@@ -10,7 +10,7 @@
 <meta http-equiv="Expires" content="0"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
 <link href="assets/favicon.svg?v=20260914-1351-v99" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=20260922-quotidien-v915" rel="stylesheet"/>
+<link href="css/style.css?v=20260922-courses-compost-v918" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -108,6 +108,7 @@
 </section><section class="context-reminders-zone" data-home-block="reminders" id="contextRemindersZone" hidden>
 <div class="context-reminders-title"><span>RAPPELS.DU.MOMENT</span><strong>JUSTE CE QUI EST UTILE MAINTENANT</strong></div>
 <div class="today-rdv-reminders" id="todayRdvReminders" hidden></div>
+<div class="local-reminders-list" id="localReminderRows" hidden></div>
 <article class="context-reminder fruit-reminder" id="fruitReminder3615" hidden>
 <div class="context-reminder-icon">🍎</div><div class="context-reminder-copy"><strong>UN FRUIT POUR FINIR LE REPAS ?</strong><small id="fruitReminder3615Text">Petit rappel pour penser aux fruits.</small></div>
 <div class="context-reminder-actions"><button class="minitel-action" id="fruitReminder3615Done" type="button">J’Y PENSE ✓</button><button class="text-key" id="fruitReminder3615Later" type="button">LE PROCRASTINER · 30 MIN →</button></div>
@@ -116,7 +117,12 @@
 <div class="context-reminder-icon">🧹</div><div class="context-reminder-copy"><strong id="cleaningReminder3615Title">MÉNAGE AUJOURD’HUI</strong><small id="cleaningReminder3615Text">Mardi · créneau conseillé : 13 h–18 h.</small></div>
 <div class="context-reminder-actions cleaning-reminder-actions"><label class="context-reminder-check"><input id="cleaningReminder3615Done" type="checkbox"/><span>C’EST FAIT</span></label><button class="text-key procrastinate-btn" id="cleaningReminder3615Later" type="button">LE PROCRASTINER →</button></div>
 </article>
-</section><article class="minitel-card transport-month-recap" id="transportMonthRecapHome" hidden></article><div class="nexus-modules-zone" data-home-block="modules" id="homeBlock-modules" hidden></div><article class="minitel-card otarie-home-card" data-home-block="otarie" id="homeBlock-otarie">
+</section>
+<article class="minitel-card home-tomorrow-card" id="homeTomorrowReminders" hidden>
+<div class="retro-head"><span>DEMAIN</span><strong id="homeTomorrowState">À PRÉVOIR</strong></div>
+<div class="home-tomorrow-rows" id="homeTomorrowRows"></div>
+</article>
+<article class="minitel-card transport-month-recap" id="transportMonthRecapHome" hidden></article><div class="nexus-modules-zone" data-home-block="modules" id="homeBlock-modules" hidden></div><article class="minitel-card otarie-home-card" data-home-block="otarie" id="homeBlock-otarie">
 <div class="retro-head"><span>OTARIE.LIVE</span><strong id="otarieHomeMood">BAIGNADE EN COURS</strong></div>
 <div class="otarie-home-layout">
 <div class="mini-aquarium-frame"><canvas aria-label="Otarie animée dans son bassin" height="180" id="otarieMiniCanvas" width="720"></canvas><span>BASSIN // DIRECT</span></div>
@@ -366,6 +372,27 @@
 <div class="section-title"><span>3615.SYS9</span><h2>SYSTÈME</h2></div>
 <p class="section-lead">NEXUS, notifications, bus, sauvegardes et commandes du terminal.</p>
 <div class="system-grid">
+<article class="minitel-card reminder-manager-card" id="reminderManagerCard">
+<div class="retro-head"><span>RAPPELS.LOCAUX</span><strong id="pinnedReminderState">ÉPINGLER UN JOUR</strong></div>
+<details class="system-accordion" id="reminderManagerAccordion">
+<summary>AJOUTER UN RAPPEL PONCTUEL</summary>
+<div class="reminder-manager-body">
+<label class="reminder-date-field"><span>JOUR J</span><input id="pinnedReminderDate" type="date"/></label>
+<div class="reminder-template-grid">
+<button class="minitel-action secondary" data-pinned-template="trash" type="button">🗑️ POUBELLES / TRI</button>
+<button class="minitel-action secondary" data-pinned-template="laundry" type="button">🧺 LESSIVE</button>
+<button class="minitel-action secondary" data-pinned-template="admin" type="button">📄 ADMINISTRATIF</button>
+<button class="minitel-action secondary" data-pinned-template="compost" type="button">🪱 COMPOST</button>
+</div>
+<div class="reminder-custom-row"><input id="pinnedReminderCustom" maxlength="80" placeholder="Autre rappel…" type="text"/><button class="text-key" id="pinnedReminderCustomAdd" type="button">ÉPINGLER →</button></div>
+</div>
+</details>
+<div class="pinned-upcoming" id="pinnedUpcoming"></div>
+</article>
+<article class="minitel-card procrastination-history-card">
+<div class="retro-head"><span>PROCRASTINATION</span><strong id="procrastinationState">HISTORIQUE</strong></div>
+<div class="procrastination-history" id="procrastinationHistory"><div class="express-empty">Aucun report enregistré.</div></div>
+</article>
 <article class="minitel-card"><div class="retro-head"><span>NOTIFICATIONS</span><strong id="systemNotifState">—</strong></div><div class="activity-feed" id="systemNotifications"></div></article>
 <article class="minitel-card"><div class="retro-head"><span>NEXUS</span><strong>CMS CENTRAL</strong></div><p>Configuration, contenus, données, automatisations et snapshots.</p><a class="minitel-action" href="cms.html">OUVRIR NEXUS →</a></article>
 <article class="minitel-card"><div class="retro-head"><span>BUS</span><strong id="systemBusState">—</strong></div><div class="health-lines" id="systemBusDetail"></div></article>
@@ -379,16 +406,16 @@
 <input autocomplete="off" id="commandInput" placeholder="0–9, RDV, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.15</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.18</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=20260922-quotidien-v915"></script>
-<script src="js/app.js?v=20260922-quotidien-v915"></script>
+<script src="js/app.js?v=20260922-courses-compost-v918"></script>
 <script src="js/minigames.js?v=20260922-quotidien-v915"></script>
 <script src="js/ecosystem-v2.js?v=20260922-quotidien-v915"></script>
 
 <script>
-window.__3615_BUILD__='20260922-quotidien-v915';
+window.__3615_BUILD__='20260922-courses-compost-v918';
 (async()=>{
   try{
     const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});
