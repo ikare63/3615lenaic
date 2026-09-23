@@ -645,8 +645,53 @@ body[data-nexus-cms="v2"] .brand-sub::after{content:" · V9.15";color:var(--ambe
 .transport-counter-balance>span{color:var(--ink-soft);font-size:.55rem;font-weight:900;letter-spacing:.08em}.transport-counter-balance>strong{color:var(--green);font-size:1.75rem;line-height:1.1}.transport-counter-balance>small{color:var(--ink-soft);font-size:.58rem}
 .transport-counter-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.transport-counter-actions .text-key{grid-column:1/-1;justify-self:center;margin-top:2px}.transport-counter-actions button b{margin-left:5px;color:inherit}
 .transport-counter-foot{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:10px;padding-top:9px;border-top:1px dotted var(--line);font-size:.58rem}.transport-counter-foot>span{color:var(--amber);font-weight:900}.transport-counter-foot>small{color:var(--ink-soft);text-align:right}
-.transport-month-recap{order:38;grid-column:1/-1!important;border-color:color-mix(in srgb,var(--green) 62%,var(--line));background:linear-gradient(90deg,rgba(127,255,180,.045),#031015 40%)}
+.transport-month-recap{order:6;grid-column:1/-1!important;border-color:color-mix(in srgb,var(--green) 62%,var(--line));background:linear-gradient(90deg,rgba(127,255,180,.045),#031015 40%)}
 .transport-month-recap[hidden]{display:none!important}.transport-month-recap-today{margin-bottom:14px}
 .transport-recap-copy{display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;align-items:center}.transport-recap-copy>span{display:grid;place-items:center;width:52px;height:52px;border:1px solid var(--green);font-size:1.55rem}.transport-recap-copy strong{display:block;color:var(--green);font-size:.86rem;line-height:1.4}.transport-recap-copy p{margin:5px 0 0;color:var(--ink);font-size:.67rem}.transport-recap-copy p b{color:var(--amber)}.transport-recap-copy small{display:block;margin-top:4px;color:var(--ink-soft);font-size:.55rem}
 #transportUndoBtn:disabled{opacity:.38;cursor:not-allowed}
 @media(max-width:620px){.transport-counter-actions{grid-template-columns:1fr}.transport-counter-actions .text-key{grid-column:auto;justify-self:stretch}.transport-counter-foot{align-items:flex-start;flex-direction:column}.transport-counter-foot>small{text-align:left}.savings52-actions,.cleaning-reminder-actions{align-items:stretch;flex-direction:column}.savings52-actions>* ,.cleaning-reminder-actions>*{width:100%;justify-content:center}.transport-recap-copy{grid-template-columns:42px 1fr}.transport-recap-copy>span{width:42px;height:42px;font-size:1.25rem}}
+
+
+/* === V9.16 · Rappels locaux, Demain, Courses & historique === */
+.local-reminders-list{display:grid;gap:8px}.local-reminders-list[hidden]{display:none!important}
+.context-reminder.is-done{opacity:.72;border-color:color-mix(in srgb,var(--green) 55%,var(--line));background:linear-gradient(90deg,rgba(91,255,168,.05),#031015 35%)}
+.context-reminder.is-done .context-reminder-copy strong{color:var(--green);text-decoration:line-through;text-decoration-thickness:1px}
+.context-reminder.is-done .context-reminder-icon{border-color:var(--green)}
+.context-reminder-status{display:inline-block;margin-top:5px;color:var(--green);font-size:.54rem;font-weight:900;letter-spacing:.08em}
+.context-reminder-actions .minitel-action:disabled,.context-reminder-actions .text-key:disabled{opacity:.4;cursor:not-allowed}
+.shopping-reminder-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.shopping-reminder-list span{border:1px solid var(--line);background:rgba(0,0,0,.18);padding:3px 6px;color:var(--ink-soft);font-size:.53rem}
+.home-tomorrow-card{order:6;grid-column:1/-1!important;border-color:color-mix(in srgb,var(--cyan) 42%,var(--line));background:linear-gradient(90deg,rgba(80,210,255,.035),#031015 42%)}
+.home-tomorrow-card[hidden]{display:none!important}.home-tomorrow-rows{display:grid;gap:7px}.home-tomorrow-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;border:1px solid var(--line);background:rgba(0,0,0,.12);padding:9px 10px}.home-tomorrow-row span{display:block;color:var(--muted);font-size:.54rem;letter-spacing:.08em}.home-tomorrow-row strong{display:block;margin-top:3px;color:var(--cyan);font-size:.7rem}.home-tomorrow-row small{display:block;margin-top:3px;color:var(--ink-soft);font-size:.54rem}.home-tomorrow-row>b{color:var(--amber);font-size:.6rem;white-space:nowrap}
+.reminder-manager-card,.procrastination-history-card{grid-column:1/-1}.system-accordion{border:1px solid var(--line);background:#031015}.system-accordion summary{cursor:pointer;list-style:none;padding:11px 12px;color:var(--cyan);font-size:.66rem;font-weight:900;letter-spacing:.08em}.system-accordion summary::-webkit-details-marker{display:none}.system-accordion summary::after{content:'＋';float:right;color:var(--amber)}.system-accordion[open] summary::after{content:'−'}
+.reminder-manager-body{border-top:1px solid var(--line);padding:11px;display:grid;gap:10px}.reminder-date-field{display:grid;gap:5px}.reminder-date-field span{color:var(--muted);font-size:.55rem;letter-spacing:.08em}.reminder-date-field input,.reminder-custom-row input{width:100%;border:1px solid var(--line-strong);background:#01080b;color:var(--ink);padding:9px 10px;font:inherit}
+.reminder-template-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.reminder-template-grid .minitel-action{min-width:0}.reminder-custom-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px}.reminder-custom-row .text-key{margin:0}
+.pinned-upcoming{display:grid;gap:6px;margin-top:9px}.pinned-upcoming-row{display:flex;justify-content:space-between;gap:10px;border-top:1px dotted var(--line);padding-top:7px}.pinned-upcoming-row:first-child{border-top:0}.pinned-upcoming-row strong{color:var(--ink);font-size:.64rem}.pinned-upcoming-row small{display:block;margin-top:2px;color:var(--muted);font-size:.53rem}.pinned-upcoming-row button{border:0;background:none;color:var(--amber);font:inherit;font-size:.55rem;cursor:pointer}
+.procrastination-history{display:grid;gap:7px}.procrastination-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted var(--line);padding-bottom:7px}.procrastination-row:last-child{border-bottom:0}.procrastination-row strong{color:var(--ink);font-size:.64rem}.procrastination-row small{display:block;margin-top:2px;color:var(--muted);font-size:.53rem}.procrastination-row b{color:var(--amber);font-size:.56rem;white-space:nowrap}
+@media(max-width:680px){.reminder-template-grid{grid-template-columns:1fr}.reminder-custom-row{grid-template-columns:1fr}.home-tomorrow-row{align-items:flex-start}.shopping-reminder-list{max-height:140px;overflow:auto}}
+
+/* === V9.20 · Récurrences, historique global, bilan hebdo & objectifs === */
+.recurring-accordion{margin-top:9px}
+.recurring-main-row,.recurring-settings-row{display:grid;gap:8px}
+.recurring-main-row{grid-template-columns:110px minmax(0,1fr)}
+.recurring-settings-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+.recurring-reminder-form label,.goal-form label,.global-history-toolbar label{display:grid;gap:5px;min-width:0}
+.recurring-reminder-form label>span,.goal-form label>span,.global-history-toolbar label>span{color:var(--muted);font-size:.53rem;font-weight:900;letter-spacing:.08em}
+.recurring-reminder-form input,.recurring-reminder-form select,.goal-form input,.goal-form select,.global-history-toolbar input,.global-history-toolbar select{width:100%;min-width:0;border:1px solid var(--line-strong);background:#01080b;color:var(--ink);padding:9px 10px;font:inherit}
+.recurring-reminder-list{display:grid;gap:6px;margin-top:10px;padding-top:9px;border-top:1px dashed var(--line)}
+.recurring-list-head{display:flex;justify-content:space-between;align-items:center;color:var(--cyan);font-size:.55rem;font-weight:900;letter-spacing:.08em}
+.global-history-card,.goals-card{grid-column:1/-1}
+.global-history-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.global-history-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:11px}
+.global-history-summary span{border:1px solid var(--line);background:#031015;padding:8px;color:var(--ink-soft);font-size:.57rem;font-weight:900;text-align:center}
+.global-history-row b{color:var(--cyan)}
+.goals-list{display:grid;gap:7px;margin-bottom:10px}
+.goal-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;border:1px solid var(--line);background:#031015;padding:9px 10px}
+.goal-row strong{display:block;color:var(--ink);font-size:.65rem}.goal-row small{display:block;margin-top:3px;color:var(--muted);font-size:.53rem}
+.goal-row>b{color:var(--amber);font-size:.66rem;white-space:nowrap}.goal-row.is-done>b{color:var(--green)}.goal-row.is-done{border-color:color-mix(in srgb,var(--green) 48%,var(--line))}
+.goal-row button{border:0;background:none;color:var(--amber);font:inherit;font-size:.53rem;cursor:pointer}
+.goal-form{grid-template-columns:1.5fr .7fr 1fr auto;align-items:end}.goal-form .minitel-action{align-self:end}
+.weekly-review-card{order:6;grid-column:1/-1!important;border-color:color-mix(in srgb,var(--green) 55%,var(--line));background:linear-gradient(90deg,rgba(127,255,180,.05),#031015 42%)}
+.weekly-review-card[hidden]{display:none!important}.weekly-review-copy{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.weekly-review-copy>div{border:1px solid var(--line);background:#020b0e;padding:10px;text-align:center}.weekly-review-copy strong{display:block;color:var(--green);font-size:1rem}.weekly-review-copy span{display:block;margin-top:4px;color:var(--ink-soft);font-size:.5rem;line-height:1.35;letter-spacing:.05em}
+@media(max-width:720px){.recurring-main-row,.recurring-settings-row,.global-history-toolbar,.goal-form{grid-template-columns:1fr}.global-history-summary,.weekly-review-copy{grid-template-columns:1fr 1fr}.goal-row{grid-template-columns:1fr auto}.goal-row button{grid-column:1/-1;justify-self:start}}
+@media(max-width:430px){.global-history-summary,.weekly-review-copy{grid-template-columns:1fr}}
