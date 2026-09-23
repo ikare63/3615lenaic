@@ -2,7 +2,7 @@
   'use strict';
 
   const $=id=>document.getElementById(id);
-  const APP_VERSION='9.18';
+  const APP_VERSION='9.20';
   const PATHS={
     cap:'../cap/',culina:'../culina/',express:'../lenaic-express/',uchronies:'../uchronies/',
     arboris:'../bureau-genealogique/index.html',scriptoria:'../bureau-genealogique/index2.html',pistoria:'../bureau-genealogique/index3.html',
@@ -80,7 +80,7 @@
       const defs=[...(cfg.homeBlocks||[])].sort((a,b)=>(a.order||0)-(b.order||0));
       defs.forEach((def,i)=>{const el=flow.querySelector(`[data-home-block="${def.id}"]`);if(el){el.style.order=String(i+1);el.dataset.cmsHidden=def.visible===false?'1':'0'}});
       const modulesIndex=defs.findIndex(def=>def.id==='modules'),remindersIndex=defs.findIndex(def=>def.id==='reminders'),specialOrder=(modulesIndex>=0?modulesIndex+1:remindersIndex>=0?remindersIndex+2:6);
-      [$('homeTomorrowReminders'),$('transportMonthRecapHome')].filter(Boolean).forEach(el=>el.style.order=String(specialOrder));
+      [$('homeMeditationCard'),$('homeTomorrowReminders'),$('transportMonthRecapHome')].filter(Boolean).forEach(el=>el.style.order=String(specialOrder));
     }
     dynamicCommands={};
     for(const a of (cfg.applications||[])){
@@ -915,7 +915,7 @@
   $('savings52Done')?.addEventListener('change',e=>{
     const info=savings52Info();if(!info.active)return;
     const state=info.state;state.completed=state.completed||{};
-    if(e.target.checked){state.completed[String(info.week)]=new Date().toISOString();delete state.snoozeUntil}else delete state.completed[String(info.week)];
+    if(e.target.checked){const at=new Date().toISOString();state.completed[String(info.week)]=at;delete state.snoozeUntil;setTaskActivity(`savings-${info.week}`,'Épargne',true,'savings',at)}else{delete state.completed[String(info.week)];setTaskActivity(`savings-${info.week}`,'Épargne',false,'savings')}
     saveSavings52(state);renderSavings52();renderV9Today();renderV9System();
   });
   $('savings52Later')?.addEventListener('click',()=>{
@@ -928,20 +928,60 @@
   const CONTEXT_REMINDERS_KEY='3615-context-reminders-v1';
   const PINNED_REMINDERS_KEY='3615-pinned-reminders-v1';
   const REMINDER_HISTORY_KEY='3615-reminder-history-v1';
+  const RECURRING_REMINDERS_KEY='3615-recurring-reminders-v1';
+  const TASK_ACTIVITY_KEY='3615-task-activity-v1';
+  const GOALS_KEY='3615-goals-v1';
   const PINNED_TEMPLATES={
     trash:{icon:'🗑️',title:'Poubelles / tri'},
     laundry:{icon:'🧺',title:'Lessive'},
     admin:{icon:'📄',title:'Administratif'},
     compost:{icon:'🪱',title:'Vider le compost'}
   };
+  function taskActivityStore(){const raw=readJsonStorage(TASK_ACTIVITY_KEY);return Array.isArray(raw)?raw:[]}
+  function saveTaskActivity(rows){localStorage.setItem(TASK_ACTIVITY_KEY,JSON.stringify(rows.slice(-1000)));renderGlobalHistory();renderWeeklyReview();renderGoals()}
+  function setTaskActivity(sourceKey,label,done,taskType='task',at=null){
+    const rows=taskActivityStore().filter(x=>x?.sourceKey!==sourceKey);
+    if(done){const when=at||new Date().toISOString();rows.push({id:`task-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,sourceKey,label,taskType,at:when,day:localDateKey(new Date(when))})}
+    saveTaskActivity(rows);
+  }
   function contextReminderStore(){const raw=readJsonStorage(CONTEXT_REMINDERS_KEY);return raw&&typeof raw==='object'?raw:{fruit:{},cleaning:{},cleaningSnooze:{},compost:{},compostSnooze:{},shopping:{},shoppingSnooze:{}}}
   function saveContextReminderStore(s){localStorage.setItem(CONTEXT_REMINDERS_KEY,JSON.stringify(s))}
   function pinnedReminderStore(){const raw=readJsonStorage(PINNED_REMINDERS_KEY);return Array.isArray(raw)?raw:[]}
   function savePinnedReminderStore(rows){localStorage.setItem(PINNED_REMINDERS_KEY,JSON.stringify(rows));renderContextualReminders();renderHomeTomorrowReminders();renderPinnedReminderSystem();renderV9Today()}
   function reminderHistoryStore(){const raw=readJsonStorage(REMINDER_HISTORY_KEY);return Array.isArray(raw)?raw:[]}
-  function logProcrastination(type,label,fromDate,toDate){const rows=reminderHistoryStore();rows.push({id:`hist-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,type,label,fromDate,toDate,at:new Date().toISOString()});localStorage.setItem(REMINDER_HISTORY_KEY,JSON.stringify(rows.slice(-200)));renderProcrastinationHistory()}
+  function logProcrastination(type,label,fromDate,toDate){const rows=reminderHistoryStore();rows.push({id:`hist-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,type,label,fromDate,toDate,at:new Date().toISOString()});localStorage.setItem(REMINDER_HISTORY_KEY,JSON.stringify(rows.slice(-200)));renderProcrastinationHistory();renderGlobalHistory();renderWeeklyReview()}
   function plusDaysKey(baseKey,days=1){const d=new Date(`${baseKey}T12:00:00`);d.setDate(d.getDate()+days);return localDateKey(d)}
   function dateLabelLong(key){const d=new Date(`${key}T12:00:00`);return Number.isFinite(d.getTime())?d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}):key}
+  function recurringReminderStore(){const raw=readJsonStorage(RECURRING_REMINDERS_KEY);return Array.isArray(raw)?raw:[]}
+  function saveRecurringReminderStore(rows){localStorage.setItem(RECURRING_REMINDERS_KEY,JSON.stringify(rows));renderContextualReminders();renderHomeTomorrowReminders();renderRecurringReminderSystem();renderGoals();renderV9Today()}
+  function recurringFrequencyLabel(r){if(r.frequency==='daily')return 'Tous les jours';if(r.frequency==='monthly')return `Chaque mois · le ${Number(r.monthDay)||1}`;const names=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];return `Chaque semaine · ${names[Number(r.weekday)||0]}`}
+  function recurringScheduledOn(r,key){if(!r||r.active===false)return false;const d=new Date(`${key}T12:00:00`);if(!Number.isFinite(d.getTime()))return false;if(r.frequency==='daily')return true;if(r.frequency==='monthly')return d.getDate()===Math.max(1,Math.min(31,Number(r.monthDay)||1));return d.getDay()===Number(r.weekday)}
+  function recurringOccurrencesForDate(key){
+    const out=[];
+    for(const r of recurringReminderStore()){
+      r.completions=r.completions&&typeof r.completions==='object'?r.completions:{};r.snoozes=r.snoozes&&typeof r.snoozes==='object'?r.snoozes:{};
+      const deferred=Object.entries(r.snoozes).find(([origin,due])=>due===key);
+      const scheduled=recurringScheduledOn(r,key)&&!(r.snoozes[key]&&r.snoozes[key]!==key);
+      if(deferred){const [origin]=deferred;out.push({row:r,origin,deferred:true,doneAt:r.completions[origin]||null});continue}
+      if(scheduled)out.push({row:r,origin:key,deferred:false,doneAt:r.completions[key]||null});
+    }
+    return out.sort((a,b)=>(a.row.time||'99:99').localeCompare(b.row.time||'99:99')||String(a.row.title).localeCompare(String(b.row.title),'fr'));
+  }
+  function renderRecurringReminderCards(key){
+    return recurringOccurrencesForDate(key).map(o=>{const r=o.row,done=Boolean(o.doneAt),when=r.time?` · ${escapeHtml3615(r.time)}`:'',freq=recurringFrequencyLabel(r),detail=o.deferred?`Prévu le ${escapeHtml3615(dateLabelLong(o.origin))} · reporté à aujourd’hui${when}.`:`${escapeHtml3615(freq)}${when}.`;return `<article class="context-reminder recurring-reminder${done?' is-done':''}" data-recurring-id="${escapeAttr3615(r.id)}" data-recurring-origin="${escapeAttr3615(o.origin)}"><div class="context-reminder-icon">${escapeHtml3615(r.emoji||'📌')}</div><div class="context-reminder-copy"><strong>${escapeHtml3615(r.title||'Rappel')}</strong><small>${detail}</small>${reminderDoneMarkup(done)}</div><div class="context-reminder-actions"><label class="context-reminder-check"><input data-recurring-done type="checkbox" ${done?'checked':''}/><span>${done?'FAIT ✓':'C’EST FAIT'}</span></label><button class="text-key procrastinate-btn" data-recurring-later type="button" ${done?'disabled':''}>LE PROCRASTINER →</button></div></article>`}).join('');
+  }
+  function updateRecurringFormVisibility(){const f=$('recurringReminderFrequency')?.value||'weekly';if($('recurringReminderWeekdayField'))$('recurringReminderWeekdayField').hidden=f!=='weekly';if($('recurringReminderMonthDayField'))$('recurringReminderMonthDayField').hidden=f!=='monthly'}
+  $('recurringReminderFrequency')?.addEventListener('change',updateRecurringFormVisibility);
+  $('recurringReminderAdd')?.addEventListener('click',()=>{
+    const title=String($('recurringReminderTitle')?.value||'').trim();if(!title){showRdvToast('Donne un nom au rappel récurrent.');return}
+    const rows=recurringReminderStore(),frequency=$('recurringReminderFrequency')?.value||'weekly';rows.push({id:`rec-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,title,emoji:String($('recurringReminderEmoji')?.value||'📌').trim()||'📌',frequency,weekday:Number($('recurringReminderWeekday')?.value||1),monthDay:Number($('recurringReminderMonthDay')?.value||1),time:String($('recurringReminderTime')?.value||''),active:true,createdAt:new Date().toISOString(),completions:{},snoozes:{}});
+    saveRecurringReminderStore(rows);$('recurringReminderTitle').value='';$('recurringReminderEmoji').value='';$('recurringReminderTime').value='';showRdvToast(`Rappel récurrent « ${title} » ajouté.`);
+  });
+  $('recurringReminderList')?.addEventListener('click',e=>{const del=e.target.closest('[data-delete-recurring]');if(!del)return;saveRecurringReminderStore(recurringReminderStore().filter(r=>r.id!==del.dataset.deleteRecurring))});
+  function renderRecurringReminderSystem(){
+    updateRecurringFormVisibility();const rows=recurringReminderStore().filter(r=>r&&r.active!==false),box=$('recurringReminderList');if(!box)return;
+    box.innerHTML=rows.length?`<div class="recurring-list-head"><span>RÉCURRENTS</span><strong>${rows.length}</strong></div>`+rows.map(r=>`<div class="pinned-upcoming-row"><div><strong>${escapeHtml3615(r.emoji||'📌')} ${escapeHtml3615(r.title)}</strong><small>${escapeHtml3615(recurringFrequencyLabel(r))}${r.time?` · ${escapeHtml3615(r.time)}`:''}</small></div><button data-delete-recurring="${escapeAttr3615(r.id)}" type="button">SUPPR.</button></div>`).join(''):'<div class="express-empty">Aucun rappel récurrent personnalisé.</div>';
+  }
   function fruitReminderSlot(date=new Date()){
     const h=date.getHours();
     if(h>=11&&h<14)return 'lunch';
@@ -997,22 +1037,23 @@
     if(!cleaningOrigin){for(const [origin,due] of Object.entries(store.cleaningSnooze)){if(due===key){cleaningOrigin=origin;break}}}
     const cleaningDone=Boolean(cleaningOrigin&&store.cleaning[cleaningOrigin]),cleaningVisible=Boolean(cleaningOrigin);
     if(clean){clean.hidden=!cleaningVisible;clean.dataset.originKey=cleaningOrigin||'';clean.classList.toggle('is-done',cleaningDone);const cb=$('cleaningReminder3615Done'),later=$('cleaningReminder3615Later');if(cb)cb.checked=cleaningDone;if(later)later.disabled=cleaningDone;if(cleaningVisible){const deferred=cleaningOrigin!==key;setText('cleaningReminder3615Title',cleaningDone?'MÉNAGE TERMINÉ':deferred?'MÉNAGE PROCRASTINÉ':'MÉNAGE AUJOURD’HUI');setText('cleaningReminder3615Text',cleaningDone?'✓ Fait aujourd’hui · ce rappel restera visible jusqu’à minuit.':deferred?`Prévu le ${dateLabelLong(cleaningOrigin)} · reporté à aujourd’hui.`:'Mardi · créneau conseillé : 13 h–18 h.')}}
-    const pinnedHtml=renderPinnedReminderCards(key),compostHtml=renderCompostReminder(key,store),shoppingHtml=renderShoppingReminder(key,store);
-    if(localBox){localBox.innerHTML=pinnedHtml+compostHtml+shoppingHtml;localBox.hidden=!(pinnedHtml||compostHtml||shoppingHtml)}
-    if(zone)zone.hidden=!(todayRdv.length||fruitVisible||cleaningVisible||pinnedHtml||compostHtml||shoppingHtml);
+    const pinnedHtml=renderPinnedReminderCards(key),recurringHtml=renderRecurringReminderCards(key),compostHtml=renderCompostReminder(key,store),shoppingHtml=renderShoppingReminder(key,store);
+    if(localBox){localBox.innerHTML=pinnedHtml+recurringHtml+compostHtml+shoppingHtml;localBox.hidden=!(pinnedHtml||recurringHtml||compostHtml||shoppingHtml)}
+    if(zone)zone.hidden=!(todayRdv.length||fruitVisible||cleaningVisible||pinnedHtml||recurringHtml||compostHtml||shoppingHtml);
     renderHomeTomorrowReminders();
   }
-  $('fruitReminder3615Done')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore();s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={done:new Date().toISOString()};saveContextReminderStore(s);renderContextualReminders()});
+  $('fruitReminder3615Done')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore(),at=new Date().toISOString(),source=`fruit-${localDateKey()}-${slot}`;s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={done:at};saveContextReminderStore(s);setTaskActivity(source,'Fruit',true,'fruit',at);renderContextualReminders()});
   $('fruitReminder3615Later')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore();s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={snoozeUntil:Date.now()+30*60*1000};saveContextReminderStore(s);logProcrastination('fruit','Fruit',localDateKey(),localDateKey());renderContextualReminders()});
-  $('cleaningReminder3615Done')?.addEventListener('change',e=>{const s=contextReminderStore(),origin=$('cleaningReminder3615')?.dataset.originKey||localDateKey();s.cleaning=s.cleaning||{};if(e.target.checked)s.cleaning[origin]=new Date().toISOString();else delete s.cleaning[origin];saveContextReminderStore(s);renderContextualReminders()});
+  $('cleaningReminder3615Done')?.addEventListener('change',e=>{const s=contextReminderStore(),origin=$('cleaningReminder3615')?.dataset.originKey||localDateKey(),at=e.target.checked?new Date().toISOString():null;s.cleaning=s.cleaning||{};if(e.target.checked)s.cleaning[origin]=at;else delete s.cleaning[origin];saveContextReminderStore(s);setTaskActivity(`cleaning-${origin}`,'Ménage',e.target.checked,'cleaning',at);renderContextualReminders()});
   $('cleaningReminder3615Later')?.addEventListener('click',()=>{const s=contextReminderStore(),origin=$('cleaningReminder3615')?.dataset.originKey||localDateKey(),tomorrowKey=plusDaysKey(localDateKey(),1);s.cleaningSnooze=s.cleaningSnooze||{};s.cleaningSnooze[origin]=tomorrowKey;saveContextReminderStore(s);logProcrastination('cleaning','Ménage',localDateKey(),tomorrowKey);renderContextualReminders()});
   $('todayRdvReminders')?.addEventListener('click',e=>{if(e.target.closest('[data-rdv-open]'))showSection('rdv')});
   $('localReminderRows')?.addEventListener('change',e=>{
-    const pin=e.target.closest('[data-pinned-done]');if(pin){const row=e.target.closest('[data-pinned-id]'),rows=pinnedReminderStore(),i=rows.findIndex(x=>x.id===row?.dataset.pinnedId);if(i>=0){rows[i].doneAt=e.target.checked?new Date().toISOString():null;savePinnedReminderStore(rows)}return}
+    const recurring=e.target.closest('[data-recurring-done]');if(recurring){const card=e.target.closest('[data-recurring-id]'),rows=recurringReminderStore(),i=rows.findIndex(r=>r.id===card?.dataset.recurringId),origin=card?.dataset.recurringOrigin||localDateKey();if(i>=0){rows[i].completions=rows[i].completions&&typeof rows[i].completions==='object'?rows[i].completions:{};const at=e.target.checked?new Date().toISOString():null;if(e.target.checked)rows[i].completions[origin]=at;else delete rows[i].completions[origin];setTaskActivity(`recurring-${rows[i].id}-${origin}`,rows[i].title,e.target.checked,'recurring',at);saveRecurringReminderStore(rows)}return}
+    const pin=e.target.closest('[data-pinned-done]');if(pin){const row=e.target.closest('[data-pinned-id]'),rows=pinnedReminderStore(),i=rows.findIndex(x=>x.id===row?.dataset.pinnedId);if(i>=0){const at=e.target.checked?new Date().toISOString():null;rows[i].doneAt=at;setTaskActivity(`pinned-${rows[i].id}`,rows[i].title,e.target.checked,'pinned',at);savePinnedReminderStore(rows)}return}
     const compost=e.target.closest('[data-compost-done]');if(compost){
       const card=e.target.closest('[data-compost-origin]'),origin=card?.dataset.compostOrigin||localDateKey(),s=contextReminderStore();s.compost=s.compost||{};
-      if(e.target.checked)s.compost[origin]=new Date().toISOString();else delete s.compost[origin];
-      saveContextReminderStore(s);renderContextualReminders();renderV9Today();return
+      const at=e.target.checked?new Date().toISOString():null;if(e.target.checked)s.compost[origin]=at;else delete s.compost[origin];
+      saveContextReminderStore(s);setTaskActivity(`compost-${origin}`,'Vider le compost',e.target.checked,'compost',at);renderContextualReminders();renderV9Today();return
     }
     const shop=e.target.closest('[data-shopping-done]');if(shop){
       const card=e.target.closest('[data-shopping-origin]'),origin=card?.dataset.shoppingOrigin||localDateKey(),s=contextReminderStore();
@@ -1022,9 +1063,10 @@
         s.shoppingArchive[origin]=Array.isArray(current)?current:[];
         localStorage.setItem('culina-shopping-v1','[]');
         s.shopping[origin]=new Date().toISOString();
+        setTaskActivity(`shopping-${origin}`,'Courses',true,'shopping',s.shopping[origin]);
         try{window.LenaicBus?.publish('culina.shopping.cleared',{origin,count:s.shoppingArchive[origin].length},{source:'3615',target:'culina',status:'done',notification:false})}catch(_e){}
       }else{
-        delete s.shopping[origin];
+        delete s.shopping[origin];setTaskActivity(`shopping-${origin}`,'Courses',false,'shopping');
         const archived=Array.isArray(s.shoppingArchive[origin])?s.shoppingArchive[origin]:[],current=readJsonStorage('culina-shopping-v1'),live=Array.isArray(current)?current:[];
         if(archived.length){
           const seen=new Set(live.map(x=>String(x?.id||'')+'|'+String(x?.name||'').toLowerCase()));
@@ -1037,6 +1079,7 @@
     }
   });
   $('localReminderRows')?.addEventListener('click',e=>{
+    const recurringLater=e.target.closest('[data-recurring-later]');if(recurringLater){const card=e.target.closest('[data-recurring-id]'),rows=recurringReminderStore(),i=rows.findIndex(r=>r.id===card?.dataset.recurringId),origin=card?.dataset.recurringOrigin||localDateKey(),to=plusDaysKey(localDateKey(),1);if(i>=0){rows[i].snoozes=rows[i].snoozes&&typeof rows[i].snoozes==='object'?rows[i].snoozes:{};rows[i].snoozes[origin]=to;logProcrastination('recurring',rows[i].title,localDateKey(),to);saveRecurringReminderStore(rows)}return}
     const later=e.target.closest('[data-pinned-later]');if(later){const card=e.target.closest('[data-pinned-id]'),rows=pinnedReminderStore(),i=rows.findIndex(x=>x.id===card?.dataset.pinnedId);if(i>=0&&!rows[i].doneAt){const from=rows[i].date,to=plusDaysKey(localDateKey(),1);rows[i].date=to;rows[i].snoozeCount=(Number(rows[i].snoozeCount)||0)+1;rows[i].lastSnoozedAt=new Date().toISOString();logProcrastination('pinned',rows[i].title,from,to);savePinnedReminderStore(rows)}return}
     const compostLater=e.target.closest('[data-compost-later]');if(compostLater){const card=e.target.closest('[data-compost-origin]'),origin=card?.dataset.compostOrigin||localDateKey(),s=contextReminderStore(),to=plusDaysKey(localDateKey(),1);s.compostSnooze=s.compostSnooze||{};s.compostSnooze[origin]=to;saveContextReminderStore(s);logProcrastination('compost','Vider le compost',localDateKey(),to);renderContextualReminders();return}
     const shoppingLater=e.target.closest('[data-shopping-later]');if(shoppingLater){const card=e.target.closest('[data-shopping-origin]'),origin=card?.dataset.shoppingOrigin||localDateKey(),s=contextReminderStore(),to=plusDaysKey(localDateKey(),1);s.shoppingSnooze=s.shoppingSnooze||{};s.shoppingSnooze[origin]=to;saveContextReminderStore(s);logProcrastination('shopping','Courses',localDateKey(),to);renderContextualReminders()}
@@ -1061,6 +1104,7 @@
     const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);const key=localDateKey(tomorrow),rows=[];
     rdvEventsForDate(key).filter(x=>!x.done).forEach(ev=>rows.push({k:rdvTypeLabel(ev.type),t:ev.title||'Rendez-vous',s:ev.time||'—',b:'RDV'}));
     pinnedReminderStore().filter(r=>r.date===key&&!r.doneAt).forEach(r=>rows.push({k:'RAPPEL',t:`${r.icon||'📌'} ${r.title}`,s:'Rappel ponctuel épinglé',b:'DEMAIN'}));
+    recurringOccurrencesForDate(key).filter(o=>!o.doneAt).forEach(o=>rows.push({k:'RÉCURRENT',t:`${o.row.emoji||'📌'} ${o.row.title}`,s:`${recurringFrequencyLabel(o.row)}${o.row.time?' · '+o.row.time:''}`,b:'DEMAIN'}));
     const s=contextReminderStore();s.cleaningSnooze=s.cleaningSnooze||{};s.compostSnooze=s.compostSnooze||{};s.shoppingSnooze=s.shoppingSnooze||{};
     const cleaningDue=Object.entries(s.cleaningSnooze).some(([o,due])=>due===key&&!s.cleaning?.[o]);if(tomorrow.getDay()===2||cleaningDue)rows.push({k:'MÉNAGE',t:'Ménage',s:'Créneau conseillé : 13 h–18 h',b:'DEMAIN'});
     const compostDue=Object.entries(s.compostSnooze).some(([o,due])=>due===key&&!s.compost?.[o]);if(tomorrow.getDay()===5||compostDue)rows.push({k:'COMPOST',t:'🪱 Vider le compost',s:'Rappel hebdomadaire du vendredi',b:'DEMAIN'});
@@ -1081,7 +1125,7 @@
   const TRANSPORT_LEDGER_KEY='3615-transport-ledger-v1';
   const TRANSPORT_SAVED_AMOUNT=1.60,TRANSPORT_FINE_AMOUNT=-65;
   function transportLedger(){const raw=readJsonStorage(TRANSPORT_LEDGER_KEY);return Array.isArray(raw)?raw.filter(x=>x&&Number.isFinite(Number(x.amount))&&x.at):[]}
-  function saveTransportLedger(rows){localStorage.setItem(TRANSPORT_LEDGER_KEY,JSON.stringify(rows));renderTransportCounter();renderTransportMonthRecap()}
+  function saveTransportLedger(rows){localStorage.setItem(TRANSPORT_LEDGER_KEY,JSON.stringify(rows));renderTransportCounter();renderTransportMonthRecap();renderGlobalHistory()}
   function transportMoney(value){return `${Number(value||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} €`}
   function transportStatsFor(year,month=null){
     const rows=transportLedger().filter(x=>{const d=new Date(x.at);return Number.isFinite(d.getTime())&&d.getFullYear()===year&&(month===null||d.getMonth()===month)});
@@ -1193,7 +1237,7 @@
     const rows=rdvStore(),id=$('rdvEditId').value||(`rdv-${Date.now()}-${Math.random().toString(36).slice(2,7)}`),i=rows.findIndex(x=>x.id===id),old=i>=0?rows[i]:{};
     const ev={...old,id,title,date,time,type:$('rdvType').value,note:$('rdvNote').value.trim(),notifyMinutes:Number($('rdvNotify').value)||0,done:false,notifiedAt:null,updatedAt:new Date().toISOString(),createdAt:old.createdAt||new Date().toISOString()};if(i>=0)rows[i]=ev;else rows.push(ev);saveRdvStore(rows);resetRdvForm();showRdvToast(i>=0?'Rendez-vous mis à jour.':'Rendez-vous ajouté.');
   });
-  $('rdv')?.addEventListener('click',e=>{const b=e.target.closest('[data-rdv-action]');if(!b)return;const row=b.closest('[data-rdv-id]'),id=row?.dataset.rdvId,rows=rdvStore(),i=rows.findIndex(x=>x.id===id);if(i<0)return;const ev=rows[i],action=b.dataset.rdvAction;if(action==='edit')editRdv(id);if(action==='delete'&&confirm(`Supprimer « ${ev.title} » ?`)){rows.splice(i,1);saveRdvStore(rows)}if(action==='done'){rows[i]={...ev,done:!ev.done,updatedAt:new Date().toISOString()};saveRdvStore(rows)}if(action==='calendar')downloadRdvIcs([ev],`${ev.date}-${ev.title}`)});
+  $('rdv')?.addEventListener('click',e=>{const b=e.target.closest('[data-rdv-action]');if(!b)return;const row=b.closest('[data-rdv-id]'),id=row?.dataset.rdvId,rows=rdvStore(),i=rows.findIndex(x=>x.id===id);if(i<0)return;const ev=rows[i],action=b.dataset.rdvAction;if(action==='edit')editRdv(id);if(action==='delete'&&confirm(`Supprimer « ${ev.title} » ?`)){rows.splice(i,1);saveRdvStore(rows)}if(action==='done'){const nextDone=!ev.done,at=new Date().toISOString();rows[i]={...ev,done:nextDone,updatedAt:at};setTaskActivity(`rdv-${ev.id}`,ev.title||'Rendez-vous',nextDone,'rdv',nextDone?at:null);saveRdvStore(rows)}if(action==='calendar')downloadRdvIcs([ev],`${ev.date}-${ev.title}`)});
   $('rdvExportAll')?.addEventListener('click',()=>{const now=Date.now(),events=rdvStore().filter(ev=>!ev.done&&(rdvDateTime(ev)?.getTime()||0)>=now).sort((a,b)=>rdvDateTime(a)-rdvDateTime(b));downloadRdvIcs(events,'3615-rdv-a-venir')});
   window.addEventListener('storage',e=>{if(e.key===RDV_KEY){renderRdv();renderContextualReminders();renderV9Today()}});
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkRdvNotifications()});window.addEventListener('focus',checkRdvNotifications);
@@ -1224,9 +1268,12 @@
     if(e.key===SAVINGS52_KEY){renderSavings52();renderV9Today();renderV9System()}
     if(e.key===CONTEXT_REMINDERS_KEY){renderContextualReminders();renderV9Today();renderV9System()}
     if(e.key===PINNED_REMINDERS_KEY){renderContextualReminders();renderHomeTomorrowReminders();renderPinnedReminderSystem();renderV9Today()}
-    if(e.key===REMINDER_HISTORY_KEY)renderProcrastinationHistory();
+    if(e.key===RECURRING_REMINDERS_KEY){renderContextualReminders();renderHomeTomorrowReminders();renderRecurringReminderSystem();renderV9Today();renderGoals()}
+    if(e.key===REMINDER_HISTORY_KEY){renderProcrastinationHistory();renderGlobalHistory();renderWeeklyReview()}
+    if(e.key===TASK_ACTIVITY_KEY){renderGlobalHistory();renderWeeklyReview();renderGoals()}
+    if(e.key===GOALS_KEY)renderGoals();
     if(e.key==='culina-shopping-v1'){renderContextualReminders();renderHomeTomorrowReminders();renderV9Daily();renderV9Today()}
-    if(e.key===TRANSPORT_LEDGER_KEY){renderTransportCounter();renderTransportMonthRecap()}
+    if(e.key===TRANSPORT_LEDGER_KEY){renderTransportCounter();renderTransportMonthRecap();renderGlobalHistory()}
   });
 
 
@@ -1264,6 +1311,7 @@
     const rows=[],saving=savings52Info();
     rdvEventsForDate(localDateKey()).forEach(ev=>rows.push({k:rdvTypeLabel(ev.type),t:ev.title||'Rendez-vous',s:`${ev.time||'—'}${ev.note?' · '+ev.note:''}`,b:ev.done?'TERMINÉ':'RDV'}));
     pinnedReminderStore().filter(r=>r.date===localDateKey()).forEach(r=>rows.push({k:'RAPPEL',t:`${r.icon||'📌'} ${r.title}`,s:'Rappel local épinglé',b:r.doneAt?'TERMINÉ':'À FAIRE'}));
+    recurringOccurrencesForDate(localDateKey()).forEach(o=>rows.push({k:'RÉCURRENT',t:`${o.row.emoji||'📌'} ${o.row.title}`,s:`${recurringFrequencyLabel(o.row)}${o.row.time?' · '+o.row.time:''}`,b:o.doneAt?'TERMINÉ':'À FAIRE'}));
     const compostStore=contextReminderStore(),compostTodayKey=localDateKey();let compostOriginToday='';if(new Date().getDay()===5&&!(compostStore.compostSnooze?.[compostTodayKey]&&compostStore.compostSnooze[compostTodayKey]!==compostTodayKey))compostOriginToday=compostTodayKey;if(!compostOriginToday)for(const [o,due] of Object.entries(compostStore.compostSnooze||{}))if(due===compostTodayKey){compostOriginToday=o;break}if(compostOriginToday)rows.push({k:'COMPOST',t:'🪱 Vider le compost',s:compostOriginToday===compostTodayKey?'Rappel hebdomadaire du vendredi':'Rappel reporté',b:compostStore.compost?.[compostOriginToday]?'TERMINÉ':'À FAIRE'});
     if(saving.active&&(saving.isMonday||!saving.done||saving.doneToday)&&!saving.isSnoozed)rows.push({k:'ÉPARGNE',t:`${saving.amount} € à mettre de côté`,s:`Cumul validé : ${saving.saved.toLocaleString('fr-FR')} / ${SAVINGS52_TARGET.toLocaleString('fr-FR')} €`,b:saving.done?'ÉPARGNÉ':'À FAIRE'});
     const shoppingNow=openCulinaShopping(),crs=contextReminderStore(),todayKey=localDateKey();let shoppingOrigin='';if(new Date().getDay()===1&&!(crs.shoppingSnooze?.[todayKey]&&crs.shoppingSnooze[todayKey]!==todayKey))shoppingOrigin=todayKey;if(!shoppingOrigin)for(const [o,due] of Object.entries(crs.shoppingSnooze||{}))if(due===todayKey){shoppingOrigin=o;break}if(shoppingOrigin&&(shoppingNow.length||crs.shopping?.[shoppingOrigin]))rows.push({k:'COURSES',t:`${shoppingNow.length} article${shoppingNow.length>1?'s':''} dans Culina`,s:shoppingNow.map(x=>x.name).join(' · ')||'Liste terminée',b:crs.shopping?.[shoppingOrigin]?'TERMINÉ':'À FAIRE'});
@@ -1334,6 +1382,58 @@
     const ar=readLocalJson(ARIANE_DATA_KEY);(ar?.cases||[]).slice().sort((a,b)=>timeValue(b,['updatedAt','createdAt'])-timeValue(a,['updatedAt','createdAt'])).slice(0,4).forEach(c=>rows.push({k:'ARIANE',t:c.title||'Enquête',m:c.status||'En cours'}));received.slice(0,3).forEach(r=>rows.push({k:'SCRIBE',t:r.title||'Réponse reçue',m:r.contact||'Archives'}));pending.slice(0,3).forEach(r=>rows.push({k:'SCRIBE',t:r.title||'Demande en attente',m:`${r.contact||'Archives'} · ${scribeAgeLabel(r.ageDays)}`}));
     const af=$('archiveActivityFeed');if(af)af.innerHTML=rows.length?rows.slice(0,7).map(x=>`<div class="activity-item"><div><span>${x.k}</span><strong>${escapeHtml3615(x.t)}</strong><small>${escapeHtml3615(x.m)}</small></div></div>`).join(''):'<div class="express-empty">Aucune activité récente détectée.</div>';
   }
+  function periodBounds(period='month',now=new Date()){
+    const start=new Date(now),end=new Date(now);start.setHours(0,0,0,0);end.setHours(23,59,59,999);
+    if(period==='week'){const day=(start.getDay()+6)%7;start.setDate(start.getDate()-day);end.setTime(start.getTime());end.setDate(end.getDate()+6);end.setHours(23,59,59,999)}
+    else {start.setDate(1);end.setMonth(start.getMonth()+1,0)}
+    return {start,end};
+  }
+  function globalHistoryEvents(){
+    const events=[];
+    taskActivityStore().forEach(x=>events.push({type:'task',at:x.at,label:x.label||'Tâche terminée',detail:'Terminé',badge:'✓',taskType:x.taskType||'task'}));
+    reminderHistoryStore().forEach(x=>events.push({type:'procrastination',at:x.at,label:x.label||'Rappel',detail:`${x.fromDate||''} → ${x.toDate||''}`,badge:'REPORT'}));
+    meditationSessions().forEach(x=>events.push({type:'meditation',at:x.at,label:'Méditation',detail:`Prévu ${meditationDurationLabel(x.plannedSeconds)} · fait ${meditationDurationLabel(x.actualSeconds)}`,badge:x.completed?'TERMINÉE':'ARRÊTÉE',seconds:x.actualSeconds}));
+    transportLedger().forEach(x=>events.push({type:'transport',at:x.at,label:Number(x.amount)>0?'Transport · économie':'Transport · amende',detail:transportMoney(x.amount),badge:Number(x.amount)>0?'+1,60 €':'−65 €',amount:Number(x.amount)||0}));
+    return events.filter(x=>x.at&&Number.isFinite(new Date(x.at).getTime())).sort((a,b)=>new Date(b.at)-new Date(a.at));
+  }
+  function renderGlobalHistory(){
+    const monthInput=$('globalHistoryMonth'),typeInput=$('globalHistoryType'),now=new Date();if(monthInput&&!monthInput.value)monthInput.value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+    const ym=String(monthInput?.value||'').match(/^(\d{4})-(\d{2})$/),year=ym?Number(ym[1]):now.getFullYear(),month=ym?Number(ym[2])-1:now.getMonth(),type=typeInput?.value||'all';
+    const rows=globalHistoryEvents().filter(x=>{const d=new Date(x.at);return d.getFullYear()===year&&d.getMonth()===month&&(type==='all'||x.type===type)}),box=$('globalHistoryList');
+    const tasks=rows.filter(x=>x.type==='task').length,reports=rows.filter(x=>x.type==='procrastination').length,med=rows.filter(x=>x.type==='meditation'),medSec=med.reduce((n,x)=>n+(x.seconds||0),0),transport=rows.filter(x=>x.type==='transport').reduce((n,x)=>n+(x.amount||0),0);
+    setText('globalHistoryState',`${rows.length} ÉVÉNEMENT${rows.length>1?'S':''}`);const summary=$('globalHistorySummary');if(summary)summary.innerHTML=`<span>✓ ${tasks} tâche${tasks>1?'s':''}</span><span>↪ ${reports} report${reports>1?'s':''}</span><span>🧘 ${med.length} · ${meditationDurationLabel(medSec)}</span><span>🚋 ${transportMoney(transport)}</span>`;
+    if(box)box.innerHTML=rows.length?rows.slice(0,80).map(x=>{const d=new Date(x.at),date=d.toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'2-digit'}),time=d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});return `<div class="procrastination-row global-history-row"><div><strong>${escapeHtml3615(x.label)}</strong><small>${date.toUpperCase()} · ${time} · ${escapeHtml3615(x.detail||'')}</small></div><b>${escapeHtml3615(x.badge||'')}</b></div>`}).join(''):'<div class="express-empty">Aucun événement pour ce filtre.</div>';
+  }
+  $('globalHistoryMonth')?.addEventListener('change',renderGlobalHistory);$('globalHistoryType')?.addEventListener('change',renderGlobalHistory);
+  function renderWeeklyReview(){
+    const card=$('homeWeeklyReview');if(!card)return;const now=new Date(),visible=now.getDay()===0&&now.getHours()>=18;card.hidden=!visible;if(!visible)return;
+    const {start,end}=periodBounds('week',now),inside=at=>{const d=new Date(at);return d>=start&&d<=end},tasks=taskActivityStore().filter(x=>inside(x.at)).length,reports=reminderHistoryStore().filter(x=>inside(x.at)).length,med=meditationSessions().filter(x=>inside(x.at)),seconds=med.reduce((n,x)=>n+x.actualSeconds,0),box=$('homeWeeklyReviewCopy');
+    setText('homeWeeklyReviewState',`${start.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'})} → ${end.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'})}`);if(box)box.innerHTML=`<div><strong>${tasks}</strong><span>RAPPEL${tasks>1?'S':''} TERMINÉ${tasks>1?'S':''}</span></div><div><strong>${reports}</strong><span>REPORT${reports>1?'S':''}</span></div><div><strong>${med.length}</strong><span>SÉANCE${med.length>1?'S':''} DE MÉDITATION</span></div><div><strong>${meditationDurationLabel(seconds)}</strong><span>MÉDITATION RÉELLE</span></div>`;
+  }
+  function goalsStore(){
+    const raw=readJsonStorage(GOALS_KEY);if(Array.isArray(raw))return raw;const seeded=[{id:'goal-meditation-4w',metric:'meditation_sessions',target:4,period:'week',createdAt:new Date().toISOString()},{id:'goal-compost-1w',metric:'compost',target:1,period:'week',createdAt:new Date().toISOString()}];localStorage.setItem(GOALS_KEY,JSON.stringify(seeded));return seeded;
+  }
+  function saveGoals(rows){localStorage.setItem(GOALS_KEY,JSON.stringify(rows));renderGoals()}
+  const GOAL_LABELS={meditation_sessions:'Séances de méditation',meditation_minutes:'Minutes de méditation',tasks:'Tâches terminées',compost:'Vider le compost',shopping:'Courses',cleaning:'Ménage'};
+  function goalValue(goal,now=new Date()){
+    const {start,end}=periodBounds(goal.period,now),inside=at=>{const d=new Date(at);return d>=start&&d<=end};
+    if(goal.metric==='meditation_sessions')return meditationSessions().filter(x=>inside(x.at)).length;
+    if(goal.metric==='meditation_minutes')return Math.floor(meditationSessions().filter(x=>inside(x.at)).reduce((n,x)=>n+x.actualSeconds,0)/60);
+    const rows=taskActivityStore().filter(x=>inside(x.at));if(goal.metric==='tasks')return rows.length;return rows.filter(x=>x.taskType===goal.metric).length;
+  }
+  function renderGoals(){
+    const rows=goalsStore(),box=$('goalsList');setText('goalsState',rows.length?`${rows.length} OBJECTIF${rows.length>1?'S':''}`:'AUCUN OBJECTIF');if(!box)return;
+    box.innerHTML=rows.length?rows.map(g=>{const val=goalValue(g),target=Math.max(1,Number(g.target)||1),done=val>=target;return `<div class="goal-row${done?' is-done':''}"><div><strong>${escapeHtml3615(GOAL_LABELS[g.metric]||'Objectif')}</strong><small>${g.period==='week'?'Cette semaine':'Ce mois'} · objectif ${target}</small></div><b>${val} / ${target}${done?' ✓':''}</b><button data-delete-goal="${escapeAttr3615(g.id)}" type="button">SUPPR.</button></div>`}).join(''):'<div class="express-empty">Aucun objectif. Ajoute-en un si tu veux suivre une habitude.</div>';
+  }
+  $('goalAdd')?.addEventListener('click',()=>{const metric=$('goalMetric')?.value||'meditation_sessions',target=Math.max(1,Number($('goalTarget')?.value)||1),period=$('goalPeriod')?.value||'week',rows=goalsStore();rows.push({id:`goal-${Date.now()}-${Math.random().toString(36).slice(2,5)}`,metric,target,period,createdAt:new Date().toISOString()});saveGoals(rows)});
+  $('goalsList')?.addEventListener('click',e=>{const b=e.target.closest('[data-delete-goal]');if(b)saveGoals(goalsStore().filter(g=>g.id!==b.dataset.deleteGoal))});
+  function migrateV920Activity(){
+    const flag='3615-migrate-v920-activity';if(localStorage.getItem(flag))return;const rows=taskActivityStore(),seen=new Set(rows.map(x=>x.sourceKey)),add=(sourceKey,label,taskType,at)=>{if(!at||seen.has(sourceKey)||!Number.isFinite(new Date(at).getTime()))return;seen.add(sourceKey);rows.push({id:`task-mig-${rows.length}-${Date.now()}`,sourceKey,label,taskType,at,day:localDateKey(new Date(at))})};
+    pinnedReminderStore().forEach(r=>add(`pinned-${r.id}`,r.title||'Rappel','pinned',r.doneAt));const c=contextReminderStore();Object.entries(c.cleaning||{}).forEach(([k,at])=>add(`cleaning-${k}`,'Ménage','cleaning',at));Object.entries(c.compost||{}).forEach(([k,at])=>add(`compost-${k}`,'Vider le compost','compost',at));Object.entries(c.shopping||{}).forEach(([k,at])=>add(`shopping-${k}`,'Courses','shopping',at));Object.entries(c.fruit||{}).forEach(([k,v])=>add(`fruit-${k.replace(':','-')}`,'Fruit','fruit',typeof v==='string'?v:v?.done));
+    const sv=savings52Store();Object.entries(sv.completed||{}).forEach(([week,at])=>add(`savings-${week}`,'Épargne','savings',at));rdvStore().filter(r=>r.done).forEach(r=>add(`rdv-${r.id}`,r.title||'Rendez-vous','rdv',r.updatedAt||r.createdAt));
+    localStorage.setItem(TASK_ACTIVITY_KEY,JSON.stringify(rows.slice(-1000)));localStorage.setItem(flag,'1');
+  }
+
   function renderV9System(){
     const pending=window.LenaicBus?LenaicBus.pending():[],scribe=readScribeSnapshot()||{},overdue=(scribe.pending||[]).filter(x=>Number(x.ageDays)>=scribeReminderDays()),m=readCapSnapshot()?.measurements||{},notifs=[];
     const saving=savings52Info();if(saving.active&&!saving.done)notifs.push(`Défi 52 semaines : ${saving.amount} € à épargner cette semaine`);
@@ -1341,7 +1441,7 @@
     setText('systemNotifState',notifs.length?`${notifs.length} À VOIR`:'RAS');const nb=$('systemNotifications');if(nb)nb.innerHTML=notifs.length?notifs.map(x=>`<div class="activity-item"><div><span>ATTENTION</span><strong>${escapeHtml3615(x)}</strong></div></div>`).join(''):'<div class="express-empty">Aucune action urgente.</div>';
     setText('systemBusState',window.LenaicBus?'ACTIF':'HORS LIGNE');const bd=$('systemBusDetail');if(bd)bd.innerHTML=`<div><span>MESSAGES EN ATTENTE</span><b>${pending.length}</b></div><div><span>CANAL</span><b>lenaic-bus-v1</b></div><div><span>MODE</span><b>LOCAL + BROADCAST</b></div>`;
     const keys=['cap-data','memoire-famille-data','scriptoria-data','pistoria_private_v3','ariane-local-v2','scribe-local-v3'];const present=keys.filter(k=>localStorage.getItem(k)!=null).length;const bk=$('systemBackupDetail');if(bk)bk.innerHTML=`<div><span>JEUX LOCAUX MAJEURS</span><b>${present}/${keys.length} DÉTECTÉS</b></div><div><span>SNAPSHOT AUTO</span><b>${Number(nexusConfig?.automations?.autoSnapshotHours)||3} H</b></div><div><span>RÉTENTION</span><b>${Number(nexusConfig?.automations?.retentionPerDataset)||20} VERSIONS</b></div>`;
-    renderPinnedReminderSystem();renderProcrastinationHistory();
+    renderPinnedReminderSystem();renderRecurringReminderSystem();renderProcrastinationHistory();renderGlobalHistory();renderGoals();
   }
   function renderV9All(){renderV9Today();renderV9Daily();renderV9Health();renderV9Info();renderAnniversaries();renderV9Archives();renderV9System()}
 
@@ -1367,27 +1467,66 @@
     const keySections={'0':'home','1':'aujourdhui','2':'rdv','3':'quotidien','4':'sante','5':'informations','6':'genealogie','7':'archives','8':'detente','9':'systeme'};if(keySections[e.key])showSection(keySections[e.key]);
   });
 
-  // Méditation — minuteur local, précis même si l’onglet passe en arrière-plan.
+  // Méditation — minuteur local, temps réel enregistré même en cas d'arrêt anticipé.
   const MEDITATION_KEY='3615-meditation-v1';
-  let meditation={selected:300,remaining:300,running:false,endAt:null,timer:null};
+  let meditation={selected:300,remaining:300,running:false,endAt:null,timer:null,startedAt:null};
   function meditationStore(){try{return JSON.parse(localStorage.getItem(MEDITATION_KEY)||'{}')}catch{return {}}}
-  function meditationSessionsToday(){const d=meditationStore(),key=localDateKey();return (d.sessions||[]).filter(x=>String(x.at||'').startsWith(key))}
-  function saveMeditationSession(seconds){const d=meditationStore();d.sessions=Array.isArray(d.sessions)?d.sessions:[];d.sessions.push({at:new Date().toISOString(),seconds});d.sessions=d.sessions.slice(-100);localStorage.setItem(MEDITATION_KEY,JSON.stringify(d))}
+  function normalizedMeditationSession(x){
+    const actual=Math.max(0,Number(x?.actualSeconds??x?.seconds)||0),planned=Math.max(actual,Number(x?.plannedSeconds??x?.seconds)||actual);
+    return {...x,actualSeconds:actual,plannedSeconds:planned,day:x?.day||localDateKey(new Date(x?.at||Date.now()))};
+  }
+  function meditationSessions(){const d=meditationStore();return (Array.isArray(d.sessions)?d.sessions:[]).map(normalizedMeditationSession).filter(x=>x.actualSeconds>0)}
+  function meditationSessionsToday(){const key=localDateKey();return meditationSessions().filter(x=>x.day===key)}
+  function saveMeditationSession(plannedSeconds,actualSeconds,completed=false){
+    const actual=Math.max(0,Math.round(Number(actualSeconds)||0));if(actual<1)return false;
+    const planned=Math.max(actual,Math.round(Number(plannedSeconds)||actual)),d=meditationStore();d.sessions=Array.isArray(d.sessions)?d.sessions:[];
+    d.sessions.push({at:new Date().toISOString(),day:localDateKey(),seconds:actual,actualSeconds:actual,plannedSeconds:planned,completed:Boolean(completed)});
+    d.sessions=d.sessions.slice(-365);localStorage.setItem(MEDITATION_KEY,JSON.stringify(d));return true;
+  }
   function meditationFmt(sec){sec=Math.max(0,Math.ceil(sec));return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`}
+  function meditationDurationLabel(sec){const s=Math.max(0,Math.round(Number(sec)||0)),m=Math.floor(s/60),r=s%60;return r?`${m} min ${String(r).padStart(2,'0')} s`:`${m} min`}
+  function meditationHasProgress(){return meditation.remaining<meditation.selected-0.5}
+  function meditationActualSeconds(){return Math.max(0,meditation.selected-meditation.remaining)}
+  function meditationResetState(){clearInterval(meditation.timer);meditation.timer=null;meditation.running=false;meditation.endAt=null;meditation.startedAt=null;meditation.remaining=meditation.selected}
+  function renderMeditationSystemHistory(){
+    const all=meditationSessions().slice().sort((a,b)=>String(b.at).localeCompare(String(a.at))),box=$('meditationSystemHistory'),now=new Date(),month=all.filter(x=>{const d=new Date(x.at);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()}),total=month.reduce((n,x)=>n+x.actualSeconds,0);
+    setText('meditationSystemState',month.length?`${month.length} SÉANCE${month.length>1?'S':''} · ${meditationDurationLabel(total)}`:'AUCUNE CE MOIS');
+    if(box)box.innerHTML=all.length?all.slice(0,30).map(x=>{const d=new Date(x.at),date=d.toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'2-digit'}),time=d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),same=Math.abs(x.plannedSeconds-x.actualSeconds)<2;return `<div class="procrastination-row"><div><strong>${date.toUpperCase()} · ${time}</strong><small>Prévu ${meditationDurationLabel(x.plannedSeconds)} · fait ${meditationDurationLabel(x.actualSeconds)}</small></div><b>${same?'TERMINÉE':'ARRÊTÉE'}</b></div>`}).join(''):'<div class="express-empty">Aucune séance enregistrée.</div>';
+  }
   function renderMeditation(){
     if(meditation.running&&meditation.endAt)meditation.remaining=Math.max(0,(meditation.endAt-Date.now())/1000);
-    setText('meditationDisplay',meditationFmt(meditation.remaining));setText('meditationStateLabel',meditation.running?'EN COURS':meditation.remaining<meditation.selected?'EN PAUSE':'PRÊT');
-    const pct=meditation.selected?100*(1-meditation.remaining/meditation.selected):0;if($('meditationProgress'))$('meditationProgress').style.width=`${clamp(pct,0,100)}%`;
-    const sessions=meditationSessionsToday(),total=Math.round(sessions.reduce((a,x)=>a+(Number(x.seconds)||0),0)/60);setText('meditationHistory',sessions.length?`${sessions.length} séance${sessions.length>1?'s':''} aujourd’hui · ${total} min au total.`:'Aucune séance enregistrée aujourd’hui.');setText('homeMeditationState',sessions.length?`${total} MIN AUJOURD’HUI`:'PRÊT');setText('homeMeditationMeta',sessions.length?`${sessions.length} séance${sessions.length>1?'s':''} terminée${sessions.length>1?'s':''}.`:'Aucune séance aujourd’hui.');
-    const btn=$('meditationStartBtn');if(btn)btn.textContent=meditation.running?'PAUSE':(meditation.remaining<meditation.selected?'REPRENDRE':'DÉMARRER');
+    const progressed=meditationHasProgress(),state=meditation.running?'EN COURS':progressed?'EN PAUSE':'PRÊT',pct=meditation.selected?100*(1-meditation.remaining/meditation.selected):0;
+    setText('meditationDisplay',meditationFmt(meditation.remaining));setText('meditationStateLabel',state);if($('meditationProgress'))$('meditationProgress').style.width=`${clamp(pct,0,100)}%`;
+    setText('homeMeditationDisplay',meditationFmt(meditation.remaining));setText('homeMeditationStateLabel',state);if($('homeMeditationProgress'))$('homeMeditationProgress').style.width=`${clamp(pct,0,100)}%`;
+    const sessions=meditationSessionsToday(),actual=sessions.reduce((a,x)=>a+x.actualSeconds,0),totalLabel=meditationDurationLabel(actual),historyText=sessions.length?`${sessions.length} séance${sessions.length>1?'s':''} aujourd’hui · ${totalLabel} réellement méditées.`:'Aucune séance enregistrée aujourd’hui.';
+    setText('meditationHistory',historyText);setText('homeMeditationHistory',historyText);setText('homeMeditationState',sessions.length?`${totalLabel.toUpperCase()} AUJOURD’HUI`:'PRÊT');setText('homeMeditationMeta',sessions.length?`${sessions.length} séance${sessions.length>1?'s':''} enregistrée${sessions.length>1?'s':''}.`:'Aucune séance aujourd’hui.');
+    for(const id of ['meditationStartBtn','homeMeditationStartBtn']){const btn=$(id);if(btn)btn.textContent=meditation.running?'PAUSE':(progressed?'REPRENDRE':'DÉMARRER')}
+    for(const id of ['meditationFinishBtn','homeMeditationFinishBtn']){const btn=$(id);if(btn)btn.disabled=!progressed}
+    document.querySelectorAll('[data-meditation-min],[data-home-meditation-min]').forEach(b=>{const v=Number(b.dataset.meditationMin??b.dataset.homeMeditationMin);b.classList.toggle('active',v*60===meditation.selected);b.disabled=meditation.running||progressed});
+    for(const id of ['meditationCustom','homeMeditationCustom']){const input=$(id);if(input){input.value=Math.round(meditation.selected/60);input.disabled=meditation.running||progressed}}
+    const hour=new Date().getHours(),surface=(hour>=17&&hour<22)||meditation.running||progressed,card=$('homeMeditationCard');if(card)card.hidden=!surface;
+    renderMeditationSystemHistory();renderGlobalHistory();renderWeeklyReview();renderGoals();
   }
   function meditationTone(){try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;const ac=new A(),o=ac.createOscillator(),g=ac.createGain();o.frequency.value=528;g.gain.setValueAtTime(.001,ac.currentTime);g.gain.exponentialRampToValueAtTime(.16,ac.currentTime+.03);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+1.2);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+1.25)}catch(e){}if(navigator.vibrate)navigator.vibrate([120,90,120])}
-  function meditationTick(){if(!meditation.running)return;meditation.remaining=Math.max(0,(meditation.endAt-Date.now())/1000);if(meditation.remaining<=0){clearInterval(meditation.timer);meditation.timer=null;meditation.running=false;meditation.remaining=0;saveMeditationSession(meditation.selected);meditationTone();setText('meditationStateLabel','TERMINÉE');renderMeditation();setTimeout(()=>{meditation.remaining=meditation.selected;renderMeditation()},1800);return}renderMeditation()}
-  function setMeditationMinutes(min){if(meditation.running)return;const sec=clamp(min,1,90)*60;meditation.selected=sec;meditation.remaining=sec;document.querySelectorAll('[data-meditation-min]').forEach(b=>b.classList.toggle('active',Number(b.dataset.meditationMin)===Number(min)));if($('meditationCustom'))$('meditationCustom').value=Number(min);renderMeditation()}
-  document.querySelectorAll('[data-meditation-min]').forEach(b=>b.addEventListener('click',()=>setMeditationMinutes(Number(b.dataset.meditationMin))));
-  $('meditationCustom')?.addEventListener('change',e=>setMeditationMinutes(Number(e.target.value)||5));
-  $('meditationStartBtn')?.addEventListener('click',()=>{if(meditation.running){meditation.remaining=Math.max(0,(meditation.endAt-Date.now())/1000);meditation.running=false;clearInterval(meditation.timer);meditation.timer=null}else{if(meditation.remaining<=0)meditation.remaining=meditation.selected;meditation.running=true;meditation.endAt=Date.now()+meditation.remaining*1000;meditation.timer=setInterval(meditationTick,250);meditationTick()}renderMeditation()});
-  $('meditationResetBtn')?.addEventListener('click',()=>{clearInterval(meditation.timer);meditation.timer=null;meditation.running=false;meditation.remaining=meditation.selected;renderMeditation()});
+  function meditationFinishSession(completed=false){
+    if(meditation.running){meditation.remaining=Math.max(0,(meditation.endAt-Date.now())/1000)}
+    clearInterval(meditation.timer);meditation.timer=null;meditation.running=false;meditation.endAt=null;
+    const actual=completed?meditation.selected:meditationActualSeconds(),saved=saveMeditationSession(meditation.selected,actual,completed);
+    if(saved&&completed)meditationTone();
+    if(saved){setText('meditationStateLabel',completed?'TERMINÉE':'ENREGISTRÉE');setText('homeMeditationStateLabel',completed?'TERMINÉE':'ENREGISTRÉE')}
+    meditation.startedAt=null;meditation.remaining=meditation.selected;renderMeditation();
+  }
+  function meditationTick(){if(!meditation.running)return;meditation.remaining=Math.max(0,(meditation.endAt-Date.now())/1000);if(meditation.remaining<=0){meditation.remaining=0;meditationFinishSession(true);return}renderMeditation()}
+  function setMeditationMinutes(min){if(meditation.running||meditationHasProgress())return;const sec=clamp(min,1,90)*60;meditation.selected=sec;meditation.remaining=sec;renderMeditation()}
+  function toggleMeditation(){
+    if(meditation.running){meditation.remaining=Math.max(0,(meditation.endAt-Date.now())/1000);meditation.running=false;clearInterval(meditation.timer);meditation.timer=null;meditation.endAt=null}
+    else{if(meditation.remaining<=0)meditation.remaining=meditation.selected;if(!meditationHasProgress())meditation.startedAt=Date.now();meditation.running=true;meditation.endAt=Date.now()+meditation.remaining*1000;meditation.timer=setInterval(meditationTick,250);meditationTick()}renderMeditation();
+  }
+  document.querySelectorAll('[data-meditation-min],[data-home-meditation-min]').forEach(b=>b.addEventListener('click',()=>setMeditationMinutes(Number(b.dataset.meditationMin??b.dataset.homeMeditationMin))));
+  for(const id of ['meditationCustom','homeMeditationCustom'])$(id)?.addEventListener('change',e=>setMeditationMinutes(Number(e.target.value)||5));
+  for(const id of ['meditationStartBtn','homeMeditationStartBtn'])$(id)?.addEventListener('click',toggleMeditation);
+  for(const id of ['meditationFinishBtn','homeMeditationFinishBtn'])$(id)?.addEventListener('click',()=>meditationFinishSession(false));
+  for(const id of ['meditationResetBtn','homeMeditationResetBtn'])$(id)?.addEventListener('click',()=>{meditationResetState();renderMeditation()});
 
   // 3615.BIZARRE
   let bizarreSalt=0;
@@ -1439,9 +1578,9 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  migrateV918RecurringCompost();renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderContextualReminders();renderHomeTomorrowReminders();renderPinnedReminderSystem();renderProcrastinationHistory();renderTransportCounter();renderTransportMonthRecap();renderRdv();ensureRdvServiceWorker();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
+  migrateV918RecurringCompost();migrateV920Activity();renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderContextualReminders();renderHomeTomorrowReminders();renderPinnedReminderSystem();renderRecurringReminderSystem();renderProcrastinationHistory();renderGlobalHistory();renderGoals();renderWeeklyReview();renderTransportCounter();renderTransportMonthRecap();renderRdv();ensureRdvServiceWorker();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
   loadNexusConfig();loadWeather();loadNameday();
-  setInterval(()=>{renderContext();renderSavings52();renderContextualReminders();renderTransportCounter();renderTransportMonthRecap();renderRdv();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderV9All();},60000);
+  setInterval(()=>{renderContext();renderSavings52();renderContextualReminders();renderTransportCounter();renderTransportMonthRecap();renderRdv();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderWeeklyReview();renderV9All();},60000);
   setInterval(renderCulinaLive,3000);
   setInterval(checkRdvNotifications,15000);
   if(location.hash==='#rdv')showSection('rdv');
