@@ -10,7 +10,7 @@
 <meta http-equiv="Expires" content="0"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
 <link href="assets/favicon.svg?v=20260914-1351-v99" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=20260922-courses-compost-v918" rel="stylesheet"/>
+<link href="css/style.css?v=20260923-productivite-v920" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -118,9 +118,21 @@
 <div class="context-reminder-actions cleaning-reminder-actions"><label class="context-reminder-check"><input id="cleaningReminder3615Done" type="checkbox"/><span>C’EST FAIT</span></label><button class="text-key procrastinate-btn" id="cleaningReminder3615Later" type="button">LE PROCRASTINER →</button></div>
 </article>
 </section>
+<article class="minitel-card meditation-card home-meditation-card" id="homeMeditationCard" hidden>
+<div class="retro-head"><span>ZEN.17-22</span><strong id="homeMeditationStateLabel">PRÊT</strong></div>
+<div class="meditation-display" id="homeMeditationDisplay">05:00</div><div class="meditation-progress"><i id="homeMeditationProgress"></i></div>
+<div class="meditation-presets"><button data-home-meditation-min="5" type="button">5 MIN</button><button data-home-meditation-min="10" type="button">10 MIN</button><button data-home-meditation-min="15" type="button">15 MIN</button><button data-home-meditation-min="20" type="button">20 MIN</button></div>
+<div class="meditation-custom"><label>PERSONNALISÉ <input id="homeMeditationCustom" inputmode="numeric" max="90" min="1" type="number" value="5"/> MIN</label></div>
+<div class="meditation-actions"><button class="minitel-action" id="homeMeditationStartBtn" type="button">DÉMARRER</button><button class="minitel-action secondary" id="homeMeditationFinishBtn" type="button" disabled>TERMINER LA SÉANCE</button><button class="text-key" id="homeMeditationResetBtn" type="button">RÉINITIALISER</button></div>
+<p class="meditation-history" id="homeMeditationHistory">Aucune séance enregistrée aujourd’hui.</p>
+</article>
 <article class="minitel-card home-tomorrow-card" id="homeTomorrowReminders" hidden>
 <div class="retro-head"><span>DEMAIN</span><strong id="homeTomorrowState">À PRÉVOIR</strong></div>
 <div class="home-tomorrow-rows" id="homeTomorrowRows"></div>
+</article>
+<article class="minitel-card weekly-review-card" id="homeWeeklyReview" hidden>
+<div class="retro-head"><span>BILAN.SEMAINE</span><strong id="homeWeeklyReviewState">DIMANCHE SOIR</strong></div>
+<div class="weekly-review-copy" id="homeWeeklyReviewCopy"></div>
 </article>
 <article class="minitel-card transport-month-recap" id="transportMonthRecapHome" hidden></article><div class="nexus-modules-zone" data-home-block="modules" id="homeBlock-modules" hidden></div><article class="minitel-card otarie-home-card" data-home-block="otarie" id="homeBlock-otarie">
 <div class="retro-head"><span>OTARIE.LIVE</span><strong id="otarieHomeMood">BAIGNADE EN COURS</strong></div>
@@ -304,7 +316,7 @@
 <div class="meditation-display" id="meditationDisplay">05:00</div><div class="meditation-progress"><i id="meditationProgress"></i></div>
 <div class="meditation-presets"><button data-meditation-min="3" type="button">3 MIN</button><button class="active" data-meditation-min="5" type="button">5 MIN</button><button data-meditation-min="10" type="button">10 MIN</button><button data-meditation-min="15" type="button">15 MIN</button><button data-meditation-min="20" type="button">20 MIN</button></div>
 <div class="meditation-custom"><label>PERSONNALISÉ <input id="meditationCustom" inputmode="numeric" max="90" min="1" type="number" value="5"/> MIN</label></div>
-<div class="meditation-actions"><button class="minitel-action" id="meditationStartBtn" type="button">DÉMARRER</button><button class="minitel-action secondary" id="meditationResetBtn" type="button">RÉINITIALISER</button></div>
+<div class="meditation-actions"><button class="minitel-action" id="meditationStartBtn" type="button">DÉMARRER</button><button class="minitel-action secondary" id="meditationFinishBtn" type="button" disabled>TERMINER LA SÉANCE</button><button class="text-key" id="meditationResetBtn" type="button">RÉINITIALISER</button></div>
 <p class="meditation-history" id="meditationHistory">Aucune séance enregistrée aujourd’hui.</p>
 </article>
 <div class="health-grid">
@@ -373,7 +385,7 @@
 <p class="section-lead">NEXUS, notifications, bus, sauvegardes et commandes du terminal.</p>
 <div class="system-grid">
 <article class="minitel-card reminder-manager-card" id="reminderManagerCard">
-<div class="retro-head"><span>RAPPELS.LOCAUX</span><strong id="pinnedReminderState">ÉPINGLER UN JOUR</strong></div>
+<div class="retro-head"><span>RAPPELS.LOCAUX</span><strong id="pinnedReminderState">PROGRAMMATION</strong></div>
 <details class="system-accordion" id="reminderManagerAccordion">
 <summary>AJOUTER UN RAPPEL PONCTUEL</summary>
 <div class="reminder-manager-body">
@@ -387,11 +399,43 @@
 <div class="reminder-custom-row"><input id="pinnedReminderCustom" maxlength="80" placeholder="Autre rappel…" type="text"/><button class="text-key" id="pinnedReminderCustomAdd" type="button">ÉPINGLER →</button></div>
 </div>
 </details>
+<details class="system-accordion recurring-accordion" id="recurringReminderAccordion">
+<summary>AJOUTER UN RAPPEL RÉCURRENT</summary>
+<div class="reminder-manager-body recurring-reminder-form">
+<div class="recurring-main-row">
+<label><span>EMOJI</span><input id="recurringReminderEmoji" maxlength="6" placeholder="📌" type="text"/></label>
+<label><span>NOM</span><input id="recurringReminderTitle" maxlength="80" placeholder="Ex. Arroser les plantes" type="text"/></label>
+</div>
+<div class="recurring-settings-row">
+<label><span>FRÉQUENCE</span><select id="recurringReminderFrequency"><option value="daily">TOUS LES JOURS</option><option value="weekly" selected>CHAQUE SEMAINE</option><option value="monthly">CHAQUE MOIS</option></select></label>
+<label id="recurringReminderWeekdayField"><span>JOUR</span><select id="recurringReminderWeekday"><option value="1">LUNDI</option><option value="2">MARDI</option><option value="3">MERCREDI</option><option value="4">JEUDI</option><option value="5">VENDREDI</option><option value="6">SAMEDI</option><option value="0">DIMANCHE</option></select></label>
+<label id="recurringReminderMonthDayField" hidden><span>JOUR DU MOIS</span><input id="recurringReminderMonthDay" max="31" min="1" type="number" value="1"/></label>
+<label><span>HEURE · OPTIONNEL</span><input id="recurringReminderTime" type="time"/></label>
+</div>
+<button class="minitel-action" id="recurringReminderAdd" type="button">AJOUTER LE RAPPEL RÉCURRENT</button>
+</div>
+</details>
+<div class="recurring-reminder-list" id="recurringReminderList"></div>
 <div class="pinned-upcoming" id="pinnedUpcoming"></div>
 </article>
-<article class="minitel-card procrastination-history-card">
-<div class="retro-head"><span>PROCRASTINATION</span><strong id="procrastinationState">HISTORIQUE</strong></div>
-<div class="procrastination-history" id="procrastinationHistory"><div class="express-empty">Aucun report enregistré.</div></div>
+<article class="minitel-card global-history-card">
+<div class="retro-head"><span>HISTORIQUE.GLOBAL</span><strong id="globalHistoryState">CE MOIS</strong></div>
+<div class="global-history-toolbar"><label><span>MOIS</span><input id="globalHistoryMonth" type="month"/></label><label><span>TYPE</span><select id="globalHistoryType"><option value="all">TOUT</option><option value="task">TÂCHES TERMINÉES</option><option value="procrastination">REPORTS</option><option value="meditation">MÉDITATION</option><option value="transport">TRANSPORT</option></select></label></div>
+<div class="global-history-summary" id="globalHistorySummary"></div>
+<div class="procrastination-history" id="globalHistoryList"><div class="express-empty">Aucun événement enregistré.</div></div>
+</article>
+<article class="minitel-card goals-card">
+<div class="retro-head"><span>OBJECTIFS</span><strong id="goalsState">SIMPLES · SANS SCORE</strong></div>
+<div class="goals-list" id="goalsList"></div>
+<details class="system-accordion goals-accordion">
+<summary>AJOUTER UN OBJECTIF</summary>
+<div class="reminder-manager-body goal-form">
+<label><span>MESURE</span><select id="goalMetric"><option value="meditation_sessions">SÉANCES DE MÉDITATION</option><option value="meditation_minutes">MINUTES DE MÉDITATION</option><option value="tasks">TÂCHES TERMINÉES</option><option value="compost">COMPOST VIDÉ</option><option value="shopping">COURSES TERMINÉES</option><option value="cleaning">MÉNAGE TERMINÉ</option></select></label>
+<label><span>OBJECTIF</span><input id="goalTarget" min="1" type="number" value="4"/></label>
+<label><span>PÉRIODE</span><select id="goalPeriod"><option value="week">PAR SEMAINE</option><option value="month">PAR MOIS</option></select></label>
+<button class="minitel-action" id="goalAdd" type="button">AJOUTER L’OBJECTIF</button>
+</div>
+</details>
 </article>
 <article class="minitel-card"><div class="retro-head"><span>NOTIFICATIONS</span><strong id="systemNotifState">—</strong></div><div class="activity-feed" id="systemNotifications"></div></article>
 <article class="minitel-card"><div class="retro-head"><span>NEXUS</span><strong>CMS CENTRAL</strong></div><p>Configuration, contenus, données, automatisations et snapshots.</p><a class="minitel-action" href="cms.html">OUVRIR NEXUS →</a></article>
@@ -406,16 +450,16 @@
 <input autocomplete="off" id="commandInput" placeholder="0–9, RDV, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.18</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.20</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=20260922-quotidien-v915"></script>
-<script src="js/app.js?v=20260922-courses-compost-v918"></script>
+<script src="js/app.js?v=20260923-productivite-v920"></script>
 <script src="js/minigames.js?v=20260922-quotidien-v915"></script>
 <script src="js/ecosystem-v2.js?v=20260922-quotidien-v915"></script>
 
 <script>
-window.__3615_BUILD__='20260922-courses-compost-v918';
+window.__3615_BUILD__='20260923-productivite-v920';
 (async()=>{
   try{
     const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});
