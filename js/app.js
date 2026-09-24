@@ -2,7 +2,7 @@
   'use strict';
 
   const $=id=>document.getElementById(id);
-  const APP_VERSION='9.20';
+  const APP_VERSION='9.21';
   const PATHS={
     cap:'../cap/',culina:'../culina/',express:'../lenaic-express/',uchronies:'../uchronies/',
     arboris:'../bureau-genealogique/index.html',scriptoria:'../bureau-genealogique/index2.html',pistoria:'../bureau-genealogique/index3.html',
@@ -882,15 +882,18 @@
     const done=active&&Boolean(completed[String(week)]);
     const missed=[];if(active)for(let i=1;i<week;i++)if(!completed[String(i)])missed.push(i);
     const missedAmount=missed.reduce((a,b)=>a+b,0);
-    const snoozeUntil=Number(state.snoozeUntil||0),isSnoozed=!done&&snoozeUntil>Date.now();
+    const snoozeUntil=Number(state.snoozeUntil||0),snoozeDate=snoozeUntil?new Date(snoozeUntil):null,snoozeDueToday=Boolean(snoozeDate&&Number.isFinite(snoozeDate.getTime())&&localDateKey(snoozeDate)===localDateKey(date)),isSnoozed=!done&&snoozeUntil>Date.now()&&!snoozeDueToday;
     const doneAt=done?new Date(completed[String(week)]):null,doneToday=Boolean(doneAt&&Number.isFinite(doneAt.getTime())&&localDateKey(doneAt)===localDateKey(date));
-    return {state,active,week,amount:active?week:0,done,doneToday,saved,percent:SAVINGS52_TARGET?saved/SAVINGS52_TARGET*100:0,isMonday:date.getDay()===1,missed,missedAmount,snoozeUntil,isSnoozed};
+    return {state,active,week,amount:active?week:0,done,doneToday,saved,percent:SAVINGS52_TARGET?saved/SAVINGS52_TARGET*100:0,isWednesday:date.getDay()===3,missed,missedAmount,snoozeUntil,snoozeDueToday,isSnoozed};
+  }
+  function savings52ShouldShow(date=new Date(),info=savings52Info(date)){
+    return info.active&&!info.isSnoozed&&(info.doneToday||info.snoozeDueToday||(!info.done&&info.isWednesday));
   }
   function renderSavings52(){
     const card=$('savings52Card');if(!card)return;
     const info=savings52Info(),cmsHidden=card.dataset.cmsHidden==='1';
-    // Le lundi, le module reste visible même une fois coché. Sinon il reste affiché tant que la semaine n'est pas validée.
-    const shouldShow=info.active&&(info.isMonday||!info.done||info.doneToday)&&!info.isSnoozed;
+    // Le rappel hebdomadaire commence le mercredi puis reste présent jusqu'à validation ou report.
+    const shouldShow=savings52ShouldShow(new Date(),info);
     card.hidden=cmsHidden||!shouldShow;
     if(!info.active)return;
     card.classList.toggle('is-done',info.done);
@@ -937,6 +940,10 @@
     admin:{icon:'📄',title:'Administratif'},
     compost:{icon:'🪱',title:'Vider le compost'}
   };
+  const HOUSEHOLD_REMINDERS={
+    sheets:{icon:'🛏️',title:'Laver les draps',taskType:'sheets',scheduleLabel:'1er et 4e jeudi du mois',matches(date){if(date.getDay()!==4)return false;const nth=Math.floor((date.getDate()-1)/7)+1;return nth===1||nth===4}},
+    litter:{icon:'🐈',title:'Nettoyer la litière de Félix',taskType:'litter',scheduleLabel:'3e jeudi du mois',matches(date){if(date.getDay()!==4)return false;const nth=Math.floor((date.getDate()-1)/7)+1;return nth===3}}
+  };
   function taskActivityStore(){const raw=readJsonStorage(TASK_ACTIVITY_KEY);return Array.isArray(raw)?raw:[]}
   function saveTaskActivity(rows){localStorage.setItem(TASK_ACTIVITY_KEY,JSON.stringify(rows.slice(-1000)));renderGlobalHistory();renderWeeklyReview();renderGoals()}
   function setTaskActivity(sourceKey,label,done,taskType='task',at=null){
@@ -944,7 +951,7 @@
     if(done){const when=at||new Date().toISOString();rows.push({id:`task-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,sourceKey,label,taskType,at:when,day:localDateKey(new Date(when))})}
     saveTaskActivity(rows);
   }
-  function contextReminderStore(){const raw=readJsonStorage(CONTEXT_REMINDERS_KEY);return raw&&typeof raw==='object'?raw:{fruit:{},cleaning:{},cleaningSnooze:{},compost:{},compostSnooze:{},shopping:{},shoppingSnooze:{}}}
+  function contextReminderStore(){const raw=readJsonStorage(CONTEXT_REMINDERS_KEY);return raw&&typeof raw==='object'?raw:{fruit:{},cleaning:{},cleaningSnooze:{},compost:{},compostSnooze:{},shopping:{},shoppingSnooze:{},household:{},householdSnooze:{}}}
   function saveContextReminderStore(s){localStorage.setItem(CONTEXT_REMINDERS_KEY,JSON.stringify(s))}
   function pinnedReminderStore(){const raw=readJsonStorage(PINNED_REMINDERS_KEY);return Array.isArray(raw)?raw:[]}
   function savePinnedReminderStore(rows){localStorage.setItem(PINNED_REMINDERS_KEY,JSON.stringify(rows));renderContextualReminders();renderHomeTomorrowReminders();renderPinnedReminderSystem();renderV9Today()}
@@ -1017,6 +1024,23 @@
     const done=Boolean(store.compost[origin]),deferred=origin!==key;
     return `<article class="context-reminder compost-reminder${done?' is-done':''}" data-compost-origin="${escapeAttr3615(origin)}"><div class="context-reminder-icon">🪱</div><div class="context-reminder-copy"><strong>VIDER LE COMPOST</strong><small>${done?'Fait aujourd’hui.':deferred?`Prévu le ${escapeHtml3615(dateLabelLong(origin))} · reporté à aujourd’hui.`:'Rappel hebdomadaire · chaque vendredi.'}</small>${reminderDoneMarkup(done)}</div><div class="context-reminder-actions"><label class="context-reminder-check"><input data-compost-done type="checkbox" ${done?'checked':''}/><span>${done?'FAIT ✓':'C’EST FAIT'}</span></label><button class="text-key procrastinate-btn" data-compost-later type="button" ${done?'disabled':''}>LE PROCRASTINER →</button></div></article>`;
   }
+  function householdOccurrencesForDate(key,store=contextReminderStore()){
+    store.household=store.household&&typeof store.household==='object'?store.household:{};
+    store.householdSnooze=store.householdSnooze&&typeof store.householdSnooze==='object'?store.householdSnooze:{};
+    const date=new Date(`${key}T12:00:00`),out=[];
+    for(const [id,def] of Object.entries(HOUSEHOLD_REMINDERS)){
+      store.household[id]=store.household[id]&&typeof store.household[id]==='object'?store.household[id]:{};
+      store.householdSnooze[id]=store.householdSnooze[id]&&typeof store.householdSnooze[id]==='object'?store.householdSnooze[id]:{};
+      let origin='';
+      if(def.matches(date)&&!(store.householdSnooze[id][key]&&store.householdSnooze[id][key]!==key))origin=key;
+      if(!origin){for(const [o,due] of Object.entries(store.householdSnooze[id])){if(due===key){origin=o;break}}}
+      if(origin)out.push({id,def,origin,deferred:origin!==key,doneAt:store.household[id][origin]||null});
+    }
+    return out;
+  }
+  function renderHouseholdReminderCards(key,store){
+    return householdOccurrencesForDate(key,store).map(o=>{const done=Boolean(o.doneAt),detail=done?'Fait aujourd’hui.':o.deferred?`Prévu le ${escapeHtml3615(dateLabelLong(o.origin))} · reporté à aujourd’hui.`:`Rappel récurrent · ${escapeHtml3615(o.def.scheduleLabel)}.`;return `<article class="context-reminder household-reminder${done?' is-done':''}" data-household-id="${escapeAttr3615(o.id)}" data-household-origin="${escapeAttr3615(o.origin)}"><div class="context-reminder-icon">${escapeHtml3615(o.def.icon)}</div><div class="context-reminder-copy"><strong>${escapeHtml3615(o.def.title.toUpperCase())}</strong><small>${detail}</small>${reminderDoneMarkup(done)}</div><div class="context-reminder-actions"><label class="context-reminder-check"><input data-household-done type="checkbox" ${done?'checked':''}/><span>${done?'FAIT ✓':'C’EST FAIT'}</span></label><button class="text-key procrastinate-btn" data-household-later type="button" ${done?'disabled':''}>LE PROCRASTINER →</button></div></article>`}).join('');
+  }
   function renderContextualReminders(){
     const now=new Date(),key=localDateKey(now),store=contextReminderStore(),slot=fruitReminderSlot(now);
     store.fruit=store.fruit&&typeof store.fruit==='object'?store.fruit:{};store.cleaning=store.cleaning&&typeof store.cleaning==='object'?store.cleaning:{};store.cleaningSnooze=store.cleaningSnooze&&typeof store.cleaningSnooze==='object'?store.cleaningSnooze:{};
@@ -1037,9 +1061,9 @@
     if(!cleaningOrigin){for(const [origin,due] of Object.entries(store.cleaningSnooze)){if(due===key){cleaningOrigin=origin;break}}}
     const cleaningDone=Boolean(cleaningOrigin&&store.cleaning[cleaningOrigin]),cleaningVisible=Boolean(cleaningOrigin);
     if(clean){clean.hidden=!cleaningVisible;clean.dataset.originKey=cleaningOrigin||'';clean.classList.toggle('is-done',cleaningDone);const cb=$('cleaningReminder3615Done'),later=$('cleaningReminder3615Later');if(cb)cb.checked=cleaningDone;if(later)later.disabled=cleaningDone;if(cleaningVisible){const deferred=cleaningOrigin!==key;setText('cleaningReminder3615Title',cleaningDone?'MÉNAGE TERMINÉ':deferred?'MÉNAGE PROCRASTINÉ':'MÉNAGE AUJOURD’HUI');setText('cleaningReminder3615Text',cleaningDone?'✓ Fait aujourd’hui · ce rappel restera visible jusqu’à minuit.':deferred?`Prévu le ${dateLabelLong(cleaningOrigin)} · reporté à aujourd’hui.`:'Mardi · créneau conseillé : 13 h–18 h.')}}
-    const pinnedHtml=renderPinnedReminderCards(key),recurringHtml=renderRecurringReminderCards(key),compostHtml=renderCompostReminder(key,store),shoppingHtml=renderShoppingReminder(key,store);
-    if(localBox){localBox.innerHTML=pinnedHtml+recurringHtml+compostHtml+shoppingHtml;localBox.hidden=!(pinnedHtml||recurringHtml||compostHtml||shoppingHtml)}
-    if(zone)zone.hidden=!(todayRdv.length||fruitVisible||cleaningVisible||pinnedHtml||recurringHtml||compostHtml||shoppingHtml);
+    const pinnedHtml=renderPinnedReminderCards(key),recurringHtml=renderRecurringReminderCards(key),householdHtml=renderHouseholdReminderCards(key,store),compostHtml=renderCompostReminder(key,store),shoppingHtml=renderShoppingReminder(key,store);
+    if(localBox){localBox.innerHTML=pinnedHtml+recurringHtml+householdHtml+compostHtml+shoppingHtml;localBox.hidden=!(pinnedHtml||recurringHtml||householdHtml||compostHtml||shoppingHtml)}
+    if(zone)zone.hidden=!(todayRdv.length||fruitVisible||cleaningVisible||pinnedHtml||recurringHtml||householdHtml||compostHtml||shoppingHtml);
     renderHomeTomorrowReminders();
   }
   $('fruitReminder3615Done')?.addEventListener('click',()=>{const slot=fruitReminderSlot();if(!slot)return;const s=contextReminderStore(),at=new Date().toISOString(),source=`fruit-${localDateKey()}-${slot}`;s.fruit=s.fruit||{};s.fruit[`${localDateKey()}:${slot}`]={done:at};saveContextReminderStore(s);setTaskActivity(source,'Fruit',true,'fruit',at);renderContextualReminders()});
@@ -1050,6 +1074,12 @@
   $('localReminderRows')?.addEventListener('change',e=>{
     const recurring=e.target.closest('[data-recurring-done]');if(recurring){const card=e.target.closest('[data-recurring-id]'),rows=recurringReminderStore(),i=rows.findIndex(r=>r.id===card?.dataset.recurringId),origin=card?.dataset.recurringOrigin||localDateKey();if(i>=0){rows[i].completions=rows[i].completions&&typeof rows[i].completions==='object'?rows[i].completions:{};const at=e.target.checked?new Date().toISOString():null;if(e.target.checked)rows[i].completions[origin]=at;else delete rows[i].completions[origin];setTaskActivity(`recurring-${rows[i].id}-${origin}`,rows[i].title,e.target.checked,'recurring',at);saveRecurringReminderStore(rows)}return}
     const pin=e.target.closest('[data-pinned-done]');if(pin){const row=e.target.closest('[data-pinned-id]'),rows=pinnedReminderStore(),i=rows.findIndex(x=>x.id===row?.dataset.pinnedId);if(i>=0){const at=e.target.checked?new Date().toISOString():null;rows[i].doneAt=at;setTaskActivity(`pinned-${rows[i].id}`,rows[i].title,e.target.checked,'pinned',at);savePinnedReminderStore(rows)}return}
+    const household=e.target.closest('[data-household-done]');if(household){
+      const card=e.target.closest('[data-household-id]'),id=card?.dataset.householdId,origin=card?.dataset.householdOrigin||localDateKey(),def=HOUSEHOLD_REMINDERS[id],s=contextReminderStore();if(!def)return;
+      s.household=s.household&&typeof s.household==='object'?s.household:{};s.household[id]=s.household[id]&&typeof s.household[id]==='object'?s.household[id]:{};
+      const at=e.target.checked?new Date().toISOString():null;if(e.target.checked)s.household[id][origin]=at;else delete s.household[id][origin];
+      saveContextReminderStore(s);setTaskActivity(`${id}-${origin}`,def.title,e.target.checked,def.taskType,at);renderContextualReminders();renderV9Today();return
+    }
     const compost=e.target.closest('[data-compost-done]');if(compost){
       const card=e.target.closest('[data-compost-origin]'),origin=card?.dataset.compostOrigin||localDateKey(),s=contextReminderStore();s.compost=s.compost||{};
       const at=e.target.checked?new Date().toISOString():null;if(e.target.checked)s.compost[origin]=at;else delete s.compost[origin];
@@ -1081,6 +1111,7 @@
   $('localReminderRows')?.addEventListener('click',e=>{
     const recurringLater=e.target.closest('[data-recurring-later]');if(recurringLater){const card=e.target.closest('[data-recurring-id]'),rows=recurringReminderStore(),i=rows.findIndex(r=>r.id===card?.dataset.recurringId),origin=card?.dataset.recurringOrigin||localDateKey(),to=plusDaysKey(localDateKey(),1);if(i>=0){rows[i].snoozes=rows[i].snoozes&&typeof rows[i].snoozes==='object'?rows[i].snoozes:{};rows[i].snoozes[origin]=to;logProcrastination('recurring',rows[i].title,localDateKey(),to);saveRecurringReminderStore(rows)}return}
     const later=e.target.closest('[data-pinned-later]');if(later){const card=e.target.closest('[data-pinned-id]'),rows=pinnedReminderStore(),i=rows.findIndex(x=>x.id===card?.dataset.pinnedId);if(i>=0&&!rows[i].doneAt){const from=rows[i].date,to=plusDaysKey(localDateKey(),1);rows[i].date=to;rows[i].snoozeCount=(Number(rows[i].snoozeCount)||0)+1;rows[i].lastSnoozedAt=new Date().toISOString();logProcrastination('pinned',rows[i].title,from,to);savePinnedReminderStore(rows)}return}
+    const householdLater=e.target.closest('[data-household-later]');if(householdLater){const card=e.target.closest('[data-household-id]'),id=card?.dataset.householdId,origin=card?.dataset.householdOrigin||localDateKey(),def=HOUSEHOLD_REMINDERS[id],s=contextReminderStore(),to=plusDaysKey(localDateKey(),1);if(!def)return;s.householdSnooze=s.householdSnooze&&typeof s.householdSnooze==='object'?s.householdSnooze:{};s.householdSnooze[id]=s.householdSnooze[id]&&typeof s.householdSnooze[id]==='object'?s.householdSnooze[id]:{};s.householdSnooze[id][origin]=to;saveContextReminderStore(s);logProcrastination(def.taskType,def.title,localDateKey(),to);renderContextualReminders();return}
     const compostLater=e.target.closest('[data-compost-later]');if(compostLater){const card=e.target.closest('[data-compost-origin]'),origin=card?.dataset.compostOrigin||localDateKey(),s=contextReminderStore(),to=plusDaysKey(localDateKey(),1);s.compostSnooze=s.compostSnooze||{};s.compostSnooze[origin]=to;saveContextReminderStore(s);logProcrastination('compost','Vider le compost',localDateKey(),to);renderContextualReminders();return}
     const shoppingLater=e.target.closest('[data-shopping-later]');if(shoppingLater){const card=e.target.closest('[data-shopping-origin]'),origin=card?.dataset.shoppingOrigin||localDateKey(),s=contextReminderStore(),to=plusDaysKey(localDateKey(),1);s.shoppingSnooze=s.shoppingSnooze||{};s.shoppingSnooze[origin]=to;saveContextReminderStore(s);logProcrastination('shopping','Courses',localDateKey(),to);renderContextualReminders()}
   });
@@ -1107,9 +1138,10 @@
     recurringOccurrencesForDate(key).filter(o=>!o.doneAt).forEach(o=>rows.push({k:'RÉCURRENT',t:`${o.row.emoji||'📌'} ${o.row.title}`,s:`${recurringFrequencyLabel(o.row)}${o.row.time?' · '+o.row.time:''}`,b:'DEMAIN'}));
     const s=contextReminderStore();s.cleaningSnooze=s.cleaningSnooze||{};s.compostSnooze=s.compostSnooze||{};s.shoppingSnooze=s.shoppingSnooze||{};
     const cleaningDue=Object.entries(s.cleaningSnooze).some(([o,due])=>due===key&&!s.cleaning?.[o]);if(tomorrow.getDay()===2||cleaningDue)rows.push({k:'MÉNAGE',t:'Ménage',s:'Créneau conseillé : 13 h–18 h',b:'DEMAIN'});
+    householdOccurrencesForDate(key,s).filter(o=>!o.doneAt).forEach(o=>rows.push({k:'MAISON',t:`${o.def.icon} ${o.def.title}`,s:o.deferred?'Rappel reporté':o.def.scheduleLabel,b:'DEMAIN'}));
     const compostDue=Object.entries(s.compostSnooze).some(([o,due])=>due===key&&!s.compost?.[o]);if(tomorrow.getDay()===5||compostDue)rows.push({k:'COMPOST',t:'🪱 Vider le compost',s:'Rappel hebdomadaire du vendredi',b:'DEMAIN'});
     const shoppingDue=Object.entries(s.shoppingSnooze).some(([o,due])=>due===key&&!s.shopping?.[o]);if((tomorrow.getDay()===1||shoppingDue)&&openCulinaShopping().length)rows.push({k:'COURSES',t:`${openCulinaShopping().length} article${openCulinaShopping().length>1?'s':''} dans Culina`,s:'Liste de courses synchronisée',b:'DEMAIN'});
-    const saving=savings52Info();if(!saving.done&&saving.snoozeUntil){const d=new Date(saving.snoozeUntil);if(localDateKey(d)===key)rows.push({k:'ÉPARGNE',t:`${saving.amount} € à mettre de côté`,s:'Rappel reporté',b:'DEMAIN'})}
+    const saving=savings52Info(tomorrow);if(!saving.done&&savings52ShouldShow(tomorrow,saving))rows.push({k:'ÉPARGNE',t:`${saving.amount} € à mettre de côté`,s:saving.snoozeDueToday?'Rappel reporté':'Rappel hebdomadaire du mercredi',b:'DEMAIN'});
     return rows;
   }
   function renderHomeTomorrowReminders(){const rows=tomorrowReminderRows(),card=$('homeTomorrowReminders'),box=$('homeTomorrowRows');if(!card||!box)return;card.hidden=!rows.length;setText('homeTomorrowState',rows.length?`${rows.length} À PRÉVOIR`:'RIEN DE PRÉVU');box.innerHTML=rows.map(r=>`<div class="home-tomorrow-row"><div><span>${escapeHtml3615(r.k)}</span><strong>${escapeHtml3615(r.t)}</strong><small>${escapeHtml3615(r.s||'')}</small></div><b>${escapeHtml3615(r.b||'')}</b></div>`).join('')}
@@ -1312,8 +1344,8 @@
     rdvEventsForDate(localDateKey()).forEach(ev=>rows.push({k:rdvTypeLabel(ev.type),t:ev.title||'Rendez-vous',s:`${ev.time||'—'}${ev.note?' · '+ev.note:''}`,b:ev.done?'TERMINÉ':'RDV'}));
     pinnedReminderStore().filter(r=>r.date===localDateKey()).forEach(r=>rows.push({k:'RAPPEL',t:`${r.icon||'📌'} ${r.title}`,s:'Rappel local épinglé',b:r.doneAt?'TERMINÉ':'À FAIRE'}));
     recurringOccurrencesForDate(localDateKey()).forEach(o=>rows.push({k:'RÉCURRENT',t:`${o.row.emoji||'📌'} ${o.row.title}`,s:`${recurringFrequencyLabel(o.row)}${o.row.time?' · '+o.row.time:''}`,b:o.doneAt?'TERMINÉ':'À FAIRE'}));
-    const compostStore=contextReminderStore(),compostTodayKey=localDateKey();let compostOriginToday='';if(new Date().getDay()===5&&!(compostStore.compostSnooze?.[compostTodayKey]&&compostStore.compostSnooze[compostTodayKey]!==compostTodayKey))compostOriginToday=compostTodayKey;if(!compostOriginToday)for(const [o,due] of Object.entries(compostStore.compostSnooze||{}))if(due===compostTodayKey){compostOriginToday=o;break}if(compostOriginToday)rows.push({k:'COMPOST',t:'🪱 Vider le compost',s:compostOriginToday===compostTodayKey?'Rappel hebdomadaire du vendredi':'Rappel reporté',b:compostStore.compost?.[compostOriginToday]?'TERMINÉ':'À FAIRE'});
-    if(saving.active&&(saving.isMonday||!saving.done||saving.doneToday)&&!saving.isSnoozed)rows.push({k:'ÉPARGNE',t:`${saving.amount} € à mettre de côté`,s:`Cumul validé : ${saving.saved.toLocaleString('fr-FR')} / ${SAVINGS52_TARGET.toLocaleString('fr-FR')} €`,b:saving.done?'ÉPARGNÉ':'À FAIRE'});
+    const compostStore=contextReminderStore(),compostTodayKey=localDateKey();householdOccurrencesForDate(compostTodayKey,compostStore).forEach(o=>rows.push({k:'MAISON',t:`${o.def.icon} ${o.def.title}`,s:o.deferred?'Rappel reporté':o.def.scheduleLabel,b:o.doneAt?'TERMINÉ':'À FAIRE'}));let compostOriginToday='';if(new Date().getDay()===5&&!(compostStore.compostSnooze?.[compostTodayKey]&&compostStore.compostSnooze[compostTodayKey]!==compostTodayKey))compostOriginToday=compostTodayKey;if(!compostOriginToday)for(const [o,due] of Object.entries(compostStore.compostSnooze||{}))if(due===compostTodayKey){compostOriginToday=o;break}if(compostOriginToday)rows.push({k:'COMPOST',t:'🪱 Vider le compost',s:compostOriginToday===compostTodayKey?'Rappel hebdomadaire du vendredi':'Rappel reporté',b:compostStore.compost?.[compostOriginToday]?'TERMINÉ':'À FAIRE'});
+    if(savings52ShouldShow(new Date(),saving))rows.push({k:'ÉPARGNE',t:`${saving.amount} € à mettre de côté`,s:`Cumul validé : ${saving.saved.toLocaleString('fr-FR')} / ${SAVINGS52_TARGET.toLocaleString('fr-FR')} €`,b:saving.done?'ÉPARGNÉ':'À FAIRE'});
     const shoppingNow=openCulinaShopping(),crs=contextReminderStore(),todayKey=localDateKey();let shoppingOrigin='';if(new Date().getDay()===1&&!(crs.shoppingSnooze?.[todayKey]&&crs.shoppingSnooze[todayKey]!==todayKey))shoppingOrigin=todayKey;if(!shoppingOrigin)for(const [o,due] of Object.entries(crs.shoppingSnooze||{}))if(due===todayKey){shoppingOrigin=o;break}if(shoppingOrigin&&(shoppingNow.length||crs.shopping?.[shoppingOrigin]))rows.push({k:'COURSES',t:`${shoppingNow.length} article${shoppingNow.length>1?'s':''} dans Culina`,s:shoppingNow.map(x=>x.name).join(' · ')||'Liste terminée',b:crs.shopping?.[shoppingOrigin]?'TERMINÉ':'À FAIRE'});
     rows.push({k:'CAP',t:a.title||'Activité du jour à synchroniser',s:a.title?`${Math.round(Number(a.progress)||0)} % · ${a.label||''}`:'Ouvre CAP pour actualiser',b:a.completed?'TERMINÉE':'AUJOURD’HUI'});
     plans.forEach(p=>rows.push({k:p.mealType==='lunch'?'CE MIDI':p.mealType==='dinner'?'CE SOIR':'REPAS',t:p.name||'Repas Culina',s:`${formatClock(p.at)} · ${Math.round(Number(p.calories)||0)} kcal`,b:Number(p.missingCount)?`${p.missingCount} MANQUANT${p.missingCount>1?'S':''}`:'PRÊT'}));
@@ -1414,7 +1446,7 @@
     const raw=readJsonStorage(GOALS_KEY);if(Array.isArray(raw))return raw;const seeded=[{id:'goal-meditation-4w',metric:'meditation_sessions',target:4,period:'week',createdAt:new Date().toISOString()},{id:'goal-compost-1w',metric:'compost',target:1,period:'week',createdAt:new Date().toISOString()}];localStorage.setItem(GOALS_KEY,JSON.stringify(seeded));return seeded;
   }
   function saveGoals(rows){localStorage.setItem(GOALS_KEY,JSON.stringify(rows));renderGoals()}
-  const GOAL_LABELS={meditation_sessions:'Séances de méditation',meditation_minutes:'Minutes de méditation',tasks:'Tâches terminées',compost:'Vider le compost',shopping:'Courses',cleaning:'Ménage'};
+  const GOAL_LABELS={meditation_sessions:'Séances de méditation',meditation_minutes:'Minutes de méditation',tasks:'Tâches terminées',compost:'Vider le compost',shopping:'Courses',cleaning:'Ménage',sheets:'Laver les draps',litter:'Nettoyer la litière de Félix'};
   function goalValue(goal,now=new Date()){
     const {start,end}=periodBounds(goal.period,now),inside=at=>{const d=new Date(at);return d>=start&&d<=end};
     if(goal.metric==='meditation_sessions')return meditationSessions().filter(x=>inside(x.at)).length;
@@ -1429,14 +1461,14 @@
   $('goalsList')?.addEventListener('click',e=>{const b=e.target.closest('[data-delete-goal]');if(b)saveGoals(goalsStore().filter(g=>g.id!==b.dataset.deleteGoal))});
   function migrateV920Activity(){
     const flag='3615-migrate-v920-activity';if(localStorage.getItem(flag))return;const rows=taskActivityStore(),seen=new Set(rows.map(x=>x.sourceKey)),add=(sourceKey,label,taskType,at)=>{if(!at||seen.has(sourceKey)||!Number.isFinite(new Date(at).getTime()))return;seen.add(sourceKey);rows.push({id:`task-mig-${rows.length}-${Date.now()}`,sourceKey,label,taskType,at,day:localDateKey(new Date(at))})};
-    pinnedReminderStore().forEach(r=>add(`pinned-${r.id}`,r.title||'Rappel','pinned',r.doneAt));const c=contextReminderStore();Object.entries(c.cleaning||{}).forEach(([k,at])=>add(`cleaning-${k}`,'Ménage','cleaning',at));Object.entries(c.compost||{}).forEach(([k,at])=>add(`compost-${k}`,'Vider le compost','compost',at));Object.entries(c.shopping||{}).forEach(([k,at])=>add(`shopping-${k}`,'Courses','shopping',at));Object.entries(c.fruit||{}).forEach(([k,v])=>add(`fruit-${k.replace(':','-')}`,'Fruit','fruit',typeof v==='string'?v:v?.done));
+    pinnedReminderStore().forEach(r=>add(`pinned-${r.id}`,r.title||'Rappel','pinned',r.doneAt));const c=contextReminderStore();Object.entries(c.cleaning||{}).forEach(([k,at])=>add(`cleaning-${k}`,'Ménage','cleaning',at));Object.entries(c.compost||{}).forEach(([k,at])=>add(`compost-${k}`,'Vider le compost','compost',at));Object.entries(c.household||{}).forEach(([id,doneMap])=>{const def=HOUSEHOLD_REMINDERS[id];if(def&&doneMap&&typeof doneMap==='object')Object.entries(doneMap).forEach(([k,at])=>add(`${id}-${k}`,def.title,def.taskType,at))});Object.entries(c.shopping||{}).forEach(([k,at])=>add(`shopping-${k}`,'Courses','shopping',at));Object.entries(c.fruit||{}).forEach(([k,v])=>add(`fruit-${k.replace(':','-')}`,'Fruit','fruit',typeof v==='string'?v:v?.done));
     const sv=savings52Store();Object.entries(sv.completed||{}).forEach(([week,at])=>add(`savings-${week}`,'Épargne','savings',at));rdvStore().filter(r=>r.done).forEach(r=>add(`rdv-${r.id}`,r.title||'Rendez-vous','rdv',r.updatedAt||r.createdAt));
     localStorage.setItem(TASK_ACTIVITY_KEY,JSON.stringify(rows.slice(-1000)));localStorage.setItem(flag,'1');
   }
 
   function renderV9System(){
     const pending=window.LenaicBus?LenaicBus.pending():[],scribe=readScribeSnapshot()||{},overdue=(scribe.pending||[]).filter(x=>Number(x.ageDays)>=scribeReminderDays()),m=readCapSnapshot()?.measurements||{},notifs=[];
-    const saving=savings52Info();if(saving.active&&!saving.done)notifs.push(`Défi 52 semaines : ${saving.amount} € à épargner cette semaine`);
+    const saving=savings52Info();if(!saving.done&&savings52ShouldShow(new Date(),saving))notifs.push(`Défi 52 semaines : ${saving.amount} € à épargner aujourd’hui`);
     if(overdue.length)notifs.push(`${overdue.length} relance${overdue.length>1?'s':''} Scribe à envisager`);if((scribe.received||[]).length)notifs.push(`${scribe.received.length} réponse${scribe.received.length>1?'s':''} Scribe reçue${scribe.received.length>1?'s':''}`);if(m.latestDate&&Number(m.daysUntil)<=1)notifs.push(Number(m.daysUntil)<=0?'Mensurations CAP à faire':'Mensurations CAP demain');if(pending.length)notifs.push(`${pending.length} message${pending.length>1?'s':''} sur le bus`);
     setText('systemNotifState',notifs.length?`${notifs.length} À VOIR`:'RAS');const nb=$('systemNotifications');if(nb)nb.innerHTML=notifs.length?notifs.map(x=>`<div class="activity-item"><div><span>ATTENTION</span><strong>${escapeHtml3615(x)}</strong></div></div>`).join(''):'<div class="express-empty">Aucune action urgente.</div>';
     setText('systemBusState',window.LenaicBus?'ACTIF':'HORS LIGNE');const bd=$('systemBusDetail');if(bd)bd.innerHTML=`<div><span>MESSAGES EN ATTENTE</span><b>${pending.length}</b></div><div><span>CANAL</span><b>lenaic-bus-v1</b></div><div><span>MODE</span><b>LOCAL + BROADCAST</b></div>`;
