@@ -10,7 +10,7 @@
 <meta http-equiv="Expires" content="0"/>
 <title>3615 LÉNAÏC — Portail personnel</title>
 <link href="assets/favicon.svg?v=20260914-1351-v99" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=20260923-productivite-v920" rel="stylesheet"/>
+<link href="css/style.css?v=20260924-rappels-v921" rel="stylesheet"/>
 </head>
 <body data-nexus-cms="v2">
 <div class="terminal-shell">
@@ -104,7 +104,7 @@
 <div class="savings52-progress" aria-label="Progression du défi épargne"><i id="savings52Bar"></i></div>
 <div class="savings52-progress-meta"><span id="savings52ProgressText">0 € réellement validés</span><strong id="savings52Percent">0,0 %</strong></div>
 <div class="savings52-actions"><label class="savings52-check" for="savings52Done"><input id="savings52Done" type="checkbox"/><span>ÉPARGNÉ</span></label><button class="text-key procrastinate-btn" id="savings52Later" type="button">LE PROCRASTINER →</button></div>
-<p class="savings52-hint" id="savings52Hint">Le défi commence le lundi 14 septembre 2026.</p>
+<p class="savings52-hint" id="savings52Hint">Rappel hebdomadaire le mercredi.</p>
 </section><section class="context-reminders-zone" data-home-block="reminders" id="contextRemindersZone" hidden>
 <div class="context-reminders-title"><span>RAPPELS.DU.MOMENT</span><strong>JUSTE CE QUI EST UTILE MAINTENANT</strong></div>
 <div class="today-rdv-reminders" id="todayRdvReminders" hidden></div>
@@ -430,7 +430,7 @@
 <details class="system-accordion goals-accordion">
 <summary>AJOUTER UN OBJECTIF</summary>
 <div class="reminder-manager-body goal-form">
-<label><span>MESURE</span><select id="goalMetric"><option value="meditation_sessions">SÉANCES DE MÉDITATION</option><option value="meditation_minutes">MINUTES DE MÉDITATION</option><option value="tasks">TÂCHES TERMINÉES</option><option value="compost">COMPOST VIDÉ</option><option value="shopping">COURSES TERMINÉES</option><option value="cleaning">MÉNAGE TERMINÉ</option></select></label>
+<label><span>MESURE</span><select id="goalMetric"><option value="meditation_sessions">SÉANCES DE MÉDITATION</option><option value="meditation_minutes">MINUTES DE MÉDITATION</option><option value="tasks">TÂCHES TERMINÉES</option><option value="compost">COMPOST VIDÉ</option><option value="shopping">COURSES TERMINÉES</option><option value="cleaning">MÉNAGE TERMINÉ</option><option value="sheets">DRAPS LAVÉS</option><option value="litter">LITIÈRE NETTOYÉE</option></select></label>
 <label><span>OBJECTIF</span><input id="goalTarget" min="1" type="number" value="4"/></label>
 <label><span>PÉRIODE</span><select id="goalPeriod"><option value="week">PAR SEMAINE</option><option value="month">PAR MOIS</option></select></label>
 <button class="minitel-action" id="goalAdd" type="button">AJOUTER L’OBJECTIF</button>
@@ -450,16 +450,16 @@
 <input autocomplete="off" id="commandInput" placeholder="0–9, RDV, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.20</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.21</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=20260922-quotidien-v915"></script>
-<script src="js/app.js?v=20260923-productivite-v920"></script>
+<script src="js/app.js?v=20260924-rappels-v921"></script>
 <script src="js/minigames.js?v=20260922-quotidien-v915"></script>
 <script src="js/ecosystem-v2.js?v=20260922-quotidien-v915"></script>
 
 <script>
-window.__3615_BUILD__='20260923-productivite-v920';
+window.__3615_BUILD__='20260924-rappels-v921';
 (async()=>{
   try{
     const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});

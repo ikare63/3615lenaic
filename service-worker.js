@@ -1,4 +1,4 @@
-const CACHE_VERSION='3615-productivite-v920';
+const CACHE_VERSION='3615-rappels-v921';
 self.addEventListener('install',()=>self.skipWaiting());
 self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
 self.addEventListener('notificationclick',event=>{
