@@ -2,7 +2,7 @@
   'use strict';
 
   const $=id=>document.getElementById(id);
-  const APP_VERSION='9.22';
+  const APP_VERSION='9.23';
   const PATHS={
     cap:'../cap/',culina:'../culina/',express:'../lenaic-express/',uchronies:'../uchronies/',
     arboris:'../bureau-genealogique/index.html',scriptoria:'../bureau-genealogique/index2.html',pistoria:'../bureau-genealogique/index3.html',
@@ -1199,13 +1199,38 @@
   function rdvEventsForDate(key){const isToday=key===localDateKey();return rdvStore().filter(ev=>ev.date===key&&(!ev.done||isToday)).sort((a,b)=>(a.time||'').localeCompare(b.time||''))}
   function rdvNextEvent(){const now=Date.now();return rdvStore().filter(ev=>!ev.done&&rdvDateTime(ev)?.getTime()>=now).sort((a,b)=>rdvDateTime(a)-rdvDateTime(b))[0]||null}
   function showRdvToast(message){document.querySelector('.rdv-toast')?.remove();const n=document.createElement('div');n.className='rdv-toast';n.textContent=message;document.body.appendChild(n);setTimeout(()=>n.remove(),4200)}
-  function rdvDefaultForm(){
-    const now=new Date(),next=new Date(now.getTime()+30*60000);next.setMinutes(Math.ceil(next.getMinutes()/30)*30,0,0);
-    if($('rdvDate')&&!$('rdvDate').value)$('rdvDate').value=localDateKey(next);
-    if($('rdvTime')&&!$('rdvTime').value)$('rdvTime').value=`${String(next.getHours()).padStart(2,'0')}:${String(next.getMinutes()).padStart(2,'0')}`;
+  function ensureRdvSelectOptions(){
+    const day=$('rdvDateDay'),month=$('rdvDateMonth'),year=$('rdvDateYear'),hour=$('rdvTimeHour'),minute=$('rdvTimeMinute');
+    if(!day||!month||!year||!hour||!minute)return;
+    if(!day.options.length)for(let i=1;i<=31;i++)day.add(new Option(String(i).padStart(2,'0'),String(i).padStart(2,'0')));
+    if(!month.options.length){const names=['JAN','FÉV','MAR','AVR','MAI','JUN','JUL','AOÛ','SEP','OCT','NOV','DÉC'];names.forEach((name,i)=>month.add(new Option(`${String(i+1).padStart(2,'0')} · ${name}`,String(i+1).padStart(2,'0'))))}
+    if(!year.options.length){const current=new Date().getFullYear();for(let y=current-5;y<=current+15;y++)year.add(new Option(String(y),String(y)))}
+    if(!hour.options.length)for(let i=0;i<24;i++)hour.add(new Option(String(i).padStart(2,'0'),String(i).padStart(2,'0')));
+    if(!minute.options.length)for(let i=0;i<60;i++)minute.add(new Option(String(i).padStart(2,'0'),String(i).padStart(2,'0')));
   }
-  function resetRdvForm(){if(!$('rdvForm'))return;$('rdvForm').reset();$('rdvEditId').value='';$('rdvNotify').value='0';$('rdvType').value='rdv';$('rdvCancelEdit').hidden=true;setText('rdvFormState','NOUVEAU RENDEZ-VOUS');setText('rdvSaveBtn','AJOUTER AU RDV');rdvDefaultForm()}
-  function editRdv(id){const ev=rdvStore().find(x=>x.id===id);if(!ev)return;$('rdvEditId').value=ev.id;$('rdvTitle').value=ev.title||'';$('rdvDate').value=ev.date||'';$('rdvTime').value=ev.time||'';$('rdvType').value=ev.type||'rdv';$('rdvNotify').value=String(Number(ev.notifyMinutes)||0);$('rdvNote').value=ev.note||'';$('rdvCancelEdit').hidden=false;setText('rdvFormState','MODIFICATION');setText('rdvSaveBtn','ENREGISTRER');$('rdvTitle').focus();$('rdvEditorCard')?.scrollIntoView?.({behavior:'smooth',block:'start'})}
+  function ensureRdvYearOption(value){const year=$('rdvDateYear');if(!year||!value)return;if(!Array.from(year.options).some(o=>o.value===String(value)))year.add(new Option(String(value),String(value)))}
+  function syncRdvDateFromParts(){
+    const d=$('rdvDateDay')?.value,m=$('rdvDateMonth')?.value,y=$('rdvDateYear')?.value,input=$('rdvDate');if(!d||!m||!y||!input)return '';
+    const iso=`${y}-${m}-${d}`,probe=new Date(`${iso}T12:00:00`);
+    const valid=Number.isFinite(probe.getTime())&&probe.getFullYear()===Number(y)&&probe.getMonth()+1===Number(m)&&probe.getDate()===Number(d);
+    input.value=valid?iso:'';return input.value;
+  }
+  function syncRdvTimeFromParts(){const h=$('rdvTimeHour')?.value,m=$('rdvTimeMinute')?.value,input=$('rdvTime');if(!input||h==null||m==null)return '';input.value=`${h}:${m}`;return input.value}
+  function setRdvManualDate(iso){
+    ensureRdvSelectOptions();const m=String(iso||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);if(!m)return false;
+    ensureRdvYearOption(m[1]);$('rdvDateYear').value=m[1];$('rdvDateMonth').value=m[2];$('rdvDateDay').value=m[3];syncRdvDateFromParts();return true;
+  }
+  function setRdvManualTime(value){
+    ensureRdvSelectOptions();const m=String(value||'').match(/^(\d{2}):(\d{2})$/);if(!m)return false;
+    $('rdvTimeHour').value=m[1];$('rdvTimeMinute').value=m[2];syncRdvTimeFromParts();return true;
+  }
+  function rdvDefaultForm(){
+    ensureRdvSelectOptions();const now=new Date(),next=new Date(now.getTime()+30*60000);next.setMinutes(Math.ceil(next.getMinutes()/30)*30,0,0);
+    if($('rdvDate')&&!$('rdvDate').value)setRdvManualDate(localDateKey(next));
+    if($('rdvTime')&&!$('rdvTime').value)setRdvManualTime(`${String(next.getHours()).padStart(2,'0')}:${String(next.getMinutes()).padStart(2,'0')}`);
+  }
+  function resetRdvForm(){if(!$('rdvForm'))return;$('rdvForm').reset();$('rdvEditId').value='';$('rdvDate').value='';$('rdvTime').value='';$('rdvNotify').value='0';$('rdvType').value='rdv';$('rdvCancelEdit').hidden=true;setText('rdvFormState','NOUVEAU RENDEZ-VOUS');setText('rdvSaveBtn','AJOUTER AU RDV');rdvDefaultForm()}
+  function editRdv(id){const ev=rdvStore().find(x=>x.id===id);if(!ev)return;$('rdvEditId').value=ev.id;$('rdvTitle').value=ev.title||'';setRdvManualDate(ev.date||localDateKey());setRdvManualTime(ev.time||'12:00');$('rdvType').value=ev.type||'rdv';$('rdvNotify').value=String(Number(ev.notifyMinutes)||0);$('rdvNote').value=ev.note||'';$('rdvCancelEdit').hidden=false;setText('rdvFormState','MODIFICATION');setText('rdvSaveBtn','ENREGISTRER');$('rdvTitle').focus();$('rdvEditorCard')?.scrollIntoView?.({behavior:'smooth',block:'start'})}
   function ensureRdvServiceWorker(){
     if(!('serviceWorker' in navigator)||!window.isSecureContext)return Promise.resolve(null);
     if(!rdvSwRegistrationPromise)rdvSwRegistrationPromise=navigator.serviceWorker.register('./service-worker.js').catch(()=>null);
@@ -1262,23 +1287,13 @@
   }
   function safeFileName(v){return String(v||'rdv').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase()||'rdv'}
   function downloadRdvIcs(events,name='3615-rdv'){if(!events.length){showRdvToast('Aucun rendez-vous à exporter.');return}const blob=new Blob([makeRdvIcs(events)],{type:'text/calendar;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${safeFileName(name)}.ics`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);showRdvToast('Fichier calendrier créé : ouvre-le sur le téléphone pour enregistrer l’alarme.')}
-  function openRdvNativePicker(inputId){
-    const input=$(inputId);if(!input)return;
-    try{input.focus({preventScroll:true})}catch(e){input.focus()}
-    try{if(typeof input.showPicker==='function'){input.showPicker();return}}catch(e){}
-    try{input.click()}catch(e){}
-  }
-  function bindRdvNativePicker(buttonId,inputId){
-    $(buttonId)?.addEventListener('click',()=>openRdvNativePicker(inputId));
-    const input=$(inputId);if(!input)return;
-    input.addEventListener('click',()=>{try{if(typeof input.showPicker==='function')input.showPicker()}catch(e){}});
-  }
-  bindRdvNativePicker('rdvDatePickerBtn','rdvDate');
-  bindRdvNativePicker('rdvTimePickerBtn','rdvTime');
+  ensureRdvSelectOptions();
+  ['rdvDateDay','rdvDateMonth','rdvDateYear'].forEach(id=>$(id)?.addEventListener('change',()=>{if(!syncRdvDateFromParts())showRdvToast('Cette date n’existe pas. Choisis un autre jour.')}));
+  ['rdvTimeHour','rdvTimeMinute'].forEach(id=>$(id)?.addEventListener('change',syncRdvTimeFromParts));
   $('rdvEnableNotifications')?.addEventListener('click',requestRdvNotifications);
   $('rdvCancelEdit')?.addEventListener('click',resetRdvForm);
   $('rdvForm')?.addEventListener('submit',e=>{
-    e.preventDefault();const title=$('rdvTitle').value.trim(),date=$('rdvDate').value,time=$('rdvTime').value;if(!title||!date||!time)return;
+    e.preventDefault();const title=$('rdvTitle').value.trim(),date=syncRdvDateFromParts(),time=syncRdvTimeFromParts();if(!title){showRdvToast('Donne un intitulé au rendez-vous.');return}if(!date){showRdvToast('Choisis une date valide.');return}if(!time){showRdvToast('Choisis une heure valide.');return}
     const rows=rdvStore(),id=$('rdvEditId').value||(`rdv-${Date.now()}-${Math.random().toString(36).slice(2,7)}`),i=rows.findIndex(x=>x.id===id),old=i>=0?rows[i]:{};
     const ev={...old,id,title,date,time,type:$('rdvType').value,note:$('rdvNote').value.trim(),notifyMinutes:Number($('rdvNotify').value)||0,done:false,notifiedAt:null,updatedAt:new Date().toISOString(),createdAt:old.createdAt||new Date().toISOString()};if(i>=0)rows[i]=ev;else rows.push(ev);saveRdvStore(rows);resetRdvForm();showRdvToast(i>=0?'Rendez-vous mis à jour.':'Rendez-vous ajouté.');
   });
