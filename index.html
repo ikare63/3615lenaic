@@ -274,8 +274,8 @@
 <form class="rdv-form" id="rdvForm">
 <input id="rdvEditId" type="hidden"/>
 <label class="rdv-field rdv-title-field"><span>INTITULÉ</span><input id="rdvTitle" maxlength="100" placeholder="Ex. Débat, dentiste, appel…" required type="text"/></label>
-<label class="rdv-field"><span>DATE</span><div class="rdv-picker-wrap"><input id="rdvDate" required type="date"/><button class="rdv-picker-button" id="rdvDatePickerBtn" type="button" aria-label="Choisir la date">📅 CHOISIR</button></div></label>
-<label class="rdv-field"><span>HEURE</span><div class="rdv-picker-wrap"><input id="rdvTime" required type="time"/><button class="rdv-picker-button" id="rdvTimePickerBtn" type="button" aria-label="Choisir l’heure">🕒 CHOISIR</button></div></label>
+<label class="rdv-field"><span>DATE</span><div class="rdv-date-parts" role="group" aria-label="Date du rendez-vous"><select id="rdvDateDay" aria-label="Jour"></select><select id="rdvDateMonth" aria-label="Mois"></select><select id="rdvDateYear" aria-label="Année"></select><input id="rdvDate" type="hidden"/></div><small class="rdv-field-hint">JOUR · MOIS · ANNÉE</small></label>
+<label class="rdv-field"><span>HEURE</span><div class="rdv-time-parts" role="group" aria-label="Heure du rendez-vous"><select id="rdvTimeHour" aria-label="Heure"></select><span class="rdv-time-separator">:</span><select id="rdvTimeMinute" aria-label="Minute"></select><input id="rdvTime" type="hidden"/></div><small class="rdv-field-hint">HEURE · MINUTE</small></label>
 <label class="rdv-field"><span>TYPE</span><select id="rdvType"><option value="rdv">RENDEZ-VOUS</option><option value="rappel">RAPPEL</option><option value="alerte">ALERTE</option></select></label>
 <label class="rdv-field"><span>NOTIFICATION</span><select id="rdvNotify"><option value="0">À L’HEURE H</option><option value="5">5 MIN AVANT</option><option value="10">10 MIN AVANT</option><option value="30">30 MIN AVANT</option><option value="60">1 H AVANT</option><option value="1440">1 JOUR AVANT</option></select></label>
 <label class="rdv-field rdv-note-field"><span>NOTE</span><textarea id="rdvNote" maxlength="300" placeholder="Lieu, chaîne, informations utiles…" rows="3"></textarea></label>
@@ -450,16 +450,16 @@
 <input autocomplete="off" id="commandInput" placeholder="0–9, RDV, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.22</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.23</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=20260922-quotidien-v915"></script>
-<script src="js/app.js?v=20260924-rappels-v921"></script>
+<script src="js/app.js?v=20260929-rdv-manual-v923"></script>
 <script src="js/minigames.js?v=20260922-quotidien-v915"></script>
 <script src="js/ecosystem-v2.js?v=20260922-quotidien-v915"></script>
 
 <script>
-window.__3615_BUILD__='20260924-rappels-v921';
+window.__3615_BUILD__='20260929-rdv-manual-v923';
 (async()=>{
   try{
     const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});

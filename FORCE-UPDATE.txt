@@ -1,1 +1,1 @@
-3615 Lénaïc v9.22 — Sélecteurs date/heure RDV corrigés et fiabilisés sur mobile.
+3615 Lénaïc v9.23 — Date et heure RDV passent à des menus indépendants jour/mois/année et heure/minute, sans dépendre du sélecteur natif Android.
