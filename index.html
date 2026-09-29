@@ -274,8 +274,8 @@
 <form class="rdv-form" id="rdvForm">
 <input id="rdvEditId" type="hidden"/>
 <label class="rdv-field rdv-title-field"><span>INTITULÉ</span><input id="rdvTitle" maxlength="100" placeholder="Ex. Débat, dentiste, appel…" required type="text"/></label>
-<label class="rdv-field"><span>DATE</span><input id="rdvDate" required type="date"/></label>
-<label class="rdv-field"><span>HEURE</span><input id="rdvTime" required type="time"/></label>
+<label class="rdv-field"><span>DATE</span><div class="rdv-picker-wrap"><input id="rdvDate" required type="date"/><button class="rdv-picker-button" id="rdvDatePickerBtn" type="button" aria-label="Choisir la date">📅 CHOISIR</button></div></label>
+<label class="rdv-field"><span>HEURE</span><div class="rdv-picker-wrap"><input id="rdvTime" required type="time"/><button class="rdv-picker-button" id="rdvTimePickerBtn" type="button" aria-label="Choisir l’heure">🕒 CHOISIR</button></div></label>
 <label class="rdv-field"><span>TYPE</span><select id="rdvType"><option value="rdv">RENDEZ-VOUS</option><option value="rappel">RAPPEL</option><option value="alerte">ALERTE</option></select></label>
 <label class="rdv-field"><span>NOTIFICATION</span><select id="rdvNotify"><option value="0">À L’HEURE H</option><option value="5">5 MIN AVANT</option><option value="10">10 MIN AVANT</option><option value="30">30 MIN AVANT</option><option value="60">1 H AVANT</option><option value="1440">1 JOUR AVANT</option></select></label>
 <label class="rdv-field rdv-note-field"><span>NOTE</span><textarea id="rdvNote" maxlength="300" placeholder="Lieu, chaîne, informations utiles…" rows="3"></textarea></label>
@@ -450,7 +450,7 @@
 <input autocomplete="off" id="commandInput" placeholder="0–9, RDV, METEO, EPARGNE, CAP, CULINA, SCRIBE, ARIANE, OTARIE, NEXUS…" spellcheck="false"/>
 <button type="submit">ENVOI</button>
 </form>
-<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.21</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
+<div class="footer-line"><span>3615 LÉNAÏC // VERSION 9.22</span><span>DONNÉES LOCALES · BUS PARTAGÉ</span></div>
 </footer>
 </div>
 <script src="js/lenaic-bus.js?v=20260922-quotidien-v915"></script>
