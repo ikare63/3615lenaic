@@ -2,7 +2,7 @@
   'use strict';
 
   const $=id=>document.getElementById(id);
-  const APP_VERSION='9.21';
+  const APP_VERSION='9.22';
   const PATHS={
     cap:'../cap/',culina:'../culina/',express:'../lenaic-express/',uchronies:'../uchronies/',
     arboris:'../bureau-genealogique/index.html',scriptoria:'../bureau-genealogique/index2.html',pistoria:'../bureau-genealogique/index3.html',
@@ -1262,6 +1262,19 @@
   }
   function safeFileName(v){return String(v||'rdv').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase()||'rdv'}
   function downloadRdvIcs(events,name='3615-rdv'){if(!events.length){showRdvToast('Aucun rendez-vous à exporter.');return}const blob=new Blob([makeRdvIcs(events)],{type:'text/calendar;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${safeFileName(name)}.ics`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);showRdvToast('Fichier calendrier créé : ouvre-le sur le téléphone pour enregistrer l’alarme.')}
+  function openRdvNativePicker(inputId){
+    const input=$(inputId);if(!input)return;
+    try{input.focus({preventScroll:true})}catch(e){input.focus()}
+    try{if(typeof input.showPicker==='function'){input.showPicker();return}}catch(e){}
+    try{input.click()}catch(e){}
+  }
+  function bindRdvNativePicker(buttonId,inputId){
+    $(buttonId)?.addEventListener('click',()=>openRdvNativePicker(inputId));
+    const input=$(inputId);if(!input)return;
+    input.addEventListener('click',()=>{try{if(typeof input.showPicker==='function')input.showPicker()}catch(e){}});
+  }
+  bindRdvNativePicker('rdvDatePickerBtn','rdvDate');
+  bindRdvNativePicker('rdvTimePickerBtn','rdvTime');
   $('rdvEnableNotifications')?.addEventListener('click',requestRdvNotifications);
   $('rdvCancelEdit')?.addEventListener('click',resetRdvForm);
   $('rdvForm')?.addEventListener('submit',e=>{
