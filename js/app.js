@@ -2,7 +2,7 @@
   'use strict';
 
   const $=id=>document.getElementById(id);
-  const APP_VERSION='9.23';
+  const APP_VERSION='9.24';
   const PATHS={
     cap:'../cap/',culina:'../culina/',express:'../lenaic-express/',uchronies:'../uchronies/',
     arboris:'../bureau-genealogique/index.html',scriptoria:'../bureau-genealogique/index2.html',pistoria:'../bureau-genealogique/index3.html',
@@ -927,6 +927,34 @@
     state.snoozeUntil=tomorrow.getTime();saveSavings52(state);logProcrastination('savings','Épargne',localDateKey(),localDateKey(tomorrow));renderSavings52();renderContextualReminders();renderV9Today();renderV9System();
   });
 
+  function savings52ReferenceDate(week){
+    const d=new Date(SAVINGS52_START_UTC+(Math.max(1,Number(week)||1)-1)*7*86400000+2*86400000+12*3600000);
+    return d;
+  }
+  function renderSavingsHistoryCorrection(){
+    const input=$('savingsHistoryLastWeek'),meta=$('savingsHistoryMeta');if(!input||!meta)return;
+    const info=savings52Info(),completed=info.state.completed||{},weeks=Object.keys(completed).map(Number).filter(n=>Number.isInteger(n)&&n>=1&&n<=SAVINGS52_WEEKS),maxDone=weeks.length?Math.max(...weeks):0;
+    if(document.activeElement!==input)input.value=String(maxDone||Math.max(0,Math.min(SAVINGS52_WEEKS,info.week)));
+    setText('savingsHistoryState',`${weeks.length} SEMAINE${weeks.length>1?'S':''} · ${info.saved.toLocaleString('fr-FR')} €`);
+    meta.textContent=weeks.length?`Actuellement comptabilisé : ${weeks.sort((a,b)=>a-b).join(', ')} · cumul ${info.saved.toLocaleString('fr-FR')} €.`:'Aucune semaine validée. Mets 0 pour conserver un historique vide.';
+  }
+  $('savingsHistoryApply')?.addEventListener('click',()=>{
+    const input=$('savingsHistoryLastWeek');if(!input)return;
+    const last=Math.max(0,Math.min(SAVINGS52_WEEKS,Math.trunc(Number(input.value)||0))),info=savings52Info(),state=info.state;
+    state.completed=state.completed||{};
+    for(let week=1;week<=SAVINGS52_WEEKS;week++){
+      const key=String(week);
+      if(week<=last){
+        if(!state.completed[key])state.completed[key]=savings52ReferenceDate(week).toISOString();
+        setTaskActivity(`savings-${week}`,'Épargne',true,'savings',state.completed[key]);
+      }else if(state.completed[key]){
+        delete state.completed[key];setTaskActivity(`savings-${week}`,'Épargne',false,'savings');
+      }
+    }
+    if(last>=info.week)delete state.snoozeUntil;
+    saveSavings52(state);renderSavings52();renderSavingsHistoryCorrection();renderContextualReminders();renderHomeTomorrowReminders();renderV9Today();renderV9System();
+  });
+
   // Rappels contextuels : rappels locaux, tâches épinglées et intégration Culina.
   const CONTEXT_REMINDERS_KEY='3615-context-reminders-v1';
   const PINNED_REMINDERS_KEY='3615-pinned-reminders-v1';
@@ -1501,7 +1529,7 @@
     setText('systemNotifState',notifs.length?`${notifs.length} À VOIR`:'RAS');const nb=$('systemNotifications');if(nb)nb.innerHTML=notifs.length?notifs.map(x=>`<div class="activity-item"><div><span>ATTENTION</span><strong>${escapeHtml3615(x)}</strong></div></div>`).join(''):'<div class="express-empty">Aucune action urgente.</div>';
     setText('systemBusState',window.LenaicBus?'ACTIF':'HORS LIGNE');const bd=$('systemBusDetail');if(bd)bd.innerHTML=`<div><span>MESSAGES EN ATTENTE</span><b>${pending.length}</b></div><div><span>CANAL</span><b>lenaic-bus-v1</b></div><div><span>MODE</span><b>LOCAL + BROADCAST</b></div>`;
     const keys=['cap-data','memoire-famille-data','scriptoria-data','pistoria_private_v3','ariane-local-v2','scribe-local-v3'];const present=keys.filter(k=>localStorage.getItem(k)!=null).length;const bk=$('systemBackupDetail');if(bk)bk.innerHTML=`<div><span>JEUX LOCAUX MAJEURS</span><b>${present}/${keys.length} DÉTECTÉS</b></div><div><span>SNAPSHOT AUTO</span><b>${Number(nexusConfig?.automations?.autoSnapshotHours)||3} H</b></div><div><span>RÉTENTION</span><b>${Number(nexusConfig?.automations?.retentionPerDataset)||20} VERSIONS</b></div>`;
-    renderPinnedReminderSystem();renderRecurringReminderSystem();renderProcrastinationHistory();renderGlobalHistory();renderGoals();
+    renderPinnedReminderSystem();renderRecurringReminderSystem();renderProcrastinationHistory();renderGlobalHistory();renderGoals();renderSavingsHistoryCorrection();
   }
   function renderV9All(){renderV9Today();renderV9Daily();renderV9Health();renderV9Info();renderAnniversaries();renderV9Archives();renderV9System()}
 
