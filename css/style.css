@@ -696,3 +696,13 @@ body[data-nexus-cms="v2"] .brand-sub::after{content:" · V9.15";color:var(--ambe
 .weekly-review-copy>div{border:1px solid var(--line);background:#020b0e;padding:10px;text-align:center}.weekly-review-copy strong{display:block;color:var(--green);font-size:1rem}.weekly-review-copy span{display:block;margin-top:4px;color:var(--ink-soft);font-size:.5rem;line-height:1.35;letter-spacing:.05em}
 @media(max-width:720px){.recurring-main-row,.recurring-settings-row,.global-history-toolbar,.goal-form{grid-template-columns:1fr}.global-history-summary,.weekly-review-copy{grid-template-columns:1fr 1fr}.goal-row{grid-template-columns:1fr auto}.goal-row button{grid-column:1/-1;justify-self:start}}
 @media(max-width:430px){.global-history-summary,.weekly-review-copy{grid-template-columns:1fr}}
+
+
+/* === V9.24 · Correction de l’historique Épargne 52 semaines === */
+.savings-history-card{grid-column:1/-1}
+.savings-history-body{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:end}
+.savings-history-body label{display:grid;gap:5px;min-width:0}
+.savings-history-body label>span{color:var(--muted);font-size:.53rem;font-weight:900;letter-spacing:.08em}
+.savings-history-body input{width:100%;min-width:0;border:1px solid var(--line-strong);background:#01080b;color:var(--ink);padding:9px 10px;font:inherit}
+.savings-history-meta{margin:10px 0 0;color:var(--ink-soft);font-size:.58rem;line-height:1.45}
+@media(max-width:620px){.savings-history-body{grid-template-columns:1fr}.savings-history-body .minitel-action{width:100%}}
