@@ -2,7 +2,7 @@
   'use strict';
 
   const $=id=>document.getElementById(id);
-  const APP_VERSION='9.24';
+  const APP_VERSION='9.25';
   const PATHS={
     cap:'../cap/',culina:'../culina/',express:'../lenaic-express/',uchronies:'../uchronies/',
     arboris:'../bureau-genealogique/index.html',scriptoria:'../bureau-genealogique/index2.html',pistoria:'../bureau-genealogique/index3.html',

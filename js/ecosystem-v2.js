@@ -94,12 +94,18 @@ function syncModuleNotifications(){
  const keep=new Set();for(const d of moduleDefs().filter(x=>x.display?.notifications)){const r=LenaicModules.resolve(d);if(!r.active||r.done)continue;const key=`module:${d.id}:${r.periodKey}`;keep.add(key);LenaicNotifications.create({source:'nexus',priority:d.important?'high':'normal',title:d.label||'Rappel NEXUS',message:d.kind==='progressive'?`${unitLabel(d,r.currentValue)} à valider pour cette période.`:(d.description||'Action à effectuer.'),action:{label:'VOIR DANS 3615',command:'0'},dedupeKey:key,reopen:true})}resolveDedupe('module:',keep)
 }
 function notifAction(n){if(n.action?.url)return`<a href="${attr(n.action.url)}">${esc(n.action.label||'OUVRIR')}</a>`;if(n.action?.command)return`<button type="button" data-notif-command="${attr(n.action.command)}">${esc(n.action.label||'VOIR')}</button>`;return''}
+// Empêche la boucle : notification créée -> événement -> rendu -> création.
+let renderingNotifications=false;
 function renderNotifications(){
+ if(renderingNotifications)return;
+ renderingNotifications=true;
+ try{
  syncDerivedNotifications();const list=LenaicNotifications.list({active:true}),box=$('systemNotifications'),bell=$('notificationBell'),count=list.filter(n=>n.status==='new').length||list.length;
  if(bell){bell.innerHTML=`✉ <b>${count}</b>`;bell.classList.toggle('has-notifs',count>0);bell.title=`${count} notification${count>1?'s':''}`}
  if($('systemNotifState'))$('systemNotifState').textContent=list.length?`${list.length} ACTIVE${list.length>1?'S':''}`:'À JOUR';
  if(!box)return;if(!list.length){box.innerHTML='<div class="express-empty">Aucune action importante en attente.</div>';return}
  box.innerHTML=list.slice(0,30).map(n=>`<article class="notification-row priority-${esc(n.priority||'normal')}" data-notif-id="${attr(n.id)}"><div class="notification-dot"></div><div class="notification-copy"><span>${esc((n.source||'NEXUS').toUpperCase())}</span><strong>${esc(n.title)}</strong><small>${esc(n.message||'')} · ${esc(fmtDate(n.createdAt))}</small></div><div class="notification-actions">${notifAction(n)}<button type="button" data-notif-snooze="${attr(n.id)}">+24H</button><button type="button" data-notif-done="${attr(n.id)}">TRAITÉ</button></div></article>`).join('');
+ }finally{renderingNotifications=false}
 }
 document.addEventListener('click',e=>{
  const bell=e.target.closest('#notificationBell');if(bell){e.preventDefault();document.querySelector('[data-section="systeme"]')?.click();setTimeout(()=>$('systemNotifications')?.scrollIntoView({behavior:'smooth',block:'center'}),120);return}

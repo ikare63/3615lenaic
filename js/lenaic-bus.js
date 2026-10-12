@@ -126,7 +126,15 @@
       const items=this.read(),key=input.dedupeKey||null;
       let n=key?items.find(x=>x.dedupeKey===key&&x.status!=='done'):null;
       const patch={source:input.source||sourceFromPath(),title:String(input.title||'Notification'),message:String(input.message||''),priority:input.priority||'normal',action:input.action||null,dedupeKey:key,relatedEventId:input.relatedEventId||null,meta:input.meta||{},dueAt:input.dueAt||null,expiresAt:input.expiresAt||null};
-      if(n){Object.assign(n,patch,{updatedAt:now()});if(input.reopen)n.status='new'}
+      if(n){
+        // Un rendu périodique ne doit pas réécrire une notification inchangée :
+        // chaque écriture provoque un événement synchrone chez les abonnés.
+        const changed=Object.keys(patch).some(k=>JSON.stringify(n[k])!==JSON.stringify(patch[k]));
+        if(!changed)return clone(n);
+        Object.assign(n,patch,{updatedAt:now()});
+        // Ne pas annuler une notification volontairement reportée.
+        if(input.reopen&&!(n.status==='snoozed'&&Date.parse(n.snoozeUntil||0)>Date.now()))n.status='new';
+      }
       else{n={id:uid('nt'),version:1,status:'new',createdAt:now(),updatedAt:null,snoozeUntil:null,...patch};items.push(n)}
       this.write(items);return clone(n);
     },
