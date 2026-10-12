@@ -1,0 +1,10 @@
+3615 LÉNAÏC v9.25 — 12/10/2026
+
+Correction du blocage du site causé par la boucle de notifications.
+- Protection contre le rendu récursif des notifications dans js/ecosystem-v2.js.
+- Notifications déjà à jour : plus de réécriture ni de nouveaux événements à chaque affichage.
+- Les notifications reportées ne sont plus réactivées lors de simples mises à jour.
+- Version des scripts et du CSS actualisée pour contourner les caches de navigateur.
+
+Remplacer les fichiers fournis à la racine du dépôt en conservant les données utilisateur.
+Ne pas effacer le stockage local du navigateur.
