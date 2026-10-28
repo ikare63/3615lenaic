@@ -16,7 +16,7 @@
   let nexusConfig=null;
   let dynamicCommands={};
 
-  function readJsonStorage(key){try{return JSON.parse(localStorage.getItem(key)||'null')}catch{return null}}
+  function readJsonStorage(key){try{return (window.LenaicSync?.view(key)??JSON.parse(localStorage.getItem(key)||'null'))}catch{return null}}
   function htmlSafe(value){return String(value??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
   function currentCmsGreeting(slot,fallback){const v=nexusConfig?.content?.greetings?.[slot];return typeof v==='string'&&v.trim()?v.trim():fallback}
 
@@ -611,7 +611,7 @@
   const ARIANE_DATA_KEY='ariane-local-v2';
 
   function readLocalJson(key){
-    try{return JSON.parse(localStorage.getItem(key)||'null')}catch(e){return null}
+    try{return (window.LenaicSync?.view(key)??JSON.parse(localStorage.getItem(key)||'null'))}catch(e){return null}
   }
   function upperText(value,fallback='—'){
     const text=String(value||'').trim();return (text||fallback).toUpperCase();
@@ -703,7 +703,7 @@
       setText('pistoriaSummaryMeta','Aucune donnée Pistoria trouvée dans ce navigateur.');
     }
 
-    setText('genealogyOfficeState',ready===3?'À JOUR':ready?`${ready}/3 DISPONIBLES`:'EN ATTENTE');
+    setText('genealogyOfficeState',ready===3?'3 BASES DISPONIBLES':ready?`${ready}/3 DISPONIBLES`:'EN ATTENTE');
     setText('genealogyOfficeFoot',ready===3?'ARBORIS · SCRIPTORIA · PISTORIA':'OUVRE LES OUTILS POUR INITIALISER LE RÉCAP');
     syncGenealogyTab();
   }
@@ -1366,7 +1366,7 @@
 
 
   // === V9 · pages spécialisées =================================================
-  function jsonOr(key,fallback){try{const v=JSON.parse(localStorage.getItem(key)||'null');return v??fallback}catch{return fallback}}
+  function jsonOr(key,fallback){try{const v=(window.LenaicSync?.view(key)??JSON.parse(localStorage.getItem(key)||'null'));return v??fallback}catch{return fallback}}
   function capNutritionDayKey(date=new Date()){const d=new Date(date);if(d.getHours()<1)d.setDate(d.getDate()-1);return localDateKey(d)}
   function capNutritionSummary(){
     const st=readCapState()||{}, day=st.daily?.[capNutritionDayKey()]||{}, meals=Array.isArray(day.meals)?day.meals:[];
@@ -1666,6 +1666,12 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
+  const dashboardSyncAllowed=key=>(key.startsWith('3615-')&&!key.includes('weather'))||['lenaic-modules-v1','lenaic-notifications-v1','lenaic-genealogy-context-v1'].includes(key);
+  const dashboardSafeAdapter={id:'3615',get:()=>({app:'3615',version:1,storage:Object.fromEntries(Object.keys(localStorage).filter(dashboardSyncAllowed).map(key=>[key,localStorage.getItem(key)]))}),
+    valid:v=>v?.app==='3615'&&v.version===1&&v.storage&&Object.entries(v.storage).every(([key,value])=>dashboardSyncAllowed(key)&&typeof value==='string'),has:v=>Object.keys(v.storage).length>0,
+    apply:async v=>{for(const [key,value] of Object.entries(v.storage)){localStorage.setItem(key,value);window.dispatchEvent(new StorageEvent('storage',{key,newValue:value}))}palette=localStorage.getItem('3615-palette-v1')||palette;applyPalette();renderContext();renderSavings52();renderRdv();renderMeditation();renderGoals();renderContextualReminders();renderPinnedReminderSystem();renderRecurringReminderSystem();renderGlobalHistory()}};
+  window.LenaicSync.register(dashboardSafeAdapter);
+  window.LenaicSync.dashboard(()=>{renderGenealogyOffice();syncGenealogyTab();renderAnniversaries()}).catch(e=>console.error('Sources privées',e));
   migrateV918RecurringCompost();migrateV920Activity();renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderContextualReminders();renderHomeTomorrowReminders();renderPinnedReminderSystem();renderRecurringReminderSystem();renderProcrastinationHistory();renderGlobalHistory();renderGoals();renderWeeklyReview();renderTransportCounter();renderTransportMonthRecap();renderRdv();ensureRdvServiceWorker();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
   loadNexusConfig();loadWeather();loadNameday();
   setInterval(()=>{renderContext();renderSavings52();renderContextualReminders();renderTransportCounter();renderTransportMonthRecap();renderRdv();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderWeeklyReview();renderV9All();},60000);

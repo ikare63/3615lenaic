@@ -3,7 +3,7 @@
 'use strict';
 if(!window.LenaicEcosystem)return;
 const $=id=>document.getElementById(id);
-const read=(key,fallback=null)=>{try{const v=JSON.parse(localStorage.getItem(key)||'null');return v??fallback}catch{return fallback}};
+const read=(key,fallback=null)=>{try{const v=window.LenaicSync?.view(key)??JSON.parse(localStorage.getItem(key)||'null');return v??fallback}catch{return fallback}};
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 const attr=s=>esc(s).replace(/`/g,'&#96;');
 const fmtDate=v=>{if(!v)return'—';const d=new Date(v);return Number.isFinite(d.getTime())?d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—'};
