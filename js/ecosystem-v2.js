@@ -3,7 +3,7 @@
 'use strict';
 if(!window.LenaicEcosystem)return;
 const $=id=>document.getElementById(id);
-const read=(key,fallback=null)=>{try{const v=JSON.parse(localStorage.getItem(key)||'null');return v??fallback}catch{return fallback}};
+const read=(key,fallback=null)=>{try{const v=window.LenaicSync?.view(key)??JSON.parse(localStorage.getItem(key)||'null');return v??fallback}catch{return fallback}};
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 const attr=s=>esc(s).replace(/`/g,'&#96;');
 const fmtDate=v=>{if(!v)return'—';const d=new Date(v);return Number.isFinite(d.getTime())?d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—'};
@@ -118,5 +118,6 @@ LenaicNotifications.subscribe(renderNotifications);
 function renderAll(){renderGenealogyContext();renderModules();renderNotifications()}
 window.addEventListener('storage',e=>{if(['lenaic-nexus-published-v2','memoire-famille-data','scriptoria-data','pistoria_private_v3','ariane-local-v2','scribe-local-v3','lenaic-scribe-snapshot-v1','lenaic-cap-snapshot-v1','3615-savings52-v1'].includes(e.key))renderAll()});
 
+window.addEventListener('lenaicsyncchange',renderAll);
 renderAll();loadConfig();setInterval(()=>{renderGenealogyContext();renderNotifications()},15000);
 })();

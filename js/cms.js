@@ -65,7 +65,7 @@ async function snapshotKey(key,reason='auto'){
  const h=await hash(raw),latest=await latestForKey(key);if(latest?.hash===h)return false;
  const now=new Date().toISOString();await putSnapshot({id:`${key}::${Date.now()}::${Math.random().toString(36).slice(2,6)}`,key,appId:def.appId,label:def.label,createdAt:now,hash:h,bytes:new Blob([raw]).size,reason,raw});await enforceRetention(key);return true;
 }
-async function enforceRetention(key){const max=Math.max(3,Number(automation().retentionPerDataset)||20),rows=await snapshotsForKey(key);for(const x of rows.slice(max))await deleteSnapshot(x.id)}
+async function enforceRetention(key){/* Migration safety: never prune historical snapshots automatically. */}
 async function sweep(reason='auto'){
  let changed=0;for(const d of dataDefs())if(await snapshotKey(d.key,reason))changed++;
  localStorage.setItem(LAST_SWEEP_KEY,String(Date.now()));if(reason==='manual')localStorage.setItem(LAST_MANUAL_KEY,String(Date.now()));await refreshRuntime();toast(changed?`${changed} jeu${changed>1?'x':''} de données sauvegardé${changed>1?'s':''}`:'Aucun changement depuis la dernière sauvegarde');
@@ -178,6 +178,8 @@ async function ghGetFile(g){
  return {...data,text:base64ToUtf8(data.content||'')};
 }
 async function ghPutFile(g,text,message){
+ if(g.repo==='data')throw Error('Sauvegardes privées : utilise la synchronisation sécurisée après comparaison et validation des copies externes.');
+ if(window.LenaicSync)window.LenaicSync.assertNoSecrets(JSON.parse(text));
  let sha=null;try{sha=(await ghGetFile(g)).sha}catch(e){if(!String(e.message).includes('Not Found')&&!String(e.message).includes('introuvable'))throw e}
  const url=`https://api.github.com/repos/${encodeURIComponent(g.owner)}/${encodeURIComponent(g.repo)}/contents/${ghApiPath(g.path)}`;
  const body={message,content:utf8ToBase64(text),branch:g.branch||'main'};if(sha)body.sha=sha;
