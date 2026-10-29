@@ -118,5 +118,6 @@ LenaicNotifications.subscribe(renderNotifications);
 function renderAll(){renderGenealogyContext();renderModules();renderNotifications()}
 window.addEventListener('storage',e=>{if(['lenaic-nexus-published-v2','memoire-famille-data','scriptoria-data','pistoria_private_v3','ariane-local-v2','scribe-local-v3','lenaic-scribe-snapshot-v1','lenaic-cap-snapshot-v1','3615-savings52-v1'].includes(e.key))renderAll()});
 
+window.addEventListener('lenaicsyncchange',renderAll);
 renderAll();loadConfig();setInterval(()=>{renderGenealogyContext();renderNotifications()},15000);
 })();

@@ -1,5 +1,5 @@
 (function(){
-  'use strict';
+  'use strict';window.LenaicSync.assertStorageReady();
 
   const $=id=>document.getElementById(id);
   const APP_VERSION='9.25';
@@ -764,7 +764,7 @@
     const received=data.drafts.filter(d=>d.status==='received').sort((x,y)=>String(y.receivedAt||y.updatedAt||'').localeCompare(String(x.receivedAt||x.updatedAt||''))).map(d=>({id:d.id,title:d.title||'Réponse d’archives',contact:label(d),receivedAt:d.receivedAt||d.updatedAt||null}));
     return {version:1,source:'scribe',generatedAt:new Date().toISOString(),counts,pending,received};
   }
-  function readScribeSnapshot(){return readJsonStorage(SCRIBE_SNAPSHOT_KEY)||fallbackScribeSnapshot()}
+  function readScribeSnapshot(){return window.LenaicSync?.view(SCRIBE_DATA_KEY)?fallbackScribeSnapshot():(readJsonStorage(SCRIBE_SNAPSHOT_KEY)||fallbackScribeSnapshot())}
   function scribeReminderDays(){return Math.max(7,Number(nexusConfig?.automations?.scribeReminderDays)||30)}
   function scribeAgeLabel(days){const n=Math.max(0,Number(days)||0);return n===0?'AUJOURD’HUI':`${n} JOUR${n>1?'S':''}`}
   function renderScribeLive(){
@@ -1628,8 +1628,8 @@
     try{const old=JSON.parse(localStorage.getItem('3615-lenaic-v2')||'{}');if(old.fishLastFedAt||old.fishHungerBase!=null)return {lastFedAt:old.fishLastFedAt||null,hungerBase:Number(old.fishHungerBase)||0}}catch(e){}
     return {lastFedAt:null,hungerBase:20};
   }
-  let otarieState=loadOtarieState();
-  function saveOtarie(){localStorage.setItem(OTARIE_KEY,JSON.stringify(otarieState))}
+  let otarieState=loadOtarieState(),otarieKnownPrimary=localStorage.getItem(OTARIE_KEY);
+  function saveOtarie(){window.LenaicSync.atomicStorage({[OTARIE_KEY]:JSON.stringify(otarieState)},{[OTARIE_KEY]:otarieKnownPrimary});otarieKnownPrimary=localStorage.getItem(OTARIE_KEY)}
   function hunger(){const last=otarieState.lastFedAt?new Date(otarieState.lastFedAt).getTime():Date.now()-6*3600000;const hours=Math.max(0,(Date.now()-last)/3600000);return Math.round(clamp((Number(otarieState.hungerBase)||0)+hours*4,0,100))}
   function renderOtarieStatus(){const h=hunger();setText('otarieHunger',`${h} %`);if($('otarieMeter'))$('otarieMeter').style.width=`${h}%`;const last=otarieState.lastFedAt?new Date(otarieState.lastFedAt).toLocaleString('fr-FR'):'JAMAIS';setText('otarieLastFed',last);setText('otarieHomeHunger',`${h} %`);setText('otarieHomeLastFed',last);setText('otarieHomeMood',h>75?'TRÈS INTÉRESSÉE PAR LE POISSON':h>45?'SURVEILLE LA CUISINE':h>20?'BAIGNADE EN COURS':'REPUE ET SATISFAITE')}
 
@@ -1666,12 +1666,15 @@
   $('feedOtarieBtn').addEventListener('click',()=>{initAquarium();if(hunger()<15){setText('otarieMessage','PAS MAINTENANT : ELLE N’A PLUS FAIM.');return}if(aquarium.fish.length){setText('otarieMessage','LES POISSONS SONT DÉJÀ DANS LE BASSIN.');return}for(let i=0;i<5;i++)aquarium.fish.push({x:aquarium.w*.52+(i-2)*20,y:32+i*11});setText('otarieMessage','ARRIVÉE DES PETITS POISSONS…')});
   setInterval(renderOtarieStatus,60000);
 
-  const dashboardSyncAllowed=key=>(key.startsWith('3615-')&&!key.includes('weather'))||['lenaic-modules-v1','lenaic-notifications-v1','lenaic-genealogy-context-v1'].includes(key);
+  const dashboardSyncKeys=['3615-mini-games-best-v1','3615-minitel-run-progress-v1','lenaic-bus-v1','lenaic-bus-v2','lex_category_boosts','lex_hidden','lex_hidden_sources','lenaic-nexus-published-v2','lenaic-nexus-draft-v2','lenaic-nexus-config-history-v2','lenaic-express-watch-draft-v1','lenaic-nexus-express-watch-config-v1','3615-migrate-v918-recurring-compost','3615-migrate-v920-activity','3615-seed-v917-compost-2026-09-25','3615-context-reminders-v1', '3615-goals-v1', '3615-lenaic-v2', '3615-meditation-v1', '3615-otarie-v1', '3615-palette-v1', '3615-pinned-reminders-v1', '3615-rdv-v1', '3615-recurring-reminders-v1', '3615-reminder-history-v1', '3615-savings52-v1', '3615-task-activity-v1', '3615-transport-ledger-v1', 'lenaic-genealogy-context-v1', 'lenaic-modules-v1', 'lenaic-notifications-v1'];
+  const dashboardSyncAllowed=key=>dashboardSyncKeys.includes(key);
   const dashboardSafeAdapter={id:'3615',get:()=>({app:'3615',version:1,storage:Object.fromEntries(Object.keys(localStorage).filter(dashboardSyncAllowed).map(key=>[key,localStorage.getItem(key)]))}),
     valid:v=>v?.app==='3615'&&v.version===1&&v.storage&&Object.entries(v.storage).every(([key,value])=>dashboardSyncAllowed(key)&&typeof value==='string'),has:v=>Object.keys(v.storage).length>0,
-    apply:async v=>{for(const [key,value] of Object.entries(v.storage)){localStorage.setItem(key,value);window.dispatchEvent(new StorageEvent('storage',{key,newValue:value}))}palette=localStorage.getItem('3615-palette-v1')||palette;applyPalette();renderContext();renderSavings52();renderRdv();renderMeditation();renderGoals();renderContextualReminders();renderPinnedReminderSystem();renderRecurringReminderSystem();renderGlobalHistory()}};
+    revision:()=>window.LenaicSync.rawStorage(dashboardSyncKeys),
+    apply:async(v,expected)=>{window.LenaicSync.atomicStorage(v.storage,expected);otarieState=loadOtarieState();otarieKnownPrimary=localStorage.getItem(OTARIE_KEY);aquarium.fish=[];for(const [key,value] of Object.entries(v.storage)){window.dispatchEvent(new StorageEvent('storage',{key,newValue:value}))}palette=localStorage.getItem('3615-palette-v1')||palette;applyPalette();renderContext();renderSavings52();renderRdv();renderMeditation();renderGoals();renderContextualReminders();renderPinnedReminderSystem();renderRecurringReminderSystem();renderGlobalHistory();return dashboardSafeAdapter.get()}};
   window.LenaicSync.register(dashboardSafeAdapter);
-  window.LenaicSync.dashboard(()=>{renderGenealogyOffice();syncGenealogyTab();renderAnniversaries()}).catch(e=>console.error('Sources privées',e));
+  window.addEventListener('lenaicsyncchange',()=>{renderGenealogyOffice();renderArianeLive();renderScribeLive();renderAnniversaries();syncGenealogyTab()});
+  window.LenaicSync.dashboard(()=>{renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderAnniversaries()}).catch(e=>console.error('Sources privées',e));
   migrateV918RecurringCompost();migrateV920Activity();renderContext();renderAbsurdities();renderEphemeris();renderSleepPanel();renderSavings52();renderContextualReminders();renderHomeTomorrowReminders();renderPinnedReminderSystem();renderRecurringReminderSystem();renderProcrastinationHistory();renderGlobalHistory();renderGoals();renderWeeklyReview();renderTransportCounter();renderTransportMonthRecap();renderRdv();ensureRdvServiceWorker();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderGenealogyOffice();renderArianeLive();renderScribeLive();syncGenealogyTab();renderBusStatus();renderOtarieStatus();renderMeditation();renderBizarre();renderV9All();initMiniOtarie();
   loadNexusConfig();loadWeather();loadNameday();
   setInterval(()=>{renderContext();renderSavings52();renderContextualReminders();renderTransportCounter();renderTransportMonthRecap();renderRdv();checkRdvNotifications();renderCapLive();renderCulinaLive();renderExpressLive();renderScribeLive();renderBusStatus();renderEphemeris();renderMeditation();renderOtarieStatus();renderWeeklyReview();renderV9All();},60000);
